@@ -32,6 +32,9 @@ export default defineNuxtConfig({
   i18n: {
     vueI18n: "./i18n.config.ts", // if you are using custom path, default
   },
+  imports: {
+    dirs: ["stores"],
+  },
   image: {
     format: ["webp", "jpg", "png"],
   },

@@ -3,10 +3,150 @@
 @tailwind utilities;
 
 @layer components {
-  .label-text {
-    @apply font-medium text-slate-500;
+  /**
+  * btn 
+  */
+  .btn {
+    @apply !min-h-0 h-11 !py-1.5 !px-4 !font-medium rounded-md;
   }
-  .active {
-    @apply bg-emerald-200;
+
+  /**
+  * badge
+  */
+  .badge {
+    @apply text-xs font-normal leading-5 ring-1 ring-offset-1 ring-gray-200 tracking-wide;
+  }
+  .badge-neutral {
+    @apply ring-neutral;
+  }
+  .badge-primary {
+    @apply ring-primary;
+  }
+
+  .badge-secondary {
+    @apply ring-secondary;
+  }
+
+  .badge-success {
+    @apply ring-success;
+  }
+  .badge-accent {
+    @apply ring-accent;
+  }
+  .badge-error {
+    @apply ring-error;
+  }
+  .badge-warning {
+    @apply ring-warning;
+  }
+
+  .badge-info {
+    @apply ring-info;
+  }
+
+  /**
+  * input
+  */
+
+  .input {
+    @apply h-11 w-full rounded-md;
+  }
+  /**
+  * file input
+  */
+  .file-input {
+    @apply !h-11 w-full !font-medium rounded-md;
+  }
+
+  /**
+  * select
+  */
+  .select {
+    @apply h-11 w-full rounded-md min-h-0;
+  }
+  /**
+  * checkbox
+  */
+
+  .checkbox {
+    @apply rounded-md;
+  }
+
+  /**
+  * textarea
+  */
+
+  .textarea {
+    @apply w-full rounded-md h-20;
+  }
+  /**
+  * radio
+  */
+
+  .radio:checked,
+  .radio[aria-checked="true"] {
+    box-shadow: 0 0 0 2px theme(colors.base-100) inset,
+      0 0 0 2px theme(colors.base-100) inset;
+  }
+
+  /**
+  * collapse
+  */
+  .collapse {
+    @apply rounded-md w-full;
+  }
+  .collapse-title {
+    @apply min-h-0 py-1 px-2;
+  }
+
+  .collapse-content {
+    @apply px-2;
+  }
+  .collapse-arrow > .collapse-title:after {
+    @apply top-5;
+  }
+  .collapse-plus > .collapse-title:after {
+    @apply top-1.5;
+  }
+
+  /**
+  * alert
+  */
+  .alert {
+    @apply rounded-md py-1.5 px-2;
+  }
+
+  /**
+  * card
+  */
+  .card {
+    @apply rounded-md;
+  }
+
+  /**
+  * modal
+  */
+
+  .modal-box {
+    @apply rounded-t-md rounded-b-md p-1.5;
+  }
+  /**
+  * table
+  */
+  .table {
+    @apply rounded-md;
+  }
+
+  /**
+  * form error message
+  */
+  .form-error-message {
+    @apply tracking-normal text-sm text-error  leading-4;
+  }
+  /**
+  * form description
+  */
+  .form-description {
+    @apply text-gray-500 text-sm tracking-normal  leading-4;
   }
 }

@@ -1,6 +1,7 @@
 <template>
   <div>
     <slot />
+    <Notification />
   </div>
 </template>
 
