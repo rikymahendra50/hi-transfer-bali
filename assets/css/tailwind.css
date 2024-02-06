@@ -24,7 +24,7 @@
   }
 
   .badge-secondary {
-    @apply ring-secondary;
+    @apply !ring-secondary;
   }
 
   .badge-success {
@@ -148,5 +148,21 @@
   */
   .form-description {
     @apply text-gray-500 text-sm tracking-normal  leading-4;
+  }
+
+  /**
+  * .menu class change default rounded
+  */
+  .menu {
+    @apply !rounded-md;
+  }
+  /**
+  * modify the menu active
+  * @see https://github.com/saadeghi/daisyui/blob/master/src/components/styled/menu.css
+  */
+  .menu li > *:not(ul):not(.menu-title):not(details):active,
+  .menu li > *:not(ul):not(.menu-title):not(details).active,
+  .menu li > details > summary:active {
+    @apply bg-primary text-white [@media(hover:hover)]:bg-primary [@media(hover:hover)]:text-white;
   }
 }

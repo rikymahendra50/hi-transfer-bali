@@ -12,7 +12,11 @@
           {{ props.notification.text }}
         </span>
       </div>
-      <div class="w-5 h-full" @click="close" role="button">
+      <div
+        class="w-6 h-6 p-0.5 flex items-center justify-center hover:bg-white rounded-full transition-all duration-300"
+        @click="close"
+        role="button"
+      >
         <Icon name="i-heroicons-x-circle" />
       </div>
     </div>

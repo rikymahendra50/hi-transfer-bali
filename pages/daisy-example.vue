@@ -303,6 +303,53 @@
         />
       </div>
     </section>
+    <section>
+      <h3>Menu</h3>
+      <ul class="menu bg-base-200/50 space-y-2 w-56">
+        <li><a class="active disabled">Enabled item</a></li>
+        <li><a>disabled item</a></li>
+        <li><a>disabled item</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Font Size</h3>
+      <p class="text-sm">text-sm</p>
+      <p class="text-base">text-base</p>
+      <p class="text-lg">text-lg</p>
+      <p class="text-xl">text-xl</p>
+      <p class="text-2xl">text-2xl</p>
+      <p class="text-3xl">text-3xl</p>
+      <p class="text-4xl">text-4xl</p>
+      <p class="text-5xl">text-5xl</p>
+      <p class="text-6xl">text-6xl</p>
+    </section>
+    <section class="mb-10">
+      <h3>Transition</h3>
+      <TransitionTopToBottom>
+        <div v-if="toggle" class="card card-compact">
+          <div class="card-body bg-indigo-400 antialiased">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto nobis
+            accusantium eius praesentium magni officia, corporis animi
+            consequatur labore, repudiandae voluptas modi qui ut quibusdam
+            nesciunt minus fugiat est cum.
+          </div>
+        </div>
+      </TransitionTopToBottom>
+
+      <TransitionLeftToRight>
+        <div v-if="togglex" class="card card-compact">
+          <div class="card-body bg-indigo-400">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto nobis
+            accusantium eius praesentium magni officia, corporis animi
+            consequatur labore, repudiandae voluptas modi qui ut quibusdam
+            nesciunt minus fugiat est cum.
+          </div>
+        </div>
+      </TransitionLeftToRight>
+      <button @click="toggle = !toggle" class="btn">toggle</button>
+      <button @click="togglex = !togglex" class="btn">togglex</button>
+    </section>
   </div>
 </template>
 
@@ -311,6 +358,8 @@ const { pushNotification } = useNotification();
 
 const modal = ref(false);
 const ratingValue = ref();
+const toggle = ref(false);
+const togglex = ref(false);
 
 function exampleOfAddNotification(
   type: "success" | "error" | "warning" | "info"
