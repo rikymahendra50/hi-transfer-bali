@@ -1,45 +1,66 @@
+<script lang="ts" setup>
+
+const { loginSchema } = useSchema()
+
+const { loading, message, alertType } = useRequestHelper()
+
+const stateForm = ref({
+  email: "",
+  password: ""
+})
+
+function onSubmit(values: any, ctx: any) {
+  loading.value = true;
+  message.value = "hallo";
+  alertType.value = "success";
+  loading.value = false;
+}
+
+
+useHead({
+  title: "Sign In",
+})
+
+
+</script>
+
 <template>
   <div class="hero min-h-screen">
     <div class="hero-content text-center">
       <div class="max-w-md">
         <h1 class="text-4xl font-bold mb-4">Sign In</h1>
-        <div
-          class="grid grid-cols-1 w-[350px] text-left gap-2 p-4 rounded-md shadow"
-        >
-          <FormGroup label="Email" name="email">
-            <VeeField
-              type="email"
-              name="email"
-              placeholder="ex:myemail@gmail.com"
-              class="input input-bordered"
-            />
-            <div class="form-error-message">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-              Explicabo laborum
+
+        <VeeForm @submit="onSubmit" :validation-schema="loginSchema">
+          <div class="grid grid-cols-1 w-[450px] text-left gap-4 p-4 rounded-md shadow">
+            <Alert v-model="message" :type="alertType" />
+            <FormGroup label="Email" name="email">
+              <FormTextField name="email" v-model="stateForm.email" class="input-bordered"
+                placeholder="ex:myemail@gmail.com" />
+            </FormGroup>
+            <FormGroup label="Password" name="password">
+              <FormTextField name="password" v-model="stateForm.password" type="password" class="input-bordered"
+                placeholder="********" />
+            </FormGroup>
+            <div>
+              <NuxtLink class="link link-hover text-sm" to="/forgot-password">Forgot password?</NuxtLink>
             </div>
-            <template #descriptionBottom>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet
-              assumenda perferendis maiores consequatur magni
-            </template>
-          </FormGroup>
-          <FormGroup label="Password" name="password">
-            <VeeField
-              type="password"
-              name="password"
-              placeholder="ex:myemail@gmail.com"
-              class="input input-bordered"
-            />
-            <div class="form-error-message">Password is required.</div>
-          </FormGroup>
-          <div>
-            <button class="btn btn-success">Submit</button>
+            <div class="flex justify-between items-center">
+              <div>
+                <button class="btn btn-success" type="submit" :disabled="loading">Submit</button>
+              </div>
+              <div class="text-sm">
+                <p>Don't have an account? <NuxtLink to="/sign-up" class="link link-hover">Sign Up</NuxtLink>
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
+        </VeeForm>
+
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+
 
 <style></style>

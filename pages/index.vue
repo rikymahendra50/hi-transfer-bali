@@ -14,6 +14,10 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+useHead({
+  title: "DaisyUI",
+})
+</script>
 
 <style></style>

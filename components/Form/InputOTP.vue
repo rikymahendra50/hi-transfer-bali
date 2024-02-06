@@ -1,16 +1,8 @@
 <template>
   <div class="inline-flex space-x-2.5">
-    <input
-      type="text"
-      v-for="i in length"
-      v-model="fieldValues[i - 1]"
-      @keyup="onKeyUp($event, i - 1)"
-      class="input input-bordered h-14 w-10 px-3.5"
-      maxlength="1"
-      @update:model-value="onUpdate($event, i - 1)"
-      :key="i"
-      :ref="(el) => updateFieldRef(el, i - 1)"
-    />
+    <input type="text" v-for="i in length" v-model="fieldValues[i - 1]" @keyup="onKeyUp($event, i - 1)"
+      class="input input-bordered h-14 w-10 px-3.5" :class="{ 'input-error': isError }" maxlength="1"
+      @update:model-value="onUpdate($event, i - 1)" :key="i" :ref="(el) => updateFieldRef(el, i - 1)" />
   </div>
 </template>
 
@@ -23,6 +15,10 @@ const prop = defineProps({
   modelValue: {
     type: [String, Number],
   },
+  isError: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const emit = defineEmits(["update:modelValue"]);
