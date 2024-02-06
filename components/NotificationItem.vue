@@ -7,7 +7,7 @@
           {{ props.notification.title }}
         </strong>
         <span
-          class="max-w-[300px] whitespace-pre-wrap leading-4 tracking-normal"
+          class="max-w-[300px] whitespace-pre-wrap leading-4 tracking-normal text-left"
         >
           {{ props.notification.text }}
         </span>

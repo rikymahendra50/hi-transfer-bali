@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-7xl space-y-4 mx-auto pb-10">
+  <Container class="space-y-4 pb-10">
     <h1>Implement DaisyUI Example</h1>
     <section>
       <h3>Button</h3>
@@ -350,7 +350,7 @@
       <button @click="toggle = !toggle" class="btn">toggle</button>
       <button @click="togglex = !togglex" class="btn">togglex</button>
     </section>
-  </div>
+  </Container>
 </template>
 
 <script setup lang="ts">
