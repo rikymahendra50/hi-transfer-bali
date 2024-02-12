@@ -4,17 +4,27 @@
       <div class="max-w-7xl mx-auto">
         <nav class="navbar">
           <div class="flex-1">
-            <NuxtLink class="link link-neutral link-hover" active-class="font-medium" to="/">DaisyUI</NuxtLink>
+            <NuxtLink
+              class="link link-neutral link-hover"
+              active-class="font-medium"
+              to="/"
+            >DaisyUI</NuxtLink>
           </div>
           <div class="flex-none">
             <ul class="inline-flex items-center space-x-4">
               <li>
-                <NuxtLink class="link link-hover transition-colors duration-500 hover:link-neutral"
-                  active-class="link-neutral font-medium" to="/daisy-example">Home</NuxtLink>
+                <NuxtLink
+                  class="link link-hover transition-colors duration-500 hover:link-neutral"
+                  active-class="link-neutral font-medium"
+                  to="/daisy-example"
+                >Home</NuxtLink>
               </li>
               <li>
-                <NuxtLink class="link link-hover transition-colors duration-500 hover:link-neutral"
-                  active-class="link-neutral font-medium" to="/sign-in">Sign In</NuxtLink>
+                <NuxtLink
+                  class="link link-hover transition-colors duration-500 hover:link-neutral"
+                  active-class="link-neutral font-medium"
+                  to="/sign-in"
+                >Sign In</NuxtLink>
               </li>
             </ul>
           </div>

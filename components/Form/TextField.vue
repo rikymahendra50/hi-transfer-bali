@@ -53,9 +53,10 @@ const className = computed(() => {
     @input="handleChange"
     @blur="handleBlur"
     :class="className"
-    v-bind="$attrs"
-  />
-  <TransitionLeftToRight>
-    <VeeErrorMessage :name="name" class="form-error-message" />
-  </TransitionLeftToRight>
+    v-bind="$attrs" />
+  <TransitionTopToBottom>
+    <VeeErrorMessage
+      :name="name"
+      class="form-error-message" />
+  </TransitionTopToBottom>
 </template>

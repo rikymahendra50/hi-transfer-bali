@@ -105,7 +105,10 @@
           :class="input"
           class="select select-bordered"
         >
-          <option v-for="n in 10" :key="n">example input {{ n }}</option>
+          <option
+            v-for="n in 10"
+            :key="n"
+          >example input {{ n }}</option>
         </select>
       </div>
 
@@ -125,7 +128,10 @@
           :key="index"
         >
           <ClientOnly>
-            <textarea :class="input" class="textarea textarea-bordered">
+            <textarea
+              :class="input"
+              class="textarea textarea-bordered"
+            >
             </textarea>
           </ClientOnly>
         </div>
@@ -133,7 +139,10 @@
 
       <h3>Collapse</h3>
       <div class="join join-vertical w-full">
-        <div tabindex="0" class="join-item collapse collapse-arrow">
+        <div
+          tabindex="0"
+          class="join-item collapse collapse-arrow"
+        >
           <div class="collapse-title text-lg font-medium bg-base-200/40">
             Focus me to see content
           </div>
@@ -143,7 +152,10 @@
             </div>
           </div>
         </div>
-        <div tabindex="0" class="join-item collapse collapse-plus">
+        <div
+          tabindex="0"
+          class="join-item collapse collapse-plus"
+        >
           <div class="collapse-title text-lg font-medium bg-base-200/40">
             Focus me to see content
           </div>
@@ -162,10 +174,16 @@
       >
         success
       </button>
-      <button class="btn btn-error" @click="exampleOfAddNotification('error')">
+      <button
+        class="btn btn-error"
+        @click="exampleOfAddNotification('error')"
+      >
         error
       </button>
-      <button class="btn btn-info" @click="exampleOfAddNotification('info')">
+      <button
+        class="btn btn-info"
+        @click="exampleOfAddNotification('info')"
+      >
         infor
       </button>
       <button
@@ -185,11 +203,12 @@
       </div>
     </div>
 
-    <button class="btn" @click="modal = true">open modal</button>
+    <button
+      class="btn"
+      @click="modal = true"
+    >open modal</button>
     <ModalContainer v-model="modal">
-      <div
-        class="flex justify-between py-1 w-full px-3 mx-auto border-b-2 mb-1.5"
-      >
+      <div class="flex justify-between py-1 w-full px-3 mx-auto border-b-2 mb-1.5">
         <div>hallo</div>
         <div>
           <div
@@ -227,7 +246,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="n in 20" key="n">
+            <tr
+              v-for="n in 20"
+              key="n"
+            >
               <th>{{ n }}</th>
               <td>Cy Ganderton</td>
               <td>Quality Control Specialist</td>
@@ -247,13 +269,41 @@
     </section>
     <section>
       <h3>Radio</h3>
-      <input type="radio" name="radio-1" class="radio" />
-      <input type="radio" name="radio-1" class="radio radio-primary" />
-      <input type="radio" name="radio-1" class="radio radio-error" />
-      <input type="radio" name="radio-1" class="radio radio-info" />
-      <input type="radio" name="radio-1" class="radio radio-warning" />
-      <input type="radio" name="radio-1" class="radio radio-success" />
-      <input type="radio" name="radio-1" class="radio radio-accent" />
+      <input
+        type="radio"
+        name="radio-1"
+        class="radio"
+      />
+      <input
+        type="radio"
+        name="radio-1"
+        class="radio radio-primary"
+      />
+      <input
+        type="radio"
+        name="radio-1"
+        class="radio radio-error"
+      />
+      <input
+        type="radio"
+        name="radio-1"
+        class="radio radio-info"
+      />
+      <input
+        type="radio"
+        name="radio-1"
+        class="radio radio-warning"
+      />
+      <input
+        type="radio"
+        name="radio-1"
+        class="radio radio-success"
+      />
+      <input
+        type="radio"
+        name="radio-1"
+        class="radio radio-accent"
+      />
     </section>
     <section>
       <h3>Rating {{ ratingValue }}</h3>
@@ -327,31 +377,50 @@
     <section class="mb-10">
       <h3>Transition</h3>
       <TransitionTopToBottom>
-        <div v-if="toggle" class="card card-compact">
+        <div
+          v-if="toggle"
+          class="card card-compact"
+        >
           <div class="card-body bg-indigo-400 antialiased">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto nobis
             accusantium eius praesentium magni officia, corporis animi
             consequatur labore, repudiandae voluptas modi qui ut quibusdam
             nesciunt minus fugiat est cum.
           </div>
-        </div>
-      </TransitionTopToBottom>
+      </div>
+    </TransitionTopToBottom>
 
-      <TransitionLeftToRight>
-        <div v-if="togglex" class="card card-compact">
-          <div class="card-body bg-indigo-400">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto nobis
-            accusantium eius praesentium magni officia, corporis animi
-            consequatur labore, repudiandae voluptas modi qui ut quibusdam
-            nesciunt minus fugiat est cum.
-          </div>
+    <TransitionLeftToRight>
+      <div
+        v-if="togglex"
+        class="card card-compact"
+      >
+        <div class="card-body bg-indigo-400">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto nobis
+          accusantium eius praesentium magni officia, corporis animi
+          consequatur labore, repudiandae voluptas modi qui ut quibusdam
+          nesciunt minus fugiat est cum.
         </div>
-      </TransitionLeftToRight>
-      <button @click="toggle = !toggle" class="btn">toggle</button>
-      <button @click="togglex = !togglex" class="btn">togglex</button>
-    </section>
-  </Container>
-</template>
+      </div>
+    </TransitionLeftToRight>
+    <button
+      @click="toggle = !toggle"
+      class="btn"
+    >toggle</button>
+    <button
+      @click="togglex = !togglex"
+      class="btn"
+    >togglex</button>
+  </section>
+  <section>
+    <h3>Loading</h3>
+    <div class="card card-compact">
+      <div class="card-body">
+        <LoadingTable />
+      </div>
+    </div>
+  </section>
+</Container></template>
 
 <script setup lang="ts">
 const { pushNotification } = useNotification();

@@ -36,7 +36,8 @@ export default defineNuxtConfig({
     dirs: ["stores"],
   },
   image: {
-    format: ["webp", "jpg", "png"],
+    format: ["webp"],
+    domains:['https://unsplash.com','https://spdigitalagency.com']
   },
   devServer: {
     /**
