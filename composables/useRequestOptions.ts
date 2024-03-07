@@ -1,6 +1,9 @@
 import type { AuthCredential } from "@/types";
 export default function () {
   const config = useRuntimeConfig();
+
+  const defaultRedirect = "/sign-in";
+
   const credential = useCookie<AuthCredential | null>("auth-token", {
     expires: new Date(Date.now() + 12096e5), // 2 weeks from now
     sameSite: "lax",
@@ -11,7 +14,7 @@ export default function () {
   async function clearCredential() {
     if (process.client) {
       useCookie("auth-token").value = null;
-      window.location.replace("/admin/sign-in");
+      window.location.replace(defaultRedirect);
     }
   }
   function onRequest(context: any) {

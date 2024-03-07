@@ -30,8 +30,11 @@
           </div>
         </nav>
       </div>
+
     </header>
+
     <main>
+      <div class="loading-indicator"></div>
       <slot />
     </main>
     <FooterDefault />

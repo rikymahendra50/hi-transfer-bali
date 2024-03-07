@@ -1,4 +1,7 @@
 <template>
+  <Teleport to=".loading-indicator">
+    <ScrollProgress />
+  </Teleport>
   <Container class="space-y-4 pb-10">
     <h1>Implement DaisyUI Example</h1>
     <section>
@@ -236,7 +239,9 @@
         <table class="table table-md table-pin-rows table-pin-cols">
           <thead>
             <tr>
-              <th></th>
+              <th>
+                <span class="sr-only">sr only</span>
+              </th>
               <th>Name</th>
               <th>Job</th>
               <th>company</th>
@@ -387,42 +392,46 @@
             consequatur labore, repudiandae voluptas modi qui ut quibusdam
             nesciunt minus fugiat est cum.
           </div>
-      </div>
-    </TransitionTopToBottom>
+        </div>
+      </TransitionTopToBottom>
 
-    <TransitionLeftToRight>
-      <div
-        v-if="togglex"
-        class="card card-compact"
-      >
-        <div class="card-body bg-indigo-400">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto nobis
-          accusantium eius praesentium magni officia, corporis animi
-          consequatur labore, repudiandae voluptas modi qui ut quibusdam
-          nesciunt minus fugiat est cum.
+      <TransitionLeftToRight>
+        <div
+          v-if="togglex"
+          class="card card-compact"
+        >
+          <div class="card-body bg-indigo-400">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto nobis
+            accusantium eius praesentium magni officia, corporis animi
+            consequatur labore, repudiandae voluptas modi qui ut quibusdam
+            nesciunt minus fugiat est cum.
+          </div>
+        </div>
+      </TransitionLeftToRight>
+      <button
+        @click="toggle = !toggle"
+        class="btn"
+      >toggle</button>
+      <button
+        @click="togglex = !togglex"
+        class="btn"
+      >togglex</button>
+    </section>
+    <section>
+      <h3>Loading</h3>
+      <div class="card card-compact">
+        <div class="card-body">
+          <LoadingTable />
         </div>
       </div>
-    </TransitionLeftToRight>
-    <button
-      @click="toggle = !toggle"
-      class="btn"
-    >toggle</button>
-    <button
-      @click="togglex = !togglex"
-      class="btn"
-    >togglex</button>
-  </section>
-  <section>
-    <h3>Loading</h3>
-    <div class="card card-compact">
-      <div class="card-body">
-        <LoadingTable />
-      </div>
-    </div>
-  </section>
-</Container></template>
+    </section>
+  </Container>
+</template>
 
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 const { pushNotification } = useNotification();
 
 const modal = ref(false);
@@ -445,4 +454,7 @@ useHead({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style
+  lang="scss"
+  scoped
+></style>

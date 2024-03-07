@@ -21,23 +21,6 @@ export default defineNuxtPlugin({
         return await navigateTo("/sign-in");
       }
     });
-
-    const setCredential = (credentialProperty: Required<AuthCredential>) => {
-      credential.value = credentialProperty;
-    };
-
-    const clearCredential = async () => {
-      if (process.client) {
-        useCookie("auth-token").value = null;
-        window.location.replace("/sign-in");
-      }
-    };
-
-    return {
-      provide: {
-        clearCredential,
-        setCredential,
-      },
-    };
   },
 });
+   
