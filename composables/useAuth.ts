@@ -349,7 +349,7 @@ export default function (options?: useAuthOptions) {
      * Send a POST request to login
      * to the backend server
      */
-    const {data,error}=await useFetch<CommonResponse<{token:string}>>(_loginURL.value,{
+    const {data,error}=await useFetch<{token:string,message:string}>(_loginURL.value,{
       method:"POST",
       /**
        * The body of the request must
@@ -374,12 +374,13 @@ export default function (options?: useAuthOptions) {
      * If the request is successful
      * then set the credential in the store
      */
-    else if(data.value?.data.token){
+    else if(data.value?.token){
+
 
       const role=options?.usedBy==='admin'?Role.ADMIN:Role.USER
 
       $credential.value={
-        token:data.value.data.token,
+        token:data.value.token,
         role,
         provider:Provider.LOCAL
       }
@@ -489,7 +490,7 @@ export default function (options?: useAuthOptions) {
      * Send a POST request to login
      * to the backend server
      */
-    const {data,error}=await useFetch<CommonResponse<{token:string}>>(_registerURL.value,{
+    const {data,error}=await useFetch<{message:string}>(_registerURL.value,{
       method:"POST",
       body:{...$credentialForm.value},
       ...requestOptions
@@ -507,7 +508,7 @@ export default function (options?: useAuthOptions) {
      * If the request is successful
      * then set the credential in the store
      */
-    else if(data.value?.data.token){
+    else if(data.value){
       ctx.resetForm()
       setSuccessMessage(
         `Account has been created please check your email to activate your account`
@@ -591,8 +592,8 @@ export default function (options?: useAuthOptions) {
     */
 
     return {
-      data,
-      error
+      data:data?.value,
+      error:error?.value
     }
   }
 
@@ -620,8 +621,8 @@ export default function (options?: useAuthOptions) {
     */
 
     return {
-      data,
-      error
+      data:data.value,
+      error:error.value
     }
   }
 
@@ -690,7 +691,8 @@ export default function (options?: useAuthOptions) {
       body:{
         email:$credentialForgotPassword.value.email,
         pin:$credentialForgotPassword.value.pin
-      }
+      },
+      ...requestOptions
     })
 
     if(error.value){
@@ -739,7 +741,8 @@ export default function (options?: useAuthOptions) {
         pin:$credentialForgotPassword.value.pin,
         password:$credentialForgotPassword.value.password,
         confirm_password:$credentialForgotPassword.value.confirm_password
-      }
+      },
+      ...requestOptions
     })
 
     if(error.value){
@@ -752,7 +755,7 @@ export default function (options?: useAuthOptions) {
         title:"Success",
         text:
           data.value?.data?.message ??
-          "OTP has been sent to your email. Please check your email.",
+          "Your password has been set. Please login with your new password.",
       });
       if(options?.callback){
         options?.callback()
@@ -811,6 +814,7 @@ export default function (options?: useAuthOptions) {
     $setNewPasswordForgotPassword,
     // forgot password && register
     $countdownTokenExpired,
+    $forgotPasswordSetup,
     // general
     loading,
     message,

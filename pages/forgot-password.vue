@@ -6,21 +6,35 @@
           {{ stepper.current.value.title }}
         </h1>
 
-        <ForgotPassword v-model:email="stateForm.email" v-if="stepper.isCurrent('forgot-password')"
-          @next="() => stepper.goTo('otp')" />
+        <ForgotPassword
+          v-model:email="$credentialForgotPassword.email"
+          v-if="stepper.isCurrent('forgot-password')"
+          @next="() => stepper.goTo('otp')"
+        />
 
-        <ForgotPasswordVerifiedOTP v-if="stepper.isCurrent('otp')" v-model:otp="stateForm.otp" :email="stateForm.email"
-          @next="() => stepper.goTo('change-password')" />
+        <ForgotPasswordVerifiedOTP
+          v-if="stepper.isCurrent('otp')"
+          v-model:pin="$credentialForgotPassword.pin"
+          :email="$credentialForgotPassword.email"
+          @next="() => stepper.goTo('change-password')"
+        />
 
-        <ForgotPasswordChange v-if="stepper.isCurrent('change-password')" :email="stateForm.email" :otp="stateForm.otp"
-          @next="goToHome" />
+        <ForgotPasswordChange
+          v-if="stepper.isCurrent('change-password')"
+          :email="$credentialForgotPassword.email"
+          :pin="$credentialForgotPassword.pin"
+          @next="goToHome"
+        />
 
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup>
+<script
+  lang="ts"
+  setup
+>
 import { useStepper } from "@vueuse/core";
 
 const router = useRouter();
@@ -40,7 +54,7 @@ const stepper = useStepper({
   },
 });
 
-const { stateForm } = useForgotPassword();
+const { $credentialForgotPassword } = useAuth()
 
 const titleHeader = computed(() => {
   return stepper.current?.value?.title ?? "Forgot Password"
