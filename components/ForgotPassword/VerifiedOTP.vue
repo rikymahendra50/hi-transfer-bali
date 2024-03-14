@@ -12,7 +12,7 @@ const emit = defineEmits(["next", "update:pin"]);
 
 const { otpSchema } = useSchema()
 
-const { loading, message, alertType, $verificationOTPForgotPassword, $credentialForgotPassword, $countdownTokenExpired, $forgotPasswordSetup } = useAuth({
+const { loading, message, alertType, $verificationOTPForgotPassword, $credentialForgotPassword, $countdownTokenExpired, $countdownHelper } = useAuth({
   usedBy: props.usedBy as "user" | "admin",
   callback: updateToParent
 })
@@ -23,8 +23,8 @@ function updateToParent() {
 }
 
 function resentEmail() {
-  $forgotPasswordSetup.value.showPinEmailExpired = false
-  $forgotPasswordSetup.value.expiredTime = 60
+  $countdownHelper.value.showExpired = false
+  $countdownHelper.value.expiredTime = 60
   $countdownTokenExpired()
 
 }
@@ -69,7 +69,7 @@ onMounted(async () => {
           />
         </TransitionLeftToRight>
       </FormGroup>
-      <div v-if="$forgotPasswordSetup.showPinEmailExpired">
+      <div v-if="$countdownHelper.showExpired">
         <p class="text-gray-400">If you did not receive the an email <span
             class="link"
             @click="resentEmail"
@@ -80,18 +80,18 @@ onMounted(async () => {
 
       <div>
         <div
-          v-if="$forgotPasswordSetup.expiredTime > 0"
+          v-if="$countdownHelper.expiredTime > 0"
           class="text-gray-400 text-sm"
         >
           We have sent an OTP to your email.
           Your OTP will expired in <span class="whitespace-nowrap">
-            {{ $forgotPasswordSetup.expiredTime }} seconds
+            {{ $countdownHelper.expiredTime }} seconds
           </span>
         </div>
 
         <div
           class="text-error  text-sm"
-          v-if="$forgotPasswordSetup.showPinEmailExpired"
+          v-if="$countdownHelper.showExpired"
         >
           Your OTP has expired. Please request a new one
         </div>

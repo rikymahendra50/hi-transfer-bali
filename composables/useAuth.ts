@@ -95,8 +95,8 @@ export default function (options?: useAuthOptions) {
   /**
    * state of forgot password setup
   */
-   const $forgotPasswordSetup=ref({
-    showPinEmailExpired:false,
+   const $countdownHelper=ref({
+    showExpired:false,
     // after email forgot password was request then this value countdown
     expiredTime:60
    })
@@ -771,11 +771,11 @@ export default function (options?: useAuthOptions) {
   */
   function $countdownTokenExpired() {
     const interval = setInterval(() => {
-      if ($forgotPasswordSetup.value.expiredTime === 0) {
+      if ($countdownHelper.value.expiredTime === 0) {
         clearInterval(interval);
-        $forgotPasswordSetup.value.showPinEmailExpired = true;
+        $countdownHelper.value.showExpired = true;
       } else {
-        $forgotPasswordSetup.value.expiredTime--;
+        $countdownHelper.value.expiredTime--;
       }
     }, 1000);
   }
@@ -814,7 +814,7 @@ export default function (options?: useAuthOptions) {
     $setNewPasswordForgotPassword,
     // forgot password && register
     $countdownTokenExpired,
-    $forgotPasswordSetup,
+    $countdownHelper,
     // general
     loading,
     message,
