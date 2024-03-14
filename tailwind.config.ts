@@ -26,6 +26,38 @@ export default <Partial<Config>>{
         "text-5xl": "clamp(3.81rem, 5.18vw + 2.52rem, 6.66rem)",
         "text-6xl": " clamp(4.77rem, 7.48vw + 2.9rem, 8.88rem)",
       },
+      keyframes:{
+        popup:{
+          '0%':{
+            transform: 'scaleX(0.7)',
+            opacity: '0.2'
+          },
+          '50%':{
+            transform: 'scaleX(1.1)',
+            opacity: '0.8'
+          },
+          '100%':{
+            transform: 'scaleX(1)',
+            opacity: '1'
+          },
+
+        },
+        popin:{
+          '0%':{
+            transform: 'scaleX(1)',
+            opacity: '1'
+          },
+          '50%':{
+            transform: 'scaleX(0.9)',
+            opacity: '0.6'
+          },
+          '100%':{
+            transform: 'scaleX(0.7)',
+            opacity: '0.2'
+          },
+        }
+      }
+
     },
   },
   daisyui: {

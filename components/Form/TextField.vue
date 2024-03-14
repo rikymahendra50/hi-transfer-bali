@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 import { useField } from "vee-validate";
 defineOptions({
   inheritAttrs: false,
@@ -53,10 +56,12 @@ const className = computed(() => {
     @input="handleChange"
     @blur="handleBlur"
     :class="className"
-    v-bind="$attrs" />
-  <TransitionTopToBottom>
+    v-bind="$attrs"
+  />
+  <TransitionX>
     <VeeErrorMessage
       :name="name"
-      class="form-error-message" />
-  </TransitionTopToBottom>
+      class="form-error-message"
+    />
+  </TransitionX>
 </template>

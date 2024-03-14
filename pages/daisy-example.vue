@@ -408,6 +408,12 @@
           </div>
         </div>
       </TransitionLeftToRight>
+      <TransitionX>
+        <div
+          v-if="toggleXexample"
+          class="bg-red-500"
+        >Contoh Elament</div>
+      </TransitionX>
       <button
         @click="toggle = !toggle"
         class="btn"
@@ -416,6 +422,10 @@
         @click="togglex = !togglex"
         class="btn"
       >togglex</button>
+      <button
+        @click="toggleXexample = !toggleXexample"
+        class="btn"
+      >togglex example</button>
     </section>
     <section>
       <h3>Loading</h3>
@@ -438,6 +448,8 @@ const modal = ref(false);
 const ratingValue = ref();
 const toggle = ref(false);
 const togglex = ref(false);
+
+const toggleXexample = ref(false)
 
 function exampleOfAddNotification(
   type: "success" | "error" | "warning" | "info"
