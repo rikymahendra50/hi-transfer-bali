@@ -29,9 +29,6 @@ export default defineNuxtConfig({
   ],
 
   css: ["~/assets/css/main.css"],
-  i18n: {
-    vueI18n: "./i18n.config.ts", // if you are using custom path, default
-  },
   imports: {
     dirs: ["stores"],
   },
@@ -108,6 +105,27 @@ export default defineNuxtConfig({
         { name: "twitter:image", content: projectImageThumbnail },
       ],
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    },
+  },
+  i18n: {
+    detectBrowserLanguage: {
+      useCookie: true,
+      fallbackLocale: "en",
+    },
+    strategy: "no_prefix",
+    locales: [
+      {
+        code: "en",
+        name: "English",
+        file: "en.json",
+      },
+    ],
+    lazy: false,
+    langDir: "internationalization",
+    defaultLocale: "en",
+    compilation: {
+      strictMessage: false,
+      escapeHtml: false,
     },
   },
   vite: {
