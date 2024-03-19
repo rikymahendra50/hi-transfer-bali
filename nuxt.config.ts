@@ -133,6 +133,10 @@ export default defineNuxtConfig({
       chunkSizeWarningLimit: 1500,
     },
   },
+  build: {
+    // @see https://github.com/fawmi/vue-google-maps/issues/150#issuecomment-1238108805
+    transpile: ["@fawmi/vue-google-maps", "@googlemaps/markerclusterer"],
+  },
   veeValidate: {
     autoImports: true,
     componentNames: {

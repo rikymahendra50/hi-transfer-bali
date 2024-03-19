@@ -22,5 +22,8 @@
         "ngClass",
         "ui"
     ],
-    "html.format.wrapAttributes": "force-expand-multiline"
+    "html.format.wrapAttributes": "force-expand-multiline",
+    "i18n-ally.localesPaths": [
+        "internationalization"
+    ]
 }
