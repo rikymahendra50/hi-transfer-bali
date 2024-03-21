@@ -14,7 +14,12 @@ export default <Partial<Config>>{
       display: ["ClashGrotesk"],
       body: ["ClashGrotesk"],
     },
+ 
     extend: {
+      colors: {
+        secondary: "#0C2815",
+        primary: "#51B749",
+      },
       fontSize: {
         "text-sm": "clamp(0.8rem, 0.17vw + 0.76rem, 0.89rem)",
         "text-base": "clamp(1rem, 0.34vw + 0.91rem, 1.19rem)",
@@ -61,7 +66,17 @@ export default <Partial<Config>>{
     },
   },
   daisyui: {
-    themes: false, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+    themes: [
+      {
+        mytheme: {
+          primary: "#51B749",
+          secondary: "#0C2815",
+          accent: "#37cdbe",
+          neutral: "#3d4451",
+          "base-100": "#ffffff"
+        }
+      }
+    ], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
     darkTheme: false, // name of one of the included themes for dark mode
     base: false, // applies background color and foreground color for root element by default
     styled: true, // include daisyUI colors and design decisions for all components
