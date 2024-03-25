@@ -12,7 +12,7 @@ const emit = defineEmits(["next", "update:pin"]);
 
 const { otpSchema } = useSchema()
 
-const { loading, message, alertType, $verificationOTPForgotPassword, $credentialForgotPassword, $countdownTokenExpired, $countdownHelper } = useAuth({
+const { loading, message, alertType, $verificationOTPForgotPassword, $credentialForgotPassword, $countdownTokenExpired, $countdownHelper, $reRequestForgotPassword } = useAuth({
   usedBy: props.usedBy as "user" | "admin",
   callback: updateToParent
 })
@@ -22,7 +22,11 @@ function updateToParent() {
   emit("next");
 }
 
-function resentEmail() {
+async function resentEmail() {
+  if (loading.value) {
+    return
+  }
+  await $reRequestForgotPassword()
   $countdownHelper.value.showExpired = false
   $countdownHelper.value.expiredTime = 60
   $countdownTokenExpired()

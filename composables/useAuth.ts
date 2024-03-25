@@ -669,6 +669,35 @@ export default function (options?: useAuthOptions) {
     loading.value = false;
   }
 
+
+  /**
+   * STEP 1 FORGOT PASSWORD SOME CASE THE EMAIL IS NOT SEND TO THE USER
+   * 
+  */
+  async function $reRequestForgotPassword() {
+    loading.value = true;
+    const { data, error } = await useFetch<CommonResponse<{ message: string }>>(
+      _requestForgotPassworURL.value,
+      {
+        method: "POST",
+        body: { email: $credentialForgotPassword.value.email },
+        ...requestOptions,
+      }
+    );
+    if (error.value) {
+      setErrorMessage(error.value?.data?.message);
+    } else {
+      pushNotification({
+        type: "success",
+        text:
+          data.value?.data?.message ??
+          "OTP has been sent to your email. Please check your email.",
+      });
+    }
+    loading.value = false;
+
+  }
+
   /**
     * STEP 2 FORGOT PASSWORD VERIFY THE TOKEN OR PIN
     * 
@@ -811,6 +840,7 @@ export default function (options?: useAuthOptions) {
     $veficationEmailChange,
     // forgot password
     $requestForgotPassword,
+    $reRequestForgotPassword,
     $verificationOTPForgotPassword,
     $setNewPasswordForgotPassword,
     // forgot password && register
