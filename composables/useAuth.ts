@@ -1,10 +1,10 @@
-import { Role, AuthCredential, AuthUser,CommonResponse,Provider } from "@/types";
+import { Role, AuthCredential, AuthUser, CommonResponse, Provider } from "@/types";
 
 import { SubmissionContext } from "vee-validate";
 
 interface useAuthOptions {
   // determine who using this auth composable
-  usedBy: "user"|"admin"
+  usedBy: "user" | "admin"
   // callback that called after do some action inside the composable
   callback?: Function
 }
@@ -19,41 +19,41 @@ interface useAuthOptions {
 export default function (options?: useAuthOptions) {
 
   // other composable
-  
+
   /**
    * use request options
   */
- const {requestOptions}=useRequestOptions()
+  const { requestOptions } = useRequestOptions()
 
- const {setErrorMessage,setSuccessMessage,message,alertType,transformErrors,loading}=useRequestHelper()
+  const { setErrorMessage, setSuccessMessage, message, alertType, transformErrors, loading } = useRequestHelper()
 
- const {pushNotification}=useNotification()
+  const { pushNotification } = useNotification()
 
- const {  $Oauth, $OauthProviders } = useNuxtApp();
-
-  
-// state 
+  const { $Oauth, $OauthProviders } = useNuxtApp();
 
 
- const defaultRedirect="/sign-in"
-
- const userProfileURL = "/users/profile";
- const userLogoutURL = "/users/logout";
-
- const userLoginURL = "/users/login";
- const adminLoginURL = "/admins/login";
-
- const adminProfileURL = "/admins/profile";
- const adminLogoutURL = "/admins/logout";
-
- const adminRedirect = "/admin";
- const userRedirect = "/user";
+  // state 
 
 
- /**
-  * use cookie for auth
-  */
-  const $credential = useCookie<AuthCredential | null>("auth-token",{
+  const defaultRedirect = "/sign-in"
+
+  const userProfileURL = "/users/profile";
+  const userLogoutURL = "/users/logout";
+
+  const userLoginURL = "/users/login";
+  const adminLoginURL = "/admins/login";
+
+  const adminProfileURL = "/admins/profile";
+  const adminLogoutURL = "/admins/logout";
+
+  const adminRedirect = "/admin";
+  const userRedirect = "/user";
+
+
+  /**
+   * use cookie for auth
+   */
+  const $credential = useCookie<AuthCredential | null>("auth-token", {
     expires: new Date(Date.now() + 12096e5), // 2 weeks from now
     sameSite: "lax",
     path: "/",
@@ -69,37 +69,37 @@ export default function (options?: useAuthOptions) {
    * state of credential form
    * can use for $login and $register
   */
-  const $credentialForm=ref({
-    first_name:"",
-    last_name:"",
-    email:"",
-    password:"",
-    confirm_password:"",
+  const $credentialForm = ref({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    confirm_password: "",
   })
 
   /**
    * state of forgot password
   */
-  const $credentialForgotPassword=ref({
-    email:"",
-    pin:"",
-    password:"",
-    confirm_password:"",
+  const $credentialForgotPassword = ref({
+    email: "",
+    pin: "",
+    password: "",
+    confirm_password: "",
   })
 
 
-  const _emailForResent=ref()
+  const _emailForResent = ref()
 
-  const $showResentEmailBtn=ref(false)
+  const $showResentEmailBtn = ref(false)
 
   /**
    * state of forgot password setup
   */
-   const $countdownHelper=ref({
-    showExpired:false,
+  const $countdownHelper = ref({
+    showExpired: false,
     // after email forgot password was request then this value countdown
-    expiredTime:60
-   })
+    expiredTime: 60
+  })
 
 
   // computed
@@ -134,8 +134,8 @@ export default function (options?: useAuthOptions) {
    * 
    * 
   */
-  const _redirectLogin=computed(()=>{
-    if(options?.usedBy==='admin'){
+  const _redirectLogin = computed(() => {
+    if (options?.usedBy === 'admin') {
       return adminRedirect
     }
     return userRedirect
@@ -146,9 +146,9 @@ export default function (options?: useAuthOptions) {
    * 
    * can be modified to fit your need
   */
-  const _loginURL=computed(()=>{
+  const _loginURL = computed(() => {
 
-    if(options?.usedBy==='admin'){
+    if (options?.usedBy === 'admin') {
       return adminLoginURL
     }
     return userLoginURL
@@ -161,7 +161,7 @@ export default function (options?: useAuthOptions) {
    * 
    * most register only by role user only . but this not limited you to modify
   */
-  const _registerURL=computed(()=>{
+  const _registerURL = computed(() => {
     return "/users/register"
   })
 
@@ -169,8 +169,8 @@ export default function (options?: useAuthOptions) {
    * Path for verification email
    *
   */
-  const _verificationEmailURL=computed(()=>{
-    if(options?.usedBy==='admin'){
+  const _verificationEmailURL = computed(() => {
+    if (options?.usedBy === 'admin') {
       return "/admins/email-verification"
     }
     return "/users/email-verification"
@@ -179,8 +179,8 @@ export default function (options?: useAuthOptions) {
   /**
    * Path for verification email change
   */
-  const _verificationEmailChangeURL=computed(()=>{
-    if(options?.usedBy==='admin'){
+  const _verificationEmailChangeURL = computed(() => {
+    if (options?.usedBy === 'admin') {
       return "/admins/verify-email-changes"
     }
     return "/users/verify-email-changes"
@@ -189,8 +189,8 @@ export default function (options?: useAuthOptions) {
   /**
    * Path for forgot password
   */
-  const _requestForgotPassworURL=computed(()=>{
-    if(options?.usedBy==='admin'){
+  const _requestForgotPassworURL = computed(() => {
+    if (options?.usedBy === 'admin') {
       return "/admins/forget-password"
     }
     return "/users/forget-password"
@@ -200,8 +200,8 @@ export default function (options?: useAuthOptions) {
    * Path for verify pin
    * 
   */
-  const _verificationForgotPasswordPinURL=computed(()=>{
-    if(options?.usedBy==='admin'){
+  const _verificationForgotPasswordPinURL = computed(() => {
+    if (options?.usedBy === 'admin') {
       return "/admins/forget-password/verify-pin"
     }
     return "/users/forget-password/verify-pin"
@@ -210,8 +210,8 @@ export default function (options?: useAuthOptions) {
   /**
    * Path for reset password
   */
-  const _resetPasswordURL=computed(()=>{
-    if(options?.usedBy==='admin'){
+  const _resetPasswordURL = computed(() => {
+    if (options?.usedBy === 'admin') {
       return "/admins/forget-password/reset-password"
     }
     return "/users/forget-password/reset-password"
@@ -219,7 +219,7 @@ export default function (options?: useAuthOptions) {
 
 
 
-  const _registerRequestResendEmailVerificationURL=computed(()=>{
+  const _registerRequestResendEmailVerificationURL = computed(() => {
     return "/users/resend-email-verification"
   })
 
@@ -267,7 +267,7 @@ export default function (options?: useAuthOptions) {
       ...requestOptions
     });
 
-    if(data.value?.data){
+    if (data.value?.data) {
       $setAuthUser(data.value.data);
     }
 
@@ -278,7 +278,7 @@ export default function (options?: useAuthOptions) {
 
     loading.value = true;
 
-    await useFetch<CommonResponse<{message:string}>>(url, {
+    await useFetch<CommonResponse<{ message: string }>>(url, {
       method: "POST",
       ...requestOptions
     });
@@ -303,7 +303,7 @@ export default function (options?: useAuthOptions) {
     if ($credential.value?.role === Role.ADMIN) {
 
       url = adminProfileURL;
-    } 
+    }
 
     return await _fetchProfile(url);
   }
@@ -321,9 +321,9 @@ export default function (options?: useAuthOptions) {
 
     if ($credential.value?.role === Role.ADMIN) {
       url = adminLogoutURL
-    } 
-   return await _logoutAuth(url);
-   
+    }
+    return await _logoutAuth(url);
+
   }
 
 
@@ -341,23 +341,23 @@ export default function (options?: useAuthOptions) {
    * @param {SubmissionContext} 
    * 
    */
-  async function $login(values:any,ctx:SubmissionContext){
-    
+  async function $login(values: any, ctx: SubmissionContext) {
+
     loading.value = true;
 
     /**
      * Send a POST request to login
      * to the backend server
      */
-    const {data,error}=await useFetch<{token:string,message:string}>(_loginURL.value,{
-      method:"POST",
+    const { data, error } = await useFetch<{ token: string, message: string }>(_loginURL.value, {
+      method: "POST",
       /**
        * The body of the request must
        * contain an email and password
        */
-      body:{
-        email:$credentialForm.value.email,
-        password:$credentialForm.value.password
+      body: {
+        email: $credentialForm.value.email,
+        password: $credentialForm.value.password
       },
       ...requestOptions
     })
@@ -366,23 +366,23 @@ export default function (options?: useAuthOptions) {
      * If there is an error
      * set the error message and the errors from the backend
      */
-    if(error.value){
-      setErrorMessage(error.value?.data?.message??"Crendential is not valid");
+    if (error.value) {
+      setErrorMessage(error.value?.data?.message ?? "Crendential is not valid");
       ctx.setErrors(transformErrors(error.value?.data))
     }
     /**
      * If the request is successful
      * then set the credential in the store
      */
-    else if(data.value?.token){
+    else if (data.value?.token) {
 
 
-      const role=options?.usedBy==='admin'?Role.ADMIN:Role.USER
+      const role = options?.usedBy === 'admin' ? Role.ADMIN : Role.USER
 
-      $credential.value={
-        token:data.value.token,
+      $credential.value = {
+        token: data.value.token,
         role,
-        provider:Provider.LOCAL
+        provider: Provider.LOCAL
       }
       /**
        * Redirect the user to the page
@@ -405,15 +405,15 @@ export default function (options?: useAuthOptions) {
    * following name should be import to:
    * - loading
   */
-  async function $loginWithGoogle(){
+  async function $loginWithGoogle() {
     loading.value = true;
     const response:
       | { code: string; promps: string; scope: string }
       | undefined = await $Oauth.authenticate(
-      "google",
-      // @ts-ignore
-      $OauthProviders("google")
-    );
+        "google",
+        // @ts-ignore
+        $OauthProviders("google")
+      );
 
     if (response?.code) {
       _loginTokenGoogle(response?.code);
@@ -450,12 +450,12 @@ export default function (options?: useAuthOptions) {
           "Something went wrong. Please try again later.",
       });
     } else if (data.value?.token) {
-    
-      const role=Role.USER
-      $credential.value={
-        token:data.value.token,
+
+      const role = Role.USER
+      $credential.value = {
+        token: data.value.token,
         role,
-        provider:Provider.GOOGLE
+        provider: Provider.GOOGLE
       }
 
       window.location.replace(_redirectLogin.value);
@@ -476,23 +476,23 @@ export default function (options?: useAuthOptions) {
    * - $showResentEmailBtn
    *  -$credentialForm 
   */
-  async function $register(values:any,ctx:SubmissionContext){
+  async function $register(values: any, ctx: SubmissionContext) {
 
     // if user already registered
-    if($showResentEmailBtn.value){
+    if ($showResentEmailBtn.value) {
       return
     }
 
     loading.value = true;
-    _emailForResent.value=$credentialForm.value.email
+    _emailForResent.value = $credentialForm.value.email
 
     /**
      * Send a POST request to login
      * to the backend server
      */
-    const {data,error}=await useFetch<{message:string}>(_registerURL.value,{
-      method:"POST",
-      body:{...$credentialForm.value},
+    const { data, error } = await useFetch<{ message: string }>(_registerURL.value, {
+      method: "POST",
+      body: { ...$credentialForm.value },
       ...requestOptions
     })
 
@@ -500,15 +500,15 @@ export default function (options?: useAuthOptions) {
      * If there is an error
      * set the error message and the errors from the backend
      */
-    if(error.value){
-      setErrorMessage(error.value?.data?.message??"Crendential is not valid");
+    if (error.value) {
+      setErrorMessage(error.value?.data?.message ?? "Crendential is not valid");
       ctx.setErrors(transformErrors(error.value?.data))
     }
     /**
      * If the request is successful
      * then set the credential in the store
      */
-    else if(data.value){
+    else if (data.value) {
       ctx.resetForm()
       setSuccessMessage(
         `Account has been created please check your email to activate your account`
@@ -539,17 +539,17 @@ export default function (options?: useAuthOptions) {
    * - message
    * - alertType
   */
-  async function $registerRequestEmailForActiveAccount(){
-    loading.value=true
-    
+  async function $registerRequestEmailForActiveAccount() {
+    loading.value = true
+
     loading.value = true;
     const { data, error } = await useFetch<{ data: { message: string } }>(
       _registerRequestResendEmailVerificationURL.value,
       {
         method: "POST",
-        body: { 
+        body: {
           email: _emailForResent.value
-         },
+        },
         ...requestOptions,
       }
     );
@@ -559,11 +559,11 @@ export default function (options?: useAuthOptions) {
     } else {
       setSuccessMessage(
         data.value?.data?.message ??
-          "Please check your email to activate your account."
+        "Please check your email to activate your account."
       );
     }
 
-    loading.value=false
+    loading.value = false
   }
 
 
@@ -575,8 +575,8 @@ export default function (options?: useAuthOptions) {
    * - loading
    * 
   */
-  async function $verificationEmail(token:string){
-    loading.value=true
+  async function $verificationEmail(token: string) {
+    loading.value = true
     const { data, error } = await useFetch<{ data: { message: string } }>(
       `${_verificationEmailURL.value}/${token}`,
       {
@@ -584,7 +584,7 @@ export default function (options?: useAuthOptions) {
         ...requestOptions,
       }
     );
-    loading.value=false
+    loading.value = false
 
     /**
      * some times verification email has their own style 
@@ -592,8 +592,8 @@ export default function (options?: useAuthOptions) {
     */
 
     return {
-      data:data?.value,
-      error:error?.value
+      data: data?.value,
+      error: error?.value
     }
   }
 
@@ -604,8 +604,8 @@ export default function (options?: useAuthOptions) {
    * following name should be import to:
    * - loading
   */
-  async function $veficationEmailChange(token:string){
-    loading.value=true
+  async function $veficationEmailChange(token: string) {
+    loading.value = true
     const { data, error } = await useFetch<{ data: { message: string } }>(
       `${_verificationEmailChangeURL.value}/${token}`,
       {
@@ -613,7 +613,7 @@ export default function (options?: useAuthOptions) {
         ...requestOptions,
       }
     );
-    loading.value=false
+    loading.value = false
 
     /**
      * some times verification email has their own style 
@@ -621,8 +621,8 @@ export default function (options?: useAuthOptions) {
     */
 
     return {
-      data:data.value,
-      error:error.value
+      data: data.value,
+      error: error.value
     }
   }
 
@@ -641,7 +641,7 @@ export default function (options?: useAuthOptions) {
      callback:reload()
    })
    **/
-  async function $requestForgotPassword(values:any,ctx:SubmissionContext){
+  async function $requestForgotPassword(values: any, ctx: SubmissionContext) {
     loading.value = true;
     const { data, error } = await useFetch<CommonResponse<{ message: string }>>(
       _requestForgotPassworURL.value,
@@ -652,112 +652,112 @@ export default function (options?: useAuthOptions) {
       }
     );
 
-      if (error.value) {
-        setErrorMessage(error.value?.data?.message);
-        ctx.setErrors(transformErrors(error.value?.data));
-      } else {
-        pushNotification({
-          type: "success",
-          text:
-            data.value?.data?.message ??
-            "OTP has been sent to your email. Please check your email.",
-        });
-        if(options?.callback){
-          options?.callback()
-        }
-    }
-    loading.value = false;
-  }
-
- /**
-   * STEP 2 FORGOT PASSWORD VERIFY THE TOKEN OR PIN
-   * 
-   * following name should be import to:
-   * - loading
-   * - $credentialForgotPassword
-   * - message
-   * - alertType 
-   * 
-   * and don't forget to passing options for the composable example
-   *  - useAuth({
-     usedBy:"user",
-     callback:reload()
-   })
-   **/
-  async function $verificationOTPForgotPassword(values:any,ctx:SubmissionContext){
-    loading.value = true;
-    const {data,error}=await useFetch<CommonResponse<{message:string}>>(_verificationForgotPasswordPinURL.value,{
-      method:"POST",
-      body:{
-        email:$credentialForgotPassword.value.email,
-        pin:$credentialForgotPassword.value.pin
-      },
-      ...requestOptions
-    })
-
-    if(error.value){
+    if (error.value) {
       setErrorMessage(error.value?.data?.message);
       ctx.setErrors(transformErrors(error.value?.data));
-    }
-    else{
+    } else {
       pushNotification({
         type: "success",
-        title:"Success",
         text:
           data.value?.data?.message ??
           "OTP has been sent to your email. Please check your email.",
       });
-      if(options?.callback){
+      if (options?.callback) {
+        options?.callback()
+      }
+    }
+    loading.value = false;
+  }
+
+  /**
+    * STEP 2 FORGOT PASSWORD VERIFY THE TOKEN OR PIN
+    * 
+    * following name should be import to:
+    * - loading
+    * - $credentialForgotPassword
+    * - message
+    * - alertType 
+    * 
+    * and don't forget to passing options for the composable example
+    *  - useAuth({
+      usedBy:"user",
+      callback:reload()
+    })
+    **/
+  async function $verificationOTPForgotPassword(values: any, ctx: SubmissionContext) {
+    loading.value = true;
+    const { data, error } = await useFetch<CommonResponse<{ message: string }>>(_verificationForgotPasswordPinURL.value, {
+      method: "POST",
+      body: {
+        email: $credentialForgotPassword.value.email,
+        pin: $credentialForgotPassword.value.pin
+      },
+      ...requestOptions
+    })
+
+    if (error.value) {
+      setErrorMessage(error.value?.data?.message);
+      ctx.setErrors(transformErrors(error.value?.data));
+    }
+    else {
+      pushNotification({
+        type: "success",
+        title: "Success",
+        text:
+          data.value?.data?.message ??
+          "OTP has been sent to your email. Please check your email.",
+      });
+      if (options?.callback) {
         options?.callback()
       }
     }
 
 
-    loading.value=false
+    loading.value = false
   }
 
-   /**
-   * STEP 3 FORGOT PASSWORD SET NEW PASSWORD
-   * 
-   * following name should be import to:
-   * - loading
-   * - $credentialForgotPassword
-   * - message
-   * - alertType 
-   * 
-   * and don't forget to passing options for the composable example
-   *  - useAuth({
-     usedBy:"user",
-     callback:reload()
-   })
-   **/
-  async function $setNewPasswordForgotPassword(values:any,ctx:SubmissionContext){
+  /**
+  * STEP 3 FORGOT PASSWORD SET NEW PASSWORD
+  * 
+  * following name should be import to:
+  * - loading
+  * - $credentialForgotPassword
+  * - message
+  * - alertType 
+  * 
+  * and don't forget to passing options for the composable example
+  *  - useAuth({
+    usedBy:"user",
+    callback:reload()
+  })
+  **/
+  async function $setNewPasswordForgotPassword(values: any, ctx: SubmissionContext) {
     loading.value = true;
 
-    const {data,error}=await useFetch<CommonResponse<{message:string}>>(_resetPasswordURL.value,{
-      method:"POST",
-      body:{
-        email:$credentialForgotPassword.value.email,
-        pin:$credentialForgotPassword.value.pin,
-        password:$credentialForgotPassword.value.password,
-        confirm_password:$credentialForgotPassword.value.confirm_password
+    const { data, error } = await useFetch<CommonResponse<{ message: string }>>(_resetPasswordURL.value, {
+      method: "POST",
+      body: {
+        email: $credentialForgotPassword.value.email,
+        pin: $credentialForgotPassword.value.pin,
+        password: $credentialForgotPassword.value.password,
+        confirm_password: $credentialForgotPassword.value.confirm_password
       },
       ...requestOptions
     })
 
-    if(error.value){
+    if (error.value) {
       setErrorMessage(error.value?.data?.message);
       ctx.setErrors(transformErrors(error.value?.data));
     }
-    else{
+    else {
       pushNotification({
         type: "success",
-        title:"Success",
+        title: "Success",
         text:
           data.value?.data?.message ??
           "Your password has been set. Please login with your new password.",
       });
-      if(options?.callback){
+      if (options?.callback) {
         options?.callback()
       }
     }
@@ -782,12 +782,13 @@ export default function (options?: useAuthOptions) {
 
 
   function _setShowResendEmailButton() {
-    setInterval(() => {
+    const interval = setInterval(() => {
       $showResentEmailBtn.value = true
+      clearInterval(interval)
     }, 5000);
   }
 
- 
+
   return {
     // state
     $isLoggedIn,
