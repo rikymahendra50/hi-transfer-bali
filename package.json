@@ -38,6 +38,7 @@
     "@vee-validate/zod": "^4.11.8",
     "@vuepic/vue-datepicker": "^7.2.0",
     "axios": "^1.5.1",
+    "clsx": "^2.1.1",
     "defu": "^6.1.2",
     "floating-vue": "^2.0.0-beta.24",
     "gsap": "^3.12.5",
