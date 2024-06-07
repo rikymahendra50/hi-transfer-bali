@@ -110,6 +110,7 @@ onMounted(async () => {
         class="w-full"
         :rows="rows"
         :cols="cols"
+        v-bind="$attrs"
     />
 
 

@@ -1,14 +1,18 @@
 <template>
-  <div class="alert flex flex-col" :class="alertClass">
+  <div
+    class="alert flex flex-col"
+    :class="alertClass"
+  >
     <div class="flex flex-row flex-grow mx-auto min-w-[200px] space-x-2">
       <div class="w-full flex flex-col flex-grow">
         <!--text-->
-        <strong v-if="props.notification.title" class="tracking-wide">
+        <strong
+          v-if="props.notification.title"
+          class="tracking-wide"
+        >
           {{ props.notification.title }}
         </strong>
-        <span
-          class="max-w-[300px] whitespace-pre-wrap leading-4 tracking-normal text-left"
-        >
+        <span class="max-w-[300px] whitespace-pre-wrap leading-4 tracking-normal text-left">
           {{ props.notification.text }}
         </span>
       </div>

@@ -112,6 +112,7 @@ onMounted(async () => {
         :placeholder="placeholder"
         :multiple="multiple"
         class="w-full"
+        v-bind="$attrs"
     >
         <slot></slot>
     </select>

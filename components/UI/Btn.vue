@@ -4,6 +4,7 @@
         :type="props.type"
         :disabled="disabledButton"
         :aria-label="props.ariaLabel"
+        v-bind="$attrs"
     >
         <span
             v-if="props.loading"

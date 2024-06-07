@@ -116,6 +116,7 @@ onMounted(async () => {
       :aria-label="ariaLabel"
       :placeholder="placeholder"
       class="w-full"
+      v-bind="$attrs"
     />
     <slot
       v-if="$slots.rightSection"

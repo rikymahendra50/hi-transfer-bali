@@ -173,6 +173,13 @@
       {{ exampleSelect }}
 
     </div>
+    <UIBtn
+      @click="exampleOfAddNotification('error')"
+      variant="error"
+      type="button"
+    >
+      error
+    </UIBtn>
 
 
     <button
@@ -231,6 +238,7 @@ function exampleOfAddNotification(
     title: "payment success",
     text: "This is an example of notification have long confisiion  the before after go halo fhan makd",
   });
+
 }
 
 useHead({
