@@ -1,7 +1,4 @@
-<script
-    lang="ts"
-    setup
->
+<script lang="ts" setup>
 
 const { registerSchema } = useSchema()
 
@@ -22,23 +19,23 @@ useHead({
                     :validation-schema="registerSchema"
                 >
                     <div class="grid grid-cols-1 w-[450px] text-left gap-4 p-4 rounded-md shadow">
-                        <Alert
+                        <UIAlert
                             v-model="message"
                             :type="alertType"
                         />
                         <div class="grid grid-cols-2 gap-4">
-                            <FormGroup
+                            <UIFormGroup
                                 label="First Name"
                                 name="first_name"
                             >
-                                <FormTextField
+                                <UIFormTextField
                                     v-model="$credentialForm.first_name"
                                     name="first_name"
                                     class="input-bordered"
                                     placeholder="ex:jhon"
                                 />
-                            </FormGroup>
-                            <FormGroup
+                            </UIFormGroup>
+                            <UIFormGroup
                                 label="Last Name"
                                 name="last_name"
                             >
@@ -48,10 +45,10 @@ useHead({
                                     class="input-bordered"
                                     placeholder="ex:doe"
                                 />
-                            </FormGroup>
+                            </UIFormGroup>
                         </div>
 
-                        <FormGroup
+                        <UIFormGroup
                             label="Email"
                             name="email"
                         >
@@ -61,9 +58,9 @@ useHead({
                                 class="input-bordered"
                                 placeholder="ex:myemail@gmail.com"
                             />
-                        </FormGroup>
+                        </UIFormGroup>
 
-                        <FormGroup
+                        <UIFormGroup
                             label="Password"
                             name="password"
                         >
@@ -74,9 +71,9 @@ useHead({
                                 class="input-bordered"
                                 placeholder="********"
                             />
-                        </FormGroup>
+                        </UIFormGroup>
 
-                        <FormGroup
+                        <UIFormGroup
                             label="Confirm Password"
                             name="confirm_password"
                         >
@@ -87,7 +84,7 @@ useHead({
                                 class="input-bordered"
                                 placeholder="********"
                             />
-                        </FormGroup>
+                        </UIFormGroup>
 
                         <div class="flex justify-between items-center">
                             <div>

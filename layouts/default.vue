@@ -38,7 +38,7 @@
       <slot />
     </main>
     <FooterDefault />
-    <Notification />
+    <UINotification />
   </div>
 </template>
 

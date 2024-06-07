@@ -1,7 +1,4 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 
 const props = withDefaults(defineProps<{ email: string, usedBy: string }>(), {
   usedBy: "user"
@@ -63,7 +60,7 @@ onMounted(async () => {
               v-model="$credentialForgotPassword.pin"
             />
           </div>
-          <FormInputOTP
+          <UIFormInputOTP
             v-model="$credentialForgotPassword.pin"
             :is-error="!!errors?.otp"
           />

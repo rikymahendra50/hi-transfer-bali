@@ -1,453 +1,151 @@
 <template>
-  <Teleport to=".loading-indicator">
-    <ScrollProgress />
-  </Teleport>
-  <Container class="space-y-4 pb-10">
+  <UIContainer class="space-y-4 pb-10">
     <h1>Implement DaisyUI Example</h1>
     <section>
       <h3>Button</h3>
-
-      <button class="btn">Button</button>
-      <button class="btn btn-neutral">Neutral</button>
-      <button class="btn btn-primary">Primary</button>
-      <button class="btn btn-secondary">Secondary</button>
-      <button class="btn btn-accent">Accent</button>
-      <button class="btn btn-ghost">Ghost</button>
-      <button class="btn btn-link">Link</button>
-    </section>
-    <section>
-      <h3>badge</h3>
-      <div class="space-x-2 space-y-2">
-        <div
-          v-for="(name, index) in [
-            '',
-            'badge-primary',
-            'badge-secondary',
-            'badge-accent',
-            'badge-ghost',
-            'badge-info',
-            'badge-success',
-            'badge-warning',
-            'badge-error',
-          ]"
-          class="badge"
-          :class="name"
-        >
-          {{ name }} with long text example
-        </div>
-      </div>
-    </section>
-    <section class="space-y-4">
-      <h3>Input</h3>
-      <div class="space-y-2 grid grid-cols-1">
-        <input
-          v-for="(input, index) in [
-            '',
-            'input-primary',
-            'input-secondary',
-            'input-error',
-            'input-warning',
-            'input-success',
-            'input-info',
-          ]"
-          :class="input"
-          class="input input-bordered"
-          placeholder="example of input"
+      <UIBtn>Hallo</UIBtn>
+      <UIBtn
+        variant="primary"
+        shape="square"
+        size="md"
+      >
+        <Icon
+          name="i-heroicons-plus"
+          class="w-4 h-4"
         />
-      </div>
+      </UIBtn>
+      <UIBtn variant="secondary">Secondary</UIBtn>
 
-      <h3>File Input</h3>
-      <div class="space-y-2 grid grid-cols-1">
-        <input
-          v-for="(input, index) in [
-            '',
-            'file-input-primary',
-            'file-input-secondary',
-            'file-input-error',
-            'file-input-warning',
-            'file-input-success',
-            'file-input-info',
-          ]"
-          :class="input"
-          type="file"
-          class="file-input file-input-bordered"
-        />
-      </div>
-
-      <h3>Checkbox</h3>
-      <div class="space-x-2">
-        <input
-          v-for="(input, index) in [
-            '',
-            'checkbox-primary',
-            'checkbox-secondary',
-            'checkbox-error',
-            'checkbox-warning',
-            'checkbox-success',
-            'checkbox-info',
-          ]"
-          :class="input"
-          type="checkbox"
-          class="checkbox"
-        />
-      </div>
-
-      <h3>Select</h3>
-
-      <div class="space-y-2 grid grid-cols-1">
-        <select
-          v-for="(input, index) in [
-            '',
-            'select-primary',
-            'select-secondary',
-            'select-error',
-            'select-warning',
-            'select-success',
-            'select-info',
-          ]"
-          :class="input"
-          class="select select-bordered"
-        >
-          <option
-            v-for="n in 10"
-            :key="n"
-          >example input {{ n }}</option>
-        </select>
-      </div>
-
-      <h3>Textarea</h3>
-
-      <div class="space-y-2 grid grid-cols-1">
-        <div
-          v-for="(input, index) in [
-            '',
-            'textare-primary',
-            'textare-secondary',
-            'textare-error',
-            'textare-warning',
-            'textare-success',
-            'textare-info',
-          ]"
-          :key="index"
-        >
-          <ClientOnly>
-            <textarea
-              :class="input"
-              class="textarea textarea-bordered"
-            >
-            </textarea>
-          </ClientOnly>
-        </div>
-      </div>
-
-      <h3>Collapse</h3>
-      <div class="join join-vertical w-full">
-        <div
-          tabindex="0"
-          class="join-item collapse collapse-arrow"
-        >
-          <div class="collapse-title text-lg font-medium bg-base-200/40">
-            Focus me to see content
-          </div>
-          <div class="collapse-content">
-            <div class="h-20 py-2">
-              tabindex="0" attribute is necessary to make the div focusable
-            </div>
-          </div>
-        </div>
-        <div
-          tabindex="0"
-          class="join-item collapse collapse-plus"
-        >
-          <div class="collapse-title text-lg font-medium bg-base-200/40">
-            Focus me to see content
-          </div>
-          <div class="collapse-content">
-            <div class="h-20 py-2">
-              tabindex="0" attribute is necessary to make the div focusable
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <h3>Notification</h3>
-      <button
-        class="btn btn-success"
-        @click="exampleOfAddNotification('success')"
-      >
-        success
-      </button>
-      <button
-        class="btn btn-error"
-        @click="exampleOfAddNotification('error')"
-      >
-        error
-      </button>
-      <button
-        class="btn btn-info"
-        @click="exampleOfAddNotification('info')"
-      >
-        infor
-      </button>
-      <button
-        class="btn btn-warning"
-        @click="exampleOfAddNotification('warning')"
-      >
-        warning
-      </button>
+      <UIBtn
+        variant="secondary"
+        loading
+      >Secondary</UIBtn>
     </section>
 
-    <div class="card card-compact bg-success">
-      <div class="card-body">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis illum
-        praesentium adipisci reprehenderit quam iure sit, delectus quisquam,
-        voluptate ipsa odio, impedit doloribus? Ex inventore veniam corporis
-        quaerat. Magnam, sint.
-      </div>
+    <div class="max-w-md space-y-2">
+      <UIFormTextField
+        name="name"
+        v-model="text"
+        bordered
+        placeholder="Enter Name"
+      />
+
+      <UIFormGroup
+        name="password"
+        label="Password"
+      >
+        <UIFormTextField
+          name="name"
+          v-model="text"
+          bordered
+          type="password"
+          placeholder="Enter Name"
+        >
+          <template #rightSection>
+            <Icon name="i-heroicons-lock-closed" />
+          </template>
+        </UIFormTextField>
+        <template #descriptionTop>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam accusamus totam ipsam possimus reiciendis
+          necessitatibus veniam ad recusandae, sint deleniti, tempore, repellendus molestiae eligendi perspiciatis in
+          eum aspernatur a sapiente.
+        </template>
+      </UIFormGroup>
+
+      <UIFormTextField
+        name="name"
+        v-model="text"
+        type="search"
+        placeholder="Enter Name"
+      >
+        <template #leftSection>
+          <Icon name="i-heroicons-magnifying-glass" />
+        </template>
+      </UIFormTextField>
+
+      <UIFormTextField
+        name="name"
+        v-model="text"
+        type="search"
+        variant="primary"
+        placeholder="Enter Name"
+      >
+        <template #leftSection>
+          <Icon name="i-heroicons-magnifying-glass" />
+        </template>
+      </UIFormTextField>
+
+      <UIFormTextField
+        name="name"
+        v-model="text"
+        type="search"
+        variant="secondary"
+        placeholder="Enter Name"
+      >
+        <template #leftSection>
+          <Icon name="i-heroicons-magnifying-glass" />
+        </template>
+      </UIFormTextField>
+
+      <UIFormTextField
+        name="name"
+        v-model="text"
+        type="search"
+        variant="info"
+        placeholder="Enter Name"
+      >
+        <template #leftSection>
+          <Icon name="i-heroicons-magnifying-glass" />
+        </template>
+      </UIFormTextField>
+
+      <UIFormTextarea
+        name="textarea"
+        v-model="textarea"
+        cols="30"
+        rows="8"
+        placeholder="Example of gobro"
+      ></UIFormTextarea>
+
     </div>
+
 
     <button
       class="btn"
       @click="modal = true"
     >open modal</button>
-    <ModalContainer v-model="modal">
-      <div class="flex justify-between py-1 w-full px-3 mx-auto border-b-2 mb-1.5">
-        <div>hallo</div>
-        <div>
-          <div
-            role="button"
-            @click="modal = false"
-            class="rounded-full bg-gray-200 h-5 w-5 flex items-center justify-center"
-          >
-            x
-          </div>
-        </div>
-      </div>
-      <div class="space-y-4">
+    <UIModal
+      v-model="modal"
+      close-able
+    >
+
+      <div class="space-y-4 ">
         <div class="skeleton h-96 w-full rounded-md"></div>
-        <div class="grid grid-cols-[300px_1fr] gap-4">
+        <div class="grid grid-cols-2 gap-4">
           <div class="skeleton h-11 w-full rounded-md"></div>
           <div class="skeleton h-11 w-full rounded-md"></div>
         </div>
       </div>
-    </ModalContainer>
-
-    <section>
-      <div
-        class="overflow-x-auto rounded-lg h-[550px] scrollbar-thin scrollbar-thumb-gray-300/80 scrollbar-track-gray-100"
-      >
-        <table class="table table-md table-pin-rows table-pin-cols">
-          <thead>
-            <tr>
-              <th>
-                <span class="sr-only">sr only</span>
-              </th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>company</th>
-              <th>location</th>
-              <th>Last Login</th>
-              <th>Favorite Color</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="n in 20"
-              key="n"
-            >
-              <th>{{ n }}</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td>Littel, Schaden and Vandervort</td>
-              <td>Canada</td>
-              <td>12/16/2020</td>
-              <td>Blue</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section>
-      <h3>OTP Input</h3>
-      <FormInputOTP name="otp" />
-    </section>
-    <section>
-      <h3>Radio</h3>
-      <input
-        type="radio"
-        name="radio-1"
-        class="radio"
-      />
-      <input
-        type="radio"
-        name="radio-1"
-        class="radio radio-primary"
-      />
-      <input
-        type="radio"
-        name="radio-1"
-        class="radio radio-error"
-      />
-      <input
-        type="radio"
-        name="radio-1"
-        class="radio radio-info"
-      />
-      <input
-        type="radio"
-        name="radio-1"
-        class="radio radio-warning"
-      />
-      <input
-        type="radio"
-        name="radio-1"
-        class="radio radio-success"
-      />
-      <input
-        type="radio"
-        name="radio-1"
-        class="radio radio-accent"
-      />
-    </section>
-    <section>
-      <h3>Rating {{ ratingValue }}</h3>
-
-      <div class="rating">
-        <input
-          type="radio"
-          name="rating-2"
-          class="rating-hidden"
-          :value="undefined"
-        />
-        <input
-          type="radio"
-          name="rating-2"
-          class="mask mask-star-2 bg-orange-400"
-          value="1"
-          v-model="ratingValue"
-        />
-        <input
-          type="radio"
-          name="rating-2"
-          class="mask mask-star-2 bg-orange-400"
-          checked
-          v-model="ratingValue"
-          value="2"
-        />
-        <input
-          type="radio"
-          name="rating-2"
-          class="mask mask-star-2 bg-orange-400"
-          v-model="ratingValue"
-          value="3"
-        />
-        <input
-          type="radio"
-          name="rating-2"
-          class="mask mask-star-2 bg-orange-400"
-          v-model="ratingValue"
-          value="4"
-        />
-        <input
-          type="radio"
-          name="rating-2"
-          class="mask mask-star-2 bg-orange-400"
-          v-model="ratingValue"
-          value="5"
-        />
-      </div>
-    </section>
-    <section>
-      <h3>Menu</h3>
-      <ul class="menu bg-base-200/50 space-y-2 w-56">
-        <li><a class="active disabled">Enabled item</a></li>
-        <li><a>disabled item</a></li>
-        <li><a>disabled item</a></li>
-      </ul>
-    </section>
-
-    <section>
-      <h3>Font Size</h3>
-      <p class="text-sm">text-sm</p>
-      <p class="text-base">text-base</p>
-      <p class="text-lg">text-lg</p>
-      <p class="text-xl">text-xl</p>
-      <p class="text-2xl">text-2xl</p>
-      <p class="text-3xl">text-3xl</p>
-      <p class="text-4xl">text-4xl</p>
-      <p class="text-5xl">text-5xl</p>
-      <p class="text-6xl">text-6xl</p>
-    </section>
-    <section class="mb-10">
-      <h3>Transition</h3>
-      <TransitionTopToBottom>
-        <div
-          v-if="toggle"
-          class="card card-compact"
-        >
-          <div class="card-body bg-indigo-400 antialiased">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto nobis
-            accusantium eius praesentium magni officia, corporis animi
-            consequatur labore, repudiandae voluptas modi qui ut quibusdam
-            nesciunt minus fugiat est cum.
-          </div>
-        </div>
-      </TransitionTopToBottom>
-
-      <TransitionLeftToRight>
-        <div
-          v-if="togglex"
-          class="card card-compact"
-        >
-          <div class="card-body bg-indigo-400">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto nobis
-            accusantium eius praesentium magni officia, corporis animi
-            consequatur labore, repudiandae voluptas modi qui ut quibusdam
-            nesciunt minus fugiat est cum.
-          </div>
-        </div>
-      </TransitionLeftToRight>
-      <TransitionX>
-        <div
-          v-if="toggleXexample"
-          class="bg-red-500"
-        >Contoh Elament</div>
-      </TransitionX>
-      <button
-        @click="toggle = !toggle"
-        class="btn"
-      >toggle</button>
-      <button
-        @click="togglex = !togglex"
-        class="btn"
-      >togglex</button>
-      <button
-        @click="toggleXexample = !toggleXexample"
-        class="btn"
-      >togglex example</button>
-    </section>
-    <section>
-      <h3>Loading</h3>
-      <div class="card card-compact">
-        <div class="card-body">
-          <LoadingTable />
-        </div>
-      </div>
-    </section>
-  </Container>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil nobis, molestias soluta similique earum minus sequi
+      porro aliquam. Accusamus quaerat animi, similique necessitatibus recusandae doloribus dolore. Consequatur quos
+      eveniet voluptatum!
+      <template #actions>
+        <UIBtn>Cancel</UIBtn>
+        <UIBtn variant="primary">Submit</UIBtn>
+      </template>
+    </UIModal>
+  </UIContainer>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 const { pushNotification } = useNotification();
 
 const modal = ref(false);
 const ratingValue = ref();
 const toggle = ref(false);
 const togglex = ref(false);
+const text = ref("")
+const textarea = ref("")
 
 const toggleXexample = ref(false)
 
@@ -466,7 +164,4 @@ useHead({
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
-></style>
+<style lang="scss" scoped></style>

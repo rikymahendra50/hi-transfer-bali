@@ -34,7 +34,7 @@ export default defineNuxtConfig({
   },
   image: {
     format: ["webp"],
-    domains:['https://unsplash.com','https://spdigitalagency.com']
+    domains: ['https://unsplash.com', 'https://spdigitalagency.com']
   },
   devServer: {
     /**
@@ -46,10 +46,14 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       API_ENDPOINT: process.env.API_ENDPOINT ?? "http://localhost:3000",
+      APP_DOMAIN: process.env.APP_DOMAIN ?? "http://localhost:3000",
     },
   },
   nitro: {
     compressPublicAssets: true,
+    prerender: {
+      routes: ["/sitemap.xml"]
+    },
   },
   app: {
     head: {

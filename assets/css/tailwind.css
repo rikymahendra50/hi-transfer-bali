@@ -6,9 +6,7 @@
   /**
   * btn 
   */
-  .btn {
-    @apply !min-h-0 h-11 !py-1.5 !px-4 !font-medium rounded-md;
-  }
+
 
   /**
   * badge
@@ -123,13 +121,7 @@
     @apply rounded-md;
   }
 
-  /**
-  * modal
-  */
 
-  .modal-box {
-    @apply rounded-t-md rounded-b-md p-1.5;
-  }
   /**
   * table
   */
@@ -147,7 +139,7 @@
   * form description
   */
   .form-description {
-    @apply text-gray-500 text-sm tracking-normal  leading-4;
+    @apply text-gray-400 text-sm tracking-normal  leading-4;
   }
 
   /**

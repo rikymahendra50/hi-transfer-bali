@@ -1,7 +1,4 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 
 
 interface Prop {
@@ -39,34 +36,34 @@ onMounted(() => {
     :validation-schema="resetPasswordSchema"
   >
     <div class="grid grid-cols-1 w-[450px] text-left gap-4 p-4 rounded-md shadow">
-      <Alert
+      <UIAlert
         v-model="message"
         :type="alertType"
       />
-      <FormGroup
+      <UIFormGroup
         label="Passowrd"
         name="password"
       >
-        <FormTextField
+        <UIFormTextField
           v-model="$credentialForgotPassword.password"
           name="password"
           placeholder="*******"
           type="password"
           class="input input-bordered"
         />
-      </FormGroup>
-      <FormGroup
+      </UIFormGroup>
+      <UIFormGroup
         label="Confirm Passowrd"
         name="confirm_password"
       >
-        <FormTextField
+        <UIFormTextField
           v-model="$credentialForgotPassword.confirm_password"
           name="confirm_password"
           type="password"
           placeholder="*******"
           class="input input-bordered"
         />
-      </FormGroup>
+      </UIFormGroup>
       <div>
         <p class="text-gray-400">We will send a code to your email</p>
       </div>
