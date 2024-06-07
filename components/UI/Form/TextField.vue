@@ -20,6 +20,7 @@ const props = withDefaults(defineProps<{
   size?: "xs" | "sm" | "md" | "lg"
   ghost?: boolean
   bordered?: boolean
+  readonly?: boolean
 }>(), {
   type: "text",
   disabled: false,
@@ -30,7 +31,7 @@ const props = withDefaults(defineProps<{
 const name = toRef(props, "name");
 
 const {
-  value: inputValue,
+  value,
   errorMessage,
   handleBlur,
   handleChange,
@@ -109,9 +110,8 @@ onMounted(async () => {
       :name="name"
       :id="name"
       :type="type"
-      :value="inputValue"
-      @input="handleChange"
-      @blur="handleBlur"
+      v-model="value"
+      :readonly="readonly"
       :disabled="disabled"
       :aria-label="ariaLabel"
       :placeholder="placeholder"

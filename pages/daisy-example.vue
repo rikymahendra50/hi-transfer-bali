@@ -106,6 +106,71 @@
         rows="8"
         placeholder="Example of gobro"
       ></UIFormTextarea>
+      <UIFormToggle
+        name="toggle"
+        v-model="exampleToggle"
+        true-value="on"
+        false-value="off"
+        variant="error"
+        size="md"
+      >
+        {{ exampleToggle }}
+      </UIFormToggle>
+
+      <UIFormRadio
+        name="radio"
+        v-model="exampleRadio"
+        value="on"
+      >
+        on
+      </UIFormRadio>
+      <UIFormRadio
+        name="radio"
+        v-model="exampleRadio"
+        value="off"
+      >
+        off
+      </UIFormRadio>
+
+      <UIFormCheckbox
+        name="checkbox"
+        v-model="checkboxExample"
+        value="pizza"
+      >
+        Pizza
+      </UIFormCheckbox>
+      <UIFormCheckbox
+        name="checkbox"
+        v-model="checkboxExample"
+        value="roti"
+      >
+        Roti
+      </UIFormCheckbox>
+      <UIFormCheckbox
+        name="checkbox"
+        v-model="checkboxExample"
+        value="coffee"
+        :readonly="true"
+      >
+        Coffee
+      </UIFormCheckbox>
+      {{ checkboxExample }}
+
+      <UIFormSelect
+        name="select"
+        v-model="exampleSelect"
+        size="lg"
+      >
+        <option
+          v-for="i in 10"
+          :key="i"
+          :value="i"
+        >
+          Option {{ i }}
+        </option>
+      </UIFormSelect>
+
+      {{ exampleSelect }}
 
     </div>
 
@@ -147,7 +212,16 @@ const togglex = ref(false);
 const text = ref("")
 const textarea = ref("")
 
+const exampleToggle = ref();
+
+const exampleRadio = ref("")
+
+const exampleSelect = ref("")
+
+const checkboxExample = ref([])
+
 const toggleXexample = ref(false)
+
 
 function exampleOfAddNotification(
   type: "success" | "error" | "warning" | "info"
