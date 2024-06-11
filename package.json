@@ -44,6 +44,7 @@
     "gsap": "^3.12.5",
     "nuxt-swiper": "^1.2.2",
     "pinia": "^2.1.7",
+    "simple-keyboard": "^3.7.83",
     "universal-social-auth": "^0.2.6",
     "v-calendar": "^3.1.2",
     "vue-picture-cropper": "^0.7.0",

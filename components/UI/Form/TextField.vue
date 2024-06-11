@@ -4,6 +4,8 @@ import clsx from "clsx";
 
 import { useField } from "vee-validate";
 
+import { useFocus, onClickOutside, useFocusWithin } from '@vueuse/core'
+
 defineOptions({
   inheritAttrs: false,
 });
@@ -92,16 +94,50 @@ const className = computed(() => {
   return clsx(arr.join(" "), inputClass.join(" "), props.class);
 });
 
+
+const input = ref<HTMLInputElement>()
+
+const focusIn = ref<HTMLElement>()
+
+
+const { focused } = useFocusWithin(focusIn)
+
+const showModal = ref(false)
+
+watch(focused, async (value) => {
+  await nextTick()
+  if (value) {
+    showModal.value = true
+  }
+})
+
+const modalBody = ref<HTMLElement>()
+
+onClickOutside(modalBody, async () => {
+  await nextTick()
+  if (showModal.value && !focused.value) {
+    showModal.value = false
+  }
+})
+
+function onChange(input: string) {
+  value.value = input
+}
+
 onMounted(async () => {
   await nextTick();
+  showModal.value = false
 })
 </script>
 
 <template>
-  <label :class="clsx(
-    'flex items-center gap-2 input',
-    className
-  )">
+  <label
+    ref="focusIn"
+    :class="clsx(
+      'flex items-center gap-2 input',
+      className
+    )"
+  >
     <slot
       v-if="$slots.leftSection"
       name="leftSection"
@@ -130,4 +166,25 @@ onMounted(async () => {
       class="form-error-message"
     />
   </TransitionX>
+  <Teleport to="body">
+    <div
+      v-if="showModal"
+      class="modal modal-bottom  bg-black !max-h-[280px] top-auto !bg-transparent"
+      :class="{
+        'modal-open': showModal
+      }"
+    >
+      <div
+        class="modal-box w-full"
+        ref="modalBody"
+      >
+        <UIFormKeyboard
+          :input="modelValue as string"
+          @@change="onChange"
+          @@close="showModal = false"
+          :is-open="showModal"
+        />
+      </div>
+    </div>
+  </Teleport>
 </template>
