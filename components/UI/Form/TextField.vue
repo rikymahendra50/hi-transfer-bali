@@ -4,8 +4,6 @@ import clsx from "clsx";
 
 import { useField } from "vee-validate";
 
-import { useFocus, onClickOutside, useFocusWithin } from '@vueuse/core'
-
 defineOptions({
   inheritAttrs: false,
 });
@@ -103,8 +101,13 @@ const input = ref<HTMLInputElement>()
   <label
     ref="focusIn"
     :class="clsx(
-      'flex items-center gap-2 input',
-      className
+      'flex items-center input',
+      className,
+      {
+        'gap-2': !!$slots.leftSection || !!$slots.rightSection,
+        'pl-0': !$slots.leftSection,
+        'pr-0': !$slots.rightSection
+      }
     )"
   >
     <slot
@@ -120,7 +123,9 @@ const input = ref<HTMLInputElement>()
       :disabled="disabled"
       :aria-label="ariaLabel"
       :placeholder="placeholder"
-      class="w-full"
+      :class="clsx('w-full h-full', {
+        'px-4': !$slots.leftSection || !$slots.rightSection
+      })"
       v-bind="$attrs"
     />
     <slot
