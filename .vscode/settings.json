@@ -31,7 +31,14 @@
         "internationalization"
     ],
     "cSpell.words": [
+        "clsx",
+        "heroicons",
+        "LARAVEL",
         "nuxt",
-        "Nuxt"
+        "Nuxt",
+        "nuxtjs",
+        "pinia",
+        "tailwindcss",
+        "vueuse"
     ]
 }

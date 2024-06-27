@@ -3,7 +3,7 @@
     <UIContainer>
       <aside>
         <p class="font-bold">
-          Sp Digital
+          s.p. Digital
         </p>
         <p>Copyright © {{ fullYear }} - All right reserved</p>
       </aside>

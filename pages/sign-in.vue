@@ -1,9 +1,8 @@
-<script
-  lang="ts"
-  setup
->
+<script lang="ts" setup>
 
 const { loginSchema } = useSchema()
+
+const { togglePasswordType, inputType } = usePasswordHelper()
 
 const router = useRouter()
 
@@ -34,33 +33,48 @@ useHead({
           :validation-schema="loginSchema"
         >
           <div class="grid grid-cols-1 w-[450px] text-left gap-4 p-4 rounded-md shadow">
-            <Alert
+            <UIAlert
               v-model="message"
               :type="alertType"
             />
-            <FormGroup
+            <UIFormGroup
               label="Email"
               name="email"
             >
-              <FormTextField
+              <UIFormTextField
                 name="email"
                 v-model="$credentialForm.email"
                 class="input-bordered"
                 placeholder="ex:myemail@gmail.com"
               />
-            </FormGroup>
-            <FormGroup
+            </UIFormGroup>
+            <UIFormGroup
               label="Password"
               name="password"
             >
-              <FormTextField
+              <UIFormTextField
                 name="password"
                 v-model="$credentialForm.password"
-                type="password"
+                :type="inputType"
                 class="input-bordered"
                 placeholder="********"
-              />
-            </FormGroup>
+              >
+                <template #leftSection>
+                  <Icon
+                    name="i-heroicons-lock-closed"
+                    class="w-5 h-5 text-gray-400"
+                  />
+                </template>
+                <template #rightSection>
+                  <Icon
+                    :name="inputType === 'password' ? 'i-heroicons-eye' : 'i-heroicons-eye-slash'"
+                    class="w-5 h-5 text-gray-400"
+                    @click="togglePasswordType"
+                  />
+                </template>
+
+              </UIFormTextField>
+            </UIFormGroup>
             <div>
               <NuxtLink
                 class="link link-hover text-sm"
@@ -69,11 +83,11 @@ useHead({
             </div>
             <div class="flex justify-between items-center">
               <div>
-                <button
-                  class="btn btn-success"
+                <UIBtn
+                  variant="success"
                   type="submit"
                   :disabled="loading"
-                >Submit</button>
+                >Submit</UIBtn>
               </div>
               <div class="text-sm">
                 <p>Don't have an account? <NuxtLink

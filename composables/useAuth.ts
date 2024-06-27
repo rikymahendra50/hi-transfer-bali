@@ -189,7 +189,7 @@ export default function (options?: useAuthOptions) {
   /**
    * Path for forgot password
   */
-  const _requestForgotPassworURL = computed(() => {
+  const _requestForgotPasswordURL = computed(() => {
     if (options?.usedBy === 'admin') {
       return "/admins/forget-password"
     }
@@ -367,7 +367,7 @@ export default function (options?: useAuthOptions) {
      * set the error message and the errors from the backend
      */
     if (error.value) {
-      setErrorMessage(error.value?.data?.message ?? "Crendential is not valid");
+      setErrorMessage(error.value?.data?.message ?? "Credential is not valid");
       ctx.setErrors(transformErrors(error.value?.data))
     }
     /**
@@ -501,7 +501,7 @@ export default function (options?: useAuthOptions) {
      * set the error message and the errors from the backend
      */
     if (error.value) {
-      setErrorMessage(error.value?.data?.message ?? "Crendential is not valid");
+      setErrorMessage(error.value?.data?.message ?? "Credential is not valid");
       ctx.setErrors(transformErrors(error.value?.data))
     }
     /**
@@ -568,7 +568,7 @@ export default function (options?: useAuthOptions) {
 
 
   /**
-   * verication email is used for
+   * verification email is used for
    * activate account after user register or admin create new user
    * 
    * following name should be import to:
@@ -598,13 +598,13 @@ export default function (options?: useAuthOptions) {
   }
 
   /**
-   * verication email is used for
+   * verification email is used for
    * after user change email with not same with old email
    * 
    * following name should be import to:
    * - loading
   */
-  async function $veficationEmailChange(token: string) {
+  async function $verificationEmailChange(token: string) {
     loading.value = true
     const { data, error } = await useFetch<{ data: { message: string } }>(
       `${_verificationEmailChangeURL.value}/${token}`,
@@ -644,7 +644,7 @@ export default function (options?: useAuthOptions) {
   async function $requestForgotPassword(values: any, ctx: SubmissionContext) {
     loading.value = true;
     const { data, error } = await useFetch<CommonResponse<{ message: string }>>(
-      _requestForgotPassworURL.value,
+      _requestForgotPasswordURL.value,
       {
         method: "POST",
         body: { email: $credentialForgotPassword.value.email },
@@ -677,7 +677,7 @@ export default function (options?: useAuthOptions) {
   async function $reRequestForgotPassword() {
     loading.value = true;
     const { data, error } = await useFetch<CommonResponse<{ message: string }>>(
-      _requestForgotPassworURL.value,
+      _requestForgotPasswordURL.value,
       {
         method: "POST",
         body: { email: $credentialForgotPassword.value.email },
@@ -837,7 +837,7 @@ export default function (options?: useAuthOptions) {
     $registerRequestEmailForActiveAccount,
     $showResentEmailBtn,
     $verificationEmail,
-    $veficationEmailChange,
+    $verificationEmailChange,
     // forgot password
     $requestForgotPassword,
     $reRequestForgotPassword,

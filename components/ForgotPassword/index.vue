@@ -1,7 +1,4 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 
 const props = defineProps({
   usedBy: {
@@ -34,33 +31,33 @@ const { loading, message, alertType, $credentialForgotPassword, $requestForgotPa
     :validation-schema="onlyEmailSchema"
   >
     <div class="grid grid-cols-1 w-[450px] text-left gap-4 p-4 rounded-md shadow">
-      <Alert
+      <UIAlert
         v-model="message"
         :type="alertType"
       />
-      <FormGroup
+      <UIFormGroup
         label="Email"
         name="email"
       >
-        <FormTextField
+        <UIFormTextField
           name="email"
           v-model="$credentialForgotPassword.email"
           placeholder="ex:myemail@gmail.com"
           class="input-bordered"
         />
-      </FormGroup>
+      </UIFormGroup>
       <div>
         <p class="text-gray-400">We will send a code to your email</p>
       </div>
 
       <div>
-        <button
-          class="btn btn-success"
+        <UIBtn
+          variant="success"
           type="submit"
           :disabled="loading"
         >
           Submit
-        </button>
+        </UIBtn>
       </div>
     </div>
   </VeeForm>

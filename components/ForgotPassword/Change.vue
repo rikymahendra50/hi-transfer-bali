@@ -41,7 +41,7 @@ onMounted(() => {
         :type="alertType"
       />
       <UIFormGroup
-        label="Passowrd"
+        label="Password"
         name="password"
       >
         <UIFormTextField
@@ -53,7 +53,7 @@ onMounted(() => {
         />
       </UIFormGroup>
       <UIFormGroup
-        label="Confirm Passowrd"
+        label="Confirm Password"
         name="confirm_password"
       >
         <UIFormTextField
@@ -69,10 +69,10 @@ onMounted(() => {
       </div>
 
       <div>
-        <button
+        <UIBtn
           :disabled="loading"
-          class="btn btn-success"
-        >Submit</button>
+          variant="success"
+        >Submit</UIBtn>
       </div>
     </div>
   </VeeForm>

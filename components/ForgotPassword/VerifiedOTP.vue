@@ -45,12 +45,12 @@ onMounted(async () => {
     v-slot="{ errors }"
   >
     <div class="grid grid-cols-1 w-[450px] text-left gap-2 p-4 rounded-md shadow">
-      <Alert
+      <UIAlert
         v-model="message"
         :type="alertType"
       />
       <div class="flex  justify-center ">
-        <FormGroup
+        <UIFormGroup
           label="OTP"
           name="opt"
         >
@@ -70,7 +70,7 @@ onMounted(async () => {
               class="form-error-message"
             />
           </TransitionX>
-        </FormGroup>
+        </UIFormGroup>
       </div>
       <div class="flex  justify-center">
         <div v-if="$countdownHelper.showExpired">
@@ -109,13 +109,13 @@ onMounted(async () => {
 
 
       <div class="flex justify-center">
-        <button
+        <UIBtn
           type="submit"
           :disabled="loading"
-          class="btn btn-success"
+          variant="success"
         >
           Submit
-        </button>
+        </UIBtn>
       </div>
     </div>
   </VeeForm>

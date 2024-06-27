@@ -31,7 +31,7 @@ export default function () {
 
   const requestOptions = {
     baseURL: config.public.API_ENDPOINT,
-    onRequest: (contex: any) => onRequest(contex),
+    onRequest: (Context: any) => onRequest(Context),
     onResponseError: (context: any) => onResponseError(context),
   };
   return {

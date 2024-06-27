@@ -5,8 +5,8 @@ export const useRequestHelper = () => {
   const loading = ref<boolean>(false);
 
   /**
-   * composable error object to tranform errrors from response LARAVEL
-   * - the composble just for vee validate at the moment
+   * composable error object to transform errors from response LARAVEL
+   * - the composable just for vee validate at the moment
    * @example ctx.setErrors(transformErrors(error.value?.data))
    */
   function transformErrors(errorObject: ResponseErrorObject) {
