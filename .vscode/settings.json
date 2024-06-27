@@ -29,5 +29,9 @@
     "html.format.wrapAttributes": "force-expand-multiline",
     "i18n-ally.localesPaths": [
         "internationalization"
+    ],
+    "cSpell.words": [
+        "nuxt",
+        "Nuxt"
     ]
 }

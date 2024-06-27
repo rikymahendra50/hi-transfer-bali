@@ -127,12 +127,42 @@
 
   </UIContainer>
 
+  <UIBtn @click="() => $toast('hallo')">Halo</UIBtn>
+  <UIBtn
+    variant="success"
+    @click="() => $toast.success('success', {
+      description: 'This is an example of notification have long confisiion  the before after go halo fhan makd'
+    })"
+  >success</UIBtn>
+  <UIBtn
+    variant='error'
+    @click="() => $toast.error('Something went wrong', {
+      description: 'This is an example of notification have long confisiion  the before after go halo fhan makd'
+    })"
+  >Error</UIBtn>
+
+  <UIBtn
+    variant='info'
+    @click="() => $toast.info('info', {
+      description: 'This is an example of notification have long confisiion  the before after go halo fhan makd'
+    })"
+  >Info</UIBtn>
+
+  <UIBtn
+    variant='warning'
+    @click="() => $toast.warning('Something went wrong', {
+      description: 'This is an example of notification have long confisiion  the before after go halo fhan makd'
+    })"
+  >warning</UIBtn>
+
 
 
 </template>
 
 <script setup lang="ts">
 const { pushNotification } = useNotification();
+
+const { $toast } = useNuxtApp()
 
 const modal = ref(false);
 const ratingValue = ref();

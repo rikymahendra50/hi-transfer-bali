@@ -101,7 +101,7 @@ const input = ref<HTMLInputElement>()
   <label
     ref="focusIn"
     :class="clsx(
-      'flex items-center input',
+      'flex items-center input overflow-hidden',
       className,
       {
         'gap-2': !!$slots.leftSection || !!$slots.rightSection,

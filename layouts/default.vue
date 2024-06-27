@@ -39,6 +39,13 @@
     </main>
     <FooterDefault />
     <UINotification />
+    <ClientOnly>
+      <Toaster
+        position="top-right"
+        richColors
+      />
+    </ClientOnly>
+
   </div>
 </template>
 

@@ -139,7 +139,7 @@ export default defineNuxtConfig({
   },
   build: {
     // @see https://github.com/fawmi/vue-google-maps/issues/150#issuecomment-1238108805
-    transpile: ["@fawmi/vue-google-maps", "@googlemaps/markerclusterer"],
+    transpile: ["@fawmi/vue-google-maps", "@googlemaps/markerclusterer", "vue-sonner"],
   },
   veeValidate: {
     autoImports: true,
