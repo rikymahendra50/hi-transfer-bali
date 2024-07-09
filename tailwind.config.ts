@@ -14,11 +14,13 @@ export default <Partial<Config>>{
       display: ["ClashGrotesk"],
       body: ["ClashGrotesk"],
     },
- 
+
     extend: {
       colors: {
         secondary: "#0C2815",
-        primary: "#51B749",
+        primary: "#42B235",
+        'primary-content': "#ffffff",
+        neutral: "#DDDDDD",
       },
       fontSize: {
         "text-sm": "clamp(0.8rem, 0.17vw + 0.76rem, 0.89rem)",
@@ -31,32 +33,32 @@ export default <Partial<Config>>{
         "text-5xl": "clamp(3.81rem, 5.18vw + 2.52rem, 6.66rem)",
         "text-6xl": " clamp(4.77rem, 7.48vw + 2.9rem, 8.88rem)",
       },
-      keyframes:{
-        popup:{
-          '0%':{
+      keyframes: {
+        popup: {
+          '0%': {
             transform: 'scaleX(0.7)',
             opacity: '0.2'
           },
-          '50%':{
+          '50%': {
             transform: 'scaleX(1.1)',
             opacity: '0.8'
           },
-          '100%':{
+          '100%': {
             transform: 'scaleX(1)',
             opacity: '1'
           },
 
         },
-        popin:{
-          '0%':{
+        popin: {
+          '0%': {
             transform: 'scaleX(1)',
             opacity: '1'
           },
-          '50%':{
+          '50%': {
             transform: 'scaleX(0.9)',
             opacity: '0.6'
           },
-          '100%':{
+          '100%': {
             transform: 'scaleX(0.7)',
             opacity: '0.2'
           },
@@ -69,10 +71,11 @@ export default <Partial<Config>>{
     themes: [
       {
         mytheme: {
-          primary: "#51B749",
+          primary: "#42B235",
+          "primary-content": "#ffffff",
           secondary: "#0C2815",
           accent: "#37cdbe",
-          neutral: "#3d4451",
+          neutral: "#DDDDDD",
           "base-100": "#ffffff"
         }
       }
@@ -82,7 +85,7 @@ export default <Partial<Config>>{
     styled: true, // include daisyUI colors and design decisions for all components
     utils: true, // adds responsive and modifier utility classes
     prefix: "", // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
-    logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
+    logs: false, // Shows info about daisyUI version and used config in the console when building your CSS
     themeRoot: ":root", // The element that receives theme color CSS variables
   },
 };

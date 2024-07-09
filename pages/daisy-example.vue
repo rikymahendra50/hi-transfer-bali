@@ -1,208 +1,213 @@
 <template>
-  <UIContainer class="space-y-4 pb-10">
-    <h1>Implement DaisyUI Example</h1>
-    <section>
-      <h3>Button</h3>
-      <UIBtn>Hallo</UIBtn>
-      <UIBtn
-        variant="primary"
-        shape="square"
-        size="md"
-      >
-        <Icon
-          name="i-heroicons-plus"
-          class="w-4 h-4"
-        />
-      </UIBtn>
-      <UIBtn variant="secondary">Secondary</UIBtn>
+  <UIContainer class=" pb-10">
+    <VeeForm
+      :validation-schema="schema"
+      @submit="onSubmit"
+    >
+      <div class="space-y-3">
+        <UIFormMGroup
+          name="first_name"
+          label="First Name"
+        >
+          <UIFormMTextField
+            v-model="dataForm.first_name"
+            name="first_name"
+            placeholder="ex: google account"
+          />
+          <template #description>
+            <p>Enter your first name</p>
+          </template>
+        </UIFormMGroup>
 
-      <UIBtn
-        variant="secondary"
-        loading
-      >Secondary</UIBtn>
-    </section>
+        <UIFormMGroup
+          name="last_name"
+          label="Last Name"
+        >
+          <UIFormMTextField
+            v-model="dataForm.last_name"
+            name="last_name"
+            placeholder="ex: google account"
+          />
 
-    <div class="max-w-md space-y-2">
-      <UIFormTextField
-        name="name"
-        v-model="text"
-        bordered
-        placeholder="Enter Name"
-      />
+        </UIFormMGroup>
 
-      <UIFormTextField
-        name="address"
-        v-model="address"
-        bordered
-        placeholder="Enter Name"
-      />
+        <UIFormMGroup
+          name="address"
+          label="Address"
+        >
+          <UIFormMTextarea
+            name="address"
+            placeholder="ex: google account"
+            v-model="dataForm.address"
+          />
+        </UIFormMGroup>
 
-      <UIFormTextField
-        name="name_last"
-        v-model="name"
-        bordered
-        placeholder="Enter Name"
-      />
-      <UIFormTextField
-        name="name_last"
-        v-model="name"
-        bordered
-        placeholder="Enter Name"
-      />
+        <UIFormMGroup
+          name="email"
+          label="Email"
+        >
+          <UIFormMTextField
+            v-model="dataForm.email"
+            name="email"
+            placeholder="ex: google account"
+          >
+            <template #leftSection>
+              <Icon name="i-heroicons-envelope" />
+            </template>
+          </UIFormMTextField>
 
-      <UIFormTextField
-        name="name_last"
-        v-model="name"
-        bordered
-        placeholder="Enter Name"
-      />
+        </UIFormMGroup>
+        <UIFormMGroup
+          name="gender"
+          label="Gender"
+        >
+          <UIFormMSelect
+            name="gender"
+            v-model="dataForm.gender"
+            placeholder="Select gender"
+          >
+            <option
+              value=""
+              selected
+              disabled
+            >Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </UIFormMSelect>
+        </UIFormMGroup>
 
+        <UIFormMGroup
+          name="password"
+          label="Password"
+        >
+          <UIFormMTextField
+            v-model="dataForm.password"
+            name="password"
+            placeholder="*********"
+            type="password"
+          >
+            <template #leftSection>
+              <Icon name="i-heroicons-key" />
+            </template>
+            <template #rightSection>
+              <Icon name="i-heroicons-eye" />
+            </template>
+          </UIFormMTextField>
 
-      <UIFormTextField
-        name="name_last"
-        v-model="name"
-        bordered
-        placeholder="Enter Name"
-      />
+        </UIFormMGroup>
+        <UIFormMGroup
+          name="confirm_password"
+          label="Confirm Password"
+        >
+          <UIFormMTextField
+            v-model="dataForm.confirm_password"
+            name="confirm_password"
+            placeholder="*********"
+            type="password"
+          >
+            <template #leftSection>
+              <Icon name="i-heroicons-key" />
+            </template>
+            <template #rightSection>
+              <Icon name="i-heroicons-eye" />
+            </template>
+          </UIFormMTextField>
 
-      <UIFormTextField
-        name="name_last"
-        v-model="name"
-        bordered
-        placeholder="Enter Name"
-      />
+        </UIFormMGroup>
 
-      <UIFormTextField
-        name="name_last"
-        v-model="name"
-        bordered
-        placeholder="Enter Name"
-      />
+        <UIFormMGroup
+          name="job"
+          label="Job"
+        >
+          <div class="flex flex-col space-y-1 py-2">
+            <UIFormRadio
+              v-model="dataForm.job"
+              name="job"
+              value="frontend"
+              label="Frontend"
+              variant="primary"
+            />
+            <UIFormRadio
+              v-model="dataForm.job"
+              name="job"
+              value="Backend"
+              label="Backend"
+              variant="primary"
+            />
+          </div>
 
-      <UIFormTextField
-        name="name_last"
-        v-model="name"
-        bordered
-        placeholder="Enter Name"
-      />
+        </UIFormMGroup>
+        <UIFormMGroup
+          name="hobby"
+          label="Hobby"
+        >
+          <div class="flex flex-col space-y-1 py-2">
+            <UIFormCheckbox
+              v-model="dataForm.hobby"
+              name="hobby"
+              value="music"
+              label="Music"
+              variant="primary"
+            />
+            <UIFormCheckbox
+              v-model="dataForm.hobby"
+              name="hobby"
+              value="gaming"
+              label="Gaming"
+              variant="primary"
+            />
 
-      <UIFormTextField
-        name="name_last"
-        v-model="name"
-        bordered
-        placeholder="Enter Name"
-      />
+          </div>
+        </UIFormMGroup>
 
-      <UIFormTextField
-        name="name_last"
-        v-model="name"
-        bordered
-        placeholder="Enter Name"
-      />
+        <UIBtn
+          type="submit"
+          variant="primary"
+          class="text-white"
+        >Submit</UIBtn>
+      </div>
 
-      <UIFormTextField
-        name="name_last"
-        v-model="name"
-        bordered
-        placeholder="Enter Name"
-      />
+    </VeeForm>
 
-      <UIFormTextField
-        name="name_last"
-        v-model="name"
-        bordered
-        placeholder="Enter Name"
-      />
-
-      <UIFormTextField
-        name="name_last"
-        v-model="name"
-        bordered
-        placeholder="Enter Name"
-      />
-
-
-
-    </div>
 
   </UIContainer>
 
-  <UIBtn @click="() => $toast('hallo')">Halo</UIBtn>
-  <UIBtn
-    variant="success"
-    @click="() => $toast.success('success', {
-      description: 'This is an example of notification have long confisiion  the before after go halo fhan makd'
-    })"
-  >success</UIBtn>
-  <UIBtn
-    variant='error'
-    @click="() => $toast.error('Something went wrong', {
-      description: 'This is an example of notification have long confisiion  the before after go halo fhan makd'
-    })"
-  >Error</UIBtn>
-
-  <UIBtn
-    variant='info'
-    @click="() => $toast.info('info', {
-      description: 'This is an example of notification have long confisiion  the before after go halo fhan makd'
-    })"
-  >Info</UIBtn>
-
-  <UIBtn
-    variant='warning'
-    @click="() => $toast.warning('Something went wrong', {
-      description: 'This is an example of notification have long confisiion  the before after go halo fhan makd'
-    })"
-  >warning</UIBtn>
 
 
 
 </template>
 
 <script setup lang="ts">
-const { pushNotification } = useNotification();
+import z from 'zod'
+import { toTypedSchema } from "@vee-validate/zod";
 
-const { $toast } = useNuxtApp()
+const dataForm = ref({
+  first_name: "",
+  last_name: "",
+  email: "",
+  gender: "",
+  address: "",
+  password: "",
+  confirm_password: "",
+  job: "",
+  hobby: []
+})
 
-const modal = ref(false);
-const ratingValue = ref();
-const toggle = ref(false);
-const togglex = ref(false);
-const text = ref("")
-const name = ref("")
+const schema = toTypedSchema(
+  z.object({
+    first_name: z.string().min(1, "First name is required"),
+    last_name: z.string().min(1, "Last name is required"),
+    gender: z.string().min(1, "Gender is required"),
+    email: z.string().email("Please enter a valid email"),
+    password: z.string().min(7, "Password should be at least 7 characters").max(50, "Password should be at most 50 characters"),
+    confirm_password: z.string().min(7, "Confirm Password should be at least 7 characters").max(50, "Confirm Password should be at most 50 characters"),
+  })
+)
 
-const address = ref("")
-const textarea = ref("")
 
-const exampleToggle = ref();
-
-const exampleRadio = ref("")
-
-const exampleSelect = ref("")
-
-const checkboxExample = ref([])
-
-const toggleXexample = ref(false)
-
-const inputkeyBoard = ref("abse")
-
-function onChange(value: string) {
-  inputkeyBoard.value = value
+function onSubmit() {
+  console.log(dataForm.value)
 }
-
-
-
-function exampleOfAddNotification(
-  type: "success" | "error" | "warning" | "info"
-) {
-  pushNotification({
-    type: type,
-    title: "payment success",
-    text: "This is an example of notification have long confisiion  the before after go halo fhan makd",
-  });
-
-}
-
 useHead({
   title: "DaisyUI Example",
 });

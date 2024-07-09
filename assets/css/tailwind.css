@@ -7,7 +7,6 @@
   * btn 
   */
 
-
   /**
   * badge
   */
@@ -121,7 +120,6 @@
     @apply rounded-md;
   }
 
-
   /**
   * table
   */
@@ -157,4 +155,16 @@
   .menu li > details > summary:active {
     @apply bg-primary text-white [@media(hover:hover)]:bg-primary [@media(hover:hover)]:text-white;
   }
+}
+
+/* Custom CSS for options */
+select option {
+  background-color: #ffffff; /* Example background color */
+  color: #333333 !important; /* Example text color */
+  padding: 8px 12px; /* Example padding */
+}
+
+/* Custom CSS for hover state */
+select option:hover {
+  background-color: #f0f0f0 !important; /* Example hover background color */
 }

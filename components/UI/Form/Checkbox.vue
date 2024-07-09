@@ -83,7 +83,7 @@ const {
 
 
 const checkboxClass = computed(() => {
-    return clsx('checkbox',
+    return clsx('checkbox  [--chkfg:white]',
         variants[variants.indexOf(`checkbox-${props.variant}`)],
         sizes[sizes.indexOf(`checkbox-${props.size}`)],
         props.class

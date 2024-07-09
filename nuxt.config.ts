@@ -1,7 +1,7 @@
 /**
  * replace with actual title or name of the project
  */
-const projectName = "nuxt-app";
+const projectName = "Hi Travel";
 /**
  * replace with actual description for seo
  */
@@ -41,7 +41,7 @@ export default defineNuxtConfig({
      * you can change the port number according to your needs
      *
      */
-    port: 3000,
+    port: 3013,
   },
   runtimeConfig: {
     public: {
