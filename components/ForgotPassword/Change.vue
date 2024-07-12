@@ -40,30 +40,30 @@ onMounted(() => {
         v-model="message"
         :type="alertType"
       />
-      <UIFormGroup
+      <UIFormMGroup
         label="Password"
         name="password"
       >
-        <UIFormTextField
+        <UIFormMTextField
           v-model="$credentialForgotPassword.password"
           name="password"
           placeholder="*******"
           type="password"
           class="input input-bordered"
         />
-      </UIFormGroup>
-      <UIFormGroup
+      </UIFormMGroup>
+      <UIFormMGroup
         label="Confirm Password"
         name="confirm_password"
       >
-        <UIFormTextField
+        <UIFormMTextField
           v-model="$credentialForgotPassword.confirm_password"
           name="confirm_password"
           type="password"
           placeholder="*******"
           class="input input-bordered"
         />
-      </UIFormGroup>
+      </UIFormMGroup>
       <div>
         <p class="text-gray-400">We will send a code to your email</p>
       </div>
@@ -71,7 +71,7 @@ onMounted(() => {
       <div>
         <UIBtn
           :disabled="loading"
-          variant="success"
+          variant="primary"
         >Submit</UIBtn>
       </div>
     </div>

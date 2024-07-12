@@ -35,24 +35,24 @@ const { loading, message, alertType, $credentialForgotPassword, $requestForgotPa
         v-model="message"
         :type="alertType"
       />
-      <UIFormGroup
+      <UIFormMGroup
         label="Email"
         name="email"
       >
-        <UIFormTextField
+        <UIFormMTextField
           name="email"
           v-model="$credentialForgotPassword.email"
           placeholder="ex:myemail@gmail.com"
           class="input-bordered"
         />
-      </UIFormGroup>
+      </UIFormMGroup>
       <div>
-        <p class="text-gray-400">We will send a code to your email</p>
+        <p class="text-gray-400 text-xs">We will send a code to your email</p>
       </div>
 
       <div>
         <UIBtn
-          variant="success"
+          variant="primary"
           type="submit"
           :disabled="loading"
         >

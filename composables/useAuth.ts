@@ -27,9 +27,9 @@ export default function (options?: useAuthOptions) {
 
   const { setErrorMessage, setSuccessMessage, message, alertType, transformErrors, loading } = useRequestHelper()
 
-  const { pushNotification } = useNotification()
-
   const { $Oauth, $OauthProviders } = useNuxtApp();
+
+  const { $toast } = useNuxtApp()
 
 
   // state 
@@ -418,11 +418,7 @@ export default function (options?: useAuthOptions) {
     if (response?.code) {
       _loginTokenGoogle(response?.code);
     } else {
-      pushNotification({
-        type: "error",
-        title: "Errors",
-        text: "Something went wrong. Please try again later.",
-      });
+      $toast.error("Something went wrong. Please try again later.");
     }
     loading.value = false;
   }
@@ -442,13 +438,7 @@ export default function (options?: useAuthOptions) {
     );
 
     if (error.value) {
-      pushNotification({
-        type: "error",
-        title: "Errors",
-        text:
-          error.value?.data?.message ??
-          "Something went wrong. Please try again later.",
-      });
+      $toast.error(error.value?.data?.message ?? "Something went wrong. Please try again later.");
     } else if (data.value?.token) {
 
       const role = Role.USER
@@ -656,12 +646,8 @@ export default function (options?: useAuthOptions) {
       setErrorMessage(error.value?.data?.message);
       ctx.setErrors(transformErrors(error.value?.data));
     } else {
-      pushNotification({
-        type: "success",
-        text:
-          data.value?.data?.message ??
-          "OTP has been sent to your email. Please check your email.",
-      });
+
+      $toast.success(data.value?.data?.message ?? "OTP has been sent to your email. Please check your email.")
       if (options?.callback) {
         options?.callback()
       }
@@ -687,12 +673,7 @@ export default function (options?: useAuthOptions) {
     if (error.value) {
       setErrorMessage(error.value?.data?.message);
     } else {
-      pushNotification({
-        type: "success",
-        text:
-          data.value?.data?.message ??
-          "OTP has been sent to your email. Please check your email.",
-      });
+      $toast.success(data.value?.data?.message ?? "OTP has been sent to your email. Please check your email.")
     }
     loading.value = false;
 
@@ -729,13 +710,7 @@ export default function (options?: useAuthOptions) {
       ctx.setErrors(transformErrors(error.value?.data));
     }
     else {
-      pushNotification({
-        type: "success",
-        title: "Success",
-        text:
-          data.value?.data?.message ??
-          "OTP has been sent to your email. Please check your email.",
-      });
+      $toast.success(data.value?.data?.message ?? "OTP has been sent to your email. Please check your email.")
       if (options?.callback) {
         options?.callback()
       }
@@ -779,13 +754,7 @@ export default function (options?: useAuthOptions) {
       ctx.setErrors(transformErrors(error.value?.data));
     }
     else {
-      pushNotification({
-        type: "success",
-        title: "Success",
-        text:
-          data.value?.data?.message ??
-          "Your password has been set. Please login with your new password.",
-      });
+      $toast.success(data.value?.data?.message ?? "Your password has been set. Please login with your new password.")
       if (options?.callback) {
         options?.callback()
       }

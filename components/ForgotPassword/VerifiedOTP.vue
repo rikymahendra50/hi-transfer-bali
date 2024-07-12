@@ -74,7 +74,7 @@ onMounted(async () => {
       </div>
       <div class="flex  justify-center">
         <div v-if="$countdownHelper.showExpired">
-          <p class="text-gray-400">If you did not receive the an email <span
+          <p class="text-gray-400 text-xs">If you did not receive the an email <span
               class="link"
               @click="resentEmail"
               role="button"
@@ -87,7 +87,7 @@ onMounted(async () => {
         <div>
           <div
             v-if="$countdownHelper.expiredTime > 0"
-            class="text-gray-400 text-sm"
+            class="text-gray-400 text-xs"
           >
             We have sent an OTP to your email.
             Your OTP will expired in <span class="whitespace-nowrap">
@@ -96,7 +96,7 @@ onMounted(async () => {
           </div>
 
           <div
-            class="text-error  text-sm"
+            class="text-error  text-xs"
             v-if="$countdownHelper.showExpired"
           >
             Your OTP has expired. Please request a new one
@@ -112,7 +112,7 @@ onMounted(async () => {
         <UIBtn
           type="submit"
           :disabled="loading"
-          variant="success"
+          variant="primary"
         >
           Submit
         </UIBtn>

@@ -1,16 +1,18 @@
 <template>
   <div>
-    <ComingSoon />
+    <div class="h-32"></div>
+    <HeroHomeBanner />
+    <UIContainer>
+      <TourHighLight />
+    </UIContainer>
+    <UIContainer>
+      <StepToJoin />
+    </UIContainer>
+    <ShareCtaSection />
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
-definePageMeta({
-  layout: "empty",
-})
+<script setup lang="ts">
 
 useHead({
   title: "Home",

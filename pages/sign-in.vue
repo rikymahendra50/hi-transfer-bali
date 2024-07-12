@@ -19,40 +19,46 @@ useHead({
   title: "Sign In",
 })
 
+definePageMeta({
+  layout: "auth"
+})
+
 
 </script>
 
 <template>
-  <div class="hero min-h-screen">
-    <div class="hero-content text-center">
-      <div class="max-w-md">
-        <h1 class="text-4xl font-bold mb-4">Sign In</h1>
+  <div>
+    <div>
+      <div class="w-full lg:w-[500px] border rounded-xl">
+        <div class="py-4">
+          <h1 class="text-xl text-center font-bold ">Sign In</h1>
+        </div>
 
         <VeeForm
           @submit="$login"
           :validation-schema="loginSchema"
         >
-          <div class="grid grid-cols-1 w-[450px] text-left gap-4 p-4 rounded-md shadow">
+          <div class="grid grid-cols-1 gap-4 p-6">
             <UIAlert
               v-model="message"
               :type="alertType"
             />
-            <UIFormGroup
+            <UIFormMGroup
               label="Email"
               name="email"
             >
-              <UIFormTextField
+              <UIFormMTextField
                 name="email"
                 v-model="$credentialForm.email"
                 class="input-bordered"
                 placeholder="ex:myemail@gmail.com"
               />
-            </UIFormGroup>
-            <UIFormGroup
+            </UIFormMGroup>
+            <UIFormMGroup
               label="Password"
               name="password"
             >
-              <UIFormTextField
+              <UIFormMTextField
                 name="password"
                 v-model="$credentialForm.password"
                 :type="inputType"
@@ -73,29 +79,34 @@ useHead({
                   />
                 </template>
 
-              </UIFormTextField>
-            </UIFormGroup>
+              </UIFormMTextField>
+            </UIFormMGroup>
             <div>
-              <NuxtLink
-                class="link link-hover text-sm"
-                to="/forgot-password"
-              >Forgot password?</NuxtLink>
+              <UIBtn
+                variant="primary"
+                type="submit"
+                :disabled="loading"
+                class="w-full"
+              >Submit</UIBtn>
+              <div class="flex justify-between items-center">
+                <div>
+                  <NuxtLink
+                    class="link link-hover text-xs text-neutral-400"
+                    to="/forgot-password"
+                  >Forgot password?</NuxtLink>
+                </div>
+                <div class="text-xs text-neutral-400">
+                  <p>Don't have an account? <NuxtLink
+                      to="/sign-up"
+                      class="link link-hover"
+                    >Sign Up</NuxtLink>
+                  </p>
+                </div>
+              </div>
             </div>
-            <div class="flex justify-between items-center">
-              <div>
-                <UIBtn
-                  variant="success"
-                  type="submit"
-                  :disabled="loading"
-                >Submit</UIBtn>
-              </div>
-              <div class="text-sm">
-                <p>Don't have an account? <NuxtLink
-                    to="/sign-up"
-                    class="link link-hover"
-                  >Sign Up</NuxtLink>
-                </p>
-              </div>
+            <div class="divider divider-neutral text-neutral-400 text-sm">Log in lebih cepat dengan</div>
+            <div>
+              <AuthSocialLogin />
             </div>
           </div>
         </VeeForm>

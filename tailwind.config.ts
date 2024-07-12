@@ -10,15 +10,16 @@ export default <Partial<Config>>{
   ],
   theme: {
     fontFamily: {
-      sans: ["ClashGrotesk"],
-      display: ["ClashGrotesk"],
-      body: ["ClashGrotesk"],
+      sans: ["PlusJakartaSans"],
+      display: ["PlusJakartaSans"],
+      body: ["PlusJakartaSans"],
     },
 
     extend: {
       colors: {
-        secondary: "#0C2815",
+        secondary: "#0C290A",
         primary: "#42B235",
+        'primary-dark': '#121212',
         'primary-content': "#ffffff",
         neutral: "#DDDDDD",
       },
@@ -73,7 +74,8 @@ export default <Partial<Config>>{
         mytheme: {
           primary: "#42B235",
           "primary-content": "#ffffff",
-          secondary: "#0C2815",
+          "primary-dark": "#121212",
+          secondary: "#0C290A",
           accent: "#37cdbe",
           neutral: "#DDDDDD",
           "base-100": "#ffffff"

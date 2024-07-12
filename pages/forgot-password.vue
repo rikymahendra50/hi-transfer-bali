@@ -1,10 +1,13 @@
 <template>
   <div class="hero min-h-screen">
     <div class="hero-content text-center">
-      <div class="max-w-md">
-        <h1 class="text-4xl font-bold mb-6">
-          {{ stepper.current.value.title }}
-        </h1>
+      <div class="max-w-[500px] border rounded-xl">
+        <div class="py-4 text-center">
+          <h1 class="text-xl font-bold ">
+            {{ stepper.current.value.title }}
+          </h1>
+
+        </div>
 
         <ForgotPassword
           v-model:email="$credentialForgotPassword.email"
@@ -31,10 +34,7 @@
   </div>
 </template>
 
-<script
-  lang="ts"
-  setup
->
+<script lang="ts" setup>
 import { useStepper } from "@vueuse/core";
 
 const router = useRouter();
@@ -63,7 +63,9 @@ const titleHeader = computed(() => {
 function goToHome() {
   router.push("/")
 }
-
+definePageMeta({
+  layout: "auth"
+})
 
 
 useHead({
