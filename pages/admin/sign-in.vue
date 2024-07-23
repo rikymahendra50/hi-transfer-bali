@@ -1,7 +1,4 @@
-<script
-    lang="ts"
-    setup
->
+<script lang="ts" setup>
 
 const { loginSchema } = useSchema()
 
@@ -33,55 +30,51 @@ useHead({
                     @submit="$login"
                     :validation-schema="loginSchema"
                 >
-                    <div class="grid grid-cols-1 w-[450px] text-left gap-4 p-4 rounded-md shadow">
-                        <Alert
+                    <div class="grid grid-cols-1 w-[450px] text-left gap-4 p-4 rounded-md ">
+                        <UIAlert
                             v-model="message"
                             :type="alertType"
                         />
-                        <FormGroup
+                        <UIFormMGroup
                             label="Email"
                             name="email"
                         >
-                            <FormTextField
+                            <UIFormMTextField
                                 name="email"
                                 v-model="$credentialForm.email"
                                 class="input-bordered"
                                 placeholder="ex:myemail@gmail.com"
                             />
-                        </FormGroup>
-                        <FormGroup
+                        </UIFormMGroup>
+                        <UIFormMGroup
                             label="Password"
                             name="password"
                         >
-                            <FormTextField
+                            <UIFormMTextField
                                 name="password"
                                 v-model="$credentialForm.password"
                                 type="password"
                                 class="input-bordered"
                                 placeholder="********"
                             />
-                        </FormGroup>
+                        </UIFormMGroup>
                         <div>
                             <NuxtLink
-                                class="link link-hover text-sm"
-                                to="/forgot-password"
+                                class="link link-hover text-xs opacity-50"
+                                to="/admin/forgot-password"
                             >Forgot password?</NuxtLink>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <button
-                                    class="btn btn-success"
-                                    type="submit"
-                                    :disabled="loading"
-                                >Submit</button>
-                            </div>
-                            <div class="text-sm">
-                                <p>Don't have an account? <NuxtLink
-                                        to="/sign-up"
-                                        class="link link-hover"
-                                    >Sign Up</NuxtLink>
-                                </p>
-                            </div>
+                        <div>
+
+                            <UIBtn
+                                type="submit"
+                                :disabled="loading"
+                                :loading="loading"
+                                variant="primary"
+                                class="w-full"
+                            >Submit</UIBtn>
+
+
                         </div>
                     </div>
                 </VeeForm>

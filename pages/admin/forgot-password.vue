@@ -34,10 +34,7 @@
     </div>
 </template>
 
-<script
-    lang="ts"
-    setup
->
+<script lang="ts" setup>
 import { useStepper } from "@vueuse/core";
 
 const router = useRouter();
