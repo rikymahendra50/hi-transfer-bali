@@ -42,23 +42,21 @@
                     <div class="flex flex-col h-full ">
 
                         <div class=" p-4 flex-grow flex-shrink h-full ">
-
-                            <div class="h-11"></div>
-                            <ul class="space-y-1 lg:space-y-2">
+                            <ul class="space-y-3 lg:space-y-3.5">
                                 <li
                                     v-for="item in linksAllowed"
                                     :key="item.to"
                                 >
                                     <NuxtLink
                                         :to="item.to"
-                                        class="inline-flex  items-center space-x-2.5 hover:bg-primary text-secondary hover:text-white transition-all duration-500 p-2 rounded-lg group w-full hover:scale-x-95"
-                                        active-class="bg-primary text-white"
+                                        class="inline-flex  ring-1 ring-primary ring-offset-1 items-center space-x-2.5 hover:bg-primary text-secondary hover:text-white transition-all duration-500 p-2 rounded-lg group w-full hover:scale-x-95 text-sm"
+                                        active-class="bg-primary !text-white"
                                     >
                                         <Icon
                                             :name="item.icon"
                                             class="h-5 w-5 opacity-80"
                                         />
-                                        <span class="text-lg">
+                                        <span class="text-sm">
                                             {{ item.label }}
                                         </span>
                                     </NuxtLink>
@@ -117,6 +115,10 @@ const linksAllowed = ref<{
         to: '/admin/vehicles',
         icon: 'i-heroicons-truck',
         label: 'Vehicles'
+    }, {
+        to: '/admin/tours',
+        icon: 'i-heroicons-calendar',
+        label: 'Tours'
     }
 ])
 
