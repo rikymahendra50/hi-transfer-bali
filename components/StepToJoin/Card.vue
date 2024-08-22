@@ -2,7 +2,7 @@
     <div class="space-y-4 border rounded-xl p-4">
         <h4 class="text-primary-dark text-2xl font-bold">{{ props.step.title }}</h4>
         <div class="text-zinc-400">
-            {{ props.step.decription }}
+            {{ props.step.description }}
         </div>
         <img
             :src="props.step.image"
@@ -15,7 +15,7 @@
 <script setup lang="ts">
 interface Step {
     title: string
-    decription: string
+    description: string
     image: string
 }
 const props = defineProps<{ step: Step }>()

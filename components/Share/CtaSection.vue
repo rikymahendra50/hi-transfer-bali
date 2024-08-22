@@ -6,7 +6,7 @@
                     keajaiban Bali?</h3>
                 <p class="text-base lg:text-xl text-white">
                     Enjoy a holiday experience in Bali with exciting activities
-                    and easy access to purchasing transport with Hi Travel Bali
+                    and easy access to purchasing transport with Hi Transfer Bali
                 </p>
                 <div>
                     <NuxtLink

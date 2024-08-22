@@ -13,7 +13,7 @@
             <div class="h-0.5 w-[80%] bg-zinc-300"></div>
             <div></div>
           </div>
-          <div class="max-w-2xl ">
+          <div class="max-w-4xl ">
             <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr_110px_1fr] gap-6 lg:gap-2">
               <div
                 v-for="link in links"
@@ -67,13 +67,12 @@
                   >
                     <div class="font-semibold">{{ item.title }}</div>
                     <a
-                      :to="item.link"
+                      :href="item.link"
                       target="_blank"
                       class="link link-hover inline-flex"
                     >
-                      <div class=" text-sm">
+                      <div class=" text-xs">
                         {{ item.label }}
-
                       </div>
                     </a>
                   </li>
@@ -90,7 +89,7 @@
     <div class="h-0.5 w-full bg-zinc-300"></div>
     <UIContainer>
       <div class="h-8 w-full text-center">
-        <p>©{{ fullYear }} Hi Travel Bali. All rights reserved. | Design & Development by <a
+        <p>©{{ fullYear }} Hi Transfer Bali. All rights reserved. | Design & Development by <a
             href="https://spdigitalagency.com"
             target="_blank"
           >s.p. Digital</a></p>
