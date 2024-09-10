@@ -4,7 +4,7 @@
             <div class="px-6 h-24 border-b flex flex-row items-center">
 
                 <NuxtLink
-                    class="link link-primary link-hover  p-1 underline-offset-8 decoration-4  rounded"
+                    class="link link-primary-dark-full link-hover  p-1 underline-offset-8 decoration-4  rounded"
                     active-class="font-medium"
                     to="/admin"
                 >
@@ -41,28 +41,37 @@
                 >
                     <div class="flex flex-col h-full ">
 
-                        <div class=" p-4 flex-grow flex-shrink h-full ">
-                            <ul class="space-y-3 lg:space-y-3.5">
-                                <li
-                                    v-for="item in linksAllowed"
-                                    :key="item.to"
-                                >
-                                    <NuxtLink
-                                        :to="item.to"
-                                        class="inline-flex  ring-1 ring-primary ring-offset-1 items-center space-x-2.5 hover:bg-primary text-secondary hover:text-white transition-all duration-500 p-2 rounded-lg group w-full hover:scale-x-95 text-sm"
-                                        active-class="bg-primary !text-white"
-                                    >
-                                        <Icon
-                                            :name="item.icon"
-                                            class="h-5 w-5 opacity-80"
-                                        />
-                                        <span class="text-sm">
-                                            {{ item.label }}
-                                        </span>
-                                    </NuxtLink>
-                                </li>
-                            </ul>
+                        <div
+                            class=" p-4 flex-grow flex-shrink h-full space-y-8 max-h-screen overflow-y-auto scrollbar-thin scroll-smooth">
 
+                            <div
+                                class="space-y-2"
+                                v-for="link in links"
+                                :key="link.title"
+                            >
+                                <h4 class="font-semibold text-zinc-400">{{ link.title }}</h4>
+                                <ul class="space-y-2 lg:space-y-3.5">
+                                    <li
+                                        v-for="itemChild in link.links"
+                                        :key="itemChild.to"
+                                    >
+                                        <NuxtLink
+                                            :to="itemChild.to"
+                                            class="inline-flex  ring-1 ring-zinc-300 ring-offset-1 items-center space-x-2.5 hover:bg-primary-dark-full hover:ring-primary-dark-full text-zinc-400 hover:text-white transition-all duration-500 p-3 rounded-lg group w-full hover:scale-x-95 text-sm"
+                                            active-class="bg-primary !text-white !ring-primary"
+                                            exact-active-class="bg-primary-dark-full !text-white !ring-primary-dark-full"
+                                        >
+                                            <Icon
+                                                :name="itemChild.icon"
+                                                class="h-5 w-5 opacity-80"
+                                            />
+                                            <span class="text-sm">
+                                                {{ itemChild.label }}
+                                            </span>
+                                        </NuxtLink>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="  mb-16 px-4 mt-10">
@@ -89,37 +98,111 @@
             <div class=" w-full absolute lg:static min-h-svh  overflow-y-auto space-y-6">
 
                 <main>
-                    <div class="p-4 lg:p-8">
-                        <slot />
-                    </div>
+                    <slot />
                 </main>
+                <UINotification />
 
             </div>
+
         </div>
+        <ClientOnly>
+            <Toaster
+                position="top-right"
+                richColors
+            />
+        </ClientOnly>
     </div>
 </template>
 
 <script setup lang="ts">
 import { breakpointsTailwind, useBreakpoints, onClickOutside } from '@vueuse/core'
 
-const linksAllowed = ref<{
-    to: string,
-    icon: string,
-    label: string
-}[]>([
+interface LinkItem {
+    title?: string,
+    links: {
+        to: string,
+        label: string,
+        icon: string
+    }[]
+}
+
+const links = ref<LinkItem[]>([
     {
-        to: '/admin',
-        icon: 'i-heroicons-home',
-        label: 'Dashboard'
+        title: "Orders",
+        links: [
+            {
+                to: "/admin",
+                label: "Orders",
+                icon: "bx:list-ol"
+            }
+        ]
     }, {
-        to: '/admin/vehicles',
-        icon: 'i-heroicons-truck',
-        label: 'Vehicles'
+        title: "Products",
+        links: [
+            {
+                to: "/admin/transport",
+                label: "Transport",
+                icon: "ic:round-directions-car"
+            },
+
+            {
+                to: "/admin/tours",
+                label: "Tour Activities",
+                icon: "icon-park-outline:beach-umbrella"
+            }
+        ]
     }, {
-        to: '/admin/tours',
-        icon: 'i-heroicons-calendar',
-        label: 'Tours'
+        title: "Locations",
+        links: [
+            {
+                to: "/admin/locations",
+                label: "Locations",
+                icon: "ph:map-pin-line"
+            },
+
+
+        ]
+    },
+
+    {
+        title: "Promo",
+        links: [
+            {
+                to: "/admin/promo",
+                label: "Promo",
+                icon: "heroicons:receipt-percent"
+            },
+        ]
+    },
+
+    {
+        title: "Others",
+        links: [
+            {
+                to: "/admin/blog",
+                label: "Blog",
+                icon: "heroicons:newspaper"
+            },
+        ]
+    },
+
+
+    {
+        title: "Users",
+        links: [
+            {
+                to: "/admin/users",
+                label: "Users",
+                icon: "i-heroicons-user-group"
+            },
+            {
+                to: "/admin/users/admins",
+                label: "Admins",
+                icon: "i-heroicons-user-group"
+            },
+        ]
     }
+
 ])
 
 const breakpoints = useBreakpoints(breakpointsTailwind)
