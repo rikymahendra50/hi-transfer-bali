@@ -57,7 +57,6 @@ export type AuthToken = string;
 export type AuthRole = Role;
 export type AuthProvider = Provider;
 
-
 interface LinksAPI {
   first: string;
   last: string;

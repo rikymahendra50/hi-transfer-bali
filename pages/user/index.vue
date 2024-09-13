@@ -1,19 +1,10 @@
 <template>
-  <div class="max-w-7xl mx-auto">
-    <button
-      @click="$logout()"
-      class="btn btn-primary"
-    >logout</button>
-  </div>
+  <div class="h-28"></div>
+  <div class="w-full border-b"></div>
 </template>
 
-<script
-  lang="ts"
-  setup
->
+<script setup lang="ts">
+const { $logout } = useAuth();
 
-const { $logout } = useAuth()
-
+useHead({ title: "Users" });
 </script>
-
-<style></style>

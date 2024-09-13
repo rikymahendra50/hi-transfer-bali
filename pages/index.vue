@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h-32"></div>
+    <div class="h-32" id="learnmore"></div>
     <HeroHomeBanner />
     <UIContainer>
       <TourHighLight />
@@ -13,10 +13,9 @@
 </template>
 
 <script setup lang="ts">
-
 useHead({
   title: "Home",
-})
+});
 </script>
 
 <style scoped></style>
