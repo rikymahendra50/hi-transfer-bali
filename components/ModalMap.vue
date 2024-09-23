@@ -1,4 +1,48 @@
-<script lang="ts" setup>
+<template>
+  <Teleport to="body">
+    <div v-if="showModal" class="modal-background"></div>
+    <Transition @before-enter="beforeEnter" @enter="enter" @leave="leave">
+      <dialog
+        v-if="showModal"
+        class="modal z-[99] !bg-transparent"
+        :class="{
+          'modal-open': showModal,
+        }"
+      >
+        <div
+          class="modal-content rounded-[10px] !bg-white py-3 w-[90%] px-3 md:w-[60%] overflow-auto h-[90%] md:h-fit"
+          v-bind="$attrs"
+          ref="modal"
+        >
+          <template v-if="showModal">
+            <div class="flex items-end justify-between pb-4 px-2">
+              <h3 class="font-semibold text-lg">{{ $t("dijemput-dimana") }}</h3>
+              <div class="">
+                <div
+                  @click="hideModal"
+                  class="px-1 flex items-center rounded-md cursor-pointer"
+                >
+                  <Icon name="ion:close" class="w-5 h-5" />
+                </div>
+              </div>
+            </div>
+            <!-- map -->
+            <Map
+              v-model:latitude="formData.latitude"
+              v-model:longitude="formData.longitude"
+              v-model:locationAddress="formData.locationAddress"
+              v-model:locationName="formData.locationName"
+              @hideModal="hideModal"
+            />
+            <!-- end map -->
+          </template>
+        </div>
+      </dialog>
+    </Transition>
+  </Teleport>
+</template>
+
+<script setup>
 import { onClickOutside } from "@vueuse/core";
 import gsap from "gsap";
 
@@ -17,7 +61,14 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits([
+  "update:modelValue",
+  "update:longitude",
+  "update:latitude",
+  "update:locationAddress",
+  "update:locationName",
+]);
+
 const modal = ref(null);
 
 const showModal = computed({
@@ -50,65 +101,58 @@ defineExpose({
   hideModal,
 });
 
-const beforeEnter = (el: any) => {
+const beforeEnter = (el) => {
   gsap.set(el, { y: 200, opacity: 0 });
 };
 
-const enter = (el: any, done: any) => {
+const enter = (el, done) => {
   gsap.to(el, { y: 0, opacity: 1, duration: 0.5, onComplete: done });
 };
 
-const leave = (el: any, done: any) => {
+const leave = (el, done) => {
   gsap.to(el, { y: 200, opacity: 0, duration: 0.5, onComplete: done });
 };
 
 const formData = ref({
   latitude: undefined,
   longitude: undefined,
+  locationAddress: undefined,
+  locationName: undefined,
 });
+
+watch(
+  () => formData.value.latitude,
+  (newValue, oldValue) => {
+    emit("update:latitude", newValue);
+  }
+);
+
+watch(
+  () => formData.value.longitude,
+  (newValue, oldValue) => {
+    emit("update:longitude", newValue);
+  }
+);
+
+watch(
+  () => formData.value.locationAddress,
+  (newValue, oldValue) => {
+    emit("update:locationAddress", newValue);
+  }
+);
+
+watch(
+  () => formData.value.locationName,
+  (newValue, oldValue) => {
+    emit("update:locationName", newValue);
+  }
+);
+
+// function updateValue(latitude, longitude) {
+//   emit("update:longitude", longitude.toString());
+//   emit("update:latitude", latitude.toString());
+// }
 </script>
-
-<template>
-  <Teleport to="body">
-    <div v-if="showModal" class="modal-background"></div>
-    <Transition @before-enter="beforeEnter" @enter="enter" @leave="leave">
-      <dialog
-        v-if="showModal"
-        class="modal !z-[9999] !bg-transparent"
-        :class="{
-          'modal-open': showModal,
-        }"
-      >
-        <div
-          class="modal-content rounded-[10px] !bg-white py-3 w-[90%] px-3 md:w-[60%] overflow-auto"
-          v-bind="$attrs"
-          ref="modal"
-        >
-          <template v-if="showModal">
-            <div class="flex items-end justify-between pb-4 px-2">
-              <h3 class="font-semibold text-lg">Dijemput dimana?</h3>
-              <div class="">
-                <div
-                  @click="hideModal"
-                  class="px-1 flex items-center rounded-md cursor-pointer"
-                >
-                  <Icon name="ion:close" class="w-5 h-5" />
-                </div>
-              </div>
-            </div>
-
-            <!-- map -->
-            <Map
-              v-model:latitude="formData.latitude"
-              v-model:longitude="formData.longitude"
-            />
-            <!-- end map -->
-          </template>
-        </div>
-      </dialog>
-    </Transition>
-  </Teleport>
-</template>
 
 <style scoped>
 .modal-background {
@@ -118,7 +162,6 @@ const formData = ref({
   width: 100%;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.2);
-  z-index: 9998;
 }
 
 .modal {

@@ -231,8 +231,10 @@ export default function (options?: useAuthOptions) {
     useCookie("auth-token").value = null;
     // redirect to default login page
     if (redirectUrl) {
+      // console.log(redirectUrl);
       window.location.replace(redirectUrl);
     } else {
+      // console.log(defaultRedirect);
       window.location.replace(defaultRedirect);
     }
   }

@@ -21,7 +21,6 @@
           @blur="handleBlur"
           :class="className"
           v-bind="$attrs"
-          :step="step1"
           :autocomplete="autocomplete"
           readonly
           :value="inputValue"
@@ -39,7 +38,6 @@
           @blur="handleBlur"
           :class="className"
           v-bind="$attrs"
-          :step="step1"
           :autocomplete="autocomplete"
           readonly
           :value="inputValue"
@@ -157,6 +155,7 @@ const emit = defineEmits(["update:modelValue", "getId"]);
 function selectOption(option, value) {
   inputValue.value = option;
 
+  emit("update:modelValue", option);
   emit("getId", value);
 
   isDropdownOpen.value = false;

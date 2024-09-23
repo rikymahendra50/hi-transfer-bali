@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 const { loginSchema } = useSchema();
+const { locale, t: $t } = useI18n();
 
 const router = useRouter();
 
@@ -30,8 +31,7 @@ definePageMeta({
           Dasbor Admin
         </h1>
         <p class="text-sm md:text-[18px] text-[#121212] font-normal">
-          Selamat datang di Dashboard Admin Hi Travel Bali, silakan gunakan akun
-          terdaftar untuk login
+          {{ $t("selamat-datang-di-dashboard") }}
         </p>
 
         <VeeForm @submit="$login" :validation-schema="loginSchema">
@@ -41,7 +41,7 @@ definePageMeta({
                 name="email"
                 v-model="$credentialForm.email"
                 class="input-bordered"
-                placeholder="Ketik Email Anda"
+                :placeholder="$t('ketik-email-anda')"
               />
             </UIFormMGroup>
             <UIFormMGroup label="Password" name="password">

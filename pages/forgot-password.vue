@@ -3,10 +3,9 @@
     <div class="hero-content text-center">
       <div class="max-w-[500px] border rounded-xl">
         <div class="py-4 text-center">
-          <h1 class="text-xl font-bold ">
+          <h1 class="text-xl font-bold">
             {{ stepper.current.value.title }}
           </h1>
-
         </div>
 
         <ForgotPassword
@@ -28,7 +27,6 @@
           :pin="$credentialForgotPassword.pin"
           @next="goToHome"
         />
-
       </div>
     </div>
   </div>
@@ -36,12 +34,13 @@
 
 <script lang="ts" setup>
 import { useStepper } from "@vueuse/core";
+const { locale, t: $t } = useI18n();
 
 const router = useRouter();
 
 const stepper = useStepper({
   "forgot-password": {
-    title: "Forgot Password",
+    title: $t("lupa-password-?"),
     isValid: () => true,
   },
   otp: {
@@ -49,27 +48,26 @@ const stepper = useStepper({
     isValid: () => true,
   },
   "change-password": {
-    title: "Change Password",
+    title: $t("change-password"),
     isValid: () => true,
   },
 });
 
-const { $credentialForgotPassword } = useAuth()
+const { $credentialForgotPassword } = useAuth();
 
 const titleHeader = computed(() => {
-  return stepper.current?.value?.title ?? "Forgot Password"
-})
+  return stepper.current?.value?.title ?? $t("lupa-password-?");
+});
 
 function goToHome() {
-  router.push("/")
+  router.push("/");
 }
 definePageMeta({
-  layout: "auth"
-})
-
+  layout: "auth",
+});
 
 useHead({
-  title: titleHeader.value
+  title: titleHeader.value,
 });
 </script>
 

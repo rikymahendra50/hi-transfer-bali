@@ -21,23 +21,23 @@
               <li>
                 <LanguageSwitch />
               </li>
-              <li>
-                <NuxtLink
-                  class="btn btn-primary btn-outline"
-                  to="/sign-in"
-                >Masuk</NuxtLink>
+              <!-- <li>
+                <NuxtLink class="btn btn-primary btn-outline" to="/sign-in"
+                  >Masuk</NuxtLink
+                >
               </li>
               <li>
-                <NuxtLink
-                  class="btn btn-primary"
-                  to="/sign-up"
-                >Daftar</NuxtLink>
+                <NuxtLink class="btn btn-primary" to="/sign-up"
+                  >Daftar</NuxtLink
+                >
+              </li> -->
+              <li>
+                <ShareLoginRegister />
               </li>
             </ul>
           </div>
         </nav>
       </div>
-
     </header>
 
     <main>
@@ -45,12 +45,8 @@
     </main>
     <FooterDefault />
     <ClientOnly>
-      <Toaster
-        position="top-right"
-        richColors
-      />
+      <Toaster position="top-right" richColors />
     </ClientOnly>
-
   </div>
 </template>
 

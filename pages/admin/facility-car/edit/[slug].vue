@@ -1,7 +1,7 @@
 <template>
   <div class="px-5 py-6 md:px-10 md:py-10">
     <TitleBack link="/admin/facility-car" title="Edit fasilitas" />
-    <UIFormFacilityCar buttonTitle="Edit Fasilitas" :facility="data" />
+    <UIFormFacilityCar buttonTitle="Edit Fasilitas" :facility="data?.data" />
   </div>
 </template>
 

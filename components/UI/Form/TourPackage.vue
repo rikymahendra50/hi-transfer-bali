@@ -1,6 +1,8 @@
 <template>
   <VeeForm
-    :validation-schema="tourPackageSchema"
+    :validation-schema="
+      props.tourPackage ? tourPackageSchemaEdit : tourPackageSchema
+    "
     @submit="onSubmit"
     v-slot="{ errors }"
   >
@@ -15,7 +17,18 @@
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
         />
+        <UIFormTextFieldWLabel
+          v-if="props.tourPackage"
+          label="Harga"
+          name="price"
+          placeholder="Harga"
+          v-model="dataForm.price"
+          class="input-bordered shadow-sm focus:outline-none"
+          :useStarIcon="false"
+          :disabled="isVaried === true || isVaried === 1"
+        />
         <UIFormInputNumber
+          v-else-if="!props.tourPackage"
           label="Harga"
           name="price"
           placeholder="Harga"
@@ -23,6 +36,67 @@
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
         />
+
+        <UIFormInputNumber
+          label="Max person"
+          name="max_person"
+          placeholder="Max person"
+          v-model="dataForm.max_person"
+          class="input-bordered shadow-sm focus:outline-none"
+          :useStarIcon="false"
+        />
+
+        <UIFormDropdownOnlyTwo
+          label="Status Active"
+          name="is_active"
+          placeholder="Status Active"
+          @getId="funcGetIdStatus"
+          v-model="statusActive"
+          :dataDropdown="dataDropdown"
+          class="input-bordered shadow-sm focus:outline-none"
+          :useStarIcon="false"
+        />
+
+        <UIFormDropdownsTest
+          label="Locations"
+          name="locations"
+          placeholder="Locations"
+          class="mt-1"
+          :dataDropdown="data?.data"
+          v-model="dataForm.locations"
+          :dataSelected="props.tourPackage?.locations ?? []"
+          @getId="funcGetIdLocation"
+        />
+
+        <!-- meta -->
+        <TabContent>
+          <TabItem
+            name="EN"
+            group="meta"
+            checked
+            :is-error="!!errors['meta[en]']"
+          >
+            <UIFormGroup label="Meta Description" name="meta[en]">
+              <UIFormSpTextarea
+                name="meta[en]"
+                v-model="dataForm['meta[en]']"
+                class="select-bordered"
+                placeholder="e.g. My Blog Description"
+              />
+            </UIFormGroup>
+          </TabItem>
+          <TabItem name="ID" group="meta" :is-error="!!errors['meta[id]']">
+            <UIFormGroup label="(ID) Meta Description" name="meta">
+              <UIFormSpTextarea
+                name="meta[id]"
+                v-model="dataForm['meta[id]']"
+                class="select-bordered"
+                placeholder="e.g. My Blog Description"
+              />
+            </UIFormGroup>
+          </TabItem>
+        </TabContent>
+        <!-- end meta -->
       </div>
     </div>
 
@@ -34,32 +108,76 @@
           name="EN"
           group="description"
           checked
-          :is-error="!!errors['body[en]']"
+          :is-error="!!errors['description[en]']"
         >
-          <UIFormGroup label="Ringkasan English" name="body">
+          <UIFormGroup label="Ringkasan English" name="description">
             <UIFormEditor
-              v-model="dataForm['body[en]']"
-              :is-errors="!!errors.body"
+              v-model="dataForm['description[en]']"
+              :is-errors="!!errors.description"
             />
-            <VeeErrorMessage name="body[en]" class="form-error-message" />
+            <VeeErrorMessage
+              name="description[en]"
+              class="form-error-message"
+            />
           </UIFormGroup>
         </TabItem>
-        <TabItem name="ID" group="description" :is-error="!!errors['body[id]']">
-          <UIFormGroup label="Ringkasan Indonesia" name="body[id]">
+        <TabItem
+          name="ID"
+          group="description"
+          :is-error="!!errors['description[id]']"
+        >
+          <UIFormGroup label="Ringkasan Indonesia" name="description[id]">
             <UIFormEditor
-              v-model="dataForm['body[id]']"
-              :is-errors="!!errors?.['body[id]']"
+              v-model="dataForm['description[id]']"
+              :is-errors="!!errors?.['description[id]']"
             />
-            <VeeErrorMessage name="body[id]" class="form-error-message" />
+            <VeeErrorMessage
+              name="description[id]"
+              class="form-error-message"
+            />
           </UIFormGroup>
         </TabItem>
       </TabContent>
       <!-- end text editor -->
 
       <div class="hidden">
-        <VeeField name="body[en]" v-model="dataForm['body[en]']" />
-        <VeeField name="body[id]" v-model="dataForm['body[id]']" />
+        <VeeField
+          name="description[en]"
+          v-model="dataForm['description[en]']"
+        />
+        <VeeField
+          name="description[id]"
+          v-model="dataForm['description[id]']"
+        />
       </div>
+    </div>
+
+    <!-- is varied -->
+    <div class="form-control max-w-max mt-3">
+      <VeeField name="is_varied" :value="dataForm.is_varied" v-slot="{ field }">
+        <label class="label cursor-pointer">
+          <input
+            type="checkbox"
+            class="toggle toggle-primary"
+            v-bind="field"
+            v-model="dataForm.is_varied"
+            :true-value="1"
+            :false-value="0"
+          />
+          <span class="label-text ml-2">Varied</span>
+        </label>
+      </VeeField>
+    </div>
+    <!-- is varied -->
+
+    <div class="">
+      <template v-if="dataForm.is_varied">
+        <UIFormTurVariant
+          v-model="dataForm.variants"
+          :locations="props.locations"
+          :errors="errors"
+        />
+      </template>
     </div>
 
     <div class="flex items-center justify-between mt-6">
@@ -80,92 +198,95 @@
 </template>
 
 <script setup>
-const { tourPackageSchema } = useSchema();
+const { tourPackageSchema, tourPackageSchemaEdit } = useSchema();
+const { requestOptions } = useRequestOptions();
+const route = useRoute();
+const {
+  dataForm,
+  onSubmit,
+  message,
+  alertType,
+  loading,
+  existingImage,
+  selectedTourPackage,
+} = useTourPackage({ callback: redirect });
 
-const props = defineProps({ TourPackage: { type: [Array, Object] } });
+const props = defineProps({ tourPackage: { type: [Array, Object] } });
 const router = useRouter();
+const statusActive = ref();
+const isVaried = computed(() => {
+  return dataForm.value.is_varied;
+});
 
-const selectedTourPackage = ref();
+const { data, error, refresh } = await useAsyncData("locations", () =>
+  $fetch(`/admins/locations-all`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
+
+function funcGetIdLocation(ids) {
+  dataForm.value.locations = Array.isArray(ids) ? ids : [ids];
+}
+
+function funcGetIdStatus(data) {
+  dataForm.value.is_active = data;
+}
 
 onMounted(async () => {
-  if (props.TourPackage) {
-    selectedTourPackage.value = props.TourPackage;
-    props.TourPackage.name = dataForm.value.name;
-    props.TourPackage.price = dataForm.value.price;
-    props.TourPackage.body = dataForm.value.body;
+  if (props.tourPackage) {
+    selectedTourPackage.value = props.tourPackage;
+    dataForm.value.name = props.tourPackage?.name;
+    dataForm.value.price = props.tourPackage?.price;
+    dataForm.value.max_person = props.tourPackage?.max_person;
+    dataForm.value.is_varied = props.tourPackage?.is_varied;
+    dataForm.value["description[en]"] =
+      props.tourPackage?.description.find((item) => item.language === "en")
+        ?.translation || "";
+    dataForm.value["description[id]"] =
+      props.tourPackage?.description.find((item) => item.language === "id")
+        ?.translation || "";
+    statusActive.value =
+      props.tourPackage?.is_active === 0 ? "Tidak Tersedia" : "Tersedia";
+    dataForm.value.is_active = props.tourPackage?.is_active;
+    dataForm.value.locations = props.tourPackage?.locations.map(
+      (location) => location.id
+    );
+
+    // dataForm.value.variants = props.tourPackage?.variants;
+
+    dataForm.value.variants =
+      props.tourPackage?.variants.map((variant) => ({
+        name: variant.name,
+        price: variant.price,
+        description: {
+          en:
+            variant.description.find((item) => item.language === "en")
+              ?.translation || "",
+          id:
+            variant.description.find((item) => item.language === "id")
+              ?.translation || "",
+        },
+      })) || [];
+
+    console.log(dataForm.value.variants);
   }
 });
 
-const dataForm = ref({
-  name: undefined,
-  price: undefined,
-  body: undefined,
-});
+function redirect() {
+  router.push("/admin/tour-package");
+}
 
-// function redirect() {
-//   router.push("/admin/transport");
-// }
-
-// const {
-//   dataForm,
-//   onSubmit,
-//   message,
-//   alertType,
-//   loading,
-//   existingImage,
-//   selectedTransport,
-// } = useTransport({ callback: redirect });
-
-// const selectedImageThumbnail = ref();
-
-// const dataDropdown = ref([
-//   {
-//     id: 1,
-//     name: "Tersedia",
-//   },
-//   {
-//     id: 2,
-//     name: "Tidak Tersedia",
-//   },
-// ]);
-
-// const dataDropdownPengemudi = ref([
-//   {
-//     id: 1,
-//     name: "Eren",
-//   },
-//   {
-//     id: 2,
-//     name: "Spongebob",
-//   },
-// ]);
-
-// function funcGetIdStatus(data) {
-//   dataForm.status = data;
-// }
-
-// function funcGetIdDriver(data) {
-//   dataForm.driver = data;
-// }
-
-// const dropdownOptions = ref([
-//   { id: 1, name: "Option 1", value: "option1" },
-//   { id: 2, name: "Option 2", value: "option2" },
-//   { id: 3, name: "Option 3", value: "option3" },
-//   { id: 4, name: "Option 4", value: "option4" },
-// ]);
-
-// const selectedValues = ref([]);
-// const selectedIds = ref([]);
-
-// function funcGetIdFacility(ids) {
-//   if (!selectedIds.value.includes(ids)) {
-//     selectedIds.value.push(ids); // Store the selected option IDs
-//   } else {
-//     const index = selectedIds.value.indexOf(ids);
-//     if (index !== -1) {
-//       selectedIds.value.splice(index, 1); // Remove the ID if unselected
-//     }
-//   }
-// }
+const dataDropdown = ref([
+  {
+    id: 1,
+    name: "Tersedia",
+    value: 1,
+  },
+  {
+    id: 2,
+    name: "Tidak Tersedia",
+    value: 0,
+  },
+]);
 </script>

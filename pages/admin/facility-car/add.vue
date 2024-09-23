@@ -6,10 +6,10 @@
 </template>
 
 <script setup>
-// const { loading, transformErrors } = useRequestHelper();
-// const { requestOptions } = useRequestOptions();
-// const router = useRouter();
-// const route = useRoute();
+const { loading, transformErrors } = useRequestHelper();
+const { requestOptions } = useRequestOptions();
+const router = useRouter();
+const route = useRoute();
 
 definePageMeta({
   layout: "admin",

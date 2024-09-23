@@ -3,14 +3,14 @@
     title="Ringkasan Pesanan"
     subTitle="Informasi lengkap untuk pesanan TP12356780"
   >
-    <div>
+    <!-- <div>
       <UIFormMGroup name="sort" label="Urut berdasarkan">
         <UIFormMSelect v-model="status.sort" name="sort">
           <option value="">Sudah Bayar</option>
           <option value="recommended">Belum bayar</option>
         </UIFormMSelect>
       </UIFormMGroup>
-    </div>
+    </div> -->
   </TitleAdmin>
 
   <div class="px-5 py-4 flex flex-col gap-3 border-b">

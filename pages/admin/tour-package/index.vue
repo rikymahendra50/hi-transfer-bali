@@ -3,12 +3,7 @@
     title="Kelola Produk: Paket Tur"
     subTitle="Kelola paket tur Anda disini"
   >
-    <NuxtLink
-      to="/admin/tour-package/add"
-      class="border-2 py-4 px-6 rounded-[8px] shadow-xs font-medium text-black"
-    >
-      Tambah Paket tur
-    </NuxtLink>
+    <ButtonAddAdmin link="/admin/tour-package/add" name="Tambah paket baru" />
   </TitleAdmin>
 
   <table class="table">
@@ -26,12 +21,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr v-for="item in data?.data">
         <td class="text-sm font-normal">
-          <div class="font-medium text-[14px] text-black">Paket Tour</div>
+          <div class="font-medium text-[14px] text-black">{{ item?.name }}</div>
         </td>
-        <td class="text-sm font-normal text-[#989393]">Rp. 50.000</td>
-        <td class="text-sm font-normal text-[#989393]">Tersedia</td>
+        <td class="text-sm font-normal text-[#989393]">
+          Rp. {{ item?.price }}
+        </td>
+        <td class="text-sm font-normal text-[#989393]">
+          {{ item?.is_active === 1 ? "Tersedia" : "Tidak tersedia" }}
+        </td>
         <td>
           <div class="flex items-center">
             <VDropdown>
@@ -43,21 +42,27 @@
               <template #popper="{ hide }">
                 <div class="bg-white flex flex-col shadow">
                   <NuxtLink
-                    :to="`/admin/tour-package/slug/images`"
+                    :to="`/admin/tour-package/${item.slug}/images`"
                     class="hover:bg-orange-400 hover:text-white py-3 px-5 text-sm"
                   >
                     Upload Gambar
                   </NuxtLink>
                   <NuxtLink
-                    :to="`/admin/tour-package/slug/edit`"
+                    :to="`/admin/tour-package/${item.slug}/edit`"
                     class="hover:bg-orange-400 hover:text-white py-3 px-5 text-sm"
                   >
                     Edit
                   </NuxtLink>
                   <div
-                    class="flex items-start justify-start w-full hover:bg-red-600 hover:text-white text-sm"
+                    class="flex items-start justify-start w-full hover:bg-red-600 hover:text-white text-sm py-3 px-5"
+                    @click="showModalDeleteFunc(hide, item.slug)"
                   >
-                    <button type="button" class="py-3 px-5">Delete</button>
+                    <button
+                      type="button"
+                      class="hover:bg-red-600 hover:text-white"
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               </template>
@@ -74,8 +79,8 @@
     <div class="flex items-center gap-3">
       <div class="py-2 px-3 rounded-[8px]">
         <p class="font-medium text-[12px] md:text-sm text-[#121212]">
-          <!-- {{ decks?.meta?.from }} - {{ decks?.meta?.to }} of
-              {{ decks?.meta?.total }} card decks -->
+          {{ data?.meta?.from }} - {{ data?.meta?.to }} of
+          {{ data?.meta?.total }} item
         </p>
       </div>
     </div>
@@ -90,9 +95,54 @@
     </div>
   </div>
   <!-- {{ data }} -->
+  <!-- modal -->
+  <modal
+    v-model="showModalDelete"
+    class="relative w-[90%] sm:w-[60%] lg:w-[40%]"
+  >
+    <div
+      class="flex justify-center items-center flex-col p-2 sm:p-5 lg:p-10 overflow-auto"
+    >
+      <div
+        class="flex flex-col items-center gap-3 lg:gap-5 text-center transition h-full"
+      >
+        <Icon
+          name="ph:trash-duotone"
+          style="color: #ff0000"
+          class="w-12 h-12 md:w-20 md:h-20"
+        />
+        <p>Apakah anda yakin untuk menghapus tour package ini ?</p>
+      </div>
+      <div
+        class="grid grid-cols-1 lg:grid-cols-2 w-full gap-y-4 md:gap-x-6 mt-5"
+      >
+        <div
+          class="btn bg-transparent border shadow"
+          @click="showModalDelete = false"
+        >
+          <span>Batal</span>
+        </div>
+        <div
+          @click.prevent="
+            deleteTourPackage(currentId), (showModalDelete = false)
+          "
+          class="btn bg-red-600 text-white shadow"
+        >
+          <span>Hapus</span>
+        </div>
+      </div>
+    </div>
+  </modal>
+  <!-- end modal -->
 </template>
 
 <script setup lang="ts">
+const { transformErrors } = useRequestHelper();
+const { requestOptions } = useRequestOptions();
+const router = useRouter();
+const route = useRoute();
+import { withQuery } from "ufo";
+
 definePageMeta({
   layout: "admin",
   // @ts-ignore
@@ -114,12 +164,43 @@ const { data, error, refresh } = await useAsyncData("tours", () =>
   })
 );
 
+const { selectedTourPackage, deleteTourPackage, loading } = useTourPackage({
+  callback: refresh,
+});
+
+onMounted(async () => {
+  if (route.query.page) {
+    page.value = Number(route.query.page);
+  }
+});
+
+watch(page, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    start();
+  }
+});
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+function replaceWindow() {
+  router.replace(
+    withQuery("/admin/tour-package", {
+      page: page.value,
+    })
+  );
+  refresh();
+}
+
 function showModalDeleteFunc(hide, id) {
   showModalDelete.value = !showModalDelete.value;
   hide();
 
   if (showModalDelete.value) {
     currentId.value = id;
+  } else {
+    currentId.value = undefined;
   }
 }
 </script>

@@ -46,26 +46,26 @@ export default function (options: Options = {}) {
     }
   }
 
-  async function createTransport(ctx: SubmissionContext) {
-    if (!dataForm.value.image) {
-      ctx.setErrors({
-        image: "Image is required",
-      });
-
-      return;
-    }
-
+  const createTransport = async (ctx: SubmissionContext) => {
     const formData = new FormData();
-
     loading.value = true;
 
+    const uniqueFacilities = [...new Set(dataForm.value.facilities)];
+
     for (const item in dataForm.value) {
-      // @ts-ignore
-      const objectItem = dataForm.value[item];
-      formData.append(item, objectItem);
+      if (item === "facilities") {
+        uniqueFacilities.forEach((facility, index) => {
+          formData.append(`facilities[${index}]`, facility);
+        });
+      } else {
+        // @ts-ignore
+        const objectItem = dataForm.value[item];
+        formData.append(item, objectItem);
+      }
     }
 
     await $fetch<CommonResponse<{ message: string }>>("/admins/cars", {
+      headers: { Accept: "Application/json" },
       method: "POST",
       body: formData,
       ...requestOptions,
@@ -86,16 +86,23 @@ export default function (options: Options = {}) {
       });
 
     loading.value = false;
-  }
+  };
 
   const updateTransport = async (ctx: SubmissionContext) => {
     const formData = new FormData();
     loading.value = true;
 
+    // Tambahkan field lain ke FormData
     for (const item in dataForm.value) {
-      // @ts-ignore
-      const objectItem = dataForm.value[item];
-      formData.append(item, objectItem);
+      if (item === "facilities") {
+        dataForm.value.facilities.forEach((facility, index) => {
+          formData.append(`facilities[${index}]`, facility);
+        });
+      } else {
+        // @ts-ignore
+        const objectItem = dataForm.value[item];
+        formData.append(item, objectItem);
+      }
     }
 
     if (!dataForm.value.image) {
@@ -105,6 +112,9 @@ export default function (options: Options = {}) {
     await $fetch<CommonResponse<{ message: string }>>(
       `/admins/cars/${selectedTransport.value?.slug}?_method=PUT`,
       {
+        headers: {
+          Accept: "Application/json",
+        },
         method: "POST",
         body: formData,
         ...requestOptions,
@@ -187,5 +197,6 @@ export default function (options: Options = {}) {
     existingImage,
     onSubmit,
     deleteTransport,
+    loading,
   };
 }

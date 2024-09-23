@@ -1,49 +1,47 @@
 <script setup lang="ts">
-
-
 interface Prop {
-  email: string
-  pin: string
-  usedBy: "user" | "admin"
+  email: string;
+  pin: string;
+  usedBy: "user" | "admin";
 }
 
 const props = withDefaults(defineProps<Prop>(), {
-  usedBy: "user"
-})
+  usedBy: "user",
+});
 
-const router = useRouter()
+const router = useRouter();
 
 function updateToParent() {
-  router.push(props.usedBy === 'user' ? '/sign-in' : '/admin/sign-in')
+  router.push(props.usedBy === "user" ? "/sign-in" : "/admin/sign-in");
 }
 
-const { loading, message, alertType, $setNewPasswordForgotPassword, $credentialForgotPassword } = useAuth({
+const {
+  loading,
+  message,
+  alertType,
+  $setNewPasswordForgotPassword,
+  $credentialForgotPassword,
+} = useAuth({
   usedBy: props.usedBy,
-  callback: updateToParent
-})
-const { resetPasswordSchema } = useSchema()
+  callback: updateToParent,
+});
+const { resetPasswordSchema } = useSchema();
 
 onMounted(() => {
-  $credentialForgotPassword.value.email = props.email
-  $credentialForgotPassword.value.pin = props.pin
-})
-
-
+  $credentialForgotPassword.value.email = props.email;
+  $credentialForgotPassword.value.pin = props.pin;
+});
 </script>
 <template>
   <VeeForm
     @submit="$setNewPasswordForgotPassword"
     :validation-schema="resetPasswordSchema"
   >
-    <div class="grid grid-cols-1 w-[450px] text-left gap-4 p-4 rounded-md shadow">
-      <UIAlert
-        v-model="message"
-        :type="alertType"
-      />
-      <UIFormMGroup
-        label="Password"
-        name="password"
-      >
+    <div
+      class="grid grid-cols-1 w-[450px] text-left gap-4 p-4 rounded-md shadow"
+    >
+      <UIAlert v-model="message" :type="alertType" />
+      <UIFormMGroup label="Password" name="password">
         <UIFormMTextField
           v-model="$credentialForgotPassword.password"
           name="password"
@@ -52,10 +50,7 @@ onMounted(() => {
           class="input input-bordered"
         />
       </UIFormMGroup>
-      <UIFormMGroup
-        label="Confirm Password"
-        name="confirm_password"
-      >
+      <UIFormMGroup label="Confirm Password" name="confirm_password">
         <UIFormMTextField
           v-model="$credentialForgotPassword.confirm_password"
           name="confirm_password"
@@ -65,19 +60,14 @@ onMounted(() => {
         />
       </UIFormMGroup>
       <div>
-        <p class="text-gray-400">We will send a code to your email</p>
+        <p class="text-gray-400">{{ $t("kami-akan-mengirimkan") }}</p>
       </div>
 
       <div>
-        <UIBtn
-          :disabled="loading"
-          variant="primary"
-        >Submit</UIBtn>
+        <UIBtn :disabled="loading" variant="primary">Submit</UIBtn>
       </div>
     </div>
   </VeeForm>
 </template>
-
-
 
 <style scoped></style>

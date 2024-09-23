@@ -14,6 +14,7 @@ export default function () {
   async function clearCredential() {
     if (process.client) {
       useCookie("auth-token").value = null;
+      console.log(defaultRedirect);
       window.location.replace(defaultRedirect);
     }
   }

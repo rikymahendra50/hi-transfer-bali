@@ -50,6 +50,19 @@ export default function () {
     object({
       first_name: firstNameField,
       last_name: lastNameField,
+      phone: string()
+        .min(1, "Telepon harus diisi")
+        .transform((value, ctx) => {
+          const parsed = parseInt(value);
+          if (isNaN(parsed)) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: notANumber,
+            });
+            return z.NEVER;
+          }
+          return parsed;
+        }),
       email: emailField,
     }).and(passwordAndConfirm)
   );
@@ -95,6 +108,16 @@ export default function () {
             });
           }
         }),
+      max_person: number().min(1, "Maksimal orang harus diisi"),
+      is_active: string().min(1, "Status harus diisi"),
+      locations: z.array(z.number()),
+    })
+  );
+
+  const tourPackageEditSchema = toTypedSchema(
+    object({
+      name: string().min(1, "Nama package harus diisi"),
+      price: string().min(1, "Harga package harus diisi"),
     })
   );
 
@@ -120,8 +143,22 @@ export default function () {
 
   const facilityCar = toTypedSchema(
     object({
-      name_en: string().min(1, "Nama fasilitas English wajib diisi"),
-      name_id: string().min(1, "Nama fasilitas Indonesia wajib diisi"),
+      "description[en]": string().min(1, "Nama fasilitas English wajib diisi"),
+      "description[id]": string().min(
+        1,
+        "Nama fasilitas Indonesia wajib diisi"
+      ),
+      // image: z.instanceof(File),
+    })
+  );
+
+  const facilityCarEdit = toTypedSchema(
+    object({
+      "description[en]": string().min(1, "Nama fasilitas English wajib diisi"),
+      "description[id]": string().min(
+        1,
+        "Nama fasilitas Indonesia wajib diisi"
+      ),
     })
   );
 
@@ -130,6 +167,53 @@ export default function () {
       name: string().min(1, "Nama destinasi wajib diisi"),
     })
   );
+
+  const profileSchema = toTypedSchema(
+    object({
+      name: string().min(1, "Nama wajib diisi"),
+      email: emailField,
+    })
+  );
+
+  const updateProfileSchema = toTypedSchema(
+    object({
+      first_name: firstNameField,
+      last_name: lastNameField,
+      email: emailField,
+    })
+  );
+
+  const carSearchSchema = toTypedSchema(
+    object({
+      pickup_address: string().min(1, "Lokasi penjemputan harus diisi"),
+      return_address: string().min(1, "Lokasi tujuan harus diisi"),
+      pickup_date: string().min(1, "Tanggal penjemputan harus diisi"),
+      return_date: string().min(1, "Tanggal kembali harus diisi"),
+    })
+  );
+
+  const orderCarSchema = toTypedSchema(
+    object({
+      name: string().min(1, "Lokasi penjemputan harus diisi"),
+      email: emailField,
+      // flight_number: string().min(1, "Lokasi penjemputan harus diisi"),
+      phone: string()
+        .min(1, "Telepon harus diisi")
+        .transform((value, ctx) => {
+          const parsed = parseInt(value);
+          if (isNaN(parsed)) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: notANumber,
+            });
+            return z.NEVER;
+          }
+          return parsed;
+        }),
+    })
+  );
+
+  const unSetPasswordSchema = toTypedSchema(passwordAndConfirm);
 
   return {
     loginSchema,
@@ -140,8 +224,15 @@ export default function () {
     updatePasswordSchema,
     transportSchema,
     tourPackageSchema,
+    tourPackageEditSchema,
     driverSchema,
     facilityCar,
     destinationsSchema,
+    profileSchema,
+    updateProfileSchema,
+    unSetPasswordSchema,
+    facilityCarEdit,
+    carSearchSchema,
+    orderCarSchema,
   };
 }

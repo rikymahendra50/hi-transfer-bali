@@ -3,12 +3,7 @@
     title="Kelola Pengemudi"
     subTitle="Kelola daftar pengemudi Anda disini"
   >
-    <NuxtLink
-      to="/admin/driver/add"
-      class="border-2 py-4 px-6 rounded-[8px] shadow-xs font-medium text-black"
-    >
-      Tambah Driver Baru
-    </NuxtLink>
+    <ButtonAddAdmin link="/admin/driver/add" name="Tambah driver baru" />
   </TitleAdmin>
   <table class="table">
     <thead>

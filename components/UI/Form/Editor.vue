@@ -265,14 +265,14 @@
           >
             <Icon name="i-heroicons-stop" />
           </button>
-          <button
+          <!-- <button
             v-if="withImage"
             @click.prevent="open()"
             type="button"
             class="p-0.5 hover:bg-gray-300/60 rounded border flex items-center justify-center h-6 w-6"
           >
             <Icon name="i-heroicons-photo" />
-          </button>
+          </button> -->
           <VMenu>
             <button
               type="button"
@@ -611,7 +611,11 @@ function addButton() {
 }
 
 function addPhoto({ url }: { url: string; alt?: string }) {
-  editor.value?.chain().focus().setImage({ src: url, alt: "Hi Travel" }).run();
+  editor.value
+    ?.chain()
+    .focus()
+    .setImage({ src: url, alt: "Hi Transfer" })
+    .run();
 }
 
 const { open, reset, onChange } = useFileDialog({

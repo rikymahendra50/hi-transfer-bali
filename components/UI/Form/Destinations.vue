@@ -28,6 +28,7 @@
       </NuxtLink>
       <button
         type="submit"
+        :disabled="loading"
         class="btn bg-primary text-white normal-case !font-medium text-base hover:bg-primary"
       >
         {{ buttonTitle }}

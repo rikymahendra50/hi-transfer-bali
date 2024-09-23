@@ -1,51 +1,31 @@
 <template>
-  <div class="border shadow-sm rounded-[8px] py-4 px-4">
-    <p class="text-black font-semibold">General</p>
-    <div>
-      <div class="hidden">
-        <VeeField
-          type="file"
-          name="image_thumbnail"
-          id="image_thumbnail"
-          v-model="selectedImageThumbnail"
+  <div class="m-5 flex flex-col gap-3">
+    <TitleBack title="Kelola gambar paket tur" link="/admin/tour-package" />
+    <div class="h-screen">
+      <div class="h-[500px] m-3">
+        <ImagesProduct
+          v-if="!pending"
+          :productSlug="slug"
+          :images-data="data?.data"
+          @reload="onReload"
         />
       </div>
-
-      <UIFormInputMultipleImage
-        v-if="!pending"
-        :product-slug="slug"
-        :images-data="data?.data"
-        @reload="onReload"
-      />
-
-      <!-- <VeeErrorMessage name="image" class="text-red-500" /> -->
     </div>
   </div>
 </template>
 
-<script setup>
-const { transportSchema } = useSchema();
-const { locale } = useI18n();
-const { requestOptions } = useRequestOptions();
+<script setup lang="ts">
+const router = useRouter();
+
 const route = useRoute();
 
-definePageMeta({
-  layout: "admin",
-  // @ts-ignore
-  middleware: ["auth", "admin"],
+const { requestOptions } = useRequestOptions();
+
+const slug = computed(() => {
+  return route.params.slug as string;
 });
 
-useHead({
-  title: "Upload Images",
-});
-
-const slug = computed(() => route.params.slug);
-
-const selectedImageThumbnail = ref();
-
-const loading = ref(false);
-
-const { data, refresh, pending } = await useAsyncData(`toursImage`, () =>
+const { data, refresh, pending } = await useAsyncData(`tourImageAdmin`, () =>
   $fetch(`/admins/tours/${slug.value}/images`, {
     method: "GET",
     ...requestOptions,
@@ -55,4 +35,22 @@ const { data, refresh, pending } = await useAsyncData(`toursImage`, () =>
 function onReload() {
   refresh();
 }
+
+useHead({
+  title: "Product Create",
+});
+definePageMeta({
+  layout: "admin",
+  // @ts-ignore
+  middleware: ["auth", "admin"],
+});
+
+onMounted(async () => {
+  await nextTick();
+  // if (!hasPermission("product")) {
+  //   await router.push("/admin");
+  // }
+});
 </script>
+
+<style scoped></style>

@@ -3,12 +3,7 @@
     title="Kelola Produk: Transport"
     subTitle="Kelola daftar mobil Anda disini"
   >
-    <NuxtLink
-      to="/admin/transport/add"
-      class="border-2 py-4 px-6 rounded-[8px] shadow-xs font-medium text-black"
-    >
-      Tambah Mobil Baru
-    </NuxtLink>
+    <ButtonAddAdmin link="/admin/transport/add" name="Tambah Mobil Baru" />
   </TitleAdmin>
 
   <table class="table">
@@ -124,7 +119,7 @@
           <span>Batal</span>
         </div>
         <div
-          @click.prevent="deleteTransport(currentId)"
+          @click.prevent="deleteTransport(currentId), (showModalDelete = false)"
           class="btn bg-red-600 text-white shadow"
         >
           <span>Hapus</span>

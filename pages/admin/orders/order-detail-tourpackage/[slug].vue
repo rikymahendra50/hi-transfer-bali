@@ -106,7 +106,7 @@
 definePageMeta({
   layout: "admin",
   // @ts-ignore
-  // middleware: ["auth", "admin"],
+  middleware: ["auth", "admin"],
 });
 
 // @ts-ignore

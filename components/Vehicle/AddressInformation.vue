@@ -1,13 +1,25 @@
 <template>
   <div class="border rounded-xl p-4 space-y-2">
-    <div class="text-xs text-zinc-400">Penjemputan</div>
-    <div>Bandara Int'l Gusti Ngurah Rai</div>
+    <div class="text-xs text-zinc-400">{{ props.name }}</div>
+    <div>{{ props.locationName }}</div>
     <div class="text-sm text-zinc-400">
-      Jln. Raya Gusti Ngurah Rai, Tuban, Kec. Kuta, Kabupaten Badung, Bali 80362
+      {{ props.locationAddress }}
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps({
+  name: {
+    type: String,
+  },
+  locationName: {
+    type: String,
+  },
+  locationAddress: {
+    type: String,
+  },
+});
+</script>
 
 <style scoped></style>

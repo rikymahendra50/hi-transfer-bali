@@ -2,7 +2,14 @@
   <div class="px-5 py-6 md:px-10 md:py-10">
     <TitleBack link="/admin/destinations" title="Edit Destinasi" />
 
-    <UIFormDestinations buttonTitle="Edit destinasi" :data="data" />
+    <UIFormDestinations
+      buttonTitle="Edit destinasi"
+      :destinations="data?.data"
+    />
+
+    <!-- <pre>
+      {{ data }}
+    </pre> -->
   </div>
 </template>
 

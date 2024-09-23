@@ -25,33 +25,18 @@
           @blur="handleBlur"
           :class="className"
           v-bind="$attrs"
-          :step="step1"
           :autocomplete="autocomplete"
           readonly
-          :value="selectedOptions.map((option) => option.name).join(', ')"
+          :value="
+            selectedOptions.map((option) => option.description).join(', ')
+          "
         />
         <div class="absolute top-2 right-4">
           <Icon name="gridicons:dropdown" class="text-black w-5 h-5" />
         </div>
       </div>
-      <div class="flex flex-col justify-center relative" v-else>
-        <input
-          :id="name"
-          :name="name"
-          :type="type"
-          @input="handleChange"
-          @blur="handleBlur"
-          :class="className"
-          v-bind="$attrs"
-          :step="step1"
-          :autocomplete="autocomplete"
-          readonly
-          :value="selectedOptions.map((option) => option.name).join(', ')"
-        />
-        <div class="absolute top-2 right-4">
-          <Icon name="gridicons:dropdown" class="text-black w-5 h-5" />
-        </div>
-      </div>
+
+      <!-- Dropdown terbuka saat user mengklik -->
       <div class="relative z-20" v-if="isDropdownOpen">
         <div
           class="absolute mt-2 min-w-48 bg-white border border-gray-300 rounded shadow-lg max-h-[130px] overflow-auto"
@@ -67,7 +52,7 @@
                 isSelected(item) ? 'bg-gray-100' : '',
               ]"
             >
-              {{ item.name }}
+              {{ item.description }}
               <span v-if="isSelected(item)" class="text-sm text-primary">
                 &nbsp;&nbsp;(Dipilih)</span
               >
@@ -75,13 +60,15 @@
           </ul>
         </div>
       </div>
+
+      <!-- Menampilkan opsi yang sudah dipilih -->
       <div v-if="selectedOptions.length" class="mt-2">
         <div
           v-for="(option, index) in selectedOptions"
           :key="index"
           class="inline-block bg-gray-100 border border-gray-300 rounded px-2 py-2 mr-2 mb-2 text-sm"
         >
-          {{ option.name }}
+          {{ option.description }}
           <Icon
             name="mingcute:close-fill"
             class="text-red-500 ml-1 cursor-pointer"
@@ -95,7 +82,7 @@
 
 <script setup>
 import { onClickOutside } from "@vueuse/core";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useField } from "vee-validate";
 
 defineOptions({
@@ -125,9 +112,6 @@ const props = defineProps({
   label: {
     type: String,
   },
-  step1: {
-    type: String,
-  },
   min: {
     type: [Number, String],
   },
@@ -140,6 +124,9 @@ const props = defineProps({
   },
   dataDropdown: {
     type: Array,
+  },
+  dataSelected: {
+    type: [Array, String, Object],
   },
 });
 
@@ -157,59 +144,82 @@ const {
 
 const className = computed(() => {
   const arr = ["input input-bordered cursor-pointer"];
-
-  if (!meta.touched) {
-    return arr;
-  }
-  if (meta.touched && meta.valid) {
-    arr.push("input-success");
-  }
-  if (!!errorMessage.value) {
-    arr.push("input-error");
-  }
+  if (!meta.touched) return arr;
+  if (meta.valid) arr.push("input-success");
+  if (errorMessage.value) arr.push("input-error");
   return arr.join(" ");
 });
 
 const isDropdownOpen = ref(false);
-const selectedOptions = ref([]); // Untuk menyimpan pilihan yang dipilih
+const selectedOptions = ref([]);
 
+if (props.dataSelected.length > 0) {
+  selectedOptions.value = props.dataSelected;
+}
+
+// Inisialisasi selectedOptions jika ada dataSelected
+// watch(
+//   () => props.dataSelected,
+//   (newVal) => {
+//     if (newVal && Array.isArray(newVal)) {
+//       selectedOptions.value = newVal.map((item) => ({
+//         ...item,
+//       }));
+//     }
+//   },
+//   { immediate: true }
+// );
+
+const emit = defineEmits(["update:modelValue", "getId"]);
+
+// Toggle dropdown open/close
 function toggleDropdown() {
   isDropdownOpen.value = !isDropdownOpen.value;
 }
 
-const emit = defineEmits(["update:modelValue", "getId"]);
-
+// Menambah atau menghapus opsi yang dipilih
 function toggleSelectOption(option) {
   const index = selectedOptions.value.findIndex(
-    (selected) => selected.value === option.value
+    (selected) => selected.id === option.id
   );
+
   if (index === -1) {
-    selectedOptions.value.push(option); // Tambahkan pilihan jika belum dipilih
+    selectedOptions.value.push(option);
   } else {
-    selectedOptions.value.splice(index, 1); // Hapus pilihan jika sudah dipilih
+    selectedOptions.value.splice(index, 1);
   }
+
   emit(
     "update:modelValue",
-    selectedOptions.value.map((option) => option.value)
+    selectedOptions.value.map((option) => option.description)
+  );
+  emit(
+    "getId",
+    selectedOptions.value.map((option) => option.id)
   );
 }
 
+// Mengecek apakah opsi sudah dipilih
 function isSelected(option) {
-  return selectedOptions.value.some(
-    (selected) => selected.value === option.value
-  ); // Mengecek apakah item sudah dipilih
+  return selectedOptions.value.some((selected) => selected.id === option.id);
 }
 
+// Menghapus opsi yang dipilih
 function removeOption(option) {
   const index = selectedOptions.value.findIndex(
-    (selected) => selected.value === option.value
+    (selected) => selected.id === option.id
   );
   if (index !== -1) {
-    selectedOptions.value.splice(index, 1); // Menghapus pilihan
+    selectedOptions.value.splice(index, 1);
   }
+
   emit(
     "update:modelValue",
-    selectedOptions.value.map((option) => option.value)
+    selectedOptions.value.map((option) => option.description)
+  );
+  emit(
+    "getId",
+    selectedOptions.value.map((option) => option.id)
   );
 }
 </script>

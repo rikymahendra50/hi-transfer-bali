@@ -3,12 +3,10 @@
     title="Daftar Destinasi"
     subTitle="Kelola daftar destinasi untuk paket Tur Anda disini"
   >
-    <NuxtLink
-      to="/admin/destinations/add"
-      class="border-2 py-4 px-6 rounded-[8px] shadow-xs font-medium text-black"
-    >
-      Tambah destinasi baru
-    </NuxtLink>
+    <ButtonAddAdmin
+      link="/admin/destinations/add"
+      name="Tambah destinasi baru"
+    />
   </TitleAdmin>
   <table class="table">
     <thead>
@@ -35,7 +33,7 @@
               <template #popper="{ hide }">
                 <div class="bg-white flex flex-col shadow">
                   <NuxtLink
-                    :to="`/admin/destinations/edit/slug`"
+                    :to="`/admin/destinations/edit/${item.id}`"
                     class="hover:bg-orange-400 hover:text-white py-2 px-3"
                   >
                     Edit
@@ -147,7 +145,7 @@ const { data, error, refresh } = await useAsyncData("destinasi", () =>
 );
 
 const { selectedDestinations, deleteDestinations, loading } = useDestinations({
-  callback: refresh(),
+  callback: refresh,
 });
 
 onMounted(async () => {

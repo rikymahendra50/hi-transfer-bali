@@ -26,7 +26,6 @@
                 </button>
               </div>
             </div>
-
             <img
               :src="element.image"
               alt="image review"
@@ -36,7 +35,7 @@
         </template>
         <template #footer>
           <div v-if="ableToAddMoreImage">
-            <CropImage
+            <UIFormInputImageCropAdmin
               ref="cropHelper"
               :loading="loading"
               @@upload-image="uploadImageToServer"
@@ -47,7 +46,7 @@
 
       <div v-if="arrayChange" class="space-y-4">
         <p>You have changed the image position</p>
-        <Btn
+        <button
           type="button"
           :disabled="loading"
           :loading="loading"
@@ -56,7 +55,7 @@
           @click="saveImagesChangePosition"
         >
           Save
-        </Btn>
+        </button>
       </div>
     </div>
   </div>

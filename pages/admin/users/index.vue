@@ -14,21 +14,31 @@
         <th>
           <div>Phone Number</div>
         </th>
+        <th>
+          <div>Status</div>
+        </th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr v-for="item in data?.data">
         <td class="text-sm font-normal">
-          <div class="font-medium text-[14px] text-black">Nama users</div>
+          <div class="font-medium text-[14px] text-black">
+            {{ item.first_name }} &nbsp; {{ item.last_name }}
+          </div>
         </td>
-        <td class="text-sm font-normal text-[#989393]">@gmail.com</td>
+        <td class="text-sm font-normal text-[#989393]">{{ item.email }}</td>
         <td class="text-sm font-normal text-[#989393]">
-          <div class="px-3 py-1 w-fit rounded-xl">0880</div>
+          <div class="px-3 py-1 w-fit rounded-xl">{{ item.phone }}</div>
+        </td>
+        <td>
+          <div>
+            {{ item.is_active === 1 ? "Aktif" : "Tidak Aktif" }}
+          </div>
         </td>
         <td>
           <div class="flex items-center">
-            <VDropdown>
+            <!-- <VDropdown>
               <div class="flex items-center justify-center">
                 <button class="flex items-center justify-center cursor-pointer">
                   <Icon name="pepicons-pencil:dots-y" class="text-[#717171]" />
@@ -37,7 +47,7 @@
               <template #popper="{ hide }">
                 <div class="bg-white flex flex-col shadow">
                   <NuxtLink
-                    :to="`/admin/transport/edit/`"
+                    :to="`/admin/users/edit/${item}`"
                     class="hover:bg-orange-400 hover:text-white py-2 px-3"
                   >
                     Edit
@@ -51,7 +61,7 @@
                   </button>
                 </div>
               </template>
-            </VDropdown>
+            </VDropdown> -->
           </div>
         </td>
       </tr>
@@ -72,16 +82,16 @@
     <div class="font-medium text-[14px] text-[#344054] flex items-center gap-3">
       <PaginationAdmin
         v-model="page"
-        :total="5"
+        :total="data?.meta?.total"
         :includeFirstLast="false"
-        :per-page="5"
+        :per-page="data?.meta?.per_page"
         class="flex justify-center"
       />
     </div>
   </div>
 
   <!-- modal -->
-  <modal
+  <!-- <modal
     v-model="showModalDelete"
     class="relative w-[90%] sm:w-[60%] lg:w-[40%]"
   >
@@ -115,7 +125,7 @@
         </div>
       </div>
     </div>
-  </modal>
+  </modal> -->
   <!-- end modal -->
 </template>
 
@@ -148,25 +158,10 @@ function showModalDeleteFunc(hide, id) {
   }
 }
 
-async function deleteItemFunc() {
-  // loading.value = true;
-  // const { error } = await useFetch(`/api/v1/admin/deck/${currentId.value}`, {
-  //   method: "delete",
-  //   ...requestOptions,
-  // });
-  // if (error.value) {
-  //   snackbar.add({
-  //     type: "error",
-  //     text: error.value?.message ?? "Something went wrong",
-  //   });
-  // } else {
-  //   snackbar.add({
-  //     type: "success",
-  //     text: "Delete Decks Success",
-  //   });
-  //   showModalDelete.value = false;
-  //   start();
-  // }
-  // loading.value = false;
-}
+const { data, error, refresh } = await useAsyncData("users", () =>
+  $fetch(`/admins/users?page=${page.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
 </script>

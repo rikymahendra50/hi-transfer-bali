@@ -155,7 +155,7 @@ const props = defineProps({
     default: null,
   },
   modelValue: {
-    type: File,
+    type: [File, String],
     default: null,
   },
   name: {

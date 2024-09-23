@@ -3,12 +3,10 @@
     title="Kelola Fasilitas Mobil"
     subTitle="Kelola daftar fasilitas untuk daftar mobil disini"
   >
-    <NuxtLink
-      to="/admin/facility-car/add"
-      class="border-2 py-4 px-6 rounded-[8px] shadow-xs font-medium text-black"
-    >
-      Tambah Fasilitas mobil
-    </NuxtLink>
+    <ButtonAddAdmin
+      link="/admin/facility-car/add"
+      name="Tambah Fasilitas mobil"
+    />
   </TitleAdmin>
 
   <table class="table">
@@ -21,9 +19,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr v-for="item in data?.data" :key="item.id">
         <td class="text-sm font-normal md:pl-5">
-          <div class="font-medium text-[14px] text-black">Gratis Tol</div>
+          <div class="font-medium text-[14px] text-black">
+            {{ item?.description }}
+          </div>
         </td>
         <td>
           <div class="flex justify-center">
@@ -36,13 +36,13 @@
               <template #popper="{ hide }">
                 <div class="bg-white flex flex-col shadow">
                   <NuxtLink
-                    :to="`/admin/facility-car/edit/slug`"
+                    :to="`/admin/facility-car/edit/${item.id}`"
                     class="hover:bg-orange-400 hover:text-white py-2 px-3"
                   >
                     Edit
                   </NuxtLink>
                   <button
-                    @click="showModalDeleteFunc(hide, 1)"
+                    @click="showModalDeleteFunc(hide, item?.id)"
                     type="button"
                     class="hover:bg-red-600 hover:text-white py-2 px-3"
                   >
@@ -92,8 +92,7 @@
       >
         <Icon
           name="ph:trash-duotone"
-          style="color: #ff0000"
-          class="w-12 h-12 md:w-20 md:h-20"
+          class="w-12 h-12 md:w-20 md:h-20 text-[#ff0000]"
         />
         <p>Apakah anda yakin untuk menghapus fasilitas mobil ini ?</p>
       </div>
@@ -107,7 +106,7 @@
           <span>Batal</span>
         </div>
         <div
-          @click.prevent="deleteFacility(currentId)"
+          @click.prevent="deleteFacility(currentId), (showModalDelete = false)"
           class="btn bg-red-600 text-white shadow"
         >
           <span>Hapus</span>
@@ -116,6 +115,10 @@
     </div>
   </modal>
   <!-- end modal -->
+
+  <!-- <pre>
+    {{ data }}
+  </pre> -->
 </template>
 
 <script setup>
@@ -155,7 +158,7 @@ const { data, error, refresh } = await useAsyncData("facility", () =>
 );
 
 const { selectedFacility, deleteFacility, loading } = useFacility({
-  callback: refresh(),
+  callback: refresh,
 });
 
 onMounted(async () => {

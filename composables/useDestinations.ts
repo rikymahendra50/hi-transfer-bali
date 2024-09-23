@@ -77,7 +77,7 @@ export default function (options: Options = {}) {
     }
 
     await $fetch<CommonResponse<{ message: string }>>(
-      `/admins/locations/${selectedDestinations.value?.slug}?_method=PUT`,
+      `/admins/locations/${selectedDestinations.value?.id}?_method=PUT`,
       {
         method: "POST",
         body: formData,
@@ -130,5 +130,6 @@ export default function (options: Options = {}) {
     dataForm,
     onSubmit,
     deleteDestinations,
+    loading,
   };
 }

@@ -7,43 +7,22 @@
     >
       <div class="border rounded-xl overflow-hidden">
         <img
-          src="https://placehold.co/150"
+          :src="image"
           alt="vehicle"
           class="w-full h-full xl:h-[150px] object-cover"
         />
       </div>
       <div class="grid grid-cols-1">
         <div class="space-y-2">
-          <h4 class="text-lg lg:text-2xl font-semibold">Standar (Hatchback)</h4>
+          <h4 class="text-lg lg:text-2xl font-semibold">{{ name }}</h4>
           <div class="flex flex-wrap gap-1 md:gap-3 py-2">
-            <div class="inline-flex space-x-1">
-              <Icon name="i-heroicons-users" class="w-5 h-5 text-primary" />
+            <div
+              class="inline-flex space-x-1 items-center"
+              v-for="item in facilities"
+            >
+              <img :src="item.image" :alt="item.image" class="w-6 h-6" />
               <div class="text-zinc-400 text-sm whitespace-nowrap">
-                Hingga 4 Penumpang
-              </div>
-            </div>
-            <div class="inline-flex space-x-1">
-              <Icon name="i-heroicons-briefcase" class="w-5 h-5 text-primary" />
-              <div class="text-zinc-400 text-sm whitespace-nowrap">
-                Muat 4 Koper
-              </div>
-            </div>
-            <div class="inline-flex space-x-1">
-              <Icon
-                name="mingcute:steering-wheel-fill"
-                class="w-5 h-5 text-primary"
-              />
-              <div class="text-zinc-400 text-sm whitespace-nowrap">
-                Termasuk Sopir
-              </div>
-            </div>
-            <div class="inline-flex space-x-1">
-              <Icon
-                name="i-heroicons-check-circle"
-                class="w-5 h-5 text-primary"
-              />
-              <div class="text-zinc-400 text-sm whitespace-nowrap">
-                Gratis Tol & Parkir
+                {{ item.description }}
               </div>
             </div>
           </div>
@@ -55,6 +34,18 @@
 
 <script setup lang="ts">
 const router = useRouter();
+
+const props = defineProps({
+  name: {
+    type: String,
+  },
+  image: {
+    type: String,
+  },
+  facilities: {
+    type: [Array, Object],
+  },
+});
 
 function goToVehicleBooking() {
   router.push("/vehicles/booking");

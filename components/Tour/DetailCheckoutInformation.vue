@@ -11,7 +11,7 @@
       <div class="flex flex-col justify-between space-y-4">
         <div class="text-lg font-semibold">West Nusa Penida Tour</div>
         <div>
-          <div class="text-zinc-400 text-xs">Destinasi</div>
+          <div class="text-zinc-400 text-xs">{{ $t("destinasi") }}</div>
           <div class="text-sm">
             Kelingking Cliff - Angel's Billabong - Broken Beach - Crystal Bay
             Beach
@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <div class="font-semibold py-2">Detail Harga</div>
+    <div class="font-semibold py-2">{{ $t("detail-harga") }}</div>
     <div class="flex justify-between items-center py-2">
       <div class="font-semibold">Dewasa x 2</div>
       <div>Rp. 1.000.000</div>
@@ -29,7 +29,7 @@
       <div>Rp. 1.000.000</div>
     </div>
     <div class="flex justify-between items-center py-2">
-      <div class="font-semibold">Total Harga</div>
+      <div class="font-semibold">{{ $t("total-harga") }}</div>
       <div>Rp. 3.000.000</div>
     </div>
   </div>

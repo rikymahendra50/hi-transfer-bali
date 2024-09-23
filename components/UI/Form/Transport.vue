@@ -12,14 +12,14 @@
             type="file"
             name="image_thumbnail"
             id="image_thumbnail"
-            v-model="selectedImageThumbnail"
+            v-model="dataForm.image"
           />
         </div>
         <UIFormInputImageCropAdmin
           :loading="loading"
-          label="Foto mobil"
-          name="image_thumbnail"
-          v-model="selectedImageThumbnail"
+          label="Foto Mobil"
+          name="image"
+          v-model="dataForm.image"
           :existingimage="existingImage"
         />
         <VeeErrorMessage name="image" class="text-red-500" />
@@ -35,82 +35,45 @@
           :useStarIcon="false"
         />
 
-        <!-- <UIFormDropdown
-          label="Status Mobil"
-          name="status_mobil"
-          placeholder="Status Mobil"
-          @getId="funcGetIdStatus"
-          v-model="dataForm.is_active"
-          :dataDropdown="dataDropdown"
+        <UIFormInputNumber
+          label="Harga"
+          name="price"
+          placeholder="Harga"
+          v-model="dataForm.price"
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
-        /> -->
+        />
 
         <UIFormDropdownOnlyTwo
           label="Status Mobil"
           name="is_active"
           placeholder="Status Mobil"
           @getId="funcGetIdStatus"
-          v-model="statusIsActive"
+          v-model="statusActive"
           :dataDropdown="dataDropdown"
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
         />
 
-        <!-- <UIFormDropdown
-          label="Pengemudi"
-          name="pengemudi"
-          placeholder="Pilih Pengemudi"
-          @getId="funcGetIdDriver"
-          v-model="dataForm.driver"
-          :dataDropdown="dataDropdownPengemudi"
-          class="input-bordered shadow-sm focus:outline-none"
-          :useStarIcon="false"
-        /> -->
-
         <UIFormInputNumber
           label="Maksimal Penumpang"
           name="maxpenumpang"
-          placeholder="12"
+          placeholder="4"
           v-model="dataForm.max_person"
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
         />
       </div>
 
-      <div class="grid grid-cols-2 gap-4">
-        <!-- <UIFormInputNumber
-          label="Maksimal Penumpang"
-          name="maxpenumpang"
-          placeholder="12"
-          v-model="dataForm.maxpenumpang"
-          class="input-bordered shadow-sm focus:outline-none"
-          :useStarIcon="false"
-        /> -->
-
-        <!-- <UIFormInputNumber
-          label="Maksimal Koper"
-          name="maxkoper"
-          placeholder="12"
-          v-model="dataForm.maxkoperkg"
-          class="input-bordered shadow-sm focus:outline-none"
-          :useStarIcon="false"
-        /> -->
-      </div>
-
-      <UIFormDropdowns
+      <UIFormDropdownsTest
         label="Fasilitas mobil"
         name="fasilitas_mobil"
         placeholder="Fasilitas mobil"
+        :dataDropdown="data?.data"
+        v-model="dataForm.facilities"
+        :dataSelected="props.transport?.facilities ?? []"
         @getId="funcGetIdFacility"
-        v-model="selectedValues"
-        :dataDropdown="dropdownOptions"
-        class="input-bordered shadow-sm focus:outline-none"
-        :useStarIcon="false"
-      >
-        <p class="mt-4">Selected IDs: {{ selectedIds.join(", ") }}</p>
-        <p class="mt-2">Selected Values: {{ selectedValues.join(", ") }}</p>
-      </UIFormDropdowns>
+      />
     </div>
 
     <div class="flex items-center justify-between mt-6">
@@ -122,6 +85,7 @@
       </NuxtLink>
       <button
         type="submit"
+        :disabled="loading"
         class="btn bg-primary text-white normal-case !font-medium text-base hover:bg-primary"
       >
         {{ buttonTitle }}
@@ -132,6 +96,7 @@
 
 <script setup>
 const { transportSchema } = useSchema();
+const { requestOptions } = useRequestOptions();
 
 const props = defineProps({
   transport: {
@@ -158,81 +123,88 @@ const {
   selectedTransport,
 } = useTransport({ callback: redirect });
 
-const selectedImageThumbnail = ref();
+// const statusIsActive = computed(() => {
+//   return dataForm.value.is_active === 1 ? "Tersedia" : "Tidak Tersedia";
+// });
+
+const statusActive = ref();
 
 const dataDropdown = ref([
   {
     id: 1,
     name: "Tersedia",
+    value: 1,
   },
   {
     id: 2,
     name: "Tidak Tersedia",
-  },
-]);
-
-const dataDropdownPengemudi = ref([
-  {
-    id: 1,
-    name: "Eren",
-  },
-  {
-    id: 2,
-    name: "Spongebob",
+    value: 0,
   },
 ]);
 
 function funcGetIdStatus(data) {
-  dataForm.status = data;
+  dataForm.value.is_active = data;
 }
 
-function funcGetIdDriver(data) {
-  dataForm.driver = data;
-}
+const { data, error, refresh } = await useAsyncData("facilities", () =>
+  $fetch(`/admins/facilities-all`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
 
-const dropdownOptions = ref([
-  { id: 1, name: "Option 1", value: "option1" },
-  { id: 2, name: "Option 2", value: "option2" },
-  { id: 3, name: "Option 3", value: "option3" },
-  { id: 4, name: "Option 4", value: "option4" },
-]);
+// console.log(data.value);
 
 const selectedValues = ref([]);
 const selectedIds = ref([]);
+const selectedOptions = ref([]);
+
+// function funcGetIdFacility(ids) {
+//   if (!selectedIds.value.includes(ids)) {
+//     selectedIds.value.push(ids); // Store the selected option IDs
+//   } else {
+//     const index = selectedIds.value.indexOf(ids);
+//     if (index !== -1) {
+//       selectedIds.value.splice(index, 1); // Remove the ID if unselected
+//     }
+//   }
+// }
+
+// function funcGetIdFacility(ids) {
+//   if (!selectedIds.value.includes(ids)) {
+//     selectedIds.value.push(ids); // Store the selected option IDs
+//   } else {
+//     const index = selectedIds.value.indexOf(ids);
+//     if (index !== -1) {
+//       selectedIds.value.splice(index, 1); // Remove the ID if unselected
+//     }
+//   }
+//   selectedIds.value.forEach((item, index) => {
+//     dataForm.value.facilities[`${index}`] = item.id;
+//   });
+
+//   // console.log(selectedIds.value);
+// }
 
 function funcGetIdFacility(ids) {
-  if (!selectedIds.value.includes(ids)) {
-    selectedIds.value.push(ids); // Store the selected option IDs
-  } else {
-    const index = selectedIds.value.indexOf(ids);
-    if (index !== -1) {
-      selectedIds.value.splice(index, 1); // Remove the ID if unselected
-    }
-  }
+  dataForm.value.facilities = Array.isArray(ids) ? ids : [ids];
 }
-
-const statusIsActive = ref();
 
 onMounted(async () => {
   if (props.transport) {
     selectedTransport.value = props.transport;
 
     dataForm.value.name = props.transport.name;
+    dataForm.value.price = props.transport.price;
     dataForm.value.max_person = props.transport.max_person;
     dataForm.value.is_active = props.transport.is_active;
-    dataForm.value.facilities = props.transport.facilities;
+    statusActive.value =
+      props.transport.is_active === 0 ? "Tidak Tersedia" : "Tersedia";
+    dataForm.value.facilities = props.transport.facilities.map(
+      (facility) => facility.id
+    );
 
-    // console.log(dataForm.value.facilities[0].id);
-
-    dataForm.value.facilities.forEach((item) => {
-      selectedIds.value.push(item.id);
-      selectedValues.value.push(item.description);
-    });
-
-    // console.log(selectedValues.value);
-
-    statusIsActive.value =
-      props.transport.is_active === 1 ? "Tersedia" : "Tidak Tersedia";
+    // console.log(dataForm.value);
   }
 });
 </script>

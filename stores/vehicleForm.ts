@@ -15,6 +15,7 @@ export const useVehicleForm = defineStore("VehicleForm", () => {
   function btnSubmitClick() {
     btnSubmit.value?.click();
   }
+
   return {
     dataForm,
     btnSubmit,

@@ -27,7 +27,6 @@
         />
       </Transition>
     </div>
-
     <div class="lg:absolute z-10 w-full inset-x-0 bottom-0 lg:-bottom-4">
       <div>
         <div
@@ -38,16 +37,15 @@
               label="Transport"
               icon="bi:car-front-fill"
               :is-active="isCurrent('transport')"
-              @click="goTo('transport')"
+              @click="goTo('transport'), replaceWindow()"
             />
             <ShareMenuTabLink
-              label="Paket Tour"
+              :label="$t('paket-tour')"
               icon="mingcute:umbrella-2-line"
               :is-active="isCurrent('paket-tour')"
-              @click="goTo('paket-tour')"
+              @click="goTo('paket-tour'), replaceWindow()"
             />
           </div>
-
           <div class="p-4 mt-2">
             <div v-if="isCurrent('transport')">
               <ShareFilterVehicle />
@@ -65,20 +63,22 @@
 <script setup lang="ts">
 import { useStepper } from "@vueuse/core";
 
+const { locale, t: $t } = useI18n();
+const route = useRoute();
+const router = useRouter();
+
 const { current, goTo, isCurrent } = useStepper(["transport", "paket-tour"]);
 
 const slides = [
   {
-    title: "Perjalanan Aman dan Nyaman di Bali",
-    description:
-      "Armada kendaraan modern dan pengemudi berpengalaman siap mengantar Anda ke mana pun tujuan Anda.",
+    title: $t("perjalanan-aman"),
+    description: $t("armada-kendaraan-modern"),
     image: "/hi-travel-hero.jpeg",
     key: "transport",
   },
   {
-    title: "Jelajahi Keajaiban Pulau Dewata",
-    description:
-      "Dari pantai hingga gunung, kami siap membawa Anda merasakan pengalaman Bali yang autentik.",
+    title: $t("jelajahi-keajaiban"),
+    description: $t("dari-pantai-hingga-gunung"),
     image: "/second-thumbnail-hero-hi-travel.jpeg",
     key: "paket-tour",
   },
@@ -87,6 +87,22 @@ const slides = [
 const currentSlide = computed(() => {
   return slides.find((slide) => slide.key === current.value);
 });
+
+onMounted(() => {
+  if (route.href === "/?tour") {
+    goTo("paket-tour");
+  } else {
+    goTo("transport");
+  }
+});
+
+function replaceWindow() {
+  if (isCurrent("transport")) {
+    router.replace("/?transport");
+  } else {
+    router.replace("/?tour");
+  }
+}
 </script>
 
 <style scoped>

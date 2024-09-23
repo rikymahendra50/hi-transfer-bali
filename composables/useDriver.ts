@@ -134,5 +134,6 @@ export default function (options: Options = {}) {
     dataForm,
     onSubmit,
     deleteDriver,
+    loading,
   };
 }

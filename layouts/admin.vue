@@ -18,7 +18,7 @@
         <NuxtLink
           class="link link-primary link-hover p-1 underline-offset-8 decoration-4 rounded"
           active-class="font-medium"
-          to="/admin"
+          to="/admin/orders"
           ><img
             src="/hi-transfer-logo.png"
             alt="logo"
@@ -110,22 +110,22 @@
             </div>
 
             <div class="mb-16 px-4 mt-10">
-              <!-- <div class="border-t py-2">
-                <button
-                  type="button"
-                  @click="$logout"
-                  class="flex flex-row space-x-2 items-center text-red-500 font-medium"
-                >
-                  <Icon name="ic:baseline-logout" class="w-6 h-6" />
-                  <span>Logout</span>
-                </button>
-              </div> -->
               <VDropdown>
                 <div
-                  class="flex items-center gap-1 border py-3 rounded-[8px] px-4 shadow-sm cursor-pointer"
+                  class="flex items-center gap-2 border py-3 rounded-[8px] px-4 shadow-sm cursor-pointer"
                 >
-                  <img src="/" alt="profile" class="w-6 h-6" />
-                  <p class="font-normal">I Putu Dewangga</p>
+                  <img
+                    :src="
+                      data?.data?.profile_picture == ''
+                        ? 'https://placehold.co/40'
+                        : data?.data?.profile_picture
+                    "
+                    alt="profile"
+                    class="w-6 h-6 rounded-full"
+                  />
+                  <p class="font-normal">
+                    {{ data?.data?.first_name }} {{ data?.data?.last_name }}
+                  </p>
                 </div>
                 <template #popper="{ hide }">
                   <div class="bg-white flex flex-col shadow w-fit">
@@ -136,19 +136,10 @@
                         name="iconamoon:profile-circle-thin"
                         class="w-6 h-6"
                       />
-                      <NuxtLink :to="`/admin/driver/edit/slug`" class="">
+                      <NuxtLink :to="`/admin/profile`" @click.prevent="hide">
                         Profil saya
                       </NuxtLink>
                     </div>
-                    <div
-                      class="border-t hover:bg-primary hover:text-white py-2 px-3 flex items-center gap-2"
-                    >
-                      <Icon name="uil:setting" class="w-6 h-6" />
-                      <NuxtLink :to="`/admin/driver/edit/slug`" class="">
-                        Pengaturan
-                      </NuxtLink>
-                    </div>
-
                     <div class="border-t py-2 px-3 cursor-pointer">
                       <button
                         type="button"
@@ -180,6 +171,8 @@
 </template>
 
 <script setup lang="ts">
+const { requestOptions } = useRequestOptions();
+
 import {
   breakpointsTailwind,
   useBreakpoints,
@@ -197,6 +190,11 @@ const linksAllowed = ref<
     to: "/admin/orders",
     label: "Orders",
     icon: "bx:list-ol",
+  },
+  {
+    to: "/admin/admin-list",
+    label: "Admins",
+    icon: "dashicons:admin-users",
   },
 ]);
 
@@ -287,6 +285,13 @@ watch(
       drawer.value = tableOrLaptop.value;
     }
   }
+);
+
+const { data, error, refresh } = await useAsyncData("adminsProfile", () =>
+  $fetch(`/admins/profile`, {
+    method: "get",
+    ...requestOptions,
+  })
 );
 </script>
 

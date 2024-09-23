@@ -1,9 +1,6 @@
 <template>
-  <VeeForm
-    :validation-schema="facilityCar"
-    @submit="onSubmit"
-    v-slot="{ errors }"
-  >
+  <VeeForm @submit="onSubmit" v-slot="{ errors }">
+    <!--     :validation-schema="props.facility ? facilityCarEdit : facilityCar" -->
     <div class="border shadow-sm rounded-[8px] py-6 px-5 mb-6">
       <p class="text-black font-semibold text-[16px]">General</p>
       <div class="grid grid-cols-1 mt-1 gap-4">
@@ -17,7 +14,7 @@
           >
             <UIFormGroup name="description">
               <UIFormTextFieldWLabel
-                v-model="dataForm.description.en"
+                v-model="dataForm['description[en]']"
                 name="description[en]"
                 label="Nama fasilitas English"
                 class="input-bordered"
@@ -36,7 +33,7 @@
           >
             <UIFormGroup name="description[id]">
               <UIFormTextFieldWLabel
-                v-model="dataForm.description.id"
+                v-model="dataForm['description[id]']"
                 name="description[id]"
                 label="Nama fasilitas Indonesia"
                 class="input-bordered"
@@ -51,14 +48,23 @@
         </TabContent>
 
         <!-- image -->
-        <UIFormInputImageCropAdmin
-          :loading="loading"
-          label="Icon"
-          name="icon"
-          v-model="selectedImageThumbnail"
-          :existing-image="existingImage"
-        />
-        <VeeErrorMessage name="image" class="text-red-500" />
+        <div>
+          <div class="hidden">
+            <VeeField
+              type="file"
+              name="image"
+              id="image"
+              v-model="dataForm.image"
+            />
+          </div>
+          <UIFormInputImageCropAdmin
+            :loading="loading"
+            label="Icon"
+            name="image"
+            v-model="dataForm.image"
+            :existingimage="existingImage"
+          />
+        </div>
       </div>
     </div>
 
@@ -71,6 +77,7 @@
       </NuxtLink>
       <button
         type="submit"
+        :disabled="loading"
         class="btn bg-primary text-white normal-case !font-medium text-base hover:bg-primary"
       >
         {{ buttonTitle }}
@@ -80,7 +87,7 @@
 </template>
 
 <script setup>
-const { facilityCar } = useSchema();
+const { facilityCar, facilityCarEdit } = useSchema();
 
 const props = defineProps({
   facility: { type: [Array, Object] },
@@ -88,8 +95,8 @@ const props = defineProps({
     type: String,
   },
 });
+
 const router = useRouter();
-const selectedImageThumbnail = ref();
 
 const {
   dataForm,
@@ -104,8 +111,13 @@ const {
 onMounted(async () => {
   if (props.facility) {
     selectedFacility.value = props.facility;
-    props.facility.description.en = dataForm.value.description.en;
-    props.facility.description.id = dataForm.value.description.id;
+    dataForm.value["description[en]"] =
+      props.facility?.description.find((item) => item.language === "en")
+        ?.translation ?? "";
+    dataForm.value["description[id]"] =
+      props.facility?.description.find((item) => item.language === "id")
+        ?.translation ?? "";
+    // dataForm.value.image = props.facility?.image;
   }
 });
 

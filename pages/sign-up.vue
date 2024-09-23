@@ -3,14 +3,12 @@ const { registerSchema } = useSchema();
 
 const { loading, message, alertType, $credentialForm, $register } = useAuth();
 
-const { inputType, togglePasswordType } = usePasswordHelper();
+const { inputType, togglePasswordType, toggleInputType } = usePasswordHelper();
+
+const { locale, t: $t } = useI18n();
 
 useHead({
   title: "Sign Up",
-});
-
-definePageMeta({
-  layout: "auth",
 });
 
 definePageMeta({
@@ -29,7 +27,7 @@ definePageMeta({
           <div class="grid grid-cols-1 gap-4 p-4">
             <UIAlert v-model="message" :type="alertType" />
             <div class="grid grid-cols-2 gap-4">
-              <UIFormMGroup label="First Name" name="first_name">
+              <UIFormMGroup :label="$t('nama-pertama')" name="first_name">
                 <UIFormMTextField
                   v-model="$credentialForm.first_name"
                   name="first_name"
@@ -37,7 +35,7 @@ definePageMeta({
                   placeholder="ex:jhon"
                 />
               </UIFormMGroup>
-              <UIFormMGroup label="Last Name" name="last_name">
+              <UIFormMGroup :label="$t('nama-terakhir')" name="last_name">
                 <UIFormMTextField
                   v-model="$credentialForm.last_name"
                   name="last_name"
@@ -46,6 +44,15 @@ definePageMeta({
                 />
               </UIFormMGroup>
             </div>
+
+            <UIFormMGroup :label="$t('phone')" name="phone">
+              <UIFormMTextField
+                name="phone"
+                v-model="$credentialForm.phone"
+                class="input-bordered"
+                placeholder="0821.."
+              />
+            </UIFormMGroup>
 
             <UIFormMGroup label="Email" name="email">
               <UIFormMTextField
@@ -78,13 +85,16 @@ definePageMeta({
                         : 'i-heroicons-eye-slash'
                     "
                     class="w-5 h-5 text-gray-400"
-                    @click="togglePasswordType"
+                    @click="toggleInputType"
                   />
                 </template>
               </UIFormMTextField>
             </UIFormMGroup>
 
-            <UIFormMGroup label="Confirm Password" name="confirm_password">
+            <UIFormMGroup
+              :label="$t('konfirmasi-password')"
+              name="confirm_password"
+            >
               <UIFormMTextField
                 v-model="$credentialForm.confirm_password"
                 name="confirm_password"
@@ -106,7 +116,7 @@ definePageMeta({
                         : 'i-heroicons-eye-slash'
                     "
                     class="w-5 h-5 text-gray-400"
-                    @click="togglePasswordType"
+                    @click="toggleInputType"
                   />
                 </template>
               </UIFormMTextField>
@@ -121,23 +131,23 @@ definePageMeta({
               >
             </div>
 
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center mt-1">
               <div></div>
               <div class="text-xs text-neutral-400">
                 <p>
-                  Already have an account?
+                  {{ $t("apakah-sudah-punya-akun") }}
                   <NuxtLink to="/sign-in" class="link link-hover"
                     >Sign In
                   </NuxtLink>
                 </p>
               </div>
             </div>
-            <div class="divider divider-neutral text-neutral-400 text-sm">
-              Daftar lebih cepat dengan
+            <!-- <div class="divider divider-neutral text-neutral-400 text-sm">
+              {{ $t("daftar-lebih-cepat-dengan") }}
             </div>
             <div>
               <AuthSocialLogin />
-            </div>
+            </div> -->
           </div>
         </VeeForm>
       </div>

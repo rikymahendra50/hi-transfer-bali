@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-col space-y-6">
     <div class="flex justify-between items-center">
-      <div class="text-2xl font-semibold">Data Peserta</div>
+      <div class="text-2xl font-semibold">{{ $t("data-peserta") }}</div>
     </div>
     <div class="space-y-4">
       <TourParticipantCard />
     </div>
     <div class="flex justify-between items-center">
-      <div class="text-2xl font-semibold">Data Pemesan</div>
+      <div class="text-2xl font-semibold">{{ $t("data-pemesan") }}</div>
     </div>
 
     <div class="space-y-4">
@@ -15,7 +15,7 @@
     </div>
 
     <div class="flex justify-between items-center">
-      <div class="text-2xl font-semibold">Detail Harga</div>
+      <div class="text-2xl font-semibold">{{ $t("detail-harga") }}</div>
     </div>
 
     <div class="space-y-4">

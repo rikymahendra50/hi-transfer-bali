@@ -15,20 +15,22 @@ export default function (options: Options = {}) {
   const selectedFacility = ref();
 
   const dataForm = ref({
-    description: {
-      en: "",
-      nl: "",
-    },
+    "description[en]": "",
+    "description[id]": "",
+    image: "",
   });
 
   function resetForm() {
     dataForm.value = {
-      description: {
-        en: "",
-        nl: "",
-      },
+      "description[en]": "",
+      "description[id]": "",
+      image: "",
     };
   }
+
+  const existingImage = computed(() => {
+    return selectedFacility.value?.image;
+  });
 
   function onSubmit(values: any, ctx: SubmissionContext) {
     if (selectedFacility.value) {
@@ -83,8 +85,11 @@ export default function (options: Options = {}) {
     }
 
     await $fetch<CommonResponse<{ message: string }>>(
-      `/admins/facilities/${selectedFacility.value?.slug}?_method=PUT`,
+      `/admins/facilities/${selectedFacility.value?.id}?_method=PUT`,
       {
+        headers: {
+          Accept: "application/json",
+        },
         method: "POST",
         body: formData,
         ...requestOptions,
@@ -124,7 +129,7 @@ export default function (options: Options = {}) {
     } else {
       pushNotification({
         type: "success",
-        text: "Driver deleted successfully",
+        text: "Facility deleted successfully",
       });
       options.callback?.();
     }
@@ -136,5 +141,7 @@ export default function (options: Options = {}) {
     dataForm,
     onSubmit,
     deleteFacility,
+    existingImage,
+    loading,
   };
 }

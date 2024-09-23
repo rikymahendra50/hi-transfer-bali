@@ -21,6 +21,8 @@ useHead({
 definePageMeta({
   layout: "auth",
 });
+
+const { locale, t: $t } = useI18n();
 </script>
 
 <template>
@@ -77,17 +79,17 @@ definePageMeta({
                 class="w-full"
                 >Submit</UIBtn
               >
-              <div class="flex justify-between items-center">
+              <div class="flex justify-between items-center mt-1">
                 <div>
                   <NuxtLink
                     class="link link-hover text-xs text-neutral-400"
                     to="/forgot-password"
-                    >Forgot password?</NuxtLink
+                    >{{ $t("lupa-password-?") }}</NuxtLink
                   >
                 </div>
                 <div class="text-xs text-neutral-400">
                   <p>
-                    Don't have an account?
+                    {{ $t("tidak-punya-akun") }}
                     <NuxtLink to="/sign-up" class="link link-hover"
                       >Sign Up</NuxtLink
                     >
@@ -95,12 +97,12 @@ definePageMeta({
                 </div>
               </div>
             </div>
-            <div class="divider divider-neutral text-neutral-400 text-sm">
-              Log in lebih cepat dengan
+            <!-- <div class="divider divider-neutral text-neutral-400 text-sm">
+              {{ $t("login-lebih-cepat-dengan") }}
             </div>
             <div>
               <AuthSocialLogin />
-            </div>
+            </div> -->
           </div>
         </VeeForm>
       </div>
