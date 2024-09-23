@@ -66,7 +66,7 @@ const props = withDefaults(
       | "time"
       | "datetime-local"
       | "search";
-    modelValue: string | number;
+    modelValue: string | number | undefined;
     name: string;
     class?: string;
     disabled?: boolean;

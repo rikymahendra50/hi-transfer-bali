@@ -53,6 +53,9 @@ export default function (usedBy: "user" | "admin", callback: Function) {
     const { data, error } = await useFetch<{ data: { message: string } }>(
       `${updateURL.value}&_method=PUT`,
       {
+        headers: {
+          Accept: "application/json",
+        },
         method: "POST",
         body: formData,
         ...requestOptions,
@@ -60,8 +63,13 @@ export default function (usedBy: "user" | "admin", callback: Function) {
     );
 
     if (error.value) {
-      setErrorMessage(error.value?.data?.message);
+      setErrorMessage(error.value.data?.message);
       ctx.setErrors(transformErrors(error.value?.data));
+      pushNotification({
+        type: "error",
+        text: error.value.data.message,
+        title: "error",
+      });
     } else {
       pushNotification({
         type: "success",

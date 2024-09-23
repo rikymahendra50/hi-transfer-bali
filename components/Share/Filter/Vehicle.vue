@@ -3,10 +3,10 @@
     <div class="flex justify-center items-center">
       <div
         class="bg-primary flex justify-center rounded-full w-fit items-center px-2"
-        v-if="distanceRound"
+        v-if="dataForm.distance"
       >
         <div class="p-1 text-sm text-white">
-          <span>{{ distanceRound }}</span>
+          <span>{{ dataForm.distance }}</span>
         </div>
       </div>
     </div>
@@ -53,17 +53,16 @@
           />
         </UIFormMGroup>
       </div>
-
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 mt-6">
         <UIFormToggle
           name="round_trip"
           label="Pulang - Pergi"
           v-model="dataForm.round_trip"
-          :max="dataForm.pickup_date"
           true-value="1"
           false-value="0"
           variant="primary"
         />
+
         <UIFormMGroup name="pickup_date" :label="$t('jemput-tanggal')">
           <UIFormMTextField
             name="pickup_date"
@@ -208,8 +207,18 @@ async function calculateDistanceMatrix() {
         if (status === "OK") {
           const result = response.rows[0].elements[0];
           distance.value = result?.distance?.value;
-          dataForm.value.distance = result?.distance?.value;
-          distanceRound.value = result?.distance?.text;
+          // distanceRound.value = result?.distance?.text;
+
+          if (dataForm.value.round_trip == 1) {
+            dataForm.value.distance =
+              (result?.distance?.value / 1000).toFixed(1) * 2;
+          } else if (dataForm.value.round_trip == 0) {
+            dataForm.value.distance = (result?.distance?.value / 1000).toFixed(
+              1
+            );
+          }
+
+          // console.log(dataForm.value.distance);
           // console.log("Distance:", result?.distance);
           // console.log("Duration:", result?.duration?.text);
         }

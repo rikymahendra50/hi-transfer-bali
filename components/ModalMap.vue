@@ -59,6 +59,18 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  latitude: {
+    type: [String, Number],
+  },
+  longitude: {
+    type: [String, Number],
+  },
+  locationAddress: {
+    type: [String, Number],
+  },
+  locationName: {
+    type: String,
+  },
 });
 
 const emit = defineEmits([

@@ -99,16 +99,12 @@ const {
   },
 });
 
-// const bookingForm = ref({
-//   variant: [],
-// });
-
-watch(
-  () => dataForm.value.bookingForm.variant,
-  (newValue, oldValue) => {
-    console.log(newValue);
-  }
-);
+// watch(
+//   () => dataForm.value.bookingForm.variant,
+//   (newValue, oldValue) => {
+//     console.log(newValue);
+//   }
+// );
 
 const {
   data: apiData,
@@ -143,6 +139,16 @@ function continueOnsubmit() {
   saveFormData();
   router.push({ path: "/tours/booking" });
 }
+
+useHead({
+  title: apiData?.value.data?.name,
+  meta: [
+    {
+      name: "description",
+      content: result.value,
+    },
+  ],
+});
 </script>
 
 <style scoped>

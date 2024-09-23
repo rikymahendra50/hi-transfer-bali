@@ -38,8 +38,8 @@
       </GMapMarker>
     </GMapMap>
 
-    <div class="grid lg:grid-cols-12 mt-3 items-center gap-3">
-      <div class="grid lg:col-span-10 gap-1">
+    <div class="flex justify-between mt-3 items-center gap-3">
+      <div class="grid gap-1">
         <p class="font-semibold lg:text-[20px]">{{ $t("location") }} :</p>
         <p class="text-sm">{{ locationName }}</p>
         <p class="text-sm">{{ locationAddress }}</p>
@@ -48,7 +48,7 @@
       <button
         @click="submitKoordinat"
         type="submit"
-        class="btn btn-md bg-primary text-sm text-white normal-case !font-medium hover:bg-primary whitespace-nowrap md:col-span-2"
+        class="bg-primary text-sm text-white normal-case !font-medium hover:bg-primary whitespace-nowrap md:col-span-2 btn"
       >
         {{ $t("pilih-lokasi-ini") }}
       </button>
@@ -68,6 +68,21 @@ const latitudeFix = ref(-8.417347915171359);
 const longitudeFix = ref(115.19596919507471);
 const locationAddress = ref();
 const locationName = ref();
+
+const props = defineProps({
+  latitude: {
+    type: [String, Number],
+  },
+  longitude: {
+    type: [String, Number],
+  },
+  locationAddress: {
+    type: [String, Number],
+  },
+  locationName: {
+    type: String,
+  },
+});
 
 const emit = defineEmits([
   "update:longitude",

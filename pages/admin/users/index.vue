@@ -24,7 +24,7 @@
       <tr v-for="item in data?.data">
         <td class="text-sm font-normal">
           <div class="font-medium text-[14px] text-black">
-            {{ item.first_name }} &nbsp; {{ item.last_name }}
+            {{ item.first_name }} {{ item.last_name }}
           </div>
         </td>
         <td class="text-sm font-normal text-[#989393]">{{ item.email }}</td>

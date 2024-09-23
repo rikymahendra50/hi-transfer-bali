@@ -26,7 +26,7 @@
           <div class="font-medium text-[14px] text-black">{{ item?.name }}</div>
         </td>
         <td class="text-sm font-normal text-[#989393]">
-          Rp. {{ item?.price }}
+          {{ FormatMoneyDash(item?.price) }}
         </td>
         <td class="text-sm font-normal text-[#989393]">
           {{ item?.is_active === 1 ? "Tersedia" : "Tidak tersedia" }}
@@ -87,9 +87,9 @@
     <div class="font-medium text-[14px] text-[#344054] flex items-center gap-3">
       <PaginationAdmin
         v-model="page"
-        :total="5"
+        :total="data?.meta?.total"
         :includeFirstLast="false"
-        :per-page="5"
+        :per-page="data?.meta?.per_page"
         class="flex justify-center"
       />
     </div>

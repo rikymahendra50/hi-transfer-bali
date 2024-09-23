@@ -51,6 +51,11 @@ export default function (options: Options = {}) {
       .catch((error) => {
         setErrorMessage(error.data?.message);
         ctx.setErrors(transformErrors(error.data));
+        pushNotification({
+          type: "error",
+          text: error.value.data?.message,
+          title: "error",
+        });
       })
       .then((data) => {
         if (data) {
@@ -87,6 +92,11 @@ export default function (options: Options = {}) {
       .catch((error) => {
         setErrorMessage(error.data?.message);
         ctx.setErrors(transformErrors(error.data));
+        pushNotification({
+          type: "error",
+          text: error.value.data?.message,
+          title: "error",
+        });
       })
       .then((data) => {
         if (data) {

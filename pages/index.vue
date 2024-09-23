@@ -13,8 +13,17 @@
 </template>
 
 <script setup lang="ts">
+const { locale, t } = useI18n();
+
 useHead({
   title: "Home",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Safe and Comfortable Transfer in Bali. A fleet of modern vehicles and experienced drivers are ready to take you wherever you want.",
+    },
+  ],
 });
 </script>
 

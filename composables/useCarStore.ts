@@ -26,7 +26,7 @@ export default function useTourForm(options: Options = {}) {
     location_pickup_longitude: undefined,
     pickup_date: undefined,
     return_date: undefined,
-    round_trip: undefined,
+    round_trip: 0,
     passengers: 1,
     distance: undefined,
     distance_text: undefined,

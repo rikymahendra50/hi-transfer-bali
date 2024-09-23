@@ -74,6 +74,17 @@ const router = useRouter();
 const { requestOptions } = useRequestOptions();
 const { locale, t: $t } = useI18n();
 
+useHead({
+  title: "Tours",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Safe and Comfortable Transfer in Bali. A fleet of modern vehicles and experienced drivers are ready to take you wherever you want.",
+    },
+  ],
+});
+
 const {
   dataForm,
   submitForm,

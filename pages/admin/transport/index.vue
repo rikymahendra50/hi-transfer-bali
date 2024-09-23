@@ -27,7 +27,9 @@
             {{ item?.name }}
           </div>
         </td>
-        <td class="text-sm font-normal text-[#989393]">Rp.{{ item?.price }}</td>
+        <td class="text-sm font-normal text-[#989393]">
+          {{ FormatMoneyDash(item?.price) }}
+        </td>
         <td class="text-sm font-normal text-[#989393]">
           <StatusTrueOrFalse
             trueString="Tersedia"
