@@ -3,16 +3,16 @@ export default function () {
     const contact = [
         {
             title: "Address",
-            label: "Jl. Komp. Sesetan Agung No.13B,Sesetan, Denpasar Selatan, Bali 80114",
-            link: "#",
+            label: "Jl. Amerta Br. Dinas Kaja , Desa/Kelurahan Busungbiu, Kec. Busungbiu, Kab. Buleleng, Provinsi Bali,Kode Pos: 81154",
+            link: "https://maps.app.goo.gl/3XkGAE8Erm2wsdLZA",
         }, {
             title: "Phone",
-            label: "08123456789",
-            link: "#"
+            label: "087782660007",
+            link: "tel:+6287782660007"
         }, {
             title: "Email",
-            label: "Xp7kT@example.com",
-            link: "#"
+            label: "dekpericab@gmail.com",
+            link: "mailto:dekpericab@gmail.com"
         }
     ]
 

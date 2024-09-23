@@ -56,7 +56,7 @@
                   <li v-for="item in contact" :key="item.label">
                     <div class="font-semibold">{{ item.title }}</div>
                     <a
-                      :to="item.link"
+                      :href="item.link"
                       target="_blank"
                       class="link link-hover inline-flex"
                     >
@@ -76,7 +76,7 @@
     <UIContainer>
       <div class="h-8 w-full text-center">
         <p>
-          ©{{ fullYear }} Hi Transfer Bali. All rights reserved. | Design &
+          ©{{ fullYear }} Hi Travel Bali. All rights reserved. | Design &
           Development by
           <a href="https://spdigitalagency.com" target="_blank">s.p. Digital</a>
         </p>
