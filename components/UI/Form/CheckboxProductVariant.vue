@@ -1,40 +1,30 @@
 <template>
-  <div
-    class="flex flex-col border rounded-lg p-4 form-control hover:border-primary transition-all duration-300 mb-2"
-    :class="{ 'border-primary': additionalChecked }"
-  >
-    <div class="flex flex-row space-x-4" @click="handleClick">
+  <div class="form-control">
+    <div class="flex flex-row space-x-4">
       <div class="flex p-4 gap-3 w-full">
         <div class="form-control">
           <label class="cursor-pointer label">
             <input
               type="checkbox"
-              v-model="additionalChecked"
+              v-model="checked"
               class="checkbox checkbox-primary"
-              ref="checkbox"
-              :checked="additionalChecked"
+              @change="handleCheck"
             />
           </label>
         </div>
         <div class="flex flex-col w-full">
-          <div class="flex flex-col gap-y-2 relative">
-            <p class="text-black text-sm lg:text-base font-semibold pt-1">
-              {{ props.productVariant.description }}
-            </p>
-            <div class="flex items-center justify-between gap-4 mt-2">
-              <div class="flex items-center gap-4">
-                <NumberUpDown
-                  v-model="internalValue.quantity"
-                  :minValue="1"
-                  :maxValue="10"
-                  :showTooltip="true"
-                  @increment="updateModelValue"
-                  @decrement="updateModelValue"
-                />
-              </div>
-              <div class="font-semibold">
-                {{ FormatMoneyDash(total.toString()) }}
-              </div>
+          <p class="text-black text-sm lg:text-base font-semibold pt-1">
+            {{ productVariant.description }}
+          </p>
+          <div class="flex items-center justify-between gap-4 mt-2">
+            <NumberUpDown
+              v-model="quantity"
+              :minValue="0"
+              :maxValue="10"
+              @input="handleQuantityChange"
+            />
+            <div class="font-semibold">
+              {{ FormatMoneyDash(totalPrice.toString()) }}
             </div>
           </div>
         </div>
@@ -49,70 +39,71 @@ import { ref, computed, watch } from "vue";
 const props = defineProps({
   productVariant: {
     type: Object,
+    required: true,
   },
   modelValue: {
-    type: Array,
+    type: Object,
+    required: true,
   },
-});
-
-const additionalChecked = ref(false);
-
-const internalValue = ref({
-  id: props.productVariant.id,
-  quantity: 1,
-  type: "",
-  total: 0,
 });
 
 const emit = defineEmits(["update:modelValue"]);
 
-const price = computed(() => {
-  return parseFloat(props.productVariant.price) || 0;
+// Local state for checkbox and quantity
+const checked = ref(props.modelValue.is_checked);
+const quantity = ref(props.modelValue.quantity);
+
+// Calculate total price
+const totalPrice = computed(() => {
+  return parseFloat(props.productVariant.price) * quantity.value;
 });
 
-const total = computed(() => {
-  return price.value * internalValue.value.quantity;
-});
+// Emit changes to the parent whenever checkbox or quantity changes
+function handleCheck() {
+  if (checked.value) {
+    if (quantity.value === 0) {
+      quantity.value = 1;
+    }
+  } else {
+    quantity.value = 0;
+  }
 
-function updateModelValue() {
-  internalValue.value.total = total.value;
-  emit("update:modelValue", [...props.modelValue]);
+  emit(
+    "update:modelValue",
+    {
+      ...props.modelValue,
+      is_checked: checked.value,
+      quantity: quantity.value,
+      price: totalPrice.value,
+    },
+    props.index
+  ); // Include the index here
 }
 
-function resetInternalValue() {
-  internalValue.value = {
-    id: props.productVariant.id,
-    quantity: 1,
-    type: "",
-    total: 0,
-  };
+function handleQuantityChange() {
+  if (quantity.value === 0) {
+    checked.value = false;
+  } else {
+    checked.value = true;
+  }
+
+  emit(
+    "update:modelValue",
+    {
+      ...props.modelValue,
+      is_checked: checked.value,
+      quantity: quantity.value,
+      price: totalPrice.value,
+    },
+    props.index
+  ); // Include the index here
 }
 
 watch(
-  () => additionalChecked.value,
-  (newValue) => {
-    handleClick();
+  () => props.modelValue,
+  (newVal) => {
+    checked.value = newVal.is_checked;
+    quantity.value = newVal.quantity;
   }
 );
-
-function handleClick() {
-  let variant = [...props.modelValue];
-  const existingIndex = variant.findIndex(
-    (el) => el.id === internalValue.value.id
-  );
-
-  if (additionalChecked.value) {
-    if (existingIndex !== -1) {
-      variant[existingIndex] = { ...internalValue.value, total: total.value };
-    } else {
-      variant.push({ ...internalValue.value, total: total.value });
-    }
-  } else {
-    if (existingIndex !== -1) {
-      variant.splice(existingIndex, 1);
-    }
-  }
-
-  emit("update:modelValue", variant);
-}
 </script>

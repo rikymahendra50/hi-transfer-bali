@@ -2,34 +2,45 @@ import { ref } from "vue";
 import type { SubmissionContext } from "vee-validate";
 
 interface Options {
-  callback?: () => void; // Buat tipe lebih jelas jika callback adalah fungsi
+  callback?: () => void;
 }
 
 export default function useTourForm(options: Options = {}) {
+  const { loading, message, alertType, setErrorMessage, transformErrors } =
+    useRequestHelper();
+
+  const { requestOptions } = useRequestOptions();
+
+  const router = useRouter();
+
+  const { pushNotification } = useNotification();
+
   const dataForm = ref({
     location_id: null,
+    location_name: null,
     activity_date: null,
+    tour_image: null,
+    tour_name: null,
+    tour_id: undefined,
     tourist_numbers: 1,
     price: undefined,
     product: [],
     forms: [],
-    bookingForm: {
-      variant: [],
-    },
+    variants: [],
     name: undefined,
     email: undefined,
     phone: undefined,
+    list_location: undefined,
+    list_location_string: undefined,
+    user_uuid: undefined,
   });
 
-  // Simpan data form ke sessionStorage
   function saveFormData() {
     sessionStorage.setItem("tourFormData", JSON.stringify(dataForm.value));
-    console.log("Data tersimpan:", dataForm.value);
   }
 
-  // Tampilkan data form yang tersimpan dari sessionStorage
   function showSavedTourData() {
-    const savedData = sessionStorage.getItem("tourFormData"); // Konsisten dengan kunci penyimpanan
+    const savedData = sessionStorage.getItem("tourFormData");
 
     if (savedData) {
       dataForm.value = JSON.parse(savedData);
@@ -37,24 +48,87 @@ export default function useTourForm(options: Options = {}) {
   }
 
   function clearSavedTourData() {
-    sessionStorage.removeItem("tourFormData"); // Hapus item spesifik dari sessionStorage
-    console.log("Tour form data dihapus dari sessionStorage");
+    sessionStorage.removeItem("tourFormData");
   }
 
-  // Fungsi untuk submit form
-  function submitForm() {
-    console.log("Form submitted:", dataForm.value);
+  const submitForm = async (ctx: SubmissionContext) => {
+    const formData = new FormData();
+    loading.value = true;
 
-    // Eksekusi callback jika ada
-    if (options.callback) {
-      options.callback();
-    }
-  }
+    formData.append("pic_name", dataForm.value.name || "");
+    formData.append("pic_email", dataForm.value.email || "");
+    formData.append("pic_phone_number", dataForm.value.phone || "");
+    formData.append("activity_date", dataForm.value.activity_date || "");
+    formData.append(
+      "products[0][location_id]",
+      dataForm.value.location_id || ""
+    );
+    formData.append("forms[0][product_id]", dataForm.value.location_id || "");
+
+    // test array
+
+    // for (const item in dataForm.value) {
+    //   if (item === "locations") {
+    //     dataForm.value.locations.forEach((location, index) => {
+    //       formData.append(`locations[${index}]`, location);
+    //     });
+    //   } else {
+    //     // @ts-ignore
+    //     const objectItem = dataForm.value[item];
+    //     formData.append(item, objectItem);
+    //   }
+    // }
+
+    // if (dataForm.value.variants) {
+    //   dataForm.value.variants.forEach((variant, index) => {
+    //     formData.append(`products[${index}][id]`, dataForm.value.tour_id);
+    //     formData.append(`products[${index}][name]`, variant.name);
+    //     formData.append(`products[${index}][variant_id]`, variant.id);
+    //     formData.append(`products[${index}][quantity]`, variant.quantity);
+    //   });
+    // }
+
+    // if (dataForm.value.forms) {
+    //   dataForm.value.forms.forEach((item, index) => {
+    //     formData.append(`forms[${index}][product_id]`, dataForm.value.tour_id);
+    //     formData.append(`forms[${index}][name]`, item.name);
+    //     formData.append(`forms[${index}][variant_id]`, item.variant_id);
+    //     formData.append(`forms[${index}][nationality]`, item.nationality);
+    //   })
+    // }
+
+    // end test array
+
+    await $fetch<CommonResponse<{ message: string }>>(
+      `/users/${dataForm.value.user_uuid}/tour-orders`,
+      {
+        headers: {
+          Accept: "application/json",
+        },
+        method: "POST",
+        body: formData,
+        ...requestOptions,
+      }
+    )
+      .catch((error) => {
+        // setErrorMessage(error.data?.message);
+        // ctx.setErrors(transformErrors(error.data));
+        alert(error);
+      })
+      .then((data) => {
+        if (data) {
+          window.location.replace(data.data?.payment_url);
+          options.callback?.();
+        }
+      });
+
+    loading.value = false;
+  };
 
   return {
     submitForm,
     showSavedTourData,
-    saveFormData, // Ganti duplikasi dengan fungsi `saveFormData`
+    saveFormData,
     dataForm,
     clearSavedTourData,
   };

@@ -131,6 +131,7 @@ useHead({
 
 const selectedDistance = ref("");
 const selectedPassenger = ref("");
+const selectedTouristNumber = ref("");
 
 const {
   dataForm,
@@ -191,6 +192,7 @@ onMounted(() => {
   if (!route.query.distance && route.query.passengers) {
     selectedTouristNumber.value = route.query.passengers;
   }
+  dataForm.value.distance = dataForm.value.distance / 1000;
 
   showSavedCarData();
 });

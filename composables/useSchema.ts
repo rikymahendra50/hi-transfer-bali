@@ -12,19 +12,21 @@ import z, {
 import { toTypedSchema } from "@vee-validate/zod";
 
 export default function () {
+  const { t: $t } = useI18n();
+
   const notANumber = "Not a number";
-  const emailField = string().email("Please enter a valid email");
+  const emailField = string().email($t("validasi-email"));
   const passwordField = string()
-    .min(7, "Password should be at least 7 characters")
-    .max(50, "Password should be at most 50 characters");
+    .min(7, $t("validasi-password"))
+    .max(50, $t("validasi-max-password"));
   const confirmPasswordField = string()
-    .min(7, "Confirm Password should be at least 7 characters")
-    .max(50, "Confirm Password should be at most 50 characters");
-  const firstNameField = string().min(1, "First name is required");
-  const lastNameField = string().min(1, "Last name is required");
+    .min(7, $t("validasi-confirm-password"))
+    .max(50, $t("validasi-confirm-max-password"));
+  const firstNameField = string().min(1, $t("first-name-required"));
+  const lastNameField = string().min(1, $t("last-name-required"));
   const otpField = string()
-    .min(6, "OTP should be at least 6 characters")
-    .max(6, "OTP should be at most 6 characters");
+    .min(6, $t("otp-minimum"))
+    .max(6, $t("otp-maksimum"));
 
   const passwordAndConfirm = object({
     password: passwordField,
@@ -34,7 +36,7 @@ export default function () {
       ctx.addIssue({
         path: ["confirm_password"],
         code: "custom",
-        message: "Passwords do not match",
+        message: $t("password-not-match"),
       });
     }
   });
@@ -51,7 +53,7 @@ export default function () {
       first_name: firstNameField,
       last_name: lastNameField,
       phone: string()
-        .min(1, "Telepon harus diisi")
+        .min(1, $t("orderCarSchema.telepon"))
         .transform((value, ctx) => {
           const parsed = parseInt(value);
           if (isNaN(parsed)) {
@@ -185,20 +187,29 @@ export default function () {
 
   const carSearchSchema = toTypedSchema(
     object({
-      pickup_address: string().min(1, "Lokasi penjemputan harus diisi"),
-      return_address: string().min(1, "Lokasi tujuan harus diisi"),
-      pickup_date: string().min(1, "Tanggal penjemputan harus diisi"),
-      return_date: string().min(1, "Tanggal kembali harus diisi"),
+      pickup_address: string().min(1, $t("carSearchSchema.pickup_address")),
+      return_address: string().min(1, $t("carSearchSchema.return_address")),
+      pickup_date: string().min(1, $t("carSearchSchema.pickup_address")),
+      return_date: string().min(1, $t("carSearchSchema.return_date")),
+    })
+  );
+
+  const tourSearchSchema = toTypedSchema(
+    object({
+      activity_date: string().min(1, $t("tourSearchSchema.activity_date")),
+      total_passengers: string().min(
+        1,
+        $t("tourSearchSchema.total_passengers")
+      ),
     })
   );
 
   const orderCarSchema = toTypedSchema(
     object({
-      name: string().min(1, "Lokasi penjemputan harus diisi"),
+      name: string().min(1, $t("orderCarSchema.name")),
       email: emailField,
-      // flight_number: string().min(1, "Lokasi penjemputan harus diisi"),
       phone: string()
-        .min(1, "Telepon harus diisi")
+        .min(1, $t("orderCarSchema.telepon"))
         .transform((value, ctx) => {
           const parsed = parseInt(value);
           if (isNaN(parsed)) {
@@ -234,5 +245,6 @@ export default function () {
     facilityCarEdit,
     carSearchSchema,
     orderCarSchema,
+    tourSearchSchema,
   };
 }

@@ -49,9 +49,9 @@
                 Destination
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD]">Date</th>
-              <th class="font-medium text-[#667085] bg-[#FCFCFD]">
+              <!-- <th class="font-medium text-[#667085] bg-[#FCFCFD]">
                 Participant
-              </th>
+              </th> -->
               <th class="font-medium text-[#667085] bg-[#FCFCFD]">Type</th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD]">
                 {{ $t("pricing") }}
@@ -86,14 +86,16 @@
                   {{ item.activity_date }} {{ $t("to") }} {{ item.return_date }}
                 </div>
               </td>
-              <td>
+              <!-- <td>
                 <div class="">2 Participant</div>
-              </td>
+              </td> -->
               <td>
                 <div class="">{{ item.type }}</div>
               </td>
               <td>
-                <div class="">Rp. {{ item.grand_total_purchased }}</div>
+                <div class="">
+                  {{ FormatMoneyDash(item.grand_total_purchased) }}
+                </div>
               </td>
               <td>
                 <div
@@ -137,7 +139,6 @@
           </div>
         </div>
       </div>
-
       <!-- end table -->
 
       <!-- table order transport -->
@@ -193,7 +194,9 @@
                 <div class="">{{ item.activity_date }}</div>
               </td>
               <td>
-                <div class="">Rp{{ item.grand_total_purchased }}</div>
+                <div class="">
+                  {{ FormatMoneyDash(item.grand_total_purchased) }}
+                </div>
               </td>
               <td>
                 <div

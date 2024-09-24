@@ -36,11 +36,11 @@
 const props = defineProps({ data: { type: Array } });
 
 const slidesPerView1024 = computed(() => {
-  if (props.data.length <= 1) {
+  if (props.data?.length <= 1) {
     return 1;
-  } else if (props.data.length <= 2) {
+  } else if (props.data?.length <= 2) {
     return 2;
-  } else if (props.data.length <= 3) {
+  } else if (props.data?.length <= 3) {
     return 3;
   } else {
     return 3;

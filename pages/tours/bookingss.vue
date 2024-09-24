@@ -7,9 +7,12 @@
           <h3 class="text-2xl font-semibold text-primary-dark">
             {{ $t("pesanan-anda") }}
           </h3>
-
           <div class="space-y-4">
-            <TourSelectedCard />
+            <TourSelectedCard
+              :image="dataForm.tour_image"
+              :name="dataForm.tour_name"
+              :desk="dataForm.list_location_string"
+            />
           </div>
         </div>
         <div class="p-4">
@@ -47,6 +50,18 @@ const route = useRoute();
 const router = useRouter();
 const { locale, t: $t } = useI18n();
 
+const {
+  dataForm,
+  submitForm,
+  saveFormData,
+  showSavedTourData,
+  clearSavedTourData,
+} = useTourStore({
+  callback: () => {
+    alert("Form has been submitted!");
+  },
+});
+
 const { btnSubmitClick } = useVehicleForm();
 
 const isTourBookingPage = computed(() => {
@@ -62,8 +77,12 @@ const isTourBookingCheckoutPage = computed(() => {
 });
 
 const gotoCheckout = () => {
-  router.push("/tours/booking/checkout");
+  // router.push("/tours/booking/checkout");
 };
+
+onMounted(() => {
+  showSavedTourData();
+});
 </script>
 
 <style scoped></style>

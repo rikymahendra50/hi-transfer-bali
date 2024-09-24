@@ -12,8 +12,8 @@
     </div>
     <VeeForm
       @submit="onSubmit"
-      :validation-schema="carSearchSchema"
       v-slot="{ errors }"
+      :validation-schema="carSearchSchema"
     >
       <div
         class="grid grid-cols-1 lg:grid-cols-[1fr_50px_1fr] gap-4 items-center"
@@ -53,6 +53,7 @@
           />
         </UIFormMGroup>
       </div>
+
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 mt-6">
         <UIFormToggle
           name="round_trip"
@@ -62,10 +63,10 @@
           false-value="0"
           variant="primary"
         />
-
         <UIFormMGroup name="pickup_date" :label="$t('jemput-tanggal')">
           <UIFormMTextField
             name="pickup_date"
+            :min="today"
             v-model="dataForm.pickup_date"
             type="date"
             placeholder="ex:2024-01-01"
@@ -77,6 +78,7 @@
             v-model="dataForm.return_date"
             type="date"
             :min="dataForm.pickup_date"
+            :max="maxReturnDate"
             placeholder="ex:2024-01-02"
           />
         </UIFormMGroup>
@@ -185,6 +187,24 @@ watch(
   }
 );
 
+const maxReturnDate = ref("");
+
+watch(
+  () => dataForm.value.pickup_date,
+  (newPickupDate) => {
+    if (newPickupDate) {
+      const pickupDate = new Date(newPickupDate);
+      // Tambahkan 7 hari ke pickup_date
+      const returnDate = new Date(pickupDate);
+      returnDate.setDate(pickupDate.getDate() + 7);
+      // Formatkan tanggal menjadi YYYY-MM-DD
+      maxReturnDate.value = returnDate.toISOString().split("T")[0];
+    } else {
+      maxReturnDate.value = "";
+    }
+  }
+);
+
 async function calculateDistanceMatrix() {
   if (formDataJemput.value.latitude && formDataTujuan.value.latitude) {
     const lat1 = parseFloat(formDataJemput.value.latitude);
@@ -207,16 +227,16 @@ async function calculateDistanceMatrix() {
         if (status === "OK") {
           const result = response.rows[0].elements[0];
           distance.value = result?.distance?.value;
-          // distanceRound.value = result?.distance?.text;
+          distanceRound.value = result?.distance?.text;
 
-          if (dataForm.value.round_trip == 1) {
-            dataForm.value.distance =
-              (result?.distance?.value / 1000).toFixed(1) * 2;
-          } else if (dataForm.value.round_trip == 0) {
-            dataForm.value.distance = (result?.distance?.value / 1000).toFixed(
-              1
-            );
-          }
+          // if (dataForm.value.round_trip == 1) {
+          //   dataForm.value.distance =
+          //     (result?.distance?.value / 1000).toFixed(1) * 2;
+          // } else if (dataForm.value.round_trip == 0) {
+          //   dataForm.value.distance = (result?.distance?.value / 1000).toFixed(
+          //     1
+          //   );
+          // }
 
           // console.log(dataForm.value.distance);
           // console.log("Distance:", result?.distance);
@@ -251,12 +271,14 @@ function onSubmit() {
   dataForm.value.location_return_latitude = formDataTujuan.value.latitude;
   dataForm.value.location_return_longitude = formDataTujuan.value.longitude;
 
-  dataForm.value.distance_text = distanceRound.value;
+  dataForm.value.distance = distance.value;
 
   saveFormData();
 
   router.replace(url);
 }
+
+const today = new Date().toISOString().split("T")[0];
 </script>
 
 <style scoped></style>

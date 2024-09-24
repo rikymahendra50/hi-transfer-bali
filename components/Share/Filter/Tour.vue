@@ -1,15 +1,23 @@
 <template>
-  <div class="space-y-4">
+  <VeeForm
+    @submit="onSubmit"
+    v-slot="{ errors }"
+    :validation-schema="tourSearchSchema"
+    class="space-y-4"
+  >
     <div>
       <UIFormMGroup name="tour_id" :label="$t('pilih-destinasi')">
         <VDropdown
-          v-model="dataForm.location_id"
+          v-model="formData.location_id"
           placements="start"
           distance="-10"
           skidding="1"
           arrow-padding="1"
         >
-          <button class="text-xs h-9 w-full flex justify-between items-center">
+          <button
+            type="button"
+            class="text-xs h-9 w-full flex justify-between items-center"
+          >
             <div>
               {{ selectedLocationName ?? $t("pilih-destinasi") }}
             </div>
@@ -29,7 +37,7 @@
                   v-for="location in locations?.data"
                   :key="location.id"
                   class="grid grid-cols-[150px_1fr] gap-4 hover:bg-primary/10 transition-all duration-300 p-4 rounded-md cursor-pointer"
-                  @click="
+                  @click.prevent="
                     selectLocation(location);
                     hide();
                   "
@@ -41,13 +49,16 @@
           </template>
         </VDropdown>
       </UIFormMGroup>
+      <VeeErrorMessage name="location" class="form-error-message" />
     </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr_110px] gap-4">
       <UIFormMGroup name="activity_date" :label="$t('pilih-tanggal')">
         <UIFormMTextField
           name="activity_date"
           type="date"
-          v-model="dataForm.activity_date"
+          :min="today"
+          v-model="formData.activity_date"
           placeholder="ex:2024-01-01"
         />
       </UIFormMGroup>
@@ -55,24 +66,31 @@
       <UIFormMGroup name="total_passengers" :label="$t('beberapa-orang')">
         <UIFormMTextField
           name="total_passengers"
-          v-model="dataForm.tourist_numbers"
+          v-model="formData.tourist_numbers"
           placeholder="ex:1"
         />
       </UIFormMGroup>
       <div>
-        <UIBtn variant="primary" @click="onSubmit">{{ $t("cari-tur") }}</UIBtn>
+        <UIBtn variant="primary" type="submit">{{ $t("cari-tur") }}</UIBtn>
       </div>
     </div>
-  </div>
+  </VeeForm>
 </template>
 
 <script setup>
 const { locale, t: $t } = useI18n();
 const { transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+const { tourSearchSchema } = useSchema();
 const router = useRouter();
 
 const selectedLocationName = ref();
+
+const formData = ref({
+  location_id: undefined,
+  activity_date: undefined,
+  tourist_numbers: undefined,
+});
 
 const {
   dataForm,
@@ -107,11 +125,16 @@ function replaceWindow() {
 }
 
 function selectLocation(location) {
-  dataForm.value.location_id = location.id;
+  formData.value.location_id = location.id;
   selectedLocationName.value = location.name;
 }
 
 function onSubmit() {
+  dataForm.value.location_id = formData.value.location_id;
+  dataForm.value.location_name = selectedLocationName.value;
+  dataForm.value.activity_date = formData.value.activity_date;
+  dataForm.value.tourist_numbers = formData.value.tourist_numbers;
+
   let filters = [];
   if (dataForm.value.location_id) {
     filters.push(`location=${dataForm.value.location_id}`);
@@ -123,9 +146,12 @@ function onSubmit() {
   const queryString = filters.join("&");
   const url = `/tours?${queryString ? `&${queryString}` : ""}`;
 
-  saveFormData();
+  console.log(
+    "ini setelah filters tour harusnya menyimpan location_id, location_name, activity_date dan tourist number",
+    dataForm.value
+  );
 
-  // console.log(dataForm.value);
+  saveFormData();
 
   router.replace(url);
 }
@@ -133,6 +159,8 @@ function onSubmit() {
 onMounted(() => {
   showSavedTourData();
 });
+
+const today = new Date().toISOString().split("T")[0];
 </script>
 
 <style scoped></style>

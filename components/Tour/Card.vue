@@ -1,6 +1,7 @@
 <template>
   <NuxtLink
     :to="slug"
+    @click="goToTourBooking(id, props.image, name, price, description)"
     class="overflow-hidden rounded-xl space-y-2 border border-zinc-200 shadow-sm group"
   >
     <div class="h-[300px] overflow-hidden">
@@ -22,7 +23,7 @@
       <div>
         <div class="text-zinc-400 text-xs">{{ $t("harga-mulai-dari") }}</div>
         <h4 class="text-xl font-semibold text-primary">
-          Rp. {{ price }} /{{ $t("orang") }}
+          {{ FormatMoneyDash(price.toString()) }} /{{ $t("orang") }}
         </h4>
       </div>
     </div>
@@ -33,6 +34,7 @@
 const { locale, t: $t } = useI18n();
 
 const props = defineProps({
+  id: { type: [String, Number] },
   name: { type: String },
   slug: { type: String },
   description: { type: [String, Array] },
@@ -43,6 +45,38 @@ const props = defineProps({
 const result = computed(() => {
   return props.description.map((item) => item.name).join(" - ");
 });
+
+const {
+  dataForm,
+  submitForm,
+  saveFormData,
+  showSavedTourData,
+  clearSavedTourData,
+} = useTourStore({
+  callback: () => {
+    alert("Form has been submitted!");
+  },
+});
+
+function goToTourBooking(id, image, name, price, description) {
+  showSavedTourData();
+
+  dataForm.value.tour_id = id;
+  dataForm.value.tour_image = image;
+  dataForm.value.tour_name = name;
+  dataForm.value.price = price;
+  dataForm.value.list_location = description;
+  dataForm.value.list_location_string = result.value;
+
+  saveFormData();
+
+  console.log(
+    "Ini dari card tour, harusnya menyimpan image, name dan harga dari tour",
+    dataForm.value
+  );
+
+  router.push("/vehicles/booking");
+}
 </script>
 
 <style scoped></style>

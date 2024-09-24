@@ -17,7 +17,7 @@
     </div>
     <GMapMap
       :center="center"
-      :zoom="12"
+      :zoom="10"
       map-type-id="terrain"
       style="width: 100%; height: 250px"
       :options="{

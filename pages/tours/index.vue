@@ -19,12 +19,13 @@
             <div
               class="flex flex-col lg:flex-row space-y-1 lg:space-y-0 lg:space-x-4 text-lg lg:text-xl font-semibold"
             >
-              <div class="text-center">Bandara Int'l I Gusti Ngurah Rai</div>
+              <div class="text-center">{{ dataForm.location_name }}</div>
             </div>
             <div
               class="text-zinc-400 text-sm whitespace-nowrap text-center lg:text-left"
             >
-              21 Juni 2024 | 2 {{ $t("orang") }}
+              {{ dataForm.activity_date }} | {{ dataForm.tourist_numbers }}
+              {{ $t("orang") }}
             </div>
           </div>
         </div>
@@ -53,6 +54,7 @@
             <TourCard
               v-for="item in dataT?.data"
               :key="item.id"
+              :id="item.id"
               :description="item.locations"
               :price="item.price"
               :name="item.name"
@@ -74,16 +76,11 @@ const router = useRouter();
 const { requestOptions } = useRequestOptions();
 const { locale, t: $t } = useI18n();
 
-useHead({
-  title: "Tours",
-  meta: [
-    {
-      name: "description",
-      content:
-        "Safe and Comfortable Transfer in Bali. A fleet of modern vehicles and experienced drivers are ready to take you wherever you want.",
-    },
-  ],
-});
+const param = ref();
+const selectedLocation = ref();
+const selectedTouristNumber = ref();
+const dataT = ref();
+const filter = ref({ sort: "" });
 
 const {
   dataForm,
@@ -97,13 +94,6 @@ const {
   },
 });
 
-useHead({ title: "Tours" });
-
-const param = ref();
-const selectedLocation = ref();
-const selectedTouristNumber = ref();
-const dataT = ref();
-
 onMounted(async () => {
   if (route.query.location && route.query.tourist_numbers) {
     selectedLocation.value = route.query.location;
@@ -116,10 +106,9 @@ onMounted(async () => {
     selectedTouristNumber.value = route.query.tourist_numbers;
   }
 
+  showSavedTourData();
   fetchData();
 });
-
-const filter = ref({ sort: "" });
 
 watch(
   [() => filter.value.sort, selectedLocation, selectedTouristNumber],
@@ -147,11 +136,14 @@ function goToHomePage() {
   router.push({ path: "/?tours" });
 }
 
-// onMounted(() => {
-//   const savedFormData = localStorage.getItem("vehicleFormData");
-//   if (savedFormData) {
-//     vehicleForm.dataForm = JSON.parse(savedFormData);
-//   }
-//   console.log(savedFormData);
-// });
+useHead({
+  title: "Tours",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Safe and Comfortable Transfer in Bali. A fleet of modern vehicles and experienced drivers are ready to take you wherever you want.",
+    },
+  ],
+});
 </script>

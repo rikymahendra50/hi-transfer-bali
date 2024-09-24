@@ -119,7 +119,7 @@ export default function useTourForm(options: Options = {}) {
     formData.append("pic_email", dataForm.value.email || "");
     formData.append("pic_phone_number", dataForm.value.phone || "");
     formData.append("products[0][id]", dataForm.value.car_id || "");
-    formData.append("products[0][quantity]", "1"); // Quantity tetap 1 sesuai dengan contohmu
+    formData.append("products[0][quantity]", dataForm.value.distance || "");
     formData.append(
       "products[0][pickup_latitude]",
       dataForm.value.location_pickup_latitude || ""
@@ -154,8 +154,7 @@ export default function useTourForm(options: Options = {}) {
     );
     formData.append(
       "products[0][activity_date]",
-      // dataForm.value.pickup_date || ""
-      "2024-09-24"
+      dataForm.value.pickup_date || ""
     );
 
     // for (const item in dataFormSubmit.value) {
@@ -165,7 +164,7 @@ export default function useTourForm(options: Options = {}) {
     // }
 
     await $fetch<CommonResponse<{ message: string }>>(
-      `/users/JFTSO2rbYvY9/car-orders`,
+      `/users/${dataForm.user_uuid}/car-orders`,
       {
         headers: {
           Accept: "application/json",
@@ -183,7 +182,6 @@ export default function useTourForm(options: Options = {}) {
       .then((data) => {
         if (data) {
           window.location.replace(data.data?.payment_url);
-          // resetForm();
           options.callback?.();
         }
       });

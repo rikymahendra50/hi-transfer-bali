@@ -126,5 +126,32 @@
   "ketik-email-anda": "Type your email",
   "yang-harus-kamu-bayar": "The amount you have to pay",
   "sampai": "to",
-  "order-sekarang": "Order now"
+  "order-sekarang": "Order now",
+  "rincian-harga": "Detail price",
+  "perjalanan-pergi": "Journey away",
+  "perjalanan-pulang": "On the way home",
+  "carSearchSchema": {
+    "pickup_address": "Pickup location must be filled in",
+    "return_address": "The destination location must be filled in",
+    "pickup_date": "Pick-up date must be filled in",
+    "return_date": "Return date must be filled in"
+  },
+  "tourSearchSchema": {
+    "activity_date": "Date must be entered",
+    "total_passengers": "Total passengers"
+  },
+  "orderCarSchema": {
+    "name": "Pickup location must be filled in",
+    "telepon": "Phone number must be filled in"
+  },
+  "validasi-email": "Please enter a valid email",
+  "validasi-password": "Password should be at least 7 characters",
+  "validasi-max-password": "Password should be at most 50 characters",
+  "validasi-confirm-password": "Confirm Password should be at least 7 characters",
+  "validasi-confirm-max-password": "Confirm Password should be at most 50 characters",
+  "first-name-required": "First name is required",
+  "last-name-required": "Last name is required",
+  "otp-minimum": "OTP should be at least 6 characters",
+  "otp-maksimum": "OTP should be at most 6 characters",
+  "password-not-match": "Password do not match"
 }

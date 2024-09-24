@@ -84,12 +84,11 @@ function goToVehicleBooking(id, image, price, facilities, name) {
   dataForm.value.name_car = name;
   dataForm.value.image = image;
   dataForm.value.price = price;
-  // dataForm.value.maxPerson = maxPerson;
   dataForm.value.facilities = facilities;
 
   saveFormData();
 
-  console.log("ini data form", dataForm.value);
+  console.log("ini dari card", dataForm.value);
 
   router.push("/vehicles/booking");
 }

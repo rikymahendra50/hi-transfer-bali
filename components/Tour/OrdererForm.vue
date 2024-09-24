@@ -4,31 +4,28 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 p-4 gap-4 border rounded-xl">
         <UIFormMGroup name="name" label="Nama Lengkap">
           <UIFormMTextField
-            v-model="dataForm.name"
+            v-model="dataFormProfile.name"
             name="name"
             class="input-bordered"
             placeholder="ex:John Doe"
-            @input="emit('update:name', $event.target.value)"
           />
         </UIFormMGroup>
 
         <UIFormMGroup name="email" label="Email">
           <UIFormMTextField
-            v-model="dataForm.email"
+            v-model="dataFormProfile.email"
             name="email"
             class="input-bordered"
             placeholder="ex:myemail@gmail.com"
-            @input="emit('update:email', $event.target.value)"
           />
         </UIFormMGroup>
 
         <UIFormMGroup name="phone" label="Phone">
           <UIFormMTextField
-            v-model="dataForm.phone"
+            v-model="dataFormProfile.phone"
             name="phone"
             class="input-bordered"
             placeholder="ex:081234567890"
-            @input="emit('update:phone', $event.target.value)"
           />
         </UIFormMGroup>
         <div class="hidden">
@@ -45,27 +42,36 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
+const {
+  dataForm,
+  submitForm,
+  saveFormData,
+  showSavedTourData,
+  clearSavedTourData,
+} = useTourStore({
+  callback: () => {
+    alert("Form has been submitted!");
+  },
+});
+
 const props = defineProps({
   name: {
     type: String,
     required: false,
-    default: undefined,
   },
   email: {
     type: String,
     required: false,
-    default: undefined,
   },
   phone: {
     type: String,
     required: false,
-    default: undefined,
   },
 });
 
 const emit = defineEmits(["update:name", "update:email", "update:phone"]);
 
-const dataForm = ref({
+const dataFormProfile = ref({
   name: props.name,
   email: props.email,
   phone: props.phone,
@@ -74,25 +80,34 @@ const dataForm = ref({
 watch(
   () => props.name,
   (newName) => {
-    dataForm.value.name = newName;
+    dataFormProfile.value.name = newName;
   }
 );
 
 watch(
   () => props.email,
   (newEmail) => {
-    dataForm.value.email = newEmail;
+    dataFormProfile.value.email = newEmail;
   }
 );
 
 watch(
   () => props.phone,
   (newPhone) => {
-    dataForm.value.phone = newPhone;
+    dataFormProfile.value.phone = newPhone;
   }
 );
 
 function onSubmit() {
-  router.push("/vehicles/checkout");
+  // dataForm.value.name = dataFormProfile.value.name;
+  // dataForm.value.email = dataFormProfile.value.email;
+  // dataForm.value.phone = dataFormProfile.value.phone;
+  // saveFormData();
+  // console.log(dataForm.value);
+  // router.push("/vehicles/checkout");
 }
+
+// function onSubmit() {
+//   router.push("/vehicles/checkout");
+// }
 </script>

@@ -161,7 +161,7 @@ function submitFormT() {
   dataForm.value.email = dataFormT.value.email;
   dataForm.value.phone = dataFormT.value.phone;
 
-  // console.log("ini di booking", dataForm.value);
+  console.log("ini di booking", dataForm.value);
 
   saveFormData();
 
@@ -174,6 +174,8 @@ onMounted(async () => {
   }
 
   showSavedCarData();
+
+  console.log("ini dari booking", dataForm.value);
 });
 
 const fetchUserData = async (ctx) => {
