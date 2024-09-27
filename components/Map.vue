@@ -1,6 +1,7 @@
 <template>
   <div class="rounded-lg overflow-hidden relative p-3">
     <div class="relative z-[10000] grid md:flex gap-3 items-center">
+      <!-- test -->
       <button
         @click="getUserLocation"
         class="btn border-primary border bg-white text-primary md:mb-3"
