@@ -115,15 +115,15 @@
     </div>
   </modal>
   <!-- end modal -->
-
-  <!-- <pre>
-    {{ data }}
-  </pre> -->
 </template>
 
 <script setup>
 const { transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+const router = useRouter();
+const route = useRoute();
+
+import { withQuery } from "ufo";
 
 definePageMeta({
   layout: "admin",
@@ -162,6 +162,29 @@ const { selectedFacility, deleteFacility, loading } = useFacility({
 });
 
 onMounted(async () => {
+  if (route.query.page) {
+    page.value = Number(route.query.page);
+  }
+
   selectedFacility.value = data.value;
 });
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+watch(page, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    start();
+  }
+});
+
+function replaceWindow() {
+  router.replace(
+    withQuery("/admin/facility-car", {
+      page: page.value,
+    })
+  );
+  refresh();
+}
 </script>

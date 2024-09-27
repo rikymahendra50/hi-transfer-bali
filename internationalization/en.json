@@ -137,6 +137,7 @@
     "return_date": "Return date must be filled in"
   },
   "tourSearchSchema": {
+    "location": "Destination is required",
     "activity_date": "Date must be entered",
     "total_passengers": "Total passengers"
   },

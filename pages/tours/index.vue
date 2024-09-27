@@ -38,12 +38,14 @@
             {{ $t("menampilkan-paket-tur", { number: dataT?.meta?.total }) }}
           </div>
           <div>
-            <!-- <UIFormMGroup name="sort" label="Urut berdasarkan">
-              <UIFormMSelect v-model="filter.sort" name="sort">
-                <option value="">Semua</option>
-                <option value="recommended">Rekomendasi</option>
+            <UIFormMGroup name="sort" :label="$t('urut-berdasarkan')">
+              <UIFormMSelect v-model="filter.sort" name="sort" :class="true">
+                <option value="">{{ $t("semua") }}</option>
+                <option value="price">{{ $t("murah-ke-mahal") }}</option>
+                <option value="-price">{{ $t("mahal-ke-murah") }}</option>
+                <option value="recomended">{{ $t("rekomendasi") }}</option>
               </UIFormMSelect>
-            </UIFormMGroup> -->
+            </UIFormMGroup>
           </div>
         </div>
         <div>
@@ -107,7 +109,7 @@ onMounted(async () => {
   }
 
   showSavedTourData();
-  fetchData();
+  // fetchData();
 });
 
 watch(

@@ -129,22 +129,22 @@
                 </div>
                 <template #popper="{ hide }">
                   <div class="bg-white flex flex-col shadow w-fit">
-                    <div
+                    <NuxtLink
+                      :to="`/admin/profile`"
+                      @click.prevent="hide"
                       class="border-t hover:bg-primary hover:text-white py-2 px-3 flex items-center gap-2"
                     >
                       <Icon
                         name="iconamoon:profile-circle-thin"
                         class="w-6 h-6"
                       />
-                      <NuxtLink :to="`/admin/profile`" @click.prevent="hide">
-                        Profil saya
-                      </NuxtLink>
-                    </div>
-                    <div class="border-t py-2 px-3 cursor-pointer">
+                      <div>Profil saya</div>
+                    </NuxtLink>
+                    <div class="border-t cursor-pointer">
                       <button
                         type="button"
                         @click="$logout"
-                        class="flex flex-row space-x-2 items-center text-red-500 font-medium"
+                        class="flex flex-row space-x-2 items-center text-red-500 font-medium py-2 px-3 w-full hover:bg-red-500 hover:text-white"
                       >
                         <Icon name="ic:baseline-logout" class="w-6 h-6" />
                         <span>Logout</span>

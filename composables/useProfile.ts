@@ -71,6 +71,7 @@ export default function (usedBy: "user" | "admin", callback: Function) {
         title: "error",
       });
     } else {
+      alert("Success update profil");
       pushNotification({
         type: "success",
         text: "Success update profil",

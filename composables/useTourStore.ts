@@ -59,11 +59,28 @@ export default function useTourForm(options: Options = {}) {
     formData.append("pic_email", dataForm.value.email || "");
     formData.append("pic_phone_number", dataForm.value.phone || "");
     formData.append("activity_date", dataForm.value.activity_date || "");
-    formData.append(
-      "products[0][location_id]",
-      dataForm.value.location_id || ""
-    );
-    formData.append("forms[0][product_id]", dataForm.value.location_id || "");
+
+    if (dataForm.value.variants) {
+      dataForm.value.variants.forEach((variant, index) => {
+        formData.append(`products[${index}][id]`, dataForm.value.tour_id);
+        formData.append(
+          `products[${index}][location_id]`,
+          dataForm.value.location_id || ""
+        );
+        formData.append(`products[${index}][name]`, variant.description);
+        formData.append(`products[${index}][variant_id]`, variant.id);
+        formData.append(`products[${index}][quantity]`, variant.quantity);
+      });
+    }
+
+    if (dataForm.value.forms) {
+      dataForm.value.forms.forEach((item, index) => {
+        formData.append(`forms[${index}][product_id]`, dataForm.value.tour_id);
+        formData.append(`forms[${index}][name]`, item.name);
+        formData.append(`forms[${index}][variant_id]`, item.variant_id);
+        formData.append(`forms[${index}][nationality]`, item.nationality);
+      });
+    }
 
     // test array
 
@@ -77,24 +94,6 @@ export default function useTourForm(options: Options = {}) {
     //     const objectItem = dataForm.value[item];
     //     formData.append(item, objectItem);
     //   }
-    // }
-
-    // if (dataForm.value.variants) {
-    //   dataForm.value.variants.forEach((variant, index) => {
-    //     formData.append(`products[${index}][id]`, dataForm.value.tour_id);
-    //     formData.append(`products[${index}][name]`, variant.name);
-    //     formData.append(`products[${index}][variant_id]`, variant.id);
-    //     formData.append(`products[${index}][quantity]`, variant.quantity);
-    //   });
-    // }
-
-    // if (dataForm.value.forms) {
-    //   dataForm.value.forms.forEach((item, index) => {
-    //     formData.append(`forms[${index}][product_id]`, dataForm.value.tour_id);
-    //     formData.append(`forms[${index}][name]`, item.name);
-    //     formData.append(`forms[${index}][variant_id]`, item.variant_id);
-    //     formData.append(`forms[${index}][nationality]`, item.nationality);
-    //   })
     // }
 
     // end test array

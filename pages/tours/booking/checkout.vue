@@ -45,7 +45,6 @@
               :image="dataForm.tour_image"
               :dataListPrice="dataForm.variants"
             />
-
             <div>
               <div class="space-y-4 p-4 border rounded-xl">
                 <div
@@ -59,7 +58,6 @@
               </div>
             </div>
           </div>
-
           <div class="flex items-end justify-end" @click="onSubmit">
             <div class="btn btn-md bg-primary text-white">
               <p>{{ $t("pesan-dan-bayar") }}</p>
@@ -94,6 +92,8 @@ onMounted(() => {
 
 function onSubmit() {
   console.log("ini adalah dataForm final", dataForm.value);
+  saveFormData();
+  submitForm();
 }
 </script>
 

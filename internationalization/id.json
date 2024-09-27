@@ -136,6 +136,7 @@
     "return_date": "Tanggal kembali harus diisi"
   },
   "tourSearchSchema": {
+    "location": "Destinasi harus diisi",
     "activity_date": "Tanggal harus diisi",
     "total_passengers": "Jumlah penumpang"
   },

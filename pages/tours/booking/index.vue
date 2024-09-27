@@ -19,7 +19,12 @@
           <div class="flex justify-between items-center">
             <div class="text-2xl font-semibold">{{ $t("data-pemesan") }}</div>
           </div>
-          <div class="space-y-4">
+          <div class="space-y-4 relative">
+            <NuxtLink
+              to="/sign-in"
+              class="absolute w-full h-full z-[200] bg-opacity-0"
+              v-if="!$isUser"
+            ></NuxtLink>
             <TourOrdererForm
               :name="dataFormT.name"
               :email="dataFormT.email"
@@ -44,20 +49,31 @@
                   <div class="my-3">
                     {{ item.quantity > 0 ? item.description : "" }}
                   </div>
-
                   <div
                     class="p-4"
                     v-for="(n, participantIndex) in item.quantity"
                     :key="participantIndex"
                   >
-                    <!-- <pre>
-                    ini :::::: {{ item }}
-                  </pre
-                    > -->
-                    <!-- <input type="text" v-model=""> -->
-
+                    <!-- ini dimasukan kedalam VeeField -->
+                    <VeeField
+                      v-model="
+                        dataFormParticitpant[
+                          getParticipantIndex(variantIndex, participantIndex)
+                        ].variant_id
+                      "
+                      type="text"
+                      name="variant_id"
+                      class="border-2 hidden"
+                      id="variant_id"
+                    />
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                      <UIFormMGroup name="name" label="Nama Lengkap">
+                      <UIFormMGroup
+                        :name="
+                          `name` +
+                          getParticipantIndex(variantIndex, participantIndex)
+                        "
+                        label="Nama Lengkap"
+                      >
                         <UIFormMTextField
                           v-model="
                             dataFormParticitpant[
@@ -67,12 +83,21 @@
                               )
                             ].name
                           "
-                          name="name"
+                          :name="
+                            `name` +
+                            getParticipantIndex(variantIndex, participantIndex)
+                          "
                           class="input-bordered"
                           placeholder="ex:John Doe"
                         />
                       </UIFormMGroup>
-                      <UIFormMGroup name="nationality" label="Kebangsaan">
+                      <UIFormMGroup
+                        :name="
+                          `nationality` +
+                          getParticipantIndex(variantIndex, participantIndex)
+                        "
+                        label="Kebangsaan"
+                      >
                         <UIFormMSelect
                           v-model="
                             dataFormParticitpant[
@@ -82,18 +107,31 @@
                               )
                             ].nationality
                           "
-                          name="nationality"
+                          :name="
+                            `nationality` +
+                            getParticipantIndex(variantIndex, participantIndex)
+                          "
                           class="input-bordered"
                           placeholder="ex: Indonesia"
                         >
                           <option value="">Pilih Kebangsaan</option>
-                          <option value="Indonesia">Indonesia</option>
-                          <option value="Malaysia">Malaysia</option>
-                          <option value="Singapura">Singapura</option>
+                          <option
+                            :value="item.name"
+                            v-for="item in dataCountry"
+                            :key="item.name"
+                          >
+                            {{ item.name }}
+                          </option>
                         </UIFormMSelect>
                       </UIFormMGroup>
 
-                      <UIFormMGroup name="category" label="Kategori">
+                      <UIFormMGroup
+                        :name="
+                          `category` +
+                          getParticipantIndex(variantIndex, participantIndex)
+                        "
+                        label="Kategori"
+                      >
                         <UIFormMSelect
                           v-model="
                             dataFormParticitpant[
@@ -103,7 +141,10 @@
                               )
                             ].category
                           "
-                          name="category"
+                          :name="
+                            `category` +
+                            getParticipantIndex(variantIndex, participantIndex)
+                          "
                           class="input-bordered"
                           placeholder="ex: Dewasa"
                         >
@@ -137,6 +178,8 @@ const { $isLoggedIn, $isUser, $logout } = useAuth();
 const { requestOptions } = useRequestOptions();
 const router = useRouter();
 
+const { data: dataCountry } = await useFetch("/api/country");
+
 const {
   dataForm,
   submitForm,
@@ -163,6 +206,8 @@ const dataFormParticitpant = ref([]);
 const filter = ref({
   sort: "",
 });
+
+let participantsInitialized = false;
 
 onMounted(async () => {
   if ($isUser.value) {
@@ -194,7 +239,10 @@ onMounted(async () => {
     dataForm.value
   );
 
-  initializeParticipants();
+  if (!participantsInitialized) {
+    initializeParticipants();
+    participantsInitialized = true;
+  }
 });
 
 function initializeParticipants() {
@@ -202,6 +250,7 @@ function initializeParticipants() {
   dataForm.value.variants.forEach((variant) => {
     for (let i = 0; i < variant.quantity; i++) {
       dataFormParticitpant.value.push({
+        variant_id: variant.id, // Ini adalah perubahan utama
         name: "",
         nationality: "",
         category: "",

@@ -27,6 +27,7 @@
           :useStarIcon="false"
           :disabled="isVaried === true || isVaried === 1"
         />
+
         <UIFormInputNumber
           v-else-if="!props.tourPackage"
           label="Harga"

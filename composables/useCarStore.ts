@@ -164,7 +164,7 @@ export default function useTourForm(options: Options = {}) {
     // }
 
     await $fetch<CommonResponse<{ message: string }>>(
-      `/users/${dataForm.user_uuid}/car-orders`,
+      `/users/${dataForm.value.user_uuid}/car-orders`,
       {
         headers: {
           Accept: "application/json",
@@ -181,6 +181,7 @@ export default function useTourForm(options: Options = {}) {
       })
       .then((data) => {
         if (data) {
+          console.log(data);
           window.location.replace(data.data?.payment_url);
           options.callback?.();
         }

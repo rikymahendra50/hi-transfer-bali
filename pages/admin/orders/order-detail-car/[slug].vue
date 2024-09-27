@@ -5,12 +5,6 @@
     link="/admin/orders"
   >
     <div>
-      <!-- <UIFormMGroup name="sort" label="Urut berdasarkan">
-        <UIFormMSelect v-model="status.sort" name="sort">
-          <option value="">Sudah Bayar</option>
-          <option value="recommended">Belum bayar</option>
-        </UIFormMSelect>
-      </UIFormMGroup> -->
       <div class="border-2 shadow-xs p-3 rounded-xl">
         {{ data?.data?.status }}
       </div>
@@ -37,79 +31,34 @@
     </div>
   </div>
 
-  <div class="px-5 py-4 flex flex-col gap-3 border-b">
+  <div class="px-5 py-6 flex flex-col gap-3 border-b">
     <div class="text-gray-500 uppercase text-[12px] font-semibold">
       Informasi Pemesanan
     </div>
-    <!-- <pre>
-      {{ data?.data?.details }}
-    </pre> -->
-
-    <div class="overflow-x-auto">
-      <table class="table">
-        <!-- head -->
-        <thead>
-          <tr>
-            <th>
-              <div class="text-[#121212] font-semibold text-sm">Nama Tur</div>
-            </th>
-            <th>
-              <div class="text-[#121212] font-semibold text-sm">
-                Tanggal tur
-              </div>
-            </th>
-            <th>
-              <div class="text-[#121212] font-semibold text-sm">Quantity</div>
-            </th>
-            <th>
-              <div class="text-[#121212] font-semibold text-sm">
-                Total price
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in data?.data?.details">
-            <td>{{ item.name }}</td>
-            <td>-</td>
-            <td>{{ item.quantity ?? "-" }}</td>
-            <td>{{ FormatMoneyDash(item.total_price.toString()) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="px-5 py-4 flex flex-col gap-3 border-b">
-    <div class="text-gray-500 uppercase text-[12px] font-semibold">
-      Informasi Peserta
-    </div>
-    <div class="overflow-x-auto">
-      <table class="table">
-        <!-- head -->
-        <thead>
-          <tr>
-            <th>
-              <div class="text-[#121212] font-semibold text-sm">
-                Nama Peserta
-              </div>
-            </th>
-            <th>
-              <div class="text-[#121212] font-semibold text-sm">Kebangsaan</div>
-            </th>
-            <th>
-              <div class="text-[#121212] font-semibold text-sm">Kategori</div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in data?.data?.forms">
-            <td>{{ item.name }}</td>
-            <td>{{ item.nationality ?? "-" }}</td>
-            <td>-</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="grid md:grid-cols-2" v-for="item in data?.data?.details">
+      <div class="flex flex-col gap-2">
+        <p class="font-semibold text-sm">Penjemputan</p>
+        <p class="text-sm">{{ item.pickup_name }}</p>
+        <div class="text-sm opacity-50">
+          <a
+            :href="`https://maps.google.com/?q=${item.pickup_address},${item.pickup_address}`"
+            target="_blank"
+          >
+            {{ item.pickup_address }}
+          </a>
+        </div>
+      </div>
+      <div class="flex flex-col gap-2">
+        <p class="font-semibold text-sm">Pengantaran</p>
+        <p class="text-sm">{{ item.destination_name }}</p>
+        <div class="text-sm opacity-50">
+          <a
+            target="_blank"
+            :href="`https://maps.google.com/?q=${item.destination_latitude},${item.destination_longitude}`"
+            >{{ item.destination_address }}</a
+          >
+        </div>
+      </div>
     </div>
   </div>
 
@@ -136,12 +85,9 @@
       </p>
     </div>
   </div>
-  <!-- <pre>
-    {{ data?.data }}
-  </pre> -->
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { withQuery } from "ufo";
 
 // @ts-ignore
@@ -166,10 +112,6 @@ definePageMeta({
   middleware: ["auth", "admin"],
 });
 
-useHead({
-  title: "Orders",
-});
-
 const { transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const router = useRouter();
@@ -180,7 +122,7 @@ const currentId = ref(undefined);
 const slug = computed(() => route.params.slug);
 
 const { data, error, refresh } = await useAsyncData("ordersDetail", () =>
-  $fetch(`/admins/tour-orders/${slug.value}`, {
+  $fetch(`/admins/car-orders/${slug.value}`, {
     method: "get",
     ...requestOptions,
   })

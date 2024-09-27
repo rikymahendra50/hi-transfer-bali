@@ -77,7 +77,12 @@
           <div class="flex justify-between items-center">
             <div class="text-2xl font-semibold">{{ $t("data-pemesan") }}</div>
           </div>
-          <div class="space-y-4">
+          <div class="space-y-4 relative">
+            <NuxtLink
+              to="/sign-in"
+              class="absolute w-full h-full z-[200] bg-opacity-0"
+              v-if="!$isUser"
+            ></NuxtLink>
             <VehicleOrdererForm
               ref="vehicleForm"
               :name="dataFormT.name"

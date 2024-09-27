@@ -126,7 +126,7 @@ export default function (options: Options = {}) {
     }
 
     if (dataForm.value.variants) {
-      console.log(dataForm.value.variants);
+      // console.log(dataForm.value.variants);
       dataForm.value.variants.forEach((variant, index) => {
         formData.append(`variants[${index}][name]`, variant.name);
         formData.append(`variants[${index}][price]`, variant.price);

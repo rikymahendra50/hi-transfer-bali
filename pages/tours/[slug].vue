@@ -5,7 +5,7 @@
     <div class="h-5"></div>
     <UIContainer>
       <div
-        class="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 w-full my-2 lg:my-4"
+        class="grid sm:grid-cols-2 lg:space-y-0 lg:space-x-4 w-full my-2 lg:my-4"
       >
         <div class="flex flex-col space-y-2 gap-2">
           <h1 class="text-xl lg:text-[32px] lg:leading-[40px] font-semibold">
@@ -26,24 +26,28 @@
             <div class="text-zinc-400 text-xs">
               {{ $t("harga-mulai-dari") }}
             </div>
-            <h4 class="text-xl font-semibold text-primary">
+            <h4 class="text-base sm:text-xl font-semibold text-primary">
               {{
                 FormatMoneyDash(apiData?.data?.variants[0]?.price?.toString())
               }}
-              /{{ $t("orang") }}
+              / {{ $t("orang") }}
             </h4>
-          </div>
-          <div class="flex justify-start items-center">
-            <div class="text-lg font-semibold">
-              Total: {{ FormatMoneyDash(totalPrice.toString()) }}
+            <div class="flex justify-start items-center">
+              <div class="text-base sm:text-xl font-semibold">
+                Total :
+                <span class="text-primary">{{
+                  FormatMoneyDash(totalPrice.toString())
+                }}</span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="flex justify-end w-full">
+        <div class="flex justify-end w-full pt-5">
           <div class="flex items-center justify-end">
             <button
               class="btn btn-primary"
               type="button"
+              :disabled="isButtonDisabled"
               @click="continueOnsubmit()"
             >
               {{ $t("lanjutkan") }}
@@ -59,7 +63,7 @@
         <div class="text-2xl font-semibold pt-5 md:pt-10">
           {{ $t("variant") }}
         </div>
-        <div>
+        <div class="flex flex-col gap-3">
           <!-- test -->
           <div
             v-for="(item, index) in variants"
@@ -67,7 +71,7 @@
             class="form-control"
           >
             <div class="flex flex-row space-x-4">
-              <div class="flex p-4 gap-3 w-full">
+              <div class="flex p-2 gap-2 sm:p-4 sm:gap-3 w-full">
                 <div class="form-control">
                   <label class="cursor-pointer label">
                     <input
@@ -91,7 +95,7 @@
                         (newValue) => handleQuantityChange(index, newValue)
                       "
                     />
-                    <div class="font-semibold">
+                    <div class="text-sm sm:text-base md:text-lg font-semibold">
                       {{ FormatMoneyDash(item.totalItemPrice.toString()) }}
                     </div>
                   </div>
@@ -171,11 +175,11 @@ const fetchTourData = async () => {
 
 const initializeVariants = () => {
   if (apiData.value?.data?.variants) {
-    variants.value = apiData.value.data.variants.map((variant) => ({
+    variants.value = apiData.value.data.variants.map((variant, index) => ({
       ...variant,
-      quantity: 0,
-      isChecked: false,
-      totalItemPrice: 0, // Inisialisasi totalItemPrice
+      quantity: index === 0 ? 1 : 0,
+      isChecked: index === 0 ? true : false,
+      totalItemPrice: 0,
     }));
   }
 };
@@ -242,16 +246,21 @@ const getMaxValueForVariant = (index) => {
   return Math.min(10, remainingMaxPerson);
 };
 
+// watch(
+//   () => variants.value,
+//   (newValue, oldValue) => {
+//     console.log(newValue);
+//   }
+// );
+
 const continueOnsubmit = () => {
-  // console.log(variants.value);
-
   dataForm.value.price = totalPrice.value;
-  dataForm.value.variants = variants.value;
+
+  dataForm.value.variants = variants.value.filter(
+    (variant) => variant.quantity > 0
+  );
+
   saveFormData();
-
-  // console.log(totalPrice.value);
-
-  // console.log(dataForm.value);
 
   router.push({ path: "/tours/booking" });
 };
@@ -269,6 +278,10 @@ watch(
   },
   { deep: true }
 );
+
+const isButtonDisabled = computed(() => {
+  return variants.value.every((variant) => variant.quantity === 0);
+});
 
 useHead({
   title: computed(() => apiData.value?.data?.name),

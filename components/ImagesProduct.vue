@@ -94,7 +94,7 @@ const onDragEnd = () => {
 const images = ref([]);
 
 const ableToAddMoreImage = computed(() => {
-  return images.value.length < 4;
+  return images.value.length < 5;
 });
 
 function removeImage(element) {

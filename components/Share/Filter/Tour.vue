@@ -49,6 +49,13 @@
           </template>
         </VDropdown>
       </UIFormMGroup>
+      <VeeField
+        type="text"
+        name="location"
+        class="hidden"
+        id="location"
+        v-model="formData.location_id"
+      />
       <VeeErrorMessage name="location" class="form-error-message" />
     </div>
 

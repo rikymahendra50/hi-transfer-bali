@@ -77,7 +77,7 @@
             name="return_date"
             v-model="dataForm.return_date"
             type="date"
-            :min="dataForm.pickup_date"
+            :min="dataForm.pickup_date ?? today"
             :max="maxReturnDate"
             placeholder="ex:2024-01-02"
           />

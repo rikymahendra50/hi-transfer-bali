@@ -9,7 +9,7 @@
       </NuxtLink>
     </TitleAdmin>
 
-    <!-- <table class="table">
+    <table class="table">
       <thead>
         <tr>
           <th>
@@ -22,7 +22,7 @@
         <tr v-for="item in data?.data">
           <td class="text-sm font-normal">
             <div class="font-medium text-[14px] text-black">
-              {{ item.name }}
+              {{ item.first_name }}
             </div>
           </td>
         </tr>
@@ -50,7 +50,7 @@
           class="flex justify-center"
         />
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -60,6 +60,7 @@ const { requestOptions } = useRequestOptions();
 const router = useRouter();
 const route = useRoute();
 const { locale, t: $t } = useI18n();
+const page = ref();
 
 useHead({
   title: "Admin list",
@@ -71,28 +72,39 @@ definePageMeta({
   middleware: ["auth", "admin"],
 });
 
-// const { data, error, refresh } = await useAsyncData("destinasi", () =>
-//   $fetch(`/admins/locations?page=${page.value}`, {
-//     method: "get",
-//     ...requestOptions,
-//   })
-// );
+const { data, error, refresh } = await useAsyncData("admin-list", () =>
+  $fetch(`/admins/admins?page=${page.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
+
+onMounted(async () => {
+  await nextTick();
+
+  stop();
+
+  if (route.query.page) {
+    page.value = Number(route.query.page);
+  }
+});
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+watch(page, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    start();
+  }
+});
 
 function replaceWindow() {
-  let filters = [];
-  // if (selectedLocation.value) {
-  //   filters.push(`destinations=${selectedLocation.value}`);
-  // }
-  // if (selectedCategory.value) {
-  //   filters.push(`category=${selectedCategory.value}`);
-  // }
-  //   if (filter.value.sort) {
-  //     filters.push(`sort=${filter.value.sort}`);
-  //   }
-
-  const queryString = filters.join("&");
-  const url = `/vehicles?${queryString ? `&${queryString}` : ""}`;
-
-  router.replace(url);
+  router.replace(
+    withQuery("/admin/user-admin", {
+      page: page.value,
+    })
+  );
+  refresh();
 }
 </script>

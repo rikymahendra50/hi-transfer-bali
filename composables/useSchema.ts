@@ -196,6 +196,10 @@ export default function () {
 
   const tourSearchSchema = toTypedSchema(
     object({
+      location: union([string(), number(), any()]).refine(
+        (val) => val !== undefined && val !== null && val !== "", // Validasi required
+        { message: $t("tourSearchSchema.location") }
+      ),
       activity_date: string().min(1, $t("tourSearchSchema.activity_date")),
       total_passengers: string().min(
         1,

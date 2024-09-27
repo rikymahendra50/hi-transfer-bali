@@ -173,15 +173,15 @@ onMounted(async () => {
   selectedTransport.value = data.value;
 });
 
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
 watch(page, (newValue, oldValue) => {
   if (newValue !== oldValue) {
     start();
   }
 });
-
-const { start, stop } = useTimeoutFn(() => {
-  replaceWindow();
-}, 1000);
 
 function replaceWindow() {
   router.replace(

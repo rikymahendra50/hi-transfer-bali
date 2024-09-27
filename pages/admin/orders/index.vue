@@ -1,11 +1,17 @@
 <template>
   <div>
-    <CommonHeadPage
-      title="Manage Incoming Orders"
-      description="Review, approve, and process orders with ease."
-    >
+    <CommonHeadPage title="Order tour" description="Manage Incoming Orders">
+      <div class="flex flex-row gap-2">
+        <NuxtLink
+          to="/admin/orders/order-cars"
+          class="border-2 px-3 py-2 rounded-lg btn bg-primary text-white"
+        >
+          <p class="text-sm">Lihat Orders Car >></p>
+        </NuxtLink>
+      </div>
     </CommonHeadPage>
 
+    <!-- list for tour -->
     <div class="overflow-x-auto">
       <table class="table">
         <!-- head -->
@@ -21,7 +27,7 @@
               <div class="text-[#989393]">Contact Information</div>
             </th>
             <th>
-              <div class="text-[#989393]">Order Type</div>
+              <div class="text-[#989393]">Phone</div>
             </th>
             <th>
               <div class="text-[#989393]">Total Price</div>
@@ -32,18 +38,32 @@
         </thead>
         <tbody>
           <!-- row 1 -->
-          <tr>
-            <td class="text-sm font-normal text-[#989393]">TP12356780</td>
-            <td class="">Cy Ganderton</td>
+          <tr v-for="item in data?.data">
+            <td class="text-sm font-normal text-[#989393]">#{{ item.uuid }}</td>
+            <td class="">{{ item.pic_name }}</td>
             <td>
-              <div class="text-[#989393] !font-normal">Riky@gmail.com</div>
+              <div class="text-[#989393] !font-normal">
+                {{ item.pic_email }}
+              </div>
             </td>
             <td>
-              <div class="text-[#989393] !font-normal">Transport</div>
+              <div class="text-[#989393] !font-normal">
+                {{ item.pic_phone_number }}
+              </div>
             </td>
-            <td>Rp.100.000</td>
             <td>
-              <div class="">Paid</div>
+              {{ FormatMoneyDash(item.grand_total_purchased.toString()) }}
+            </td>
+            <td>
+              <div
+                class=""
+                :class="{
+                  'bg-yellow-400 w-fit py-2 px-3 rounded-xl':
+                    item.status === 'waiting_for_payment',
+                }"
+              >
+                {{ item.status }}
+              </div>
             </td>
             <td>
               <div class="flex items-center">
@@ -61,7 +81,7 @@
                   <template #popper="{ hide }">
                     <div class="bg-white flex flex-col shadow">
                       <NuxtLink
-                        :to="`/admin/orders/order-detail-fastboat/slug`"
+                        :to="`/admin/orders/order-detail-tourpackage/${item.uuid}`"
                         class="hover:bg-orange-400 hover:text-white py-3 px-5"
                       >
                         Detail
@@ -81,10 +101,39 @@
         </tbody>
       </table>
     </div>
+    <!-- end list for tour -->
+
+    <!-- pagination -->
+    <div
+      class="flex flex-col md:flex-row items-center justify-between gap-3 w-full py-3 px-3"
+    >
+      <div class="flex items-center gap-3">
+        <div class="py-2 px-3 rounded-[8px]">
+          <p class="font-medium text-[12px] md:text-sm text-[#121212]">
+            {{ data?.meta?.from }} - {{ data?.meta?.to }} of
+            {{ data?.meta?.total }} item
+          </p>
+        </div>
+      </div>
+      <div
+        class="font-medium text-[14px] text-[#344054] flex items-center gap-3"
+      >
+        <PaginationAdmin
+          v-model="page"
+          :total="data?.meta?.total"
+          :includeFirstLast="false"
+          :per-page="data?.meta?.per_page"
+          class="flex justify-center"
+        />
+      </div>
+    </div>
+    <!-- end pagination -->
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
+import { withQuery } from "ufo";
+
 definePageMeta({
   layout: "admin",
   // @ts-ignore
@@ -94,6 +143,58 @@ definePageMeta({
 useHead({
   title: "Orders",
 });
+
+const { transformErrors } = useRequestHelper();
+const { requestOptions } = useRequestOptions();
+const router = useRouter();
+const route = useRoute();
+
+const page = ref(1);
+const showModalDelete = ref(false);
+const currentId = ref(undefined);
+
+const { data, error, refresh } = await useAsyncData("orders", () =>
+  $fetch(`/admins/tour-orders?page=${page.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
+
+onMounted(async () => {
+  if (route.query.page) {
+    page.value = Number(route.query.page);
+  }
+});
+
+watch(page, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    start();
+  }
+});
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+function replaceWindow() {
+  router.replace(
+    withQuery("/admin/orders", {
+      page: page.value,
+    })
+  );
+  refresh();
+}
+
+function showModalDeleteFunc(hide, id) {
+  showModalDelete.value = !showModalDelete.value;
+  hide();
+
+  if (showModalDelete.value) {
+    currentId.value = id;
+  } else {
+    currentId.value = undefined;
+  }
+}
 </script>
 
 <style scoped></style>

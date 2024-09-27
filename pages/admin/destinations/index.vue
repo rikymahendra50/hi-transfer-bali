@@ -133,6 +133,8 @@ const { requestOptions } = useRequestOptions();
 const router = useRouter();
 const route = useRoute();
 
+import { withQuery } from "ufo";
+
 const page = ref(1);
 const showModalDelete = ref(false);
 const currentId = ref(undefined);
@@ -149,8 +151,31 @@ const { selectedDestinations, deleteDestinations, loading } = useDestinations({
 });
 
 onMounted(async () => {
+  if (route.query.page) {
+    page.value = Number(route.query.page);
+  }
+
   selectedDestinations.value = data.value;
 });
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+watch(page, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    start();
+  }
+});
+
+function replaceWindow() {
+  router.replace(
+    withQuery("/admin/destinations", {
+      page: page.value,
+    })
+  );
+  refresh();
+}
 
 function showModalDeleteFunc(hide, id) {
   showModalDelete.value = !showModalDelete.value;
