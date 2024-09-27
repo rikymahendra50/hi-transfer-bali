@@ -155,5 +155,8 @@
   "otp-minimum": "OTP should be at least 6 characters",
   "otp-maksimum": "OTP should be at most 6 characters",
   "password-not-match": "Password do not match",
-  "pilih-kebangsaan": "Select nationality"
+  "pilih-kebangsaan": "Select nationality",
+  "pengembalian-pembayaran": "Payment refund",
+  "silakan-periksa-kotak-masuk": "Silakan periksa kotak masuk email Anda untuk mendapatkan verifikasi PIN untuk proses pengembalian dana, lalu ketik di kolom di bawah ini.",
+  "password_has_been_change_txt": "Password has been changed"
 }

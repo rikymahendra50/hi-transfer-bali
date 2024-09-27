@@ -194,7 +194,7 @@ export default function () {
   const carSearchSchema = toTypedSchema(
     object({
       pickup_address: string().min(1, $t("carSearchSchema.pickup_address")),
-      return_address: string().min(1, $t("carSearchSchema.return_address")),
+      // return_address: string().min(1, $t("carSearchSchema.return_address")),
       pickup_date: string().min(1, $t("carSearchSchema.pickup_address")),
       return_date: string().min(1, $t("carSearchSchema.return_date")),
     })

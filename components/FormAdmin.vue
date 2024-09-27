@@ -64,7 +64,7 @@
           </UIFormGroup>
         </template>
 
-        <div class="p-2 border rounded-lg space-y-4">
+        <!-- <div class="p-2 border rounded-lg space-y-4">
           <div>Permission</div>
           <div
             v-for="(item, index) in dataForm.permissions"
@@ -135,7 +135,7 @@
               </button>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div>
           <div class="form-control">

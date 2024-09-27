@@ -8,7 +8,6 @@
         Tambah Admin baru
       </NuxtLink>
     </TitleAdmin>
-
     <table class="table">
       <thead>
         <tr>

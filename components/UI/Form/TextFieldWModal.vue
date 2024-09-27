@@ -42,6 +42,7 @@
     v-model:longitude="formData.longitude"
     v-model:locationAddress="formData.locationAddress"
     v-model:locationName="formData.locationName"
+    :dataJikaSudahada2="props.dataJikaSudahAda"
   />
   <!-- end modal -->
 </template>
@@ -73,6 +74,7 @@ const props = withDefaults(
     ariaLabel?: string;
     placeholder?: string;
     readonly?: boolean;
+    dataJikaSudahAda?: Array;
   }>(),
   {
     type: "text",

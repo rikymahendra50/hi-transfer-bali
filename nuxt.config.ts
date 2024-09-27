@@ -115,7 +115,9 @@ export default defineNuxtConfig({
         { name: "twitter:description", content: "" },
         { name: "twitter:image", content: projectImageThumbnail },
       ],
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/hi-transfer-logo.png" },
+      ],
     },
   },
 

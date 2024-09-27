@@ -49,9 +49,6 @@
                 Destination
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD]">Date</th>
-              <!-- <th class="font-medium text-[#667085] bg-[#FCFCFD]">
-                Participant
-              </th> -->
               <th class="font-medium text-[#667085] bg-[#FCFCFD]">Type</th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD]">
                 {{ $t("pricing") }}

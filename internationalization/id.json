@@ -154,5 +154,8 @@
   "otp-minimum": "OTP minimal harus 6 karakter",
   "otp-maksimum": "OTP maksimal 6 karakter",
   "password-not-match": "Kata sandi tidak cocok",
-  "pilih-kebangsaan": "Pilih kebangsaan"
+  "pilih-kebangsaan": "Pilih kebangsaan",
+  "pengembalian-pembayaran": "Pengembalian pembayaran",
+  "silakan-periksa-kotak-masuk": "Silakan periksa kotak masuk email Anda untuk mendapatkan PINverifikasi untuk proses pengembalian dana, lalu ketik di kolom di bawah ini.",
+  "password_has_been_change_txt": "Kata sandi telah diubah"
 }

@@ -83,6 +83,9 @@ const props = defineProps({
   locationName: {
     type: String,
   },
+  dataJikaSudahAda4: {
+    type: Array,
+  },
 });
 
 const emit = defineEmits([
@@ -137,9 +140,10 @@ async function fetchAddress(latitude, longitude) {
   };
 
   geocoder.geocode({ location: latLng }, (results, status) => {
-    if (status === "OK" && results[0]) {
-      locationAddress.value = results[0].formatted_address;
-      locationName.value = results[0].address_components[0].long_name;
+    if (status === "OK" && results[1]) {
+      locationAddress.value = results[1].formatted_address;
+      locationName.value = results[1].address_components[0].long_name;
+      // console.log("Ini merupakan", results[1]);
     } else {
       alert("Geocode was not successful: " + status);
     }

@@ -33,6 +33,7 @@
               v-model:locationAddress="formData.locationAddress"
               v-model:locationName="formData.locationName"
               @hideModal="hideModal"
+              :dataJikaSudahAda4="props.dataJikaSudahAda3"
             />
             <!-- end map -->
           </template>
@@ -70,6 +71,9 @@ const props = defineProps({
   },
   locationName: {
     type: String,
+  },
+  dataJikaSudahAda3: {
+    type: Array,
   },
 });
 

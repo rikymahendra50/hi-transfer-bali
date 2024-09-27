@@ -105,6 +105,7 @@
       </div>
       <div class="flex items-center justify-end">
         <button
+          v-if="carsOrderDetail?.data?.payment_status === 'paid'"
           type="button"
           @click="showModalRefundFunc()"
           class="border-2 shadow-sm rounded-lg py-2 px-4"
@@ -123,11 +124,9 @@
       class="flex justify-center items-center flex-col px-2 sm:px-4 lg:px-5 overflow-auto"
     >
       <div class="flex flex-col gap-3 lg:gap-5 transition h-full">
-        <p class="font-semibold text-xl">Pengembalian Pembayaran</p>
+        <p class="font-semibold text-xl">{{ $t("pengembalian-pembayaran") }}</p>
         <p class="text-[12px] border-b border-gray-500 pb-3">
-          Silakan periksa kotak masuk email Anda untuk mendapatkan PIN
-          verifikasi untuk proses pengembalian dana, lalu ketik di kolom di
-          bawah ini.
+          {{ $t("silakan-periksa-kotak-masuk") }}
         </p>
       </div>
       <div class="w-full">
@@ -135,10 +134,6 @@
       </div>
     </div>
   </modal>
-
-  <pre>
-    {{ carsOrderDetail?.data }}
-  </pre>
 </template>
 
 <script setup>

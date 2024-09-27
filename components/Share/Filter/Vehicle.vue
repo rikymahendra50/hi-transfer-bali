@@ -25,6 +25,7 @@
             v-model:longitude="formDataJemput.longitude"
             v-model:locationAddress="formDataJemput.locationAddress"
             v-model:locationName="formDataJemput.locationName"
+            :dataJikaSudahada="formDataJemput"
             name="pickup_address"
             placeholder="ex:Jalan Pahlawan No. 1"
           />
@@ -48,12 +49,12 @@
             v-model:longitude="formDataTujuan.longitude"
             v-model:locationAddress="formDataTujuan.locationAddress"
             v-model:locationName="formDataTujuan.locationName"
+            :dataJikaSudahada="formDataTujuan"
             name="return_address"
             placeholder="ex:Jalan Pahlawan No. 1"
           />
         </UIFormMGroup>
       </div>
-
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 mt-6">
         <UIFormToggle
           name="round_trip"
@@ -72,16 +73,22 @@
             placeholder="ex:2024-01-01"
           />
         </UIFormMGroup>
-        <UIFormMGroup name="return_date" :label="$t('pulang-balik')">
-          <UIFormMTextField
-            name="return_date"
-            v-model="dataForm.return_date"
-            type="date"
-            :min="dataForm.pickup_date ?? today"
-            :max="maxReturnDate"
-            placeholder="ex:2024-01-02"
-          />
-        </UIFormMGroup>
+        <div class="relative">
+          <div
+            class="w-full h-full absolute bg-white z-[50] bg-opacity-100 top-[-5px]"
+            v-if="dateReturnDisabled"
+          ></div>
+          <UIFormMGroup name="return_date" :label="$t('pulang-balik')">
+            <UIFormMTextField
+              name="return_date"
+              v-model="dataForm.return_date"
+              type="date"
+              :min="dataForm.pickup_date ?? today"
+              :max="maxReturnDate"
+              placeholder="ex:2024-01-02"
+            />
+          </UIFormMGroup>
+        </div>
         <UIFormMGroup name="passengers" :label="$t('jumlah-penumpang')">
           <UIFormMSelect name="passengers" v-model="dataForm.passengers">
             <option value="1">1 {{ $t("penumpang") }}</option>
@@ -145,6 +152,14 @@ const formDataTujuan = ref({
 
 const distance = ref();
 const distanceRound = ref();
+const dateReturnDisabled = computed(() => {
+  if (dataForm.value.round_trip == 1) {
+    dataForm.value.return_date = undefined;
+    return false;
+  } else if (dataForm.value.round_trip == 0) {
+    return true;
+  }
+});
 
 watch(
   () => dataForm.value.pickup_date,

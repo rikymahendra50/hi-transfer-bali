@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 // const { hasPermission } = usePermission();
 
 useHead({

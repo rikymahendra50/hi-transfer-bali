@@ -95,6 +95,7 @@ export default function (options?: useAuthOptions) {
 
   const _emailForResent = ref();
 
+  const $showRegisterSubmitBtn = ref(true);
   const $showResentEmailBtn = ref(false);
 
   /**

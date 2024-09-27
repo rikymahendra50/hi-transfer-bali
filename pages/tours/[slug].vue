@@ -325,3 +325,126 @@ useHead({
   ],
 });
 </script>
+
+<style scoped>
+:deep(.adjustdefault) ul,
+:deep(.adjustdefault) ol {
+  list-style: revert;
+  margin-left: 20px;
+}
+
+:deep(.adjustdefault) h1,
+:deep(.adjustdefault) h2,
+:deep(.adjustdefault) h3,
+:deep(.adjustdefault) h4,
+:deep(.adjustdefault) h5,
+:deep(.adjustdefault) h6 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+:deep(.adjustdefault) h1 {
+  font-size: 2.5rem; /* Base size */
+}
+:deep(.adjustdefault) h2 {
+  font-size: 2rem;
+}
+:deep(.adjustdefault) h3 {
+  font-size: 1.75rem;
+}
+:deep(.adjustdefault) h4 {
+  font-size: 1.5rem;
+}
+:deep(.adjustdefault) h5 {
+  font-size: 1.25rem;
+}
+:deep(.adjustdefault) h6 {
+  font-size: 1rem;
+}
+
+/* Responsive adjustments using media queries */
+@media (max-width: 1200px) {
+  :deep(.adjustdefault) h1 {
+    font-size: 2.25rem;
+  }
+  :deep(.adjustdefault) h2 {
+    font-size: 1.875rem;
+  }
+  :deep(.adjustdefault) h3 {
+    font-size: 1.625rem;
+  }
+  :deep(.adjustdefault) h4 {
+    font-size: 1.375rem;
+  }
+  :deep(.adjustdefault) h5 {
+    font-size: 1.125rem;
+  }
+  :deep(.adjustdefault) h6 {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 992px) {
+  :deep(.adjustdefault) h1 {
+    font-size: 2rem;
+  }
+  :deep(.adjustdefault) h2 {
+    font-size: 1.75rem;
+  }
+  :deep(.adjustdefault) h3 {
+    font-size: 1.5rem;
+  }
+  :deep(.adjustdefault) h4 {
+    font-size: 1.25rem;
+  }
+  :deep(.adjustdefault) h5 {
+    font-size: 1rem;
+  }
+  :deep(.adjustdefault) h6 {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :deep(.adjustdefault) h1 {
+    font-size: 1.75rem;
+  }
+  :deep(.adjustdefault) h2 {
+    font-size: 1.5rem;
+  }
+  :deep(.adjustdefault) h3 {
+    font-size: 1.25rem;
+  }
+  :deep(.adjustdefault) h4 {
+    font-size: 1rem;
+  }
+  :deep(.adjustdefault) h5 {
+    font-size: 0.875rem;
+  }
+  :deep(.adjustdefault) h6 {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  :deep(.adjustdefault) h1 {
+    font-size: 1.5rem;
+  }
+  :deep(.adjustdefault) h2 {
+    font-size: 1.25rem;
+  }
+  :deep(.adjustdefault) h3 {
+    font-size: 1rem;
+  }
+  :deep(.adjustdefault) h4 {
+    font-size: 0.875rem;
+  }
+  :deep(.adjustdefault) h5 {
+    font-size: 0.75rem;
+  }
+  :deep(.adjustdefault) h6 {
+    font-size: 0.625rem;
+  }
+}
+</style>
