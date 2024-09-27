@@ -103,7 +103,6 @@
             />
           </div>
         </div>
-
         <div class="space-y-6 py-4">
           <h3 class="text-2xl font-semibold text-primary-dark">
             {{ $t("rincian-harga") }}

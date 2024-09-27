@@ -78,10 +78,10 @@
             <p class="font-semibold">{{ $t("payment-method") }}</p>
             <p>{{ carsOrderDetail?.data?.payment_method }}</p>
           </div>
-          <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
+          <!-- <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
             <p class="font-semibold">Promo</p>
             <p>{{ carsOrderDetail?.data?.promo_amount }}</p>
-          </div>
+          </div> -->
           <div
             class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm"
             v-if="carsOrderDetail?.data?.refund_status"
@@ -99,7 +99,7 @@
           </div>
           <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
             <p class="font-semibold text-sm">{{ $t("total-price") }}</p>
-            <p>Rp.{{ carsOrderDetail?.data?.total_purchased }}</p>
+            <p>{{ FormatMoneyDash(carsOrderDetail?.data?.total_purchased) }}</p>
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@
           @click="showModalRefundFunc()"
           class="border-2 shadow-sm rounded-lg py-2 px-4"
         >
-          <p>Payment refund</p>
+          <p>{{ $t("pengembalian-pembayaran") }}</p>
         </button>
       </div>
     </UIContainer>

@@ -5,80 +5,83 @@
     :validation-schema="tourSearchSchema"
     class="space-y-4"
   >
-    <div>
-      <UIFormMGroup name="tour_id" :label="$t('pilih-destinasi')">
-        <VDropdown
-          v-model="formData.location_id"
-          placements="start"
-          distance="-10"
-          skidding="1"
-          arrow-padding="1"
-        >
-          <button
-            type="button"
-            class="text-xs h-9 w-full flex justify-between items-center"
+    <div class="grid grid-cols-12 gap-4">
+      <div class="col-span-5">
+        <UIFormMGroup name="tour_id" :label="$t('pilih-destinasi')">
+          <VDropdown
+            v-model="formData.location_id"
+            placements="start"
+            distance="-10"
+            skidding="1"
+            arrow-padding="1"
           >
-            <div>
-              {{ selectedLocationName ?? $t("pilih-destinasi") }}
-            </div>
-            <div>
-              <Icon name="i-heroicons-chevron-down" />
-            </div>
-          </button>
-          <template #popper="{ hide }">
-            <div class="w-full p-4 space-y-4 max-w-5xl">
-              <!-- <input
+            <button
+              type="button"
+              class="text-xs h-9 w-full flex justify-between items-center"
+            >
+              <div>
+                {{ selectedLocationName ?? $t("pilih-destinasi") }}
+              </div>
+              <div>
+                <Icon name="i-heroicons-chevron-down" />
+              </div>
+            </button>
+            <template #popper="{ hide }">
+              <div class="w-full p-4 space-y-4 max-w-5xl">
+                <!-- <input
                 placeholder="Cari"
                 class="input input-bordered input-sm w-full"
                 v-model="searchQuery"
               /> -->
-              <div class="space-y-4 overflow-y-auto h-full lg:max-h-[200px]">
-                <div
-                  v-for="location in locations?.data"
-                  :key="location.id"
-                  class="grid grid-cols-[150px_1fr] gap-4 hover:bg-primary/10 transition-all duration-300 p-4 rounded-md cursor-pointer"
-                  @click.prevent="
-                    selectLocation(location);
-                    hide();
-                  "
-                >
-                  <div>{{ location.name }}</div>
+                <div class="space-y-4 overflow-y-auto h-full lg:max-h-[200px]">
+                  <div
+                    v-for="location in locations?.data"
+                    :key="location.id"
+                    class="grid grid-cols-[150px_1fr] gap-4 hover:bg-primary/10 transition-all duration-300 p-4 rounded-md cursor-pointer"
+                    @click.prevent="
+                      selectLocation(location);
+                      hide();
+                    "
+                  >
+                    <div>{{ location.name }}</div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </template>
-        </VDropdown>
-      </UIFormMGroup>
-      <VeeField
-        type="text"
-        name="location"
-        class="hidden"
-        id="location"
-        v-model="formData.location_id"
-      />
-      <VeeErrorMessage name="location" class="form-error-message" />
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr_110px] gap-4">
-      <UIFormMGroup name="activity_date" :label="$t('pilih-tanggal')">
-        <UIFormMTextField
-          name="activity_date"
-          type="date"
-          :min="today"
-          v-model="formData.activity_date"
-          placeholder="ex:2024-01-01"
+            </template>
+          </VDropdown>
+        </UIFormMGroup>
+        <VeeField
+          type="text"
+          name="location"
+          class="hidden"
+          id="location"
+          v-model="formData.location_id"
         />
-      </UIFormMGroup>
+        <VeeErrorMessage name="location" class="form-error-message" />
+      </div>
+      <div class="col-span-5">
+        <UIFormMGroup name="activity_date" :label="$t('pilih-tanggal')">
+          <UIFormMTextField
+            name="activity_date"
+            type="date"
+            :min="today"
+            v-model="formData.activity_date"
+            placeholder="ex:2024-01-01"
+          />
+        </UIFormMGroup>
+      </div>
 
-      <UIFormMGroup name="total_passengers" :label="$t('beberapa-orang')">
+      <div class="col-span-2 flex">
+        <UIBtn variant="primary" type="submit">{{ $t("cari-tur") }}</UIBtn>
+      </div>
+
+      <!-- <UIFormMGroup name="total_passengers" :label="$t('beberapa-orang')">
         <UIFormMTextField
           name="total_passengers"
           v-model="formData.tourist_numbers"
           placeholder="ex:1"
         />
-      </UIFormMGroup>
-      <div>
-        <UIBtn variant="primary" type="submit">{{ $t("cari-tur") }}</UIBtn>
-      </div>
+      </UIFormMGroup> -->
     </div>
   </VeeForm>
 </template>
@@ -95,7 +98,7 @@ const selectedLocationName = ref();
 const formData = ref({
   location_id: undefined,
   activity_date: undefined,
-  tourist_numbers: undefined,
+  // tourist_numbers: undefined,
 });
 
 const {
@@ -124,7 +127,7 @@ const {
 function replaceWindow() {
   const queryParams = {
     location: dataForm.value.location_id || undefined,
-    tourist_numbers: dataForm.value.tourist_numbers || undefined,
+    // tourist_numbers: dataForm.value.tourist_numbers || undefined,
   };
 
   router.replace({ query: queryParams });
@@ -139,7 +142,7 @@ function onSubmit() {
   dataForm.value.location_id = formData.value.location_id;
   dataForm.value.location_name = selectedLocationName.value;
   dataForm.value.activity_date = formData.value.activity_date;
-  dataForm.value.tourist_numbers = formData.value.tourist_numbers;
+  // dataForm.value.tourist_numbers = formData.value.tourist_numbers;
 
   let filters = [];
   if (dataForm.value.location_id) {
@@ -152,12 +155,12 @@ function onSubmit() {
   const queryString = filters.join("&");
   const url = `/tours?${queryString ? `&${queryString}` : ""}`;
 
-  console.log(
-    "ini setelah filters tour harusnya menyimpan location_id, location_name, activity_date dan tourist number",
-    dataForm.value
-  );
+  // console.log(
+  //   "ini setelah filters tour harusnya menyimpan location_id, location_name, activity_date dan tourist number",
+  //   dataForm.value
+  // );
 
-  console.log(dataForm.value.tourist_numbers);
+  // console.log(dataForm.value.tourist_numbers);
 
   saveFormData();
 

@@ -137,10 +137,10 @@
             <p class="font-semibold">{{ $t("payment-method") }}</p>
             <p>{{ tourOrderDetail?.data?.payment_method }}</p>
           </div> -->
-          <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
+          <!-- <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
             <p class="font-semibold">Promo</p>
             <p>{{ tourOrderDetail?.data?.promo_amount }}</p>
-          </div>
+          </div> -->
           <div
             class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm"
             v-if="tourOrderDetail?.data?.refund_status"

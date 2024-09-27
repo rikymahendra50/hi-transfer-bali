@@ -32,14 +32,14 @@
               }}
               / {{ $t("orang") }}
             </h4>
-            <div class="flex justify-start items-center">
+            <!-- <div class="flex justify-start items-center">
               <div class="text-base sm:text-xl font-semibold">
                 Total :
                 <span class="text-primary">{{
                   FormatMoneyDash(totalPrice.toString())
                 }}</span>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="flex justify-end w-full pt-5">

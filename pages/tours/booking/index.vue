@@ -47,7 +47,7 @@
                   :key="variantIndex"
                 >
                   <div class="my-3">
-                    {{ item.quantity > 0 ? item.description : "" }}
+                    {{ item.quantity > 0 ? item.name : "" }}
                   </div>
                   <div
                     class="p-4"

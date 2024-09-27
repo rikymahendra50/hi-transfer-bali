@@ -207,10 +207,10 @@ export default function () {
         { message: $t("tourSearchSchema.location") }
       ),
       activity_date: string().min(1, $t("tourSearchSchema.activity_date")),
-      total_passengers: string().min(
-        1,
-        $t("tourSearchSchema.total_passengers")
-      ),
+      // total_passengers: string().min(
+      //   1,
+      //   $t("tourSearchSchema.total_passengers")
+      // ),
     })
   );
 
