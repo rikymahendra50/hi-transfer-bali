@@ -27,6 +27,7 @@ export default function useTourForm(options: Options = {}) {
     pickup_date: undefined,
     return_date: undefined,
     round_trip: 0,
+    quantity: undefined,
     passengers: 1,
     distance: undefined,
     distance_text: undefined,
@@ -34,6 +35,7 @@ export default function useTourForm(options: Options = {}) {
     name_car: undefined,
     image: undefined,
     price: undefined,
+    total_price: undefined,
     max_person: undefined,
     facilities: [],
     user_uuid: undefined,
@@ -119,7 +121,7 @@ export default function useTourForm(options: Options = {}) {
     formData.append("pic_email", dataForm.value.email || "");
     formData.append("pic_phone_number", dataForm.value.phone || "");
     formData.append("products[0][id]", dataForm.value.car_id || "");
-    formData.append("products[0][quantity]", dataForm.value.distance || "");
+    formData.append("products[0][quantity]", dataForm.value.quantity);
     formData.append(
       "products[0][pickup_latitude]",
       dataForm.value.location_pickup_latitude || ""
@@ -181,8 +183,10 @@ export default function useTourForm(options: Options = {}) {
       })
       .then((data) => {
         if (data) {
-          console.log(data);
+          // console.log(data);
+          loading.value = false;
           window.location.replace(data.data?.payment_url);
+          // console.log(data);
           options.callback?.();
         }
       });
@@ -196,6 +200,7 @@ export default function useTourForm(options: Options = {}) {
     saveFormData,
     dataForm,
     showSavedCarData,
+    loading,
     // saveFormDataProfile,
     // showSavedCarDataProfile,
   };

@@ -215,12 +215,12 @@ export default function (options: Options = {}) {
         ctx.setErrors(transformErrors(error.data));
         pushNotification({
           type: "error",
-          text: error.value.data?.message,
+          text: error.data?.message,
           title: "error",
         });
         pushNotification({
           type: "error",
-          text: error.value.data?.message,
+          text: error.data?.message,
           title: "error",
         });
       })

@@ -166,7 +166,16 @@ function submitFormT() {
   dataForm.value.email = dataFormT.value.email;
   dataForm.value.phone = dataFormT.value.phone;
 
-  console.log("ini di booking", dataForm.value);
+  const perKm = ref(dataForm.value.distance / 1000);
+
+  dataForm.value.quantity = parseInt(perKm.value);
+
+  const totalPrice = ref(dataForm.value.price * perKm.value);
+
+  if (dataForm.value.round_trip === 1 || true) {
+    totalPrice.value *= 2;
+    dataForm.value.total_price = totalPrice.value;
+  }
 
   saveFormData();
 

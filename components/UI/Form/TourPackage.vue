@@ -69,6 +69,7 @@
           :dataSelected="props.tourPackage?.locations ?? []"
           @getId="funcGetIdLocation"
         />
+        <VeeErrorMessage name="locations" class="form-error-message" />
 
         <!-- meta -->
         <TabContent>
@@ -112,7 +113,7 @@
           checked
           :is-error="!!errors['description[en]']"
         >
-          <UIFormGroup label="Ringkasan English" name="description">
+          <UIFormGroup label="Ringkasan English" name="description[en]">
             <UIFormEditor
               v-model="dataForm['description[en]']"
               :is-errors="!!errors.description"
@@ -128,15 +129,12 @@
           group="description"
           :is-error="!!errors['description[id]']"
         >
-          <UIFormGroup label="Ringkasan Indonesia" name="description[id]">
+          <UIFormGroup label="Ringkasan Indonesia" name="description_id">
             <UIFormEditor
               v-model="dataForm['description[id]']"
               :is-errors="!!errors?.['description[id]']"
             />
-            <VeeErrorMessage
-              name="description[id]"
-              class="form-error-message"
-            />
+            <VeeErrorMessage name="description_id" class="form-error-message" />
           </UIFormGroup>
         </TabItem>
       </TabContent>
@@ -152,6 +150,11 @@
           v-model="dataForm['description[id]']"
         />
       </div>
+    </div>
+
+    <div class="hidden">
+      <VeeField name="meta[en]" v-model="dataForm['meta[en]']" />
+      <VeeField name="meta[id]" v-model="dataForm['meta[id]']" />
     </div>
 
     <!-- is varied -->

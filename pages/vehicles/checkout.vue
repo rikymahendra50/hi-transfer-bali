@@ -102,7 +102,6 @@
               :facilities="dataForm.facilities"
             />
           </div>
-          <!-- <TourPriceCheckoutInformation :price="dataForm.price" /> -->
         </div>
 
         <div class="space-y-6 py-4">
@@ -131,16 +130,21 @@
                   {{ $t("yang-harus-kamu-bayar") }}
                 </h4>
                 <p class="text-primary text-lg font-semibold">
-                  {{ FormatMoneyDash(String(totalPrice)) }}
+                  {{ FormatMoneyDash(String(dataForm.price)) }}
                 </p>
               </div>
             </div>
           </div>
         </div>
         <div class="flex items-center justify-end mt-5">
-          <div class="btn btn-primary" @click="submitFormOrder">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            :disabled="loading"
+            @click="submitFormOrder"
+          >
             <p>{{ $t("pesan-dan-bayar") }}</p>
-          </div>
+          </button>
         </div>
       </div>
     </div>
@@ -148,7 +152,6 @@
 </template>
 
 <script setup>
-const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const router = useRouter();
 const route = useRoute();
@@ -159,6 +162,7 @@ const {
   dataForm,
   submitForm,
   saveFormData,
+  loading,
   showSavedCarData,
   clearSavedCarData,
   submitFormOrder,
@@ -179,8 +183,6 @@ onMounted(() => {
   dataFormT.value.name = dataForm.value.name;
   dataFormT.value.email = dataForm.value.email;
   dataFormT.value.phone = dataForm.value.phone;
-
-  console.log("ini dari index", dataForm.value);
 });
 
 useHead({
@@ -191,25 +193,20 @@ const filter = ref({
   sort: "",
 });
 
-const totalPrice = computed(() => {
-  const price = Number(dataForm.value.price);
-  if (dataForm.value.round_trip == 1) {
-    dataForm.value.price = price * 2;
-    return price * 2;
-  } else if (dataForm.value.round_trip == 0) {
-    return dataForm.value.price;
-  }
-});
+// const totalPrice = computed(() => {
+//   const price = Number(dataForm.value.price);
+//   if (dataForm.value.round_trip == 1) {
+//     dataForm.value.price = price * 2;
+//     return price * 2;
+//   } else if (dataForm.value.round_trip == 0) {
+//     return dataForm.value.price;
+//   }
+// });
 
 function goToHomePage() {
   clearSavedCarData();
   router.push({ path: "/?cars" });
 }
-
-// function checkOut() {
-//   // console.log(dataForm.value);
-//   submitFormOrder();
-// }
 </script>
 
 <style lang="scss" scoped></style>

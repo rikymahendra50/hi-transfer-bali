@@ -112,7 +112,13 @@ export default function () {
         }),
       max_person: number().min(1, "Maksimal orang harus diisi"),
       is_active: string().min(1, "Status harus diisi"),
-      locations: z.array(z.number()),
+      locations: z
+        .array(z.number())
+        .min(1, { message: "needs to be exactly 1" }),
+      "description[en]": string().min(1, "description en harus diisi"),
+      "description[id]": string().min(1, "description id harus diisi"),
+      "meta[en]": string().min(1, "meta en harus diisi"),
+      "meta[id]": string().min(1, "meta id harus diisi"),
     })
   );
 

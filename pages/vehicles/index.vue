@@ -153,7 +153,7 @@ const { data, error, refresh } = await useAsyncData("cars", () =>
   $fetch(
     `/cars?sort=${filter.value.sort}&lang=${locale.value}&filter[passenger_count]=${selectedPassenger.value}&filter[distance]=${selectedDistance.value}`,
     {
-      method: "post",
+      method: "get",
       ...requestOptions,
     }
   )

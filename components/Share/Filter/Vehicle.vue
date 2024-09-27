@@ -3,10 +3,10 @@
     <div class="flex justify-center items-center">
       <div
         class="bg-primary flex justify-center rounded-full w-fit items-center px-2"
-        v-if="dataForm.distance"
+        v-if="distanceRound"
       >
         <div class="p-1 text-sm text-white">
-          <span>{{ dataForm.distance }}</span>
+          <span>{{ distanceRound }}</span>
         </div>
       </div>
     </div>
@@ -272,6 +272,7 @@ function onSubmit() {
   dataForm.value.location_return_longitude = formDataTujuan.value.longitude;
 
   dataForm.value.distance = distance.value;
+  dataForm.value.distance_text = distanceRound.value;
 
   saveFormData();
 
