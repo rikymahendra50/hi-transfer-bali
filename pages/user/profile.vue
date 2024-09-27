@@ -16,6 +16,7 @@ const { $fetchAuthProfile } = useAuth();
 useHead({
   title: "User",
 });
+
 definePageMeta({
   layout: "user",
   // @ts-ignore

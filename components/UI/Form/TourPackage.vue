@@ -17,6 +17,7 @@
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
         />
+
         <UIFormTextFieldWLabel
           v-if="props.tourPackage"
           label="Harga"
@@ -172,7 +173,7 @@
     <!-- is varied -->
 
     <div class="">
-      <template v-if="dataForm.is_varied">
+      <template v-if="isVaried">
         <UIFormTurVariant
           v-model="dataForm.variants"
           :locations="props.locations"
@@ -215,6 +216,7 @@ const {
 const props = defineProps({ tourPackage: { type: [Array, Object] } });
 const router = useRouter();
 const statusActive = ref();
+
 const isVaried = computed(() => {
   return dataForm.value.is_varied;
 });
@@ -241,11 +243,18 @@ onMounted(async () => {
     dataForm.value.price = props.tourPackage?.price;
     dataForm.value.max_person = props.tourPackage?.max_person;
     dataForm.value.is_varied = props.tourPackage?.is_varied;
+
+    console.log(dataForm.value.name);
+
+    console.log(props.tourPackage?.name);
+
+    // console.log(isVaried.value);
+
     dataForm.value["description[en]"] =
-      props.tourPackage?.description.find((item) => item.language === "en")
+      props.tourPackage?.description?.find((item) => item.language === "en")
         ?.translation || "";
     dataForm.value["description[id]"] =
-      props.tourPackage?.description.find((item) => item.language === "id")
+      props.tourPackage?.description?.find((item) => item.language === "id")
         ?.translation || "";
     statusActive.value =
       props.tourPackage?.is_active === 0 ? "Tidak Tersedia" : "Tersedia";
@@ -254,23 +263,27 @@ onMounted(async () => {
       (location) => location.id
     );
 
-    // dataForm.value.variants = props.tourPackage?.variants;
+    dataForm.value["meta[en]"] =
+      props.tourPackage?.meta?.find((item) => item.language === "en")
+        ?.translation || "";
+
+    dataForm.value["meta[id]"] =
+      props.tourPackage?.meta?.find((item) => item.language === "id")
+        ?.translation || "";
 
     dataForm.value.variants =
       props.tourPackage?.variants.map((variant) => ({
-        name: variant.name,
-        price: variant.price,
+        name: variant?.name,
+        price: variant?.price,
         description: {
           en:
-            variant.description.find((item) => item.language === "en")
+            variant?.description?.find((item) => item.language === "en")
               ?.translation || "",
           id:
-            variant.description.find((item) => item.language === "id")
+            variant?.description?.find((item) => item.language === "id")
               ?.translation || "",
         },
       })) || [];
-
-    console.log(dataForm.value.variants);
   }
 });
 

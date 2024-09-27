@@ -228,6 +228,8 @@ export default function () {
     })
   );
 
+  // const bookingSchema = toTypedSchema()
+
   const unSetPasswordSchema = toTypedSchema(passwordAndConfirm);
 
   return {

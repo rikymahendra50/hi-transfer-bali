@@ -154,5 +154,6 @@
   "last-name-required": "Last name is required",
   "otp-minimum": "OTP should be at least 6 characters",
   "otp-maksimum": "OTP should be at most 6 characters",
-  "password-not-match": "Password do not match"
+  "password-not-match": "Password do not match",
+  "pilih-kebangsaan": "Select nationality"
 }

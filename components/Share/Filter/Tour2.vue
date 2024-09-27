@@ -28,13 +28,13 @@
           <template #popper="{ hide }">
             <div class="w-full p-4 space-y-4 max-w-5xl">
               <!-- <input
-                placeholder="Cari"
-                class="input input-bordered input-sm w-full"
-                v-model="searchQuery"
-              /> -->
+                  placeholder="Cari"
+                  class="input input-bordered input-sm w-full"
+                  v-model="searchQuery"
+                /> -->
               <div class="space-y-4 overflow-y-auto h-full lg:max-h-[200px]">
                 <div
-                  v-for="location in locations?.data"
+                  v-for="location in dataLocation"
                   :key="location.id"
                   class="grid grid-cols-[150px_1fr] gap-4 hover:bg-primary/10 transition-all duration-300 p-4 rounded-md cursor-pointer"
                   @click.prevent="
@@ -84,6 +84,15 @@
 </template>
 
 <script setup>
+const props = defineProps({
+  modelValue: { type: Boolean, default: false },
+  dataLocation: {
+    type: Array,
+  },
+});
+
+const emit = defineEmits(["update:modelValue", "functiSave"]);
+
 const { locale, t: $t } = useI18n();
 const { transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
@@ -110,16 +119,16 @@ const {
   },
 });
 
-const {
-  data: locations,
-  refresh,
-  pending,
-} = await useAsyncData(`locations`, () =>
-  $fetch(`/locations`, {
-    method: "GET",
-    ...requestOptions,
-  })
-);
+// const {
+//   data: locations,
+//   refresh,
+//   pending,
+// } = await useAsyncData(`locations`, () =>
+//   $fetch(`/locations`, {
+//     method: "GET",
+//     ...requestOptions,
+//   })
+// );
 
 function replaceWindow() {
   const queryParams = {
@@ -141,27 +150,14 @@ function onSubmit() {
   dataForm.value.activity_date = formData.value.activity_date;
   dataForm.value.tourist_numbers = formData.value.tourist_numbers;
 
-  let filters = [];
-  if (dataForm.value.location_id) {
-    filters.push(`location=${dataForm.value.location_id}`);
-  }
-  if (dataForm.value.tourist_numbers) {
-    filters.push(`tourist_numbers=${dataForm.value.tourist_numbers}`);
-  }
-
-  const queryString = filters.join("&");
-  const url = `/tours?${queryString ? `&${queryString}` : ""}`;
-
-  console.log(
-    "ini setelah filters tour harusnya menyimpan location_id, location_name, activity_date dan tourist number",
-    dataForm.value
-  );
-
-  console.log(dataForm.value.tourist_numbers);
+  console.log("test");
+  console.log("ini untuk cek location", formData.value.location_id);
 
   saveFormData();
 
-  router.replace(url);
+  location.reload();
+
+  emit("update:modelValue", false);
 }
 
 onMounted(() => {

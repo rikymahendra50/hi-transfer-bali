@@ -13,7 +13,16 @@
       <thead>
         <tr>
           <th>
+            <div class="text-[#989393]">Profile picture</div>
+          </th>
+          <th>
             <div class="text-[#989393]">List Admin</div>
+          </th>
+          <th>
+            <div class="text-[#989393]">Email</div>
+          </th>
+          <th>
+            <div class="text-[#989393]">Status</div>
           </th>
           <th></th>
         </tr>
@@ -21,9 +30,52 @@
       <tbody>
         <tr v-for="item in data?.data">
           <td class="text-sm font-normal">
+            <img
+              :src="item.profile_picture ?? '-'"
+              alt=""
+              class="rounded-full w-10 h-10"
+            />
+          </td>
+          <td class="text-sm font-normal">
             <div class="font-medium text-[14px] text-black">
-              {{ item.first_name }}
+              {{ item.first_name + " " + item.last_name }}
             </div>
+          </td>
+          <td class="text-sm font-normal">
+            <div class="font-medium text-[14px] text-black">
+              {{ item.email }}
+            </div>
+          </td>
+          <td class="text-sm font-normal">
+            <div class="font-medium text-[14px] text-black">
+              {{ item.is_active === 0 ? "Tidak aktif" : "Aktif" }}
+            </div>
+          </td>
+          <td class="text-sm font-normal">
+            <VDropdown>
+              <div class="flex items-center justify-center">
+                <button class="flex items-center justify-center cursor-pointer">
+                  <Icon name="pepicons-pencil:dots-y" class="text-[#717171]" />
+                </button>
+              </div>
+              <template #popper="{ hide }">
+                <div class="bg-white flex flex-col shadow">
+                  <NuxtLink
+                    :to="`/admin/admin-list/${item.uuid}/edit`"
+                    class="hover:bg-orange-400 hover:text-white py-2 px-3"
+                  >
+                    Edit
+                  </NuxtLink>
+                  <button
+                    @click="showModalDeleteFunc(hide, item.id)"
+                    type="button"
+                    class="hover:bg-red-600 hover:text-white py-2 px-3"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </template>
+            </VDropdown>
           </td>
         </tr>
       </tbody>
@@ -60,7 +112,7 @@ const { requestOptions } = useRequestOptions();
 const router = useRouter();
 const route = useRoute();
 const { locale, t: $t } = useI18n();
-const page = ref();
+const page = ref(1);
 
 useHead({
   title: "Admin list",
@@ -73,7 +125,7 @@ definePageMeta({
 });
 
 const { data, error, refresh } = await useAsyncData("admin-list", () =>
-  $fetch(`/admins/admins?page=${page.value}`, {
+  $fetch(`/admins?page=${page.value}`, {
     method: "get",
     ...requestOptions,
   })

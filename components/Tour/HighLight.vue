@@ -7,13 +7,14 @@
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <TourCard
         v-for="item in data?.data"
+        :id="item.id"
         :key="item.id"
         :name="item.name"
         :description="item.locations"
         :image="item.thumbnail_image?.image"
         :price="item.price"
+        :slug="`/tours/` + item.slug"
       />
-      <!--         :slug="`/tours/` + item.slug" -->
     </div>
   </div>
 </template>

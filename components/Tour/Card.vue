@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="slug"
-    @click="goToTourBooking(id, props.image, name, price, description)"
+    @click="goToTourBooking(props.id, props.image, name, price, description)"
     class="overflow-hidden rounded-xl space-y-2 border border-zinc-200 shadow-sm group"
   >
     <div class="h-[300px] overflow-hidden">
@@ -67,6 +67,8 @@ function goToTourBooking(id, image, name, price, description) {
   dataForm.value.price = price;
   dataForm.value.list_location = description;
   dataForm.value.list_location_string = result.value;
+
+  console.log("ini untuk cek tur id", dataForm.value.tour_id, id);
 
   saveFormData();
 

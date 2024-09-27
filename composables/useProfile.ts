@@ -78,7 +78,7 @@ export default function (usedBy: "user" | "admin", callback: Function) {
         title: "Success",
       });
       await $fetchAuthProfile();
-      callback();
+      // callback();
     }
     loading.value = false;
   }

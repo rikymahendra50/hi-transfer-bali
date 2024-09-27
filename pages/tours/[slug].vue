@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="h-28"></div>
-    <TourSwiper :data="apiData?.data?.images" />
+    <TourSwiper :data="apiData.data?.images" />
     <div class="h-5"></div>
     <UIContainer>
       <div
@@ -9,7 +9,7 @@
       >
         <div class="flex flex-col space-y-2 gap-2">
           <h1 class="text-xl lg:text-[32px] lg:leading-[40px] font-semibold">
-            {{ apiData?.data?.name }}
+            {{ apiData.data?.name }}
           </h1>
           <div class="inline-flex space-x-2">
             <div>
@@ -45,6 +45,16 @@
         <div class="flex justify-end w-full pt-5">
           <div class="flex items-center justify-end">
             <button
+              v-if="isLocationIdorActivity"
+              class="btn btn-primary"
+              type="button"
+              :disabled="isLocationIdorActivity"
+              @click="continueOnsubmit()"
+            >
+              {{ $t("lanjutkan") }}
+            </button>
+            <button
+              v-else
               class="btn btn-primary"
               type="button"
               :disabled="isButtonDisabled"
@@ -63,7 +73,13 @@
         <div class="text-2xl font-semibold pt-5 md:pt-10">
           {{ $t("variant") }}
         </div>
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3 relative">
+          <div
+            class="absolute w-full h-full bg-gray-500 bg-opacity-20 rounded-lg"
+            @click="modalWhenNotSelectDate"
+            v-if="isLocationIdorActivity"
+          ></div>
+          <!-- {{ isLocationIdorActivity }} -->
           <!-- test -->
           <div
             v-for="(item, index) in variants"
@@ -82,8 +98,11 @@
                     />
                   </label>
                 </div>
-                <div class="flex flex-col w-full">
+                <div class="flex flex-col w-full gap-2 md:gap-3">
                   <p class="text-black text-sm lg:text-base font-semibold pt-1">
+                    {{ item.name }}
+                  </p>
+                  <p class="text-black text-sm lg:text-base font-medium pt-1">
                     {{ item.description }}
                   </p>
                   <div class="flex items-center justify-between gap-4 mt-2">
@@ -118,6 +137,19 @@
     </UIContainer>
     <ShareCtaSection />
   </div>
+
+  <!-- test modal -->
+  <modal v-model="showModal" class="relative w-[90%] sm:w-[60%] lg:w-[70%]">
+    <div
+      class="flex justify-center items-center flex-col p-2 sm:p-5 lg:p-10 overflow-auto"
+    >
+      <ShareFilterTour2
+        v-model="showModal"
+        :dataLocation="apiData?.data?.locations"
+      />
+    </div>
+  </modal>
+  <!-- end test modal -->
 </template>
 
 <script setup>
@@ -144,6 +176,7 @@ const apiData = ref(null);
 const variants = ref([]);
 const totalPrice = ref(0);
 const maxPerson = ref();
+const showModal = ref(false);
 
 const result = computed(() => {
   return (
@@ -151,27 +184,18 @@ const result = computed(() => {
   );
 });
 
-const fetchTourData = async () => {
-  const { data, error } = await useAsyncData("tours", () =>
-    $fetch(`/tours/${slug.value}?lang=${locale.value}`, {
-      headers: {
-        Accept: "application/json",
-      },
-      method: "get",
-      ...requestOptions,
-    })
-  );
+const { data, error } = await useAsyncData("tours", () =>
+  $fetch(`/tours/${slug.value}?lang=${locale.value}`, {
+    headers: {
+      Accept: "application/json",
+    },
+    method: "get",
+    ...requestOptions,
+  })
+);
 
-  if (error.value) {
-    console.error("Error fetching tour data:", error.value);
-    return;
-  }
-
-  apiData.value = data.value;
-  maxPerson.value = apiData.value?.data?.max_person;
-  console.log(apiData.value?.data?.max_person);
-  initializeVariants();
-};
+apiData.value = data.value;
+maxPerson.value = apiData.value?.data?.max_person;
 
 const initializeVariants = () => {
   if (apiData.value?.data?.variants) {
@@ -179,10 +203,13 @@ const initializeVariants = () => {
       ...variant,
       quantity: index === 0 ? 1 : 0,
       isChecked: index === 0 ? true : false,
-      totalItemPrice: 0,
+      totalItemPrice: index === 0 ? variant.price : 0,
     }));
   }
+  totalPrice.value = apiData.value?.data?.variants[0].price;
 };
+
+initializeVariants();
 
 const updateTotalPrice = () => {
   totalPrice.value = variants.value.reduce((total, variant) => {
@@ -246,13 +273,6 @@ const getMaxValueForVariant = (index) => {
   return Math.min(10, remainingMaxPerson);
 };
 
-// watch(
-//   () => variants.value,
-//   (newValue, oldValue) => {
-//     console.log(newValue);
-//   }
-// );
-
 const continueOnsubmit = () => {
   dataForm.value.price = totalPrice.value;
 
@@ -266,7 +286,6 @@ const continueOnsubmit = () => {
 };
 
 onMounted(() => {
-  fetchTourData();
   showSavedTourData();
 });
 
@@ -283,136 +302,26 @@ const isButtonDisabled = computed(() => {
   return variants.value.every((variant) => variant.quantity === 0);
 });
 
+function modalWhenNotSelectDate() {
+  showModal.value = !showModal.value;
+}
+
+const isLocationIdorActivity = computed(() => {
+  return (
+    dataForm.value.location_id === null ||
+    dataForm.value.activity_date === null ||
+    dataForm.value.location_id === undefined ||
+    dataForm.value.activity_date === undefined
+  );
+});
+
 useHead({
   title: computed(() => apiData.value?.data?.name),
   meta: [
     {
       name: "description",
-      content: result.value,
+      content: apiData.value?.data?.meta,
     },
   ],
 });
 </script>
-
-<style scoped>
-:deep(.adjustdefault) ul,
-:deep(.adjustdefault) ol {
-  list-style: revert;
-  margin-left: 20px;
-}
-
-:deep(.adjustdefault) h1,
-:deep(.adjustdefault) h2,
-:deep(.adjustdefault) h3,
-:deep(.adjustdefault) h4,
-:deep(.adjustdefault) h5,
-:deep(.adjustdefault) h6 {
-  margin-top: 1em;
-  margin-bottom: 0.5em;
-  font-weight: bold;
-}
-
-:deep(.adjustdefault) h1 {
-  font-size: 2.5rem; /* Base size */
-}
-:deep(.adjustdefault) h2 {
-  font-size: 2rem;
-}
-:deep(.adjustdefault) h3 {
-  font-size: 1.75rem;
-}
-:deep(.adjustdefault) h4 {
-  font-size: 1.5rem;
-}
-:deep(.adjustdefault) h5 {
-  font-size: 1.25rem;
-}
-:deep(.adjustdefault) h6 {
-  font-size: 1rem;
-}
-
-/* Responsive adjustments using media queries */
-@media (max-width: 1200px) {
-  :deep(.adjustdefault) h1 {
-    font-size: 2.25rem;
-  }
-  :deep(.adjustdefault) h2 {
-    font-size: 1.875rem;
-  }
-  :deep(.adjustdefault) h3 {
-    font-size: 1.625rem;
-  }
-  :deep(.adjustdefault) h4 {
-    font-size: 1.375rem;
-  }
-  :deep(.adjustdefault) h5 {
-    font-size: 1.125rem;
-  }
-  :deep(.adjustdefault) h6 {
-    font-size: 0.875rem;
-  }
-}
-
-@media (max-width: 992px) {
-  :deep(.adjustdefault) h1 {
-    font-size: 2rem;
-  }
-  :deep(.adjustdefault) h2 {
-    font-size: 1.75rem;
-  }
-  :deep(.adjustdefault) h3 {
-    font-size: 1.5rem;
-  }
-  :deep(.adjustdefault) h4 {
-    font-size: 1.25rem;
-  }
-  :deep(.adjustdefault) h5 {
-    font-size: 1rem;
-  }
-  :deep(.adjustdefault) h6 {
-    font-size: 0.75rem;
-  }
-}
-
-@media (max-width: 768px) {
-  :deep(.adjustdefault) h1 {
-    font-size: 1.75rem;
-  }
-  :deep(.adjustdefault) h2 {
-    font-size: 1.5rem;
-  }
-  :deep(.adjustdefault) h3 {
-    font-size: 1.25rem;
-  }
-  :deep(.adjustdefault) h4 {
-    font-size: 1rem;
-  }
-  :deep(.adjustdefault) h5 {
-    font-size: 0.875rem;
-  }
-  :deep(.adjustdefault) h6 {
-    font-size: 0.75rem;
-  }
-}
-
-@media (max-width: 576px) {
-  :deep(.adjustdefault) h1 {
-    font-size: 1.5rem;
-  }
-  :deep(.adjustdefault) h2 {
-    font-size: 1.25rem;
-  }
-  :deep(.adjustdefault) h3 {
-    font-size: 1rem;
-  }
-  :deep(.adjustdefault) h4 {
-    font-size: 0.875rem;
-  }
-  :deep(.adjustdefault) h5 {
-    font-size: 0.75rem;
-  }
-  :deep(.adjustdefault) h6 {
-    font-size: 0.625rem;
-  }
-}
-</style>

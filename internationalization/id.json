@@ -153,5 +153,6 @@
   "last-name-required": "Nama belakang wajib diisi",
   "otp-minimum": "OTP minimal harus 6 karakter",
   "otp-maksimum": "OTP maksimal 6 karakter",
-  "password-not-match": "Kata sandi tidak cocok"
+  "password-not-match": "Kata sandi tidak cocok",
+  "pilih-kebangsaan": "Pilih kebangsaan"
 }

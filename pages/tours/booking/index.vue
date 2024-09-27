@@ -14,17 +14,17 @@
           />
         </div>
       </div>
-      <div class="p-4">
+      <div class="p-4 border-2 relative">
+        <NuxtLink
+          to="/sign-in"
+          class="absolute w-full h-full z-[200] bg-opacity-0"
+          v-if="!$isUser"
+        ></NuxtLink>
         <div class="flex flex-col space-y-6">
           <div class="flex justify-between items-center">
             <div class="text-2xl font-semibold">{{ $t("data-pemesan") }}</div>
           </div>
-          <div class="space-y-4 relative">
-            <NuxtLink
-              to="/sign-in"
-              class="absolute w-full h-full z-[200] bg-opacity-0"
-              v-if="!$isUser"
-            ></NuxtLink>
+          <div class="space-y-4">
             <TourOrdererForm
               :name="dataFormT.name"
               :email="dataFormT.email"
@@ -114,7 +114,7 @@
                           class="input-bordered"
                           placeholder="ex: Indonesia"
                         >
-                          <option value="">Pilih Kebangsaan</option>
+                          <option value="">{{ $t("pilih-kebangsaan") }}</option>
                           <option
                             :value="item.name"
                             v-for="item in dataCountry"
@@ -125,7 +125,7 @@
                         </UIFormMSelect>
                       </UIFormMGroup>
 
-                      <UIFormMGroup
+                      <!-- <UIFormMGroup
                         :name="
                           `category` +
                           getParticipantIndex(variantIndex, participantIndex)
@@ -152,14 +152,14 @@
                           <option value="dewasa">Dewasa</option>
                           <option value="anak">Anak</option>
                         </UIFormMSelect>
-                      </UIFormMGroup>
+                      </UIFormMGroup> -->
                     </div>
                   </div>
                 </div>
                 <div class="flex justify-end">
                   <div class="btn btn-md bg-primary">
                     <button ref="btnSubmit" type="submit" class="text-white">
-                      Continue
+                      {{ $t("lanjutkan") }}
                     </button>
                   </div>
                 </div>
@@ -274,11 +274,11 @@ function onSubmit() {
   dataForm.value.phone = dataFormT.value.phone;
   dataForm.value.forms = dataFormParticitpant.value;
 
-  console.log(dataFormParticitpant.value);
+  // console.log(dataFormParticitpant.value);
 
   saveFormData();
 
-  console.log("ini adalah dataFormT", dataFormT.value);
+  // console.log("ini adalah dataFormT", dataFormT.value);
 
   console.log("ini di booking", dataForm.value);
 

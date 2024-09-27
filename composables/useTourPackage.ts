@@ -272,12 +272,12 @@ export default function (options: Options = {}) {
       dataForm.value.variants = selectedTourPackage.value?.variants.map(
         (variant) => {
           return {
-            name: variant.name,
-            price: variant.price,
+            name: variant?.name,
+            price: variant?.price,
             description: {
-              en: variant.description.find((item) => item.language === "en")
+              en: variant?.description.find((item) => item.language === "en")
                 ?.translation,
-              id: variant.description.find((item) => item.language === "id")
+              id: variant?.description.find((item) => item.language === "id")
                 ?.translation,
             },
           };

@@ -17,8 +17,19 @@ const { locale, t } = useI18n();
 
 const {
   dataForm,
-  submitFormOrder,
+  submitForm,
   saveFormData,
+  showSavedTourData,
+  clearSavedTourData,
+} = useTourStore({
+  callback: () => {
+    alert("Form has been submitted!");
+  },
+});
+
+const {
+  dataForm: dataFormCar,
+  saveFormData: saveFormDataCar,
   showSavedCarData,
   clearSavedCarData,
 } = useCarStore({
@@ -39,7 +50,9 @@ useHead({
 });
 
 onMounted(() => {
+  clearSavedTourData();
   clearSavedCarData();
+  console.log(dataForm.value);
 });
 </script>
 
