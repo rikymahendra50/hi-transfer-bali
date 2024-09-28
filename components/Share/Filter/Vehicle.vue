@@ -136,7 +136,7 @@ const {
   clearSavedCarData,
 } = useCarStore({
   callback: () => {
-    alert("Form has been submitted!");
+    console.log("Form has been submitted!");
   },
 });
 
@@ -270,7 +270,7 @@ async function calculateDistanceMatrix() {
           dataForm.value.quantity = parseInt(distance.value / 1000);
           dataForm.value.distance_text = distanceRound.value;
 
-          alert(dataForm.value.round_trip);
+          // alert(dataForm.value.round_trip);
 
           if (dataForm.value.round_trip == 1) {
             const test = parseInt(distance.value / 1000);

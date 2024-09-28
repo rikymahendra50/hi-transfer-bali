@@ -74,14 +74,6 @@
       <div class="col-span-2 flex">
         <UIBtn variant="primary" type="submit">{{ $t("cari-tur") }}</UIBtn>
       </div>
-
-      <!-- <UIFormMGroup name="total_passengers" :label="$t('beberapa-orang')">
-        <UIFormMTextField
-          name="total_passengers"
-          v-model="formData.tourist_numbers"
-          placeholder="ex:1"
-        />
-      </UIFormMGroup> -->
     </div>
   </VeeForm>
 </template>
@@ -109,7 +101,7 @@ const {
   clearSavedTourData,
 } = useTourStore({
   callback: () => {
-    alert("Form has been submitted!");
+    console.log("Form has been submitted!");
   },
 });
 
