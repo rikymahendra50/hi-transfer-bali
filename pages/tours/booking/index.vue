@@ -63,7 +63,7 @@
                       "
                       type="text"
                       name="variant_id"
-                      class="border-2 hidden"
+                      class="border hidden"
                       id="variant_id"
                     />
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">

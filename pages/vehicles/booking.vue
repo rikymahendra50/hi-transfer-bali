@@ -14,7 +14,7 @@
             >{{ $t("kembali-ke-beranda") }}</UIBtn
           >
         </div>
-        <div
+        <!-- <div
           class="w-full flex flex-col gap-2"
           v-if="
             dataForm.location_pickup_address || dataForm.location_return_address
@@ -43,7 +43,7 @@
             {{ dataForm.passengers }}
             {{ $t("penumpang") }}
           </div>
-        </div>
+        </div> -->
       </div>
     </UIContainer>
   </div>
