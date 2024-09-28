@@ -118,6 +118,8 @@
 </template>
 
 <script setup>
+import { withQuery } from "ufo";
+
 definePageMeta({
   layout: "admin",
   // @ts-ignore
@@ -132,8 +134,6 @@ const { transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const router = useRouter();
 const route = useRoute();
-
-import { withQuery } from "ufo";
 
 const page = ref(1);
 const showModalDelete = ref(false);

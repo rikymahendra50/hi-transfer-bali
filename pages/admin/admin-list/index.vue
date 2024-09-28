@@ -112,6 +112,7 @@ const router = useRouter();
 const route = useRoute();
 const { locale, t: $t } = useI18n();
 const page = ref(1);
+import { withQuery } from "ufo";
 
 useHead({
   title: "Admin list",

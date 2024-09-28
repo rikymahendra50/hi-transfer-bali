@@ -5,7 +5,7 @@ const { locale, t: $t } = useI18n();
 const router = useRouter();
 
 function redirectUserProfile() {
-  router.push("/admin/profile");
+  router.push("/admin/orders");
 }
 
 const { loading, message, alertType, $credentialForm, $login } = useAuth({
@@ -28,7 +28,7 @@ definePageMeta({
     <div class="hero-content text-center">
       <div class="max-w-full md:w-[450px] lg:max-w-md mt-32">
         <h1 class="text-2xl md:text-4xl font-bold mb-2 md:mb-4">
-          Dasbor Admin
+          Dasboard Admin
         </h1>
         <p class="text-sm md:text-[18px] text-[#121212] font-normal">
           {{ $t("selamat-datang-di-dashboard") }}
