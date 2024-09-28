@@ -26,7 +26,7 @@
           v-model="dataForm.price"
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
-          :disabled="isVaried === true || isVaried === 1"
+          :disabled="isVaried === 1"
         />
 
         <UIFormInputNumber
@@ -37,15 +37,29 @@
           v-model="dataForm.price"
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
+          :disabled="isVaried === 1"
         />
 
-        <UIFormInputNumber
+        <UIFormTextFieldWLabel
+          v-if="props.tourPackage"
           label="Max person"
           name="max_person"
           placeholder="Max person"
           v-model="dataForm.max_person"
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
+          :disabled="isVaried === 1"
+        />
+
+        <UIFormInputNumber
+          v-else-if="!props.tourPackage"
+          label="Max person"
+          name="max_person"
+          placeholder="Max person"
+          v-model="dataForm.max_person"
+          class="input-bordered shadow-sm focus:outline-none"
+          :useStarIcon="false"
+          :disabled="isVaried === 1"
         />
 
         <UIFormDropdownOnlyTwo
@@ -247,12 +261,6 @@ onMounted(async () => {
     dataForm.value.max_person = props.tourPackage?.max_person;
     dataForm.value.is_varied = props.tourPackage?.is_varied;
 
-    console.log(dataForm.value.name);
-
-    console.log(props.tourPackage?.name);
-
-    // console.log(isVaried.value);
-
     dataForm.value["description[en]"] =
       props.tourPackage?.description?.find((item) => item.language === "en")
         ?.translation || "";
@@ -278,6 +286,7 @@ onMounted(async () => {
       props.tourPackage?.variants.map((variant) => ({
         name: variant?.name,
         price: variant?.price,
+        max_person: variant?.max_person,
         description: {
           en:
             variant?.description?.find((item) => item.language === "en")

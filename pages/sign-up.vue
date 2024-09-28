@@ -1,11 +1,21 @@
 <script lang="ts" setup>
 const { registerSchema } = useSchema();
 
-const { loading, message, alertType, $credentialForm, $register } = useAuth();
-
-const { inputType, togglePasswordType, toggleInputType } = usePasswordHelper();
+const { inputType, toggleInputType } = usePasswordHelper();
 
 const { locale, t: $t } = useI18n();
+
+const {
+  loading,
+  message,
+  alertType,
+  $credentialForm,
+  $register,
+  $showRegisterSubmitBtn,
+  $registerRequestEmailForActiveAccount,
+  _emailForResent,
+  $countdownHelper,
+} = useAuth();
 
 useHead({
   title: "Sign Up",
@@ -13,6 +23,8 @@ useHead({
 
 definePageMeta({
   layout: "auth",
+  // @ts-ignore
+  middleware: "guest",
 });
 </script>
 <template>
@@ -122,6 +134,46 @@ definePageMeta({
               </UIFormMTextField>
             </UIFormMGroup>
 
+            <!-- test resend -->
+
+            <!--              
+              " -->
+
+            <div class="h-1"></div>
+            <div
+              v-if="
+                $countdownHelper.expiredTime > 0 &&
+                $countdownHelper.expiredTime < 60
+              "
+              class="p-2 text-gray-400 text-sm border rounded-lg"
+            >
+              <span>
+                {{
+                  `we sent you an email with a link to activate your account. Please check your email ${_emailForResent}.Your email verification will be expired in ${$countdownHelper.expiredTime} seconds`
+                }}
+              </span>
+            </div>
+            <div
+              v-if="$countdownHelper.showExpired"
+              class="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:justify-between border p-2 rounded-lg lg:space-x-2"
+            >
+              <div class="text-sm text-gray-400">
+                If you don't receive an email, click here to request a new email
+                for verification.
+              </div>
+              <div>
+                <button
+                  class="btn btn-primary btn-block whitespace-nowrap"
+                  type="button"
+                  :disabled="loading"
+                  @click="$registerRequestEmailForActiveAccount"
+                >
+                  Resent Email
+                </button>
+              </div>
+            </div>
+
+            <!-- v-if="$showRegisterSubmitBtn" -->
             <div>
               <UIBtn
                 variant="primary"
@@ -131,6 +183,8 @@ definePageMeta({
                 >Submit</UIBtn
               >
             </div>
+
+            <!-- end test resend -->
 
             <div class="flex justify-between items-center mt-1">
               <div></div>

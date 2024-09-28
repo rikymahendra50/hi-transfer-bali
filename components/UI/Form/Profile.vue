@@ -36,7 +36,7 @@ onMounted(async () => {
         <div class="flex flex-row items-center space-x-2">
           <div class="flex-shrink-0">
             <UIFormAvatar
-              v-model="dataForm.profile_picture"
+              v-model="dataForm.image"
               :profile-image="currentUserProfile"
             />
             <VeeErrorMessage

@@ -43,44 +43,7 @@ export default function (options: Options = {}) {
     };
   }
 
-  // const productFormVariants = computed(() => {
-  //   return {
-  //     name: undefined,
-  //     price: undefined,
-  //     "description[en]": undefined,
-  //     "description[id]": undefined,
-  //     "meta[en]": undefined,
-  //     "meta[id]": undefined,
-  //     locations: [],
-  //     max_person: undefined,
-  //     is_varied: 1,
-  //     variants: [],
-  //   };
-  // });
-
-  // const productFormNonVariants = computed(() => {
-  //   return {
-  //     name: undefined,
-  //     price: undefined,
-  //     "description[en]": undefined,
-  //     "description[id]": undefined,
-  //     "meta[en]": undefined,
-  //     "meta[id]": undefined,
-  //     locations: [],
-  //     max_person: undefined,
-  //     is_varied: 0,
-  //   };
-  // });
-
   const isVaried = computed(() => dataForm.value.is_varied === 1);
-
-  // const formValues = computed(() => {
-  //   if (isVaried.value) {
-  //     return { ...productFormVariants.value };
-  //   } else {
-  //     return { ...productFormNonVariants.value };
-  //   }
-  // });
 
   function resetProductVariants() {
     dataForm.value.variants = [];
@@ -126,10 +89,11 @@ export default function (options: Options = {}) {
     }
 
     if (dataForm.value.variants) {
-      // console.log(dataForm.value.variants);
+      // console.log("testestr", dataForm.value.variants);
       dataForm.value.variants.forEach((variant, index) => {
         formData.append(`variants[${index}][name]`, variant.name);
         formData.append(`variants[${index}][price]`, variant.price);
+        formData.append(`variants[${index}][max_person]`, variant.max_person);
         formData.append(
           `variants[${index}][descriptions][en]`,
           variant.description.en
@@ -188,6 +152,7 @@ export default function (options: Options = {}) {
       dataForm.value.variants.forEach((variant, index) => {
         formData.append(`variants[${index}][name]`, variant.name);
         formData.append(`variants[${index}][price]`, variant.price);
+        formData.append(`variants[${index}][max_person]`, variant.max_person);
         formData.append(
           `variants[${index}][descriptions][en]`,
           variant.description.en

@@ -36,6 +36,7 @@ onMounted(() => {
   <VeeForm
     @submit="$setNewPasswordForgotPassword"
     :validation-schema="resetPasswordSchema"
+    v-slot="{ errors }"
   >
     <div
       class="grid grid-cols-1 w-[450px] text-left gap-4 p-4 rounded-md shadow"
@@ -64,7 +65,9 @@ onMounted(() => {
       </div>
 
       <div>
-        <UIBtn :disabled="loading" variant="primary">Submit</UIBtn>
+        <UIBtn :disabled="loading" variant="primary" type="submit"
+          >Submit</UIBtn
+        >
       </div>
     </div>
   </VeeForm>

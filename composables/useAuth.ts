@@ -194,7 +194,7 @@ export default function (options?: useAuthOptions) {
     if (options?.usedBy === "admin") {
       return "/admins/forget-password";
     }
-    return "/users/forget-password";
+    return "/users/password/forget";
   });
 
   /**
@@ -205,7 +205,7 @@ export default function (options?: useAuthOptions) {
     if (options?.usedBy === "admin") {
       return "/admins/forget-password/verify-pin";
     }
-    return "/users/forget-password/verify-pin";
+    return "/users/password/forget/verify-otp";
   });
 
   /**
@@ -215,7 +215,7 @@ export default function (options?: useAuthOptions) {
     if (options?.usedBy === "admin") {
       return "/admins/forget-password/reset-password";
     }
-    return "/users/forget-password/reset-password";
+    return "/users/password/reset";
   });
 
   const _registerRequestResendEmailVerificationURL = computed(() => {
@@ -505,6 +505,8 @@ export default function (options?: useAuthOptions) {
        * to resend the email
        */
       _setShowResendEmailButton();
+
+      $countdownHelper.value.showExpired = true;
     }
 
     /**
@@ -546,6 +548,12 @@ export default function (options?: useAuthOptions) {
           "Please check your email to activate your account."
       );
     }
+
+    $showRegisterSubmitBtn.value = false;
+
+    $countdownHelper.value.showExpired = false;
+
+    $countdownHelper.value.expiredTime = 60;
 
     loading.value = false;
   }
@@ -826,5 +834,7 @@ export default function (options?: useAuthOptions) {
     loading,
     message,
     alertType,
+    $showRegisterSubmitBtn,
+    _emailForResent,
   };
 }

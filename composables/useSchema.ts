@@ -194,7 +194,16 @@ export default function () {
   const carSearchSchema = toTypedSchema(
     object({
       pickup_address: string().min(1, $t("carSearchSchema.pickup_address")),
-      // return_address: string().min(1, $t("carSearchSchema.return_address")),
+      return_address: string().min(1, $t("carSearchSchema.return_address")),
+      pickup_date: string().min(1, $t("carSearchSchema.pickup_address")),
+      // return_date: string().min(1, $t("carSearchSchema.return_date")),
+    })
+  );
+
+  const carSearchSchemaIfPickUpTrue = toTypedSchema(
+    object({
+      pickup_address: string().min(1, $t("carSearchSchema.pickup_address")),
+      return_address: string().min(1, $t("carSearchSchema.return_address")),
       pickup_date: string().min(1, $t("carSearchSchema.pickup_address")),
       return_date: string().min(1, $t("carSearchSchema.return_date")),
     })
@@ -211,6 +220,12 @@ export default function () {
       //   1,
       //   $t("tourSearchSchema.total_passengers")
       // ),
+    })
+  );
+
+  const tourSearchSchema2 = toTypedSchema(
+    object({
+      activity_date: string().min(1, $t("tourSearchSchema.activity_date")),
     })
   );
 
@@ -258,5 +273,7 @@ export default function () {
     carSearchSchema,
     orderCarSchema,
     tourSearchSchema,
+    carSearchSchemaIfPickUpTrue,
+    tourSearchSchema2,
   };
 }

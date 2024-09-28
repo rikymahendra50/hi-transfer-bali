@@ -11,6 +11,7 @@
               v-if="$isUser && userProfile?.data?.image"
               :src="userProfile?.data?.image"
               :alt="userProfile?.data?.image"
+              class="max-w-[30px] rounded-full"
             />
             <Icon
               name="gg:profile"

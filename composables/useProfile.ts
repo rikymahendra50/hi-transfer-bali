@@ -13,14 +13,14 @@ export default function (usedBy: "user" | "admin", callback: Function) {
     first_name: string;
     last_name: string;
     phone: string;
-    profile_picture: File | undefined;
+    image: File | undefined;
     is_profile_picture_deleted: 0 | 1;
   }>({
     email: "",
     first_name: "",
     last_name: "",
     phone: "",
-    profile_picture: undefined,
+    image: undefined,
     is_profile_picture_deleted: 0,
   });
 
@@ -32,7 +32,7 @@ export default function (usedBy: "user" | "admin", callback: Function) {
   });
 
   const currentUserProfile = computed(() => {
-    return $user.value?.profile_picture ?? "";
+    return $user.value?.image ?? "";
   });
 
   async function updateProfile(values: any, ctx: any) {
@@ -44,8 +44,8 @@ export default function (usedBy: "user" | "admin", callback: Function) {
       const objectItem = object[item];
       formData.append(item, objectItem);
     }
-    if (!dataForm.value.profile_picture) {
-      formData.delete("profile_picture");
+    if (!dataForm.value.image) {
+      formData.delete("image");
     }
 
     loading.value = true;

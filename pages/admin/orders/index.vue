@@ -86,12 +86,12 @@
                       >
                         Detail
                       </NuxtLink>
-                      <button
+                      <!-- <button
                         type="button"
                         class="hover:bg-red-600 hover:text-white py-3 px-5"
                       >
                         Delete
-                      </button>
+                      </button> -->
                     </div>
                   </template>
                 </VDropdown>

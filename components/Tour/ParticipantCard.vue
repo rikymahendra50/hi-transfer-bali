@@ -11,10 +11,10 @@
               <div class="text-xs text-zinc-400">Kebangsaan</div>
               <div>{{ item.nationality }}</div>
             </div>
-            <div class="flex flex-col space-y-1">
+            <!-- <div class="flex flex-col space-y-1">
               <div class="text-xs text-zinc-400">Kategori</div>
               <div>{{ item.category }}</div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

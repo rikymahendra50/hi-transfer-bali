@@ -79,7 +79,6 @@
             @click="modalWhenNotSelectDate"
             v-if="isLocationIdorActivity"
           ></div>
-          <!-- {{ isLocationIdorActivity }} -->
           <!-- test -->
           <div
             v-for="(item, index) in variants"
@@ -307,12 +306,7 @@ function modalWhenNotSelectDate() {
 }
 
 const isLocationIdorActivity = computed(() => {
-  return (
-    dataForm.value.location_id === null ||
-    dataForm.value.activity_date === null ||
-    dataForm.value.location_id === undefined ||
-    dataForm.value.activity_date === undefined
-  );
+  return dataForm.value.activity_date === null;
 });
 
 useHead({

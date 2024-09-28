@@ -5,17 +5,17 @@
         <div>
           <nav class="navbar">
             <div class="flex-1">
-              <NuxtLink
+              <a
+                href="/"
                 class="link link-neutral link-hover"
                 active-class="font-medium"
-                to="/"
               >
                 <img
                   src="/hi-transfer-logo.png"
                   alt="Hi Transfer"
                   class="h-[60px] w-[60px]"
                 />
-              </NuxtLink>
+              </a>
             </div>
             <div class="flex-none">
               <ul class="inline-flex items-center space-x-4">

@@ -15,7 +15,7 @@ export default function (userBy: "user" | "admin") {
 
   const updateURL = computed(() => {
     if (userBy == "user") {
-      return "/users/change-password?lang=" + locale.value;
+      return `/users/${$user.value.uuid}/change-password`;
     }
     return "/admins/change-password?lang=" + locale.value;
   });
@@ -40,6 +40,7 @@ export default function (userBy: "user" | "admin") {
       password: string;
       confirm_password: string;
     } = {
+      old_password: dataForm.value.old_password,
       password: dataForm.value.password,
       confirm_password: dataForm.value.confirm_password,
     };

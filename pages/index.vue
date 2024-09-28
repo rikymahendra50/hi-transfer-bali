@@ -52,7 +52,10 @@ useHead({
 onMounted(() => {
   clearSavedTourData();
   clearSavedCarData();
-  console.log(dataForm.value);
+});
+
+definePageMeta({
+  layout: "default",
 });
 </script>
 

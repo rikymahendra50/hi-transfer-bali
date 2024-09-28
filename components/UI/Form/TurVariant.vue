@@ -30,6 +30,17 @@
             />
             <!-- end price -->
 
+            <!-- max person -->
+            <UIFormInputNumber
+              label="Max person"
+              :name="`product_variants[${index}].max_person`"
+              placeholder="Max person"
+              v-model="dataForm.max_person"
+              class="input-bordered shadow-sm focus:outline-none"
+              :useStarIcon="false"
+            />
+            <!-- end max person -->
+
             <!-- desk -->
             <TabContent>
               <TabItem

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const { loginSchema } = useSchema();
 
-const { togglePasswordType, inputType } = usePasswordHelper();
+const { inputType, toggleInputType } = usePasswordHelper();
 
 const router = useRouter();
 
@@ -20,6 +20,8 @@ useHead({
 
 definePageMeta({
   layout: "auth",
+  // @ts-ignore
+  middleware: "guest",
 });
 
 const { locale, t: $t } = useI18n();
@@ -66,7 +68,7 @@ const { locale, t: $t } = useI18n();
                         : 'i-heroicons-eye-slash'
                     "
                     class="w-5 h-5 text-gray-400"
-                    @click="togglePasswordType"
+                    @click="toggleInputType"
                   />
                 </template>
               </UIFormMTextField>

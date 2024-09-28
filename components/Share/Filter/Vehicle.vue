@@ -10,10 +10,11 @@
         </div>
       </div>
     </div>
+
     <VeeForm
       @submit="onSubmit"
       v-slot="{ errors }"
-      :validation-schema="carSearchSchema"
+      :validation-schema="carSearchSchemaShouldUse"
     >
       <div
         class="grid grid-cols-1 lg:grid-cols-[1fr_50px_1fr] gap-4 items-center"
@@ -117,7 +118,7 @@ const { requestOptions } = useRequestOptions();
 const { loading, message, alertType, setErrorMessage, transformErrors } =
   useRequestHelper();
 const { pushNotification } = useNotification();
-const { carSearchSchema } = useSchema();
+const { carSearchSchema, carSearchSchemaIfPickUpTrue } = useSchema();
 const { locale, t: $t } = useI18n();
 const config = useRuntimeConfig();
 const breakpoints = useBreakpoints(breakpointsTailwind);
@@ -152,12 +153,21 @@ const formDataTujuan = ref({
 
 const distance = ref();
 const distanceRound = ref();
+
 const dateReturnDisabled = computed(() => {
   if (dataForm.value.round_trip == 1) {
     dataForm.value.return_date = undefined;
     return false;
   } else if (dataForm.value.round_trip == 0) {
     return true;
+  }
+});
+
+const carSearchSchemaShouldUse = computed(() => {
+  if (dateReturnDisabled.value) {
+    return carSearchSchema;
+  } else {
+    return carSearchSchemaIfPickUpTrue;
   }
 });
 

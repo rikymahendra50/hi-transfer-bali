@@ -24,8 +24,7 @@
             <div
               class="text-zinc-400 text-sm whitespace-nowrap text-center lg:text-left"
             >
-              {{ dataForm.activity_date }} | {{ dataForm.tourist_numbers }}
-              {{ $t("orang") }}
+              {{ dataForm.activity_date }}
             </div>
           </div>
         </div>
@@ -80,7 +79,7 @@ const { locale, t: $t } = useI18n();
 
 const param = ref();
 const selectedLocation = ref();
-const selectedTouristNumber = ref();
+// const selectedTouristNumber = ref();
 const dataT = ref();
 const filter = ref({ sort: "" });
 
@@ -97,33 +96,19 @@ const {
 });
 
 onMounted(async () => {
-  if (route.query.location && route.query.tourist_numbers) {
+  if (route.query.location) {
     selectedLocation.value = route.query.location;
-    selectedTouristNumber.value = route.query.tourist_numbers;
-  }
-  if (route.query.location && !route.query.tourist_numbers) {
-    selectedLocation.value = route.query.location;
-  }
-  if (!route.query.location && route.query.tourist_numbers) {
-    selectedTouristNumber.value = route.query.tourist_numbers;
   }
 
   showSavedTourData();
-
-  // console.log("ini dari index tours", dataForm.value);
-
-  // fetchData();
 });
 
-watch(
-  [() => filter.value.sort, selectedLocation, selectedTouristNumber],
-  fetchData
-);
+watch([() => filter.value.sort, selectedLocation], fetchData);
 
 async function fetchData() {
   const { data, error, refresh } = await useAsyncData("tours", () =>
     $fetch(
-      `/tours?sort=${filter.value.sort}&lang=${locale.value}&filter[location_id]=${selectedLocation.value}&filter[tourist_numbers]=${selectedTouristNumber.value}`,
+      `/tours?sort=${filter.value.sort}&lang=${locale.value}&filter[location_id]=${selectedLocation.value}`,
       {
         headers: {
           Accept: "aplication/json",

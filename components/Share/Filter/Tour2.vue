@@ -2,63 +2,10 @@
   <VeeForm
     @submit="onSubmit"
     v-slot="{ errors }"
-    :validation-schema="tourSearchSchema"
-    class="space-y-4"
+    :validation-schema="tourSearchSchema2"
+    class="space-y-4 w-full"
   >
-    <div>
-      <UIFormMGroup name="tour_id" :label="$t('pilih-destinasi')">
-        <VDropdown
-          v-model="formData.location_id"
-          placements="start"
-          distance="-10"
-          skidding="1"
-          arrow-padding="1"
-        >
-          <button
-            type="button"
-            class="text-xs h-9 w-full flex justify-between items-center"
-          >
-            <div>
-              {{ selectedLocationName ?? $t("pilih-destinasi") }}
-            </div>
-            <div>
-              <Icon name="i-heroicons-chevron-down" />
-            </div>
-          </button>
-          <template #popper="{ hide }">
-            <div class="w-full p-4 space-y-4 max-w-5xl">
-              <!-- <input
-                  placeholder="Cari"
-                  class="input input-bordered input-sm w-full"
-                  v-model="searchQuery"
-                /> -->
-              <div class="space-y-4 overflow-y-auto h-full lg:max-h-[200px]">
-                <div
-                  v-for="location in dataLocation"
-                  :key="location.id"
-                  class="grid grid-cols-[150px_1fr] gap-4 hover:bg-primary/10 transition-all duration-300 p-4 rounded-md cursor-pointer"
-                  @click.prevent="
-                    selectLocation(location);
-                    hide();
-                  "
-                >
-                  <div>{{ location.name }}</div>
-                </div>
-              </div>
-            </div>
-          </template>
-        </VDropdown>
-      </UIFormMGroup>
-      <VeeField
-        type="text"
-        name="location"
-        class="hidden"
-        id="location"
-        v-model="formData.location_id"
-      />
-      <VeeErrorMessage name="location" class="form-error-message" />
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr_110px] gap-4">
+    <div class="grid md:grid-cols-1 w-full gap-4">
       <UIFormMGroup name="activity_date" :label="$t('pilih-tanggal')">
         <UIFormMTextField
           name="activity_date"
@@ -68,16 +15,8 @@
           placeholder="ex:2024-01-01"
         />
       </UIFormMGroup>
-
-      <UIFormMGroup name="total_passengers" :label="$t('beberapa-orang')">
-        <UIFormMTextField
-          name="total_passengers"
-          v-model="formData.tourist_numbers"
-          placeholder="ex:1"
-        />
-      </UIFormMGroup>
-      <div>
-        <UIBtn variant="primary" type="submit">{{ $t("cari-tur") }}</UIBtn>
+      <div class="flex justify-end">
+        <UIBtn variant="primary" type="submit">{{ $t("select-date") }}</UIBtn>
       </div>
     </div>
   </VeeForm>
@@ -96,7 +35,7 @@ const emit = defineEmits(["update:modelValue", "functiSave"]);
 const { locale, t: $t } = useI18n();
 const { transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const { tourSearchSchema } = useSchema();
+const { tourSearchSchema, tourSearchSchema2 } = useSchema();
 const router = useRouter();
 
 const selectedLocationName = ref();
@@ -150,8 +89,8 @@ function onSubmit() {
   dataForm.value.activity_date = formData.value.activity_date;
   dataForm.value.tourist_numbers = formData.value.tourist_numbers;
 
-  console.log("test");
-  console.log("ini untuk cek location", formData.value.location_id);
+  // console.log("test");
+  // console.log("ini untuk cek location", formData.value.location_id);
 
   saveFormData();
 

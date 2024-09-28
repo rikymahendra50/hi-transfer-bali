@@ -45,6 +45,9 @@
               :image="dataForm.tour_image"
               :dataListPrice="dataForm.variants"
             />
+            <!-- <pre>
+              {{ dataForm }}
+            </pre> -->
             <div>
               <div class="space-y-4 p-4 border rounded-xl">
                 <div
