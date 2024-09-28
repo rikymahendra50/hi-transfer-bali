@@ -122,10 +122,40 @@ export default function () {
     })
   );
 
-  const tourPackageEditSchema = toTypedSchema(
+  const variantSchema = object({
+    name: string().min(1, "Name is required"),
+    price: number()
+      .int()
+      .min(1, "Harga harus lebih dari 0")
+      .superRefine((data, ctx) => {
+        if (isNaN(data)) {
+          ctx.addIssue({
+            path: ["price"],
+            code: "custom",
+            message: "Harga harus berupa angka yang valid",
+          });
+        }
+      }),
+    // max_person: string().min(1, "Maksimal orang harus diisi"),
+    description: string().min(1, "Description en harus diisi"),
+    id_description: string().min(1, "Description id harus diisi"),
+  });
+
+  const tourPackageSchemaIfVaried = toTypedSchema(
     object({
       name: string().min(1, "Nama package harus diisi"),
-      price: string().min(1, "Harga package harus diisi"),
+      is_active: string().min(1, "Status harus diisi"),
+      locations: z
+        .array(z.number())
+        .min(1, { message: "Setidaknya butuh 1 lokasi" }),
+      "description[en]": string().min(1, "description en harus diisi"),
+      "description[id]": string().min(1, "description id harus diisi"),
+      "meta[en]": string().min(1, "meta en harus diisi"),
+      "meta[id]": string().min(1, "meta id harus diisi"),
+      product_variants: array(variantSchema).min(
+        1,
+        "At least one variant is required"
+      ),
     })
   );
 
@@ -196,7 +226,6 @@ export default function () {
       pickup_address: string().min(1, $t("carSearchSchema.pickup_address")),
       return_address: string().min(1, $t("carSearchSchema.return_address")),
       pickup_date: string().min(1, $t("carSearchSchema.pickup_address")),
-      // return_date: string().min(1, $t("carSearchSchema.return_date")),
     })
   );
 
@@ -216,10 +245,6 @@ export default function () {
         { message: $t("tourSearchSchema.location") }
       ),
       activity_date: string().min(1, $t("tourSearchSchema.activity_date")),
-      // total_passengers: string().min(
-      //   1,
-      //   $t("tourSearchSchema.total_passengers")
-      // ),
     })
   );
 
@@ -262,7 +287,6 @@ export default function () {
     updatePasswordSchema,
     transportSchema,
     tourPackageSchema,
-    tourPackageEditSchema,
     driverSchema,
     facilityCar,
     destinationsSchema,
@@ -275,5 +299,6 @@ export default function () {
     tourSearchSchema,
     carSearchSchemaIfPickUpTrue,
     tourSearchSchema2,
+    tourPackageSchemaIfVaried,
   };
 }

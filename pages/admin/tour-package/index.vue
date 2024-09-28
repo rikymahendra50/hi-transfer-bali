@@ -72,7 +72,6 @@
       </tr>
     </tbody>
   </table>
-
   <div
     class="flex flex-col md:flex-row items-center justify-between gap-3 w-full py-3 px-3"
   >
@@ -94,7 +93,7 @@
       />
     </div>
   </div>
-  <!-- {{ data }} -->
+
   <!-- modal -->
   <modal
     v-model="showModalDelete"

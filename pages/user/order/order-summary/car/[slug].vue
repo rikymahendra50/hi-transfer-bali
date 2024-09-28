@@ -103,15 +103,30 @@
           </div>
         </div>
       </div>
-      <div class="flex items-center justify-end">
+
+      <div class="flex items-center justify-end gap-2">
         <button
           v-if="carsOrderDetail?.data?.payment_status === 'paid'"
           type="button"
           @click="showModalRefundFunc()"
-          class="border-2 shadow-sm rounded-lg py-2 px-4"
+          class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
         >
           <p>{{ $t("pengembalian-pembayaran") }}</p>
         </button>
+        <button
+          v-else-if="
+            carsOrderDetail?.data?.status === 'waiting_for_payment' &&
+            carsOrderDetail?.data?.status !== 'cancel'
+          "
+          type="button"
+          @click="cancelOrder()"
+          class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
+        >
+          <p>Cancel Order</p>
+        </button>
+        <div v-else-if="carsOrderDetail?.data?.status == 'completed'">
+          Completed
+        </div>
       </div>
     </UIContainer>
   </div>
@@ -130,7 +145,11 @@
         </p>
       </div>
       <div class="w-full">
-        <Verified />
+        <Verified
+          :uuidData="carsOrderDetail.data?.uuid"
+          @sukses="getSuskes"
+          carOrTour="car-orders"
+        />
       </div>
     </div>
   </modal>
@@ -144,6 +163,11 @@ const { $user } = useAuth();
 const page = ref(1);
 const showModalRefund = ref(false);
 const currentId = ref(undefined);
+
+const { loading, message, alertType, setErrorMessage, transformErrors } =
+  useRequestHelper();
+
+const { pushNotification } = useNotification();
 
 const {
   data: carsOrderDetail,
@@ -159,19 +183,49 @@ const {
   })
 );
 
-console.log(carsOrderDetail.value, slug.value, $user.value?.uuid);
+async function showModalRefundFunc(id) {
+  loading.value = true;
 
-function showModalRefundFunc(id) {
   showModalRefund.value = !showModalRefund.value;
-  // hide();
 
-  // if (showModalDelete.value) {
-  //   currentId.value = id;
-  // }
+  const { data, error } = await useFetch(
+    `/users/${$user.value.uuid}/car-orders/${carsOrderDetail.value.data?.uuid}/refund-request`,
+    {
+      method: "post",
+      ...requestOptions,
+    }
+  );
+
+  if (error.value) {
+    setErrorMessage(error.value?.data?.message ?? "Something went wrong");
+  } else {
+    alert("Sending request refund sucsess");
+  }
+  loading.value = false;
 }
 
-function onSubmit() {
-  console.log("test");
+async function cancelOrder() {
+  loading.value = true;
+  const { error } = await useFetch(
+    `/users/${$user.value.uuid}/car-orders/${carsOrderDetail.value.data?.uuid}/cancel`,
+    {
+      method: "post",
+      ...requestOptions,
+    }
+  );
+
+  if (error.value) {
+    setErrorMessage(error.value?.data?.message ?? "Something went wrong");
+  } else {
+    alert("Cancel car order successfully");
+  }
+  loading.value = false;
+
+  window.location.replace("/user");
+}
+
+function getSuskes(data) {
+  showModalRefund.value = data;
 }
 
 useHead({ title: "Order Summary" });

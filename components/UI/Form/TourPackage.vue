@@ -1,13 +1,12 @@
 <template>
   <VeeForm
-    :validation-schema="
-      props.tourPackage ? tourPackageSchemaEdit : tourPackageSchema
-    "
+    :validation-schema="schemaShouldIUse"
     @submit="onSubmit"
     v-slot="{ errors }"
   >
     <div class="border shadow-sm rounded-[8px] py-6 px-5 mb-6">
       <p class="text-black font-semibold text-[16px]">General</p>
+
       <div class="grid grid-cols-1 md:grid-cols-2 mt-1 gap-4">
         <UIFormTextFieldWLabel
           label="Nama paket"
@@ -41,7 +40,7 @@
         />
 
         <UIFormTextFieldWLabel
-          v-if="props.tourPackage"
+          v-if="!props.tourPackage"
           label="Max person"
           name="max_person"
           placeholder="Max person"
@@ -52,7 +51,7 @@
         />
 
         <UIFormInputNumber
-          v-else-if="!props.tourPackage"
+          v-else-if="props.tourPackage"
           label="Max person"
           name="max_person"
           placeholder="Max person"
@@ -83,7 +82,6 @@
           :dataSelected="props.tourPackage?.locations ?? []"
           @getId="funcGetIdLocation"
         />
-        <VeeErrorMessage name="locations" class="form-error-message" />
 
         <!-- meta -->
         <TabContent>
@@ -163,12 +161,9 @@
           name="description[id]"
           v-model="dataForm['description[id]']"
         />
+        <VeeField name="meta[en]" v-model="dataForm['meta[en]']" />
+        <VeeField name="meta[id]" v-model="dataForm['meta[id]']" />
       </div>
-    </div>
-
-    <div class="hidden">
-      <VeeField name="meta[en]" v-model="dataForm['meta[en]']" />
-      <VeeField name="meta[id]" v-model="dataForm['meta[id]']" />
     </div>
 
     <!-- is varied -->
@@ -217,9 +212,10 @@
 </template>
 
 <script setup>
-const { tourPackageSchema, tourPackageSchemaEdit } = useSchema();
+const { tourPackageSchema, tourPackageSchemaIfVaried } = useSchema();
 const { requestOptions } = useRequestOptions();
 const route = useRoute();
+
 const {
   dataForm,
   onSubmit,
@@ -236,6 +232,14 @@ const statusActive = ref();
 
 const isVaried = computed(() => {
   return dataForm.value.is_varied;
+});
+
+const schemaShouldIUse = computed(() => {
+  if (isVaried.value == 1) {
+    return tourPackageSchemaIfVaried;
+  } else {
+    return tourPackageSchema;
+  }
 });
 
 const { data, error, refresh } = await useAsyncData("locations", () =>
@@ -282,20 +286,19 @@ onMounted(async () => {
       props.tourPackage?.meta?.find((item) => item.language === "id")
         ?.translation || "";
 
-    dataForm.value.variants =
-      props.tourPackage?.variants.map((variant) => ({
-        name: variant?.name,
-        price: variant?.price,
-        max_person: variant?.max_person,
-        description: {
-          en:
-            variant?.description?.find((item) => item.language === "en")
-              ?.translation || "",
-          id:
-            variant?.description?.find((item) => item.language === "id")
-              ?.translation || "",
-        },
-      })) || [];
+    dataForm.value.variants = props.tourPackage?.variants.map((variant) => ({
+      name: variant?.name,
+      price: variant?.price,
+      max_person: variant?.max_person,
+      description: {
+        en:
+          variant?.description?.find((item) => item.language === "en")
+            ?.translation || "",
+        id:
+          variant?.description?.find((item) => item.language === "id")
+            ?.translation || "",
+      },
+    }));
   }
 });
 

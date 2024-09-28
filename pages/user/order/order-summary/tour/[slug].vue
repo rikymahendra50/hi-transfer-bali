@@ -1,12 +1,16 @@
 <template>
   <div class="h-28"></div>
+
+  <!-- <pre>
+    {{ tourOrderDetail }}
+  </pre> -->
+
   <div class="w-full border-b">
     <UIContainer>
       <div class="flex items-center gap-4">
         <NuxtLink to="/user">
           <Icon name="formkit:arrowleft" class="text-black w-7 h-7" />
         </NuxtLink>
-
         <div class="flex flex-col gap-1">
           <p class="text-black text-[18px] font-medium">
             {{ $t("ringkasan-pesanan") }}
@@ -162,15 +166,29 @@
           </div>
         </div>
       </div>
-      <div class="flex items-center justify-end">
+      <div class="flex items-center justify-end gap-2">
         <button
           v-if="tourOrderDetail?.data?.payment_status === 'paid'"
           type="button"
           @click="showModalRefundFunc()"
-          class="border-2 shadow-sm rounded-lg py-2 px-4"
+          class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
         >
-          <p>Payment refund</p>
+          <p>{{ $t("pengembalian-pembayaran") }}</p>
         </button>
+        <button
+          v-else-if="
+            tourOrderDetail?.data?.status === 'waiting_for_payment' &&
+            tourOrderDetail?.data?.status !== 'cancel'
+          "
+          type="button"
+          @click="cancelOrder()"
+          class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
+        >
+          <p>Cancel Order</p>
+        </button>
+        <div v-else-if="tourOrderDetail?.data?.status == 'completed'">
+          Completed
+        </div>
       </div>
     </UIContainer>
   </div>
@@ -189,7 +207,11 @@
         </p>
       </div>
       <div class="w-full">
-        <Verified />
+        <Verified
+          :uuidData="tourOrderDetail.data?.uuid"
+          @sukses="getSuskes"
+          carOrTour="tour-orders"
+        />
       </div>
     </div>
   </modal>
@@ -203,6 +225,11 @@ const { $user } = useAuth();
 const page = ref(1);
 const showModalRefund = ref(false);
 const currentId = ref(undefined);
+
+const { loading, message, alertType, setErrorMessage, transformErrors } =
+  useRequestHelper();
+
+const { pushNotification } = useNotification();
 
 const {
   data: tourOrderDetail,
@@ -218,21 +245,46 @@ const {
   })
 );
 
-// console.log(carsOrderDetail.value, slug.value, $user.value?.uuid);
-
-console.log(tourOrderDetail.value);
-
-function showModalRefundFunc(id) {
+async function showModalRefundFunc(id) {
   showModalRefund.value = !showModalRefund.value;
-  // hide();
 
-  // if (showModalDelete.value) {
-  //   currentId.value = id;
-  // }
+  const { data, error } = await useFetch(
+    `/users/${$user.value.uuid}/car-orders/${tourOrderDetail.value.data?.uuid}/refund-request`,
+    {
+      method: "post",
+      ...requestOptions,
+    }
+  );
+
+  if (error.value) {
+    setErrorMessage(error.value?.data?.message ?? "Something went wrong");
+  } else {
+    alert("Sending request refund sucsess");
+  }
+  loading.value = false;
 }
 
-function onSubmit() {
-  console.log("test");
+async function cancelOrder() {
+  loading.value = true;
+  const { error } = await useFetch(
+    `/users/${$user.value.uuid}/tour-orders/${tourOrderDetail.value.data?.uuid}/cancel`,
+    {
+      method: "post",
+      ...requestOptions,
+    }
+  );
+
+  if (error.value) {
+    setErrorMessage(error.value?.data?.message ?? "Something went wrong");
+  } else {
+    alert("Cancel tour order successfully");
+  }
+  loading.value = false;
+
+  window.location.replace("/user");
+}
+function getSuskes(data) {
+  showModalRefund.value = data;
 }
 
 useHead({ title: "Order Summary" });

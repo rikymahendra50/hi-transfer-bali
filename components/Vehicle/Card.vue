@@ -41,7 +41,7 @@
         </div>
         <div class="flex flex-col justify-between space-y-4">
           <h4 class="text-xl font-semibold text-primary xl:text-right">
-            {{ FormatMoneyDash(price.toString()) }}
+            {{ FormatMoneyDash(props?.price?.toString()) }}
           </h4>
 
           <div>
@@ -83,7 +83,7 @@ function goToVehicleBooking(id, image, price, facilities, name) {
   dataForm.value.car_id = id;
   dataForm.value.name_car = name;
   dataForm.value.image = image;
-  dataForm.value.price = price;
+  dataForm.value.total_price = price;
   dataForm.value.facilities = facilities;
 
   saveFormData();

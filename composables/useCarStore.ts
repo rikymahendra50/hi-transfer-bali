@@ -36,7 +36,7 @@ export default function useTourForm(options: Options = {}) {
     image: undefined,
     price: undefined,
     total_price: undefined,
-    max_person: undefined,
+    max_person: 1,
     facilities: [],
     user_uuid: undefined,
     name: undefined,

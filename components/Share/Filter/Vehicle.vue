@@ -10,7 +10,6 @@
         </div>
       </div>
     </div>
-
     <VeeForm
       @submit="onSubmit"
       v-slot="{ errors }"
@@ -254,18 +253,15 @@ async function calculateDistanceMatrix() {
           distance.value = result?.distance?.value;
           distanceRound.value = result?.distance?.text;
 
-          // if (dataForm.value.round_trip == 1) {
-          //   dataForm.value.distance =
-          //     (result?.distance?.value / 1000).toFixed(1) * 2;
-          // } else if (dataForm.value.round_trip == 0) {
-          //   dataForm.value.distance = (result?.distance?.value / 1000).toFixed(
-          //     1
-          //   );
-          // }
+          dataForm.value.distance = parseInt(distance.value / 1000);
+          dataForm.value.quantity = parseInt(distance.value / 1000);
+          dataForm.value.distance_text = distanceRound.value;
 
-          // console.log(dataForm.value.distance);
-          // console.log("Distance:", result?.distance);
-          // console.log("Duration:", result?.duration?.text);
+          if (dataForm.value.round_trip == 1) {
+            const test = parseInt(distance.value / 1000);
+            dataForm.value.distance = test.toFixed(1) * 2;
+            dataForm.value.quantity = test.toFixed(1) * 2;
+          }
         }
       }
     );
@@ -274,15 +270,6 @@ async function calculateDistanceMatrix() {
 
 function onSubmit() {
   let filters = [];
-  if (dataForm.value.passengers) {
-    filters.push(`passengers=${dataForm.value.passengers}`);
-  }
-  if (dataForm.value.distance) {
-    filters.push(`distance=${dataForm.value.distance}`);
-  }
-
-  const queryString = filters.join("&");
-  const url = `/vehicles?${queryString ? `&${queryString}` : ""}`;
 
   // jemput
   dataForm.value.location_pickup_address = formDataJemput.value.locationAddress;
@@ -296,8 +283,16 @@ function onSubmit() {
   dataForm.value.location_return_latitude = formDataTujuan.value.latitude;
   dataForm.value.location_return_longitude = formDataTujuan.value.longitude;
 
-  dataForm.value.distance = distance.value;
-  dataForm.value.distance_text = distanceRound.value;
+  if (dataForm.value.passengers) {
+    filters.push(`passengers=${dataForm.value.passengers}`);
+  }
+
+  if (dataForm.value.distance) {
+    filters.push(`distance=${dataForm.value.distance}`);
+  }
+
+  const queryString = filters.join("&");
+  const url = `/vehicles?${queryString ? `&${queryString}` : ""}`;
 
   saveFormData();
 

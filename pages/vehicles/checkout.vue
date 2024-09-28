@@ -109,19 +109,19 @@
           </h3>
           <div class="space-y-4">
             <div class="border p-4 rounded-[8px] flex flex-col gap-3">
-              <div
+              <!-- <div
                 class="flex flex-col sm:flex-row sm:items-center gap-2 justify-between"
               >
                 <h4 class="font-medium">{{ $t("perjalanan-pergi") }}</h4>
-                <p>{{ FormatMoneyDash(String(dataForm.price)) }}</p>
-              </div>
-              <div
+                <p>{{ FormatMoneyDash(String(dataForm.total_price)) }}</p>
+              </div> -->
+              <!-- <div
                 class="flex flex-col sm:flex-row sm:items-center gap-2 justify-between"
                 v-if="dataForm.round_trip == 1"
               >
                 <h4 class="font-medium">{{ $t("perjalanan-pulang") }}</h4>
                 <p>{{ FormatMoneyDash(String(dataForm.price)) }}</p>
-              </div>
+              </div> -->
               <div
                 class="flex flex-col sm:flex-row sm:items-center gap-2 justify-between"
               >
@@ -129,7 +129,11 @@
                   {{ $t("yang-harus-kamu-bayar") }}
                 </h4>
                 <p class="text-primary text-lg font-semibold">
-                  {{ FormatMoneyDash(String(dataForm.price)) }}
+                  {{ dataForm.distance_text }}
+                </p>
+                <p class="text-primary text-lg font-semibold">
+                  <!-- {{ FormatMoneyDash(String(dataForm.price)) }} -->
+                  {{ FormatMoneyDash(String(dataForm.total_price)) }}
                 </p>
               </div>
             </div>
@@ -191,16 +195,6 @@ useHead({
 const filter = ref({
   sort: "",
 });
-
-// const totalPrice = computed(() => {
-//   const price = Number(dataForm.value.price);
-//   if (dataForm.value.round_trip == 1) {
-//     dataForm.value.price = price * 2;
-//     return price * 2;
-//   } else if (dataForm.value.round_trip == 0) {
-//     return dataForm.value.price;
-//   }
-// });
 
 function goToHomePage() {
   clearSavedCarData();

@@ -145,7 +145,7 @@ const {
   clearSavedCarData,
 } = useCarStore({
   callback: () => {
-    alert("Form has been submitted!");
+    console.log("Form has been submitted!");
   },
 });
 
@@ -166,17 +166,6 @@ function submitFormT() {
   dataForm.value.email = dataFormT.value.email;
   dataForm.value.phone = dataFormT.value.phone;
 
-  const perKm = ref(dataForm.value.distance / 1000);
-
-  dataForm.value.quantity = parseInt(perKm.value);
-
-  const totalPrice = ref(dataForm.value.price * perKm.value);
-
-  if (dataForm.value.round_trip === 1 || true) {
-    totalPrice.value *= 2;
-    dataForm.value.total_price = totalPrice.value;
-  }
-
   saveFormData();
 
   router.push("/vehicles/checkout");
@@ -189,7 +178,7 @@ onMounted(async () => {
 
   showSavedCarData();
 
-  console.log("ini dari booking", dataForm.value);
+  // console.log("ini dari booking", dataForm.value);
 });
 
 const fetchUserData = async (ctx) => {

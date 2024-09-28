@@ -39,6 +39,8 @@
               class="input-bordered shadow-sm focus:outline-none"
               :useStarIcon="false"
             />
+
+            <!-- {{ typeof dataForm.max_person }} -->
             <!-- end max person -->
 
             <!-- desk -->

@@ -239,6 +239,7 @@ export default function (options: Options = {}) {
           return {
             name: variant?.name,
             price: variant?.price,
+            max_person: variant?.max_person,
             description: {
               en: variant?.description.find((item) => item.language === "en")
                 ?.translation,
@@ -252,6 +253,7 @@ export default function (options: Options = {}) {
       dataForm.value.variants.push({
         name: "",
         price: "",
+        max_person: "",
         description: {
           en: "",
           id: "",

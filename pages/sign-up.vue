@@ -27,6 +27,7 @@ definePageMeta({
   middleware: "guest",
 });
 </script>
+
 <template>
   <div class="hero min-h-screen">
     <div class="hero-content text-center">

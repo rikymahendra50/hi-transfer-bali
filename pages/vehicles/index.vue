@@ -97,7 +97,7 @@
                 :id="item.id"
                 :name="item.name"
                 :image="item.image"
-                :price="item.price"
+                :price="item.trip_price"
                 :facilities="item.facilities"
                 :maxPerson="item.max_person"
                 class="mb-3"
@@ -105,6 +105,8 @@
             </div>
             <Empty v-else :description="$t('mobil-tidak-ditemukan')" />
           </div>
+
+          <!-- {{ parseInt(18.272) }} -->
         </div>
       </div>
     </div>
@@ -141,7 +143,7 @@ const {
   clearSavedCarData,
 } = useCarStore({
   callback: () => {
-    alert("Form has been submitted!");
+    console.log("Form has been submitted!");
   },
 });
 
@@ -151,7 +153,7 @@ const filter = ref({
 
 const { data, error, refresh } = await useAsyncData("cars", () =>
   $fetch(
-    `/cars?sort=${filter.value.sort}&lang=${locale.value}&filter[passenger_count]=${selectedPassenger.value}&filter[distance]=${selectedDistance.value}`,
+    `/cars?sort=${filter.value.sort}&filter[passenger_count]=${selectedPassenger.value}&filter[distance]=${selectedDistance.value}&lang=${locale.value}`,
     {
       method: "get",
       ...requestOptions,
@@ -165,7 +167,7 @@ const totalData = computed(() => {
 
 watch([() => selectedDistance, selectedPassenger], (newValues, oldValues) => {
   if (newValues !== oldValues) {
-    refresh();
+    replaceWindow();
   }
 });
 
@@ -173,7 +175,7 @@ watch(
   () => filter.value.sort,
   (newValue, oldValue) => {
     if (newValue !== oldValue) {
-      refresh();
+      replaceWindow();
     }
   }
 );
@@ -188,13 +190,14 @@ onMounted(() => {
   }
   if (route.query.distance && !route.query.passengers) {
     selectedDistance.value = route.query.distance;
+    // console.log("ini distance", selectedDistance.value);
   }
   if (!route.query.distance && route.query.passengers) {
     selectedTouristNumber.value = route.query.passengers;
   }
-  dataForm.value.distance = dataForm.value.distance / 1000;
 
   showSavedCarData();
+  // replaceWindow();
 });
 
 function replaceWindow() {
@@ -213,6 +216,7 @@ function replaceWindow() {
   const url = `/vehicles?${queryString ? `&${queryString}` : ""}`;
 
   router.replace(url);
+  refresh();
 }
 
 function goToHomePage() {

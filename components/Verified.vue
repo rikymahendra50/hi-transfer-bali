@@ -20,7 +20,7 @@
           <span>{{ $t("proses-pengembalian") }}</span>
         </button>
       </div>
-      <div v-if="showPinEmailExpired">
+      <!-- <div v-if="showPinEmailExpired">
         <p class="text-sm">
           {{ $t("jika-tidak-menerima-email") }}
           <span class="link text-primary" @click="resentEmail" role="button">{{
@@ -38,7 +38,7 @@
         <div class="text-error text-sm" v-if="showPinEmailExpired">
           {{ $t("otp-expired") }}
         </div>
-      </div>
+      </div> -->
     </div>
   </VeeForm>
 </template>
@@ -47,13 +47,16 @@
 const { requestOptions } = useRequestOptions();
 // const snackbar = useSnackbar();
 const { locale, t: $t } = useI18n();
+const { $user } = useAuth();
 
 const props = defineProps({
   email: String,
   otp: String,
+  uuidData: String || Number,
+  carOrTour: String,
 });
 
-const emit = defineEmits(["next", "update:otp"]);
+const emit = defineEmits(["next", "update:otp", "sukses"]);
 
 const { stateForm, countdown, showPinEmailExpired, secondTime } = useRefund();
 const { otpSchema } = useSchema();
@@ -65,41 +68,44 @@ function updateToParent() {
   emit("next");
 }
 
-function resentEmail() {
-  showPinEmailExpired.value = false;
-  secondTime.value = 60;
-  countdown();
+// function resentEmail() {
+//   showPinEmailExpired.value = false;
+//   secondTime.value = 60;
+//   countdown();
 
-  useFetch("/admins/resend-email-verification", {
-    method: "POST",
-    body: { email: stateForm.value.email },
-    ...requestOptions,
-  });
-}
+//   useFetch("/admins/resend-email-verification", {
+//     method: "POST",
+//     body: { email: stateForm.value.email },
+//     ...requestOptions,
+//   });
+// }
 
 async function onSubmit() {
   loading.value = true;
 
-  const { error } = await useFetch("/admins/forget-password/verify-pin", {
-    method: "POST",
-    body: JSON.stringify({
-      email: props.email,
-      pin: stateForm.value.otp,
-    }),
-    ...requestOptions,
-  });
+  const { error } = await useFetch(
+    `/users/${$user.value.uuid}/${props.carOrTour}/${props.uuidData}/refund-request`,
+    {
+      method: "POST",
+      body: stateForm.value.otp,
+      ...requestOptions,
+    }
+  );
 
   if (error.value) {
     // snackbar.add({
     //   type: "error",
     //   text: error.value?.data?.message ?? "Something went wrong",
     // });
+    alert("Error");
   } else {
     // snackbar.add({
     //   type: "success",
     //   text: "Thank you for your message. We will get back to you as soon as possible.",
     // });
-    updateToParent();
+    // updateToParent();
+    alert("Suksess");
+    emit("sukses", false);
   }
 
   loading.value = false;
@@ -107,7 +113,7 @@ async function onSubmit() {
 
 onMounted(async () => {
   await nextTick();
-  countdown();
+  // countdown();
 });
 </script>
 
