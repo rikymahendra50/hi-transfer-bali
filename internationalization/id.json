@@ -158,5 +158,15 @@
   "pengembalian-pembayaran": "Pengembalian pembayaran",
   "silakan-periksa-kotak-masuk": "Silakan periksa kotak masuk email Anda untuk mendapatkan PINverifikasi untuk proses pengembalian dana, lalu ketik di kolom di bawah ini.",
   "password_has_been_change_txt": "Kata sandi telah diubah",
-  "select-date": "Pilih tanggal"
+  "select-date": "Pilih tanggal",
+  "payment_success_page": {
+    "title": "Pembayaran berhasil",
+    "description": "Pembayaranmu telah berhasil. Terima kasih atas pesananmu."
+  },
+  "get_started_txt": "Memulai",
+  "payment_failed_page": {
+    "title": "Pembayaran gagal",
+    "description": "Pembayaranmu gagal. Jika terjadi kesalahan, mohon hubungi kami"
+  },
+  "contact_us_txt": "Hubungi Kami"
 }

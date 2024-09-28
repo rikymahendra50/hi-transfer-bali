@@ -3,10 +3,10 @@
     <div class="flex justify-center items-center">
       <div
         class="bg-primary flex justify-center rounded-full w-fit items-center px-2"
-        v-if="distanceRound"
+        v-if="dataForm.quantity"
       >
         <div class="p-1 text-sm text-white">
-          <span>{{ distanceRound }}</span>
+          <span>{{ dataForm.quantity }} Km</span>
         </div>
       </div>
     </div>
@@ -74,11 +74,15 @@
           />
         </UIFormMGroup>
         <div class="relative">
-          <div
+          <!-- <div
             class="w-full h-full absolute bg-white z-[50] bg-opacity-100 top-[-5px]"
             v-if="dateReturnDisabled"
-          ></div>
-          <UIFormMGroup name="return_date" :label="$t('pulang-balik')">
+          ></div> -->
+          <UIFormMGroup
+            name="return_date"
+            :label="$t('pulang-balik')"
+            v-if="!dateReturnDisabled"
+          >
             <UIFormMTextField
               name="return_date"
               v-model="dataForm.return_date"
@@ -211,6 +215,15 @@ watch(
   }
 );
 
+watch(
+  () => dataForm.value.round_trip,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      calculateDistanceMatrix();
+    }
+  }
+);
+
 const maxReturnDate = ref("");
 
 watch(
@@ -256,6 +269,8 @@ async function calculateDistanceMatrix() {
           dataForm.value.distance = parseInt(distance.value / 1000);
           dataForm.value.quantity = parseInt(distance.value / 1000);
           dataForm.value.distance_text = distanceRound.value;
+
+          alert(dataForm.value.round_trip);
 
           if (dataForm.value.round_trip == 1) {
             const test = parseInt(distance.value / 1000);

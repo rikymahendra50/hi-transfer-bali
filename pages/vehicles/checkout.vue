@@ -68,7 +68,7 @@
             :locationAddress="dataForm.location_pickup_address"
           />
           <div class="divider text-xs text-zinc-400">
-            {{ $t("perjalananmu-sekitar") }} {{ dataForm.distance_text }}
+            {{ $t("perjalananmu-sekitar") }} {{ dataForm.distance }} Km
           </div>
           <VehicleAddressInformation
             :name="$t('tujuan')"
@@ -129,7 +129,7 @@
                   {{ $t("yang-harus-kamu-bayar") }}
                 </h4>
                 <p class="text-primary text-lg font-semibold">
-                  {{ dataForm.distance_text }}
+                  {{ dataForm.distance }} Km
                 </p>
                 <p class="text-primary text-lg font-semibold">
                   <!-- {{ FormatMoneyDash(String(dataForm.price)) }} -->

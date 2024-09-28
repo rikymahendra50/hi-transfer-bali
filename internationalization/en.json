@@ -159,5 +159,15 @@
   "pengembalian-pembayaran": "Payment refund",
   "silakan-periksa-kotak-masuk": "Silakan periksa kotak masuk email Anda untuk mendapatkan verifikasi PIN untuk proses pengembalian dana, lalu ketik di kolom di bawah ini.",
   "password_has_been_change_txt": "Password has been changed",
-  "select-date": "Select date"
+  "select-date": "Select date",
+  "payment_success_page": {
+    "title": "Payment Success",
+    "description": "Your payment was successful. Thank you for your order."
+  },
+  "get_started_txt": "Get Started",
+  "payment_failed_page": {
+    "title": "Payment Failed",
+    "description": "Your payment was failed. if you think this is an error, please contact us"
+  },
+  "contact_us_txt": "Contact Us"
 }

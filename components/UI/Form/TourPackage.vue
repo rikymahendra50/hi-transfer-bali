@@ -40,7 +40,7 @@
         />
 
         <UIFormTextFieldWLabel
-          v-if="!props.tourPackage"
+          v-if="props.tourPackage"
           label="Max person"
           name="max_person"
           placeholder="Max person"
@@ -51,7 +51,7 @@
         />
 
         <UIFormInputNumber
-          v-else-if="props.tourPackage"
+          v-else-if="!props.tourPackage"
           label="Max person"
           name="max_person"
           placeholder="Max person"

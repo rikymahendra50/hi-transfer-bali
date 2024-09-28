@@ -60,6 +60,8 @@
                 :class="{
                   'bg-yellow-400 w-fit py-2 px-3 rounded-xl':
                     item.status === 'waiting_for_payment',
+                  'bg-ewd-400 w-fit py-2 px-3 rounded-xl':
+                    item.status === 'canceled',
                 }"
               >
                 {{ item.status }}

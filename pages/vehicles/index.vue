@@ -63,7 +63,7 @@
             :locationAddress="dataForm.location_pickup_address"
           />
           <div class="divider text-xs text-zinc-400">
-            {{ $t("perjalananmu-sekitar") }} {{ dataForm.distance_text }}
+            {{ $t("perjalananmu-sekitar") }} {{ dataForm.distance }} Km
           </div>
           <VehicleAddressInformation
             :name="$t('tujuan')"
@@ -105,8 +105,6 @@
             </div>
             <Empty v-else :description="$t('mobil-tidak-ditemukan')" />
           </div>
-
-          <!-- {{ parseInt(18.272) }} -->
         </div>
       </div>
     </div>
