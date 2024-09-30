@@ -134,7 +134,6 @@ function onSubmit() {
   dataForm.value.location_id = formData.value.location_id;
   dataForm.value.location_name = selectedLocationName.value;
   dataForm.value.activity_date = formData.value.activity_date;
-  // dataForm.value.tourist_numbers = formData.value.tourist_numbers;
 
   let filters = [];
   if (dataForm.value.location_id) {
@@ -147,18 +146,10 @@ function onSubmit() {
   const queryString = filters.join("&");
   const url = `/tours?${queryString ? `&${queryString}` : ""}`;
 
-  // console.log(
-  //   "ini setelah filters tour harusnya menyimpan location_id, location_name, activity_date dan tourist number",
-  //   dataForm.value
-  // );
-
-  // console.log(dataForm.value.tourist_numbers);
-
   saveFormData();
 
-  // router.replace(url);
-
-  window.location.replace(url);
+  // Use router.push to navigate to the new URL
+  router.push(url);
 }
 
 onMounted(() => {
