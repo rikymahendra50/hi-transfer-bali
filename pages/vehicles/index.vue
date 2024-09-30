@@ -90,9 +90,9 @@
             </div>
           </div>
           <div class="space-y-4">
-            <div v-if="data?.data.length > 0">
+            <div v-if="apiData?.data.length > 0">
               <VehicleCard
-                v-for="item in data?.data"
+                v-for="item in apiData?.data"
                 :key="item.id"
                 :id="item.id"
                 :name="item.name"
@@ -118,20 +118,11 @@ const router = useRouter();
 const route = useRoute();
 const { locale, t: $t } = useI18n();
 
-useHead({
-  title: "Vehicle",
-  meta: [
-    {
-      name: "description",
-      content:
-        "Safe and Comfortable Transfer in Bali. A fleet of modern vehicles and experienced drivers are ready to take you wherever you want.",
-    },
-  ],
-});
-
 const selectedDistance = ref("");
 const selectedPassenger = ref("");
 const selectedTouristNumber = ref("");
+const apiData = ref();
+const totalData = ref();
 
 const {
   dataForm,
@@ -149,19 +140,9 @@ const filter = ref({
   sort: "",
 });
 
-const { data, error, refresh } = await useAsyncData("cars", () =>
-  $fetch(
-    `/cars?sort=${filter.value.sort}&filter[passenger_count]=${selectedPassenger.value}&filter[distance]=${selectedDistance.value}&lang=${locale.value}`,
-    {
-      method: "get",
-      ...requestOptions,
-    }
-  )
-);
-
-const totalData = computed(() => {
-  return data?.value.meta?.total;
-});
+// const totalData = computed(() => {
+//   return apiData?.value.meta?.total;
+// });
 
 watch([() => selectedDistance, selectedPassenger], (newValues, oldValues) => {
   if (newValues !== oldValues) {
@@ -188,15 +169,35 @@ onMounted(() => {
   }
   if (route.query.distance && !route.query.passengers) {
     selectedDistance.value = route.query.distance;
-    // console.log("ini distance", selectedDistance.value);
   }
   if (!route.query.distance && route.query.passengers) {
     selectedTouristNumber.value = route.query.passengers;
   }
 
-  showSavedCarData();
   // replaceWindow();
+
+  fetchData();
+
+  showSavedCarData();
 });
+
+const fetchData = async () => {
+  const { data, error, refresh } = await useAsyncData("cars", () =>
+    $fetch(
+      `/cars?sort=${filter.value.sort}&filter[passenger_count]=${selectedPassenger.value}&filter[distance]=${selectedDistance.value}&lang=${locale.value}`,
+      {
+        headers: {
+          Accept: "application/json",
+        },
+        method: "get",
+        ...requestOptions,
+      }
+    )
+  );
+
+  apiData.value = data.value;
+  totalData.value = data?.value.meta?.total;
+};
 
 function replaceWindow() {
   let filters = [];
@@ -211,16 +212,28 @@ function replaceWindow() {
   }
 
   const queryString = filters.join("&");
-  const url = `/vehicles?${queryString ? `&${queryString}` : ""}`;
+  const url = `/vehicles?${queryString ? `${queryString}` : ""}`;
+
+  fetchData();
 
   router.replace(url);
-  refresh();
 }
 
 function goToHomePage() {
   clearSavedCarData();
   router.push({ path: "/?cars" });
 }
+
+useHead({
+  title: "Vehicle",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Safe and Comfortable Transfer in Bali. A fleet of modern vehicles and experienced drivers are ready to take you wherever you want.",
+    },
+  ],
+});
 </script>
 
 <style lang="scss" scoped></style>

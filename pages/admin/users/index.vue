@@ -24,46 +24,22 @@
       <tr v-for="item in data?.data">
         <td class="text-sm font-normal">
           <div class="font-medium text-[14px] text-black">
-            {{ item.first_name }} {{ item.last_name }}
+            {{ item?.first_name }} {{ item?.last_name }}
           </div>
         </td>
-        <td class="text-sm font-normal text-[#989393]">{{ item.email }}</td>
+        <td class="text-sm font-normal text-[#989393]">{{ item?.email }}</td>
         <td class="text-sm font-normal text-[#989393]">
-          <div class="px-3 py-1 w-fit rounded-xl">{{ item.phone }}</div>
+          <div class="px-3 py-1 w-fit rounded-xl">{{ item?.phone }}</div>
         </td>
         <td>
           <div>
-            {{ item.is_active === 1 ? "Aktif" : "Tidak Aktif" }}
+            {{ item?.is_active === 1 ? "Aktif" : "Tidak Aktif" }}
           </div>
         </td>
-        <td>
+        <!-- <td>
           <div class="flex items-center">
-            <!-- <VDropdown>
-              <div class="flex items-center justify-center">
-                <button class="flex items-center justify-center cursor-pointer">
-                  <Icon name="pepicons-pencil:dots-y" class="text-[#717171]" />
-                </button>
-              </div>
-              <template #popper="{ hide }">
-                <div class="bg-white flex flex-col shadow">
-                  <NuxtLink
-                    :to="`/admin/users/edit/${item}`"
-                    class="hover:bg-orange-400 hover:text-white py-2 px-3"
-                  >
-                    Edit
-                  </NuxtLink>
-                  <button
-                    @click="showModalDeleteFunc(hide, 'test')"
-                    type="button"
-                    class="hover:bg-red-600 hover:text-white py-2 px-3"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </template>
-            </VDropdown> -->
           </div>
-        </td>
+        </td> -->
       </tr>
     </tbody>
   </table>
@@ -89,44 +65,6 @@
       />
     </div>
   </div>
-
-  <!-- modal -->
-  <!-- <modal
-    v-model="showModalDelete"
-    class="relative w-[90%] sm:w-[60%] lg:w-[40%]"
-  >
-    <div
-      class="flex justify-center items-center flex-col p-2 sm:p-5 lg:p-10 overflow-auto"
-    >
-      <div
-        class="flex flex-col items-center gap-3 lg:gap-5 text-center transition h-full"
-      >
-        <Icon
-          name="ph:trash-duotone"
-          style="color: #ff0000"
-          class="w-12 h-12 md:w-20 md:h-20"
-        />
-        <p>Apakah anda yakin untuk menghapus user ini ?</p>
-      </div>
-      <div
-        class="grid grid-cols-1 lg:grid-cols-2 w-full gap-y-4 md:gap-x-6 mt-5"
-      >
-        <div
-          class="btn bg-transparent border shadow"
-          @click="showModalDelete = false"
-        >
-          <span>Batal</span>
-        </div>
-        <div
-          @click.prevent="deleteItemFunc"
-          class="btn bg-red-600 text-white shadow"
-        >
-          <span>Hapus</span>
-        </div>
-      </div>
-    </div>
-  </modal> -->
-  <!-- end modal -->
 </template>
 
 <script setup>
@@ -148,15 +86,6 @@ useHead({
 const page = ref(1);
 const showModalDelete = ref(false);
 const currentId = ref(undefined);
-
-function showModalDeleteFunc(hide, id) {
-  showModalDelete.value = !showModalDelete.value;
-  hide();
-
-  if (showModalDelete.value) {
-    currentId.value = id;
-  }
-}
 
 const { data, error, refresh } = await useAsyncData("users", () =>
   $fetch(`/admins/users?page=${page.value}`, {

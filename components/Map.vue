@@ -1,7 +1,6 @@
 <template>
   <div class="rounded-lg overflow-hidden relative p-3">
     <div class="relative z-[10000] grid md:flex gap-3 items-center">
-      <!-- test -->
       <button
         @click="getUserLocation"
         class="btn border-primary border bg-white text-primary md:mb-3"
@@ -20,9 +19,9 @@
       :center="center"
       :zoom="10"
       map-type-id="terrain"
-      style="width: 100%; height: 250px"
+      style="width: 100%; height: 270px"
       :options="{
-        disableDefaultUi: true,
+        disableDefaultUi: false,
         draggableCursor: 'pointer',
       }"
       @click="handleMapClick"
@@ -58,7 +57,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
+
+const { $toast } = useNuxtApp();
+
 const center = ref({ lat: -8.417347915171359, lng: 115.19596919507471 });
 const currentMarkerPosition = ref({
   lat: -8.417347915171359,
@@ -96,40 +98,41 @@ const emit = defineEmits([
   "hideModal",
 ]);
 
+// Batas koordinat Bali
+const baliBounds = {
+  minLat: -9.0, // Menambah area ke selatan
+  maxLat: -8.0, // Memperbaiki area utara
+  minLng: 114.0, // Menambah area ke barat
+  maxLng: 115.7, // Memperbaiki area timur
+};
+
 // Fungsi untuk mengambil lokasi pengguna dengan Geolocation API
 function getUserLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        latitudeFix.value = position.coords.latitude;
-        longitudeFix.value = position.coords.longitude;
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
 
-        center.value = { lat: latitudeFix.value, lng: longitudeFix };
-        currentMarkerPosition.value = {
-          lat: latitudeFix.value,
-          lng: longitudeFix,
-        };
+        if (isWithinBaliBounds(lat, lng)) {
+          latitudeFix.value = lat;
+          longitudeFix.value = lng;
 
-        // console.log(position.coords.latitude);
-
-        // updateValue(latitude, longitude);
-        // fetchAddress(latitude, longitude);
+          center.value = { lat, lng };
+          currentMarkerPosition.value = { lat, lng };
+        } else {
+          $toast.error($t("lokasi-harus-dibali"));
+        }
       },
       (error) => {
         console.error("Geolocation error:", error);
       }
     );
   } else {
-    console.error("Geolocation is not supported by this browser.");
+    // alert("Geolocation tidak didukung di browser ini.");
+    $toast.error($t("geolocation-tidak-didukung"));
   }
 }
-
-// function updateValue(latitude, longitude) {
-//   emit("update:longitude", longitude.toString());
-//   emit("update:latitude", latitude.toString());
-//   // dataForm.value.latitude = latitude;
-//   // dataForm.value.longitude = longitude;
-// }
 
 // Fungsi untuk mendapatkan alamat dari koordinat menggunakan Geocoding API
 async function fetchAddress(latitude, longitude) {
@@ -140,10 +143,11 @@ async function fetchAddress(latitude, longitude) {
   };
 
   geocoder.geocode({ location: latLng }, (results, status) => {
-    if (status === "OK" && results[1]) {
-      locationAddress.value = results[1].formatted_address;
-      locationName.value = results[1].address_components[0].long_name;
-      // console.log("Ini merupakan", results[1]);
+    if (status === "OK" && results.length > 0) {
+      locationAddress.value = results[0].formatted_address;
+      locationName.value = getDescriptiveLocationName(
+        results[0].address_components
+      );
     } else {
       alert("Geocode was not successful: " + status);
     }
@@ -154,22 +158,100 @@ function handleMapClick(event) {
   const latitude = event.latLng.lat();
   const longitude = event.latLng.lng();
 
-  currentMarkerPosition.value = { lat: latitude, lng: longitude };
-  center.value = { lat: latitude, lng: longitude };
+  if (isWithinBaliBounds(latitude, longitude)) {
+    currentMarkerPosition.value = { lat: latitude, lng: longitude };
+    center.value = { lat: latitude, lng: longitude };
 
-  latitudeFix.value = latitude;
-  longitudeFix.value = longitude;
+    latitudeFix.value = latitude;
+    longitudeFix.value = longitude;
+  } else {
+    $toast.error($t("lokasi-harus-dibali"));
+  }
 }
 
 function setPlace(ctx) {
   const latitude = ctx.geometry?.location?.lat();
   const longitude = ctx.geometry?.location?.lng();
 
-  currentMarkerPosition.value = { lat: latitude, lng: longitude };
-  center.value = { lat: latitude, lng: longitude };
+  if (isWithinBaliBounds(latitude, longitude)) {
+    currentMarkerPosition.value = { lat: latitude, lng: longitude };
+    center.value = { lat: latitude, lng: longitude };
 
-  latitudeFix.value = latitude;
-  longitudeFix.value = longitude;
+    latitudeFix.value = latitude;
+    longitudeFix.value = longitude;
+  } else {
+    $toast.error($t("lokasi-harus-dibali"));
+  }
+}
+
+function isWithinBaliBounds(lat, lng) {
+  return (
+    lat >= baliBounds.minLat &&
+    lat <= baliBounds.maxLat &&
+    lng >= baliBounds.minLng &&
+    lng <= baliBounds.maxLng
+  );
+}
+
+function getDescriptiveLocationName(addressComponents) {
+  const types = [
+    "establishment",
+    "point_of_interest",
+    // "locality",
+    // "administrative_area_level_1",
+    "country",
+    // "administrative_area_level_2",
+    // "administrative_area_level_3",
+    // "administrative_area_level_4",
+    // "administrative_area_level_5",
+    // "administrative_area_level_6",
+    // "administrative_area_level_7",
+    "archipelago",
+    // "colloquial_area",
+    "continent",
+    "food",
+    "floor",
+    "general_contractor",
+    "geocode",
+    "health",
+    // "intersection",
+    "landmark",
+    "natural_feature",
+    "neighborhood",
+    "place_of_worship",
+    "political",
+    // "plus_code",
+    // "postal_code",
+    // "postal_code_prefix",
+    // "postal_code_suffix",
+    // "postal_town",
+    // "premise",
+    // "room",
+    // "route",
+    // "street_address",
+    // "street_number",
+    // "sublocality",
+    // "sublocality_level_1",
+    // "sublocality_level_2",
+    // "sublocality_level_3",
+    // "sublocality_level_4",
+    // "sublocality_level_5",
+    // "subpremise",
+    // "town_square",
+  ];
+
+  // console.log(addressComponents);
+
+  for (const component of addressComponents) {
+    if (types.some((type) => component.types.includes(type))) {
+      console.log(component);
+      return component.long_name;
+    }
+  }
+
+  alert(addressComponents);
+
+  return addressComponents[0].long_name;
 }
 
 watch(

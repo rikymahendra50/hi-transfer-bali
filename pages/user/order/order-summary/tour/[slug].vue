@@ -171,6 +171,7 @@
           v-if="tourOrderDetail?.data?.payment_status === 'paid'"
           type="button"
           @click="showModalRefundFunc()"
+          :disabled="loading"
           class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
         >
           <p>{{ $t("pengembalian-pembayaran") }}</p>
@@ -182,6 +183,7 @@
           "
           type="button"
           @click="cancelOrder()"
+          :disabled="loading"
           class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
         >
           <p>Cancel Order</p>
@@ -224,12 +226,11 @@ const { requestOptions } = useRequestOptions();
 const { $user } = useAuth();
 const page = ref(1);
 const showModalRefund = ref(false);
+const { $toast } = useNuxtApp();
 const currentId = ref(undefined);
 
 const { loading, message, alertType, setErrorMessage, transformErrors } =
   useRequestHelper();
-
-const { pushNotification } = useNotification();
 
 const {
   data: tourOrderDetail,
@@ -258,15 +259,18 @@ async function showModalRefundFunc(id) {
 
   if (error.value) {
     setErrorMessage(error.value?.data?.message ?? "Something went wrong");
+    $toast.error(error.value?.data?.message ?? "Something went wrong.");
   } else {
-    alert("Sending request refund sucsess");
+    $toast.success(
+      data.value?.data?.message ?? "Cancel tour order successfully"
+    );
   }
   loading.value = false;
 }
 
 async function cancelOrder() {
   loading.value = true;
-  const { error } = await useFetch(
+  const { data, error } = await useFetch(
     `/users/${$user.value.uuid}/tour-orders/${tourOrderDetail.value.data?.uuid}/cancel`,
     {
       method: "post",
@@ -276,8 +280,11 @@ async function cancelOrder() {
 
   if (error.value) {
     setErrorMessage(error.value?.data?.message ?? "Something went wrong");
+    $toast.error(error.value?.data?.message ?? "Something went wrong.");
   } else {
-    alert("Cancel tour order successfully");
+    $toast.success(
+      data.value?.data?.message ?? "Cancel tour order successfully"
+    );
   }
   loading.value = false;
 
@@ -287,5 +294,5 @@ function getSuskes(data) {
   showModalRefund.value = data;
 }
 
-useHead({ title: "Order Summary" });
+useHead({ title: "Order detail tour" });
 </script>

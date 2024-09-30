@@ -168,5 +168,7 @@
     "title": "Pembayaran gagal",
     "description": "Pembayaranmu gagal. Jika terjadi kesalahan, mohon hubungi kami"
   },
-  "contact_us_txt": "Hubungi Kami"
+  "contact_us_txt": "Hubungi Kami",
+  "lokasi-harus-dibali": "Lokasi harus berada di Bali. Silahkan pilih lokasi lain",
+  "geolocation-tidak-didukung": "Geolocation tidak didukung di browser ini."
 }

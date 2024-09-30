@@ -1,11 +1,8 @@
 <template>
   <div class="">
     <div class="font-medium my-2 border-b py-2">Tour Variants</div>
-    <VeeFieldArray
-      name="product_variants"
-      class="space-y-6 border-2 border-red-600"
-    >
-      <div class="space-y-8" v-for="(dataForm, index) in state" :key="index">
+    <VeeFieldArray name="product_variants" class="space-y-6">
+      <div class="space-y-8" v-for="(dataForm, index) in state">
         <CollapseForm :title="`Variant ${index + 1}`" open>
           <div class="space-y-6">
             <!-- name -->
@@ -40,7 +37,6 @@
               :useStarIcon="false"
             />
 
-            <!-- {{ typeof dataForm.max_person }} -->
             <!-- end max person -->
 
             <!-- desk -->
@@ -96,24 +92,26 @@
               />
             </div>
 
-            <div v-if="showRemoveButton">
+            <div class="space-x-2">
               <button
+                type="button"
+                class="bg-error p-1 rounded-lg px-2 text-white hover:scale-95 transition-all duration-300"
+                v-if="showRemoveButton"
                 @click="removerVariant(index)"
-                class="btn btn-base border-red-500 bg-transparent border text-red-500 mt-2"
               >
-                Remove Variant
+                <Icon name="i-heroicons-minus" class="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                v-if="showButtonAdd(index)"
+                class="bg-primary p-1 rounded-lg px-2 text-white hover:scale-95 transition-all duration-300"
+                @click="addProductVariant"
+              >
+                <Icon name="i-heroicons-plus" class="h-4 w-4" />
               </button>
             </div>
           </div>
         </CollapseForm>
-      </div>
-      <div v-if="showButtonAdd(state.length - 1)">
-        <button
-          @click="addProductVariant"
-          class="btn btn-base border-primary bg-transparent border text-primary mt-2"
-        >
-          Tambah Variant
-        </button>
       </div>
     </VeeFieldArray>
   </div>

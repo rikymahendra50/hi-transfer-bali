@@ -311,7 +311,11 @@ function onSubmit() {
 
   saveFormData();
 
-  router.replace(url);
+  // router.replace(url);
+
+  // window.location.replace(url);
+
+  window.location.href(url);
 }
 
 const today = new Date().toISOString().split("T")[0];

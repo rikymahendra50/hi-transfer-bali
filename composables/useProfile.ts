@@ -7,6 +7,7 @@ export default function (usedBy: "user" | "admin", callback: Function) {
     useRequestHelper();
 
   const { t: $t, locale } = useI18n();
+  const { $toast } = useNuxtApp();
 
   const dataForm = ref<{
     email: string;
@@ -65,18 +66,9 @@ export default function (usedBy: "user" | "admin", callback: Function) {
     if (error.value) {
       setErrorMessage(error.value.data?.message);
       ctx.setErrors(transformErrors(error.value?.data));
-      pushNotification({
-        type: "error",
-        text: error.value.data.message,
-        title: "error",
-      });
+      $toast.error(data.value?.data?.message ?? "Fail update profile");
     } else {
-      alert("Success update profil");
-      pushNotification({
-        type: "success",
-        text: "Success update profil",
-        title: "Success",
-      });
+      $toast.success(data.value?.data?.message ?? "Success update profile");
       await $fetchAuthProfile();
       // callback();
     }

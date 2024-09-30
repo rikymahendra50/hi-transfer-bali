@@ -5,7 +5,8 @@ const { locale, t: $t } = useI18n();
 const router = useRouter();
 
 function redirectUserProfile() {
-  router.push("/admin/orders");
+  // router.push("/admin/orders");
+  location.replace("/admin/orders");
 }
 
 const { loading, message, alertType, $credentialForm, $login } = useAuth({

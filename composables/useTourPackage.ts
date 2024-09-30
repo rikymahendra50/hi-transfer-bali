@@ -23,7 +23,7 @@ export default function (options: Options = {}) {
     "meta[en]": undefined,
     "meta[id]": undefined,
     locations: [],
-    max_person: undefined,
+    max_person: 1,
     is_varied: 0,
     variants: [],
   });
@@ -37,7 +37,7 @@ export default function (options: Options = {}) {
       "meta[en]": undefined,
       "meta[id]": undefined,
       locations: [],
-      max_person: undefined,
+      max_person: 1,
       is_varied: 0,
       variants: [],
     };
@@ -89,7 +89,6 @@ export default function (options: Options = {}) {
     }
 
     if (dataForm.value.variants) {
-      // console.log("testestr", dataForm.value.variants);
       dataForm.value.variants.forEach((variant, index) => {
         formData.append(`variants[${index}][name]`, variant.name);
         formData.append(`variants[${index}][price]`, variant.price);
@@ -238,7 +237,7 @@ export default function (options: Options = {}) {
         (variant) => {
           return {
             name: variant?.name,
-            price: variant?.price,
+            price: Number(variant?.price),
             max_person: variant?.max_person,
             description: {
               en: variant?.description.find((item) => item.language === "en")

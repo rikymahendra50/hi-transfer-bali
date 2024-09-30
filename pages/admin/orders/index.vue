@@ -39,34 +39,38 @@
         <tbody>
           <!-- row 1 -->
           <tr v-for="item in data?.data">
-            <td class="text-sm font-normal text-[#989393]">#{{ item.uuid }}</td>
-            <td class="">{{ item.pic_name }}</td>
+            <td class="text-sm font-normal text-[#989393]">
+              #{{ item?.uuid }}
+            </td>
+            <td class="">{{ item?.pic_name }}</td>
             <td>
               <div class="text-[#989393] !font-normal">
-                {{ item.pic_email }}
+                {{ item?.pic_email }}
               </div>
             </td>
             <td>
               <div class="text-[#989393] !font-normal">
-                {{ item.pic_phone_number }}
+                {{ item?.pic_phone_number }}
               </div>
             </td>
             <td>
-              {{ FormatMoneyDash(item.grand_total_purchased.toString()) }}
+              {{ FormatMoneyDash(item?.grand_total_purchased.toString()) }}
             </td>
             <td>
               <div
-                class=""
-                :class="{
-                  'bg-yellow-400 w-fit py-2 px-3 rounded-xl':
-                    item.status === 'waiting_for_payment',
-                  'bg-red-400 w-fit py-2 px-3 rounded-xl':
-                    item.status === 'canceled',
-                  'bg-green-400 w-fit py-2 px-3 rounded-xl':
-                    item.status === 'paid',
+                class="w-fit py-2 px-3 rounded-xl text-black"
+                :style="{
+                  backgroundColor:
+                    item.status === 'waiting_for_payment'
+                      ? '#f2ec72'
+                      : item.status === 'canceled'
+                      ? '#f2727b'
+                      : item.status === 'paid'
+                      ? '#72f2a1'
+                      : 'transparent',
                 }"
               >
-                {{ item.status }}
+                {{ item?.status }}
               </div>
             </td>
             <td>
@@ -85,17 +89,11 @@
                   <template #popper="{ hide }">
                     <div class="bg-white flex flex-col shadow">
                       <NuxtLink
-                        :to="`/admin/orders/order-detail-tourpackage/${item.uuid}`"
+                        :to="`/admin/orders/order-detail-tourpackage/${item?.uuid}`"
                         class="hover:bg-orange-400 hover:text-white py-3 px-5"
                       >
                         Detail
                       </NuxtLink>
-                      <!-- <button
-                        type="button"
-                        class="hover:bg-red-600 hover:text-white py-3 px-5"
-                      >
-                        Delete
-                      </button> -->
                     </div>
                   </template>
                 </VDropdown>
@@ -157,48 +155,22 @@ const page = ref(1);
 const showModalDelete = ref(false);
 const currentId = ref(undefined);
 
-const { data, error, refresh } = await useAsyncData("orders", () =>
+const { data, error, refresh } = await useAsyncData("tour-orders", () =>
   $fetch(`/admins/tour-orders?page=${page.value}`, {
     method: "get",
     ...requestOptions,
   })
 );
 
-onMounted(async () => {
-  if (route.query.page) {
-    page.value = Number(route.query.page);
-  }
-});
-
 watch(page, (newValue, oldValue) => {
   if (newValue !== oldValue) {
-    start();
+    router.replace(
+      withQuery("/admin/orders", {
+        page: newValue,
+      })
+    );
   }
 });
-
-const { start, stop } = useTimeoutFn(() => {
-  replaceWindow();
-}, 1000);
-
-function replaceWindow() {
-  router.replace(
-    withQuery("/admin/orders", {
-      page: page.value,
-    })
-  );
-  refresh();
-}
-
-function showModalDeleteFunc(hide, id) {
-  showModalDelete.value = !showModalDelete.value;
-  hide();
-
-  if (showModalDelete.value) {
-    currentId.value = id;
-  } else {
-    currentId.value = undefined;
-  }
-}
 </script>
 
 <style scoped></style>

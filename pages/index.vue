@@ -10,6 +10,7 @@
     </UIContainer>
     <ShareCtaSection />
     <SectionChat />
+    <FloatingWa />
   </div>
 </template>
 
@@ -24,7 +25,7 @@ const {
   clearSavedTourData,
 } = useTourStore({
   callback: () => {
-    alert("Form has been submitted!");
+    console.log("Form has been submitted!");
   },
 });
 
@@ -35,7 +36,7 @@ const {
   clearSavedCarData,
 } = useCarStore({
   callback: () => {
-    alert("Form has been submitted!");
+    console.log("Form has been submitted!");
   },
 });
 

@@ -56,6 +56,8 @@ const props = defineProps({
   carOrTour: String,
 });
 
+const { $toast } = useNuxtApp();
+
 const emit = defineEmits(["next", "update:otp", "sukses"]);
 
 const { stateForm, countdown, showPinEmailExpired, secondTime } = useRefund();
@@ -83,7 +85,7 @@ function updateToParent() {
 async function onSubmit() {
   loading.value = true;
 
-  const { error } = await useFetch(
+  const { error, data } = await useFetch(
     `/users/${$user.value.uuid}/${props.carOrTour}/${props.uuidData}/refund-request`,
     {
       method: "POST",
@@ -93,18 +95,11 @@ async function onSubmit() {
   );
 
   if (error.value) {
-    // snackbar.add({
-    //   type: "error",
-    //   text: error.value?.data?.message ?? "Something went wrong",
-    // });
-    alert("Error");
+    // alert("Error");
+    $toast.error(error.value?.data?.message ?? "Fail ");
   } else {
-    // snackbar.add({
-    //   type: "success",
-    //   text: "Thank you for your message. We will get back to you as soon as possible.",
-    // });
     // updateToParent();
-    alert("Suksess");
+    $toast.success(data.value?.data?.message ?? "Success");
     emit("sukses", false);
   }
 

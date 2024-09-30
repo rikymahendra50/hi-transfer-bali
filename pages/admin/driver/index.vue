@@ -122,24 +122,16 @@
 </template>
 
 <script setup>
-definePageMeta({
-  layout: "admin",
-  // @ts-ignore
-  middleware: ["auth", "admin"],
-});
-
-useHead({
-  title: "Driver",
-});
-
-const { transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const router = useRouter();
 const route = useRoute();
-
+const page = ref(1);
 import { withQuery } from "ufo";
 
-const page = ref(1);
+if (route.query.page) {
+  page.value = Number(route.query.page);
+}
+
 const showModalDelete = ref(false);
 const currentId = ref(undefined);
 
@@ -154,32 +146,15 @@ const { selectedDriver, deleteDriver, loading } = useDriver({
   callback: refresh,
 });
 
-onMounted(async () => {
-  if (route.query.page) {
-    page.value = Number(route.query.page);
-  }
-
-  selectedDriver.value = data.value;
-});
-
 watch(page, (newValue, oldValue) => {
   if (newValue !== oldValue) {
-    start();
+    router.replace(
+      withQuery("/admin/driver", {
+        page: newValue,
+      })
+    );
   }
 });
-
-const { start, stop } = useTimeoutFn(() => {
-  replaceWindow();
-}, 1000);
-
-function replaceWindow() {
-  router.replace(
-    withQuery("/admin/driver", {
-      page: page.value,
-    })
-  );
-  refresh();
-}
 
 function showModalDeleteFunc(hide, id) {
   showModalDelete.value = !showModalDelete.value;
@@ -191,4 +166,13 @@ function showModalDeleteFunc(hide, id) {
     currentId.value = undefined;
   }
 }
+
+useHead({
+  title: "Driver",
+});
+
+definePageMeta({
+  layout: "admin",
+  middleware: ["auth", "admin"],
+});
 </script>

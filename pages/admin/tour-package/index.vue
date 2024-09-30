@@ -135,24 +135,17 @@
   <!-- end modal -->
 </template>
 
-<script setup lang="ts">
-const { transformErrors } = useRequestHelper();
+<script setup>
 const { requestOptions } = useRequestOptions();
 const router = useRouter();
 const route = useRoute();
+const page = ref(1);
 import { withQuery } from "ufo";
 
-definePageMeta({
-  layout: "admin",
-  // @ts-ignore
-  middleware: ["auth", "admin"],
-});
+if (route.query.page) {
+  page.value = Number(route.query.page);
+}
 
-useHead({
-  title: "Tour Package",
-});
-
-const page = ref(1);
 const showModalDelete = ref(false);
 const currentId = ref(undefined);
 
@@ -167,30 +160,15 @@ const { selectedTourPackage, deleteTourPackage, loading } = useTourPackage({
   callback: refresh,
 });
 
-onMounted(async () => {
-  if (route.query.page) {
-    page.value = Number(route.query.page);
-  }
-});
-
 watch(page, (newValue, oldValue) => {
   if (newValue !== oldValue) {
-    start();
+    router.replace(
+      withQuery("/admin/tour-package", {
+        page: newValue,
+      })
+    );
   }
 });
-
-const { start, stop } = useTimeoutFn(() => {
-  replaceWindow();
-}, 1000);
-
-function replaceWindow() {
-  router.replace(
-    withQuery("/admin/tour-package", {
-      page: page.value,
-    })
-  );
-  refresh();
-}
 
 function showModalDeleteFunc(hide, id) {
   showModalDelete.value = !showModalDelete.value;
@@ -202,4 +180,13 @@ function showModalDeleteFunc(hide, id) {
     currentId.value = undefined;
   }
 }
+
+useHead({
+  title: "Tour package",
+});
+
+definePageMeta({
+  layout: "admin",
+  middleware: ["auth", "admin"],
+});
 </script>

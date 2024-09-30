@@ -196,8 +196,8 @@ const {
   selectedItem,
   adminFeature,
   isEditMode,
-  addMorePermission,
-  removePermission,
+  // addMorePermission,
+  // removePermission,
   allFeaturesSelected,
 } = useAdmin({
   callback: reload,
@@ -213,20 +213,20 @@ onMounted(async () => {
 
     selectedItem.value = props.user;
 
-    if (props.user.permissions.length > 0) {
-      dataForm.value.permissions = props.user.permissions.map((el) => {
-        return {
-          id: el.id,
-          feature_id: el.feature_id.toString(),
-          type: el.type,
-        };
-      }) ?? [
-        {
-          feature_id: "",
-          type: "",
-        },
-      ];
-    }
+    // if (props.user.permissions.length > 0) {
+    //   dataForm.value.permissions = props.user.permissions.map((el) => {
+    //     return {
+    //       id: el.id,
+    //       feature_id: el.feature_id.toString(),
+    //       type: el.type,
+    //     };
+    //   }) ?? [
+    //     {
+    //       feature_id: "",
+    //       type: "",
+    //     },
+    //   ];
+    // }
   }
 });
 </script>

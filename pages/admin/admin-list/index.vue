@@ -11,9 +11,9 @@
     <table class="table">
       <thead>
         <tr>
-          <th>
+          <!-- <th>
             <div class="text-[#989393]">Profile picture</div>
-          </th>
+          </th> -->
           <th>
             <div class="text-[#989393]">List Admin</div>
           </th>
@@ -28,13 +28,13 @@
       </thead>
       <tbody>
         <tr v-for="item in data?.data">
-          <td class="text-sm font-normal">
+          <!-- <td class="text-sm font-normal">
             <img
               :src="item.profile_picture ?? '-'"
               alt=""
               class="rounded-full w-10 h-10"
             />
-          </td>
+          </td> -->
           <td class="text-sm font-normal">
             <div class="font-medium text-[14px] text-black">
               {{ item.first_name + " " + item.last_name }}
@@ -65,13 +65,13 @@
                   >
                     Edit
                   </NuxtLink>
-                  <button
+                  <!-- <button
                     @click="showModalDeleteFunc(hide, item.id)"
                     type="button"
                     class="hover:bg-red-600 hover:text-white py-2 px-3"
                   >
                     Delete
-                  </button>
+                  </button> -->
                 </div>
               </template>
             </VDropdown>
@@ -110,7 +110,6 @@ const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const router = useRouter();
 const route = useRoute();
-const { locale, t: $t } = useI18n();
 const page = ref(1);
 import { withQuery } from "ufo";
 
@@ -120,43 +119,27 @@ useHead({
 
 definePageMeta({
   layout: "admin",
-  // @ts-ignore
   middleware: ["auth", "admin"],
 });
 
-const { data, error, refresh } = await useAsyncData("admin-list", () =>
+if (route.query.page) {
+  page.value = Number(route.query.page);
+}
+
+const { data, error } = await useAsyncData("admin-list", () =>
   $fetch(`/admins?page=${page.value}`, {
     method: "get",
     ...requestOptions,
   })
 );
 
-onMounted(async () => {
-  await nextTick();
-
-  stop();
-
-  if (route.query.page) {
-    page.value = Number(route.query.page);
-  }
-});
-
-const { start, stop } = useTimeoutFn(() => {
-  replaceWindow();
-}, 1000);
-
 watch(page, (newValue, oldValue) => {
   if (newValue !== oldValue) {
-    start();
+    router.replace(
+      withQuery("/admin/admin-list", {
+        page: newValue,
+      })
+    );
   }
 });
-
-function replaceWindow() {
-  router.replace(
-    withQuery("/admin/user-admin", {
-      page: page.value,
-    })
-  );
-  refresh();
-}
 </script>

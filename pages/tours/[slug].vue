@@ -66,10 +66,13 @@
         </div>
       </div>
       <div class="h-5"></div>
+      <!-- <pre>
+        {{ apiData?.data }}
+      </pre> -->
       <div
         class="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-4 mb-4 sm:mb-6 md:mb-8 lg:mb-10"
-        v-if="apiData?.data?.is_varied === 1"
       >
+        <!--       v-if="apiData?.data?.is_varied === 1" -->
         <div class="text-2xl font-semibold pt-5 md:pt-10">
           {{ $t("variant") }}
         </div>
@@ -80,6 +83,7 @@
             v-if="isLocationIdorActivity"
           ></div>
           <!-- test -->
+
           <div
             v-for="(item, index) in variants"
             :key="item.id"
@@ -151,7 +155,7 @@
   <!-- end test modal -->
 </template>
 
-<script setup>
+<!-- <script setup>
 const { locale, t: $t } = useI18n();
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
@@ -166,7 +170,7 @@ const {
   clearSavedTourData,
 } = useTourStore({
   callback: () => {
-    alert("Form has been submitted!");
+    console.log("Form has been submitted!");
   },
 });
 
@@ -270,6 +274,149 @@ const getMaxValueForVariant = (index) => {
     maxPerson.value - (currentTotalQuantity - variants.value[index].quantity);
 
   return Math.min(10, remainingMaxPerson);
+};
+
+const continueOnsubmit = () => {
+  dataForm.value.price = totalPrice.value;
+
+  dataForm.value.variants = variants.value.filter(
+    (variant) => variant.quantity > 0
+  );
+
+  saveFormData();
+
+  router.push({ path: "/tours/booking" });
+};
+
+onMounted(() => {
+  showSavedTourData();
+});
+
+// Watch for changes in variants
+watch(
+  variants,
+  () => {
+    updateTotalPrice();
+  },
+  { deep: true }
+);
+
+const isButtonDisabled = computed(() => {
+  return variants.value.every((variant) => variant.quantity === 0);
+});
+
+function modalWhenNotSelectDate() {
+  showModal.value = !showModal.value;
+}
+
+const isLocationIdorActivity = computed(() => {
+  return dataForm.value.activity_date === null;
+});
+
+useHead({
+  title: computed(() => apiData.value?.data?.name),
+  meta: [
+    {
+      name: "description",
+      content: apiData.value?.data?.meta,
+    },
+  ],
+});
+</script> -->
+
+<script setup>
+const { locale, t: $t } = useI18n();
+const { loading, transformErrors } = useRequestHelper();
+const { requestOptions } = useRequestOptions();
+const router = useRouter();
+const route = useRoute();
+
+const {
+  dataForm,
+  submitForm,
+  saveFormData,
+  showSavedTourData,
+  clearSavedTourData,
+} = useTourStore({
+  callback: () => {
+    console.log("Form has been submitted!");
+  },
+});
+
+const slug = computed(() => route.params.slug);
+const apiData = ref(null);
+const variants = ref([]);
+const totalPrice = ref(0);
+const showModal = ref(false);
+
+const result = computed(() => {
+  return (
+    apiData.value?.data?.locations?.map((item) => item.name).join(" - ") || ""
+  );
+});
+
+const { data, error } = await useAsyncData("tours", () =>
+  $fetch(`/tours/${slug.value}?lang=${locale.value}`, {
+    headers: {
+      Accept: "application/json",
+    },
+    method: "get",
+    ...requestOptions,
+  })
+);
+
+apiData.value = data.value;
+
+const initializeVariants = () => {
+  if (apiData.value?.data?.variants) {
+    variants.value = apiData.value.data.variants.map((variant, index) => ({
+      ...variant,
+      quantity: index === 0 ? 1 : 0,
+      isChecked: index === 0 ? true : false,
+      totalItemPrice: index === 0 ? variant.price : 0,
+    }));
+  }
+  totalPrice.value = apiData.value?.data?.variants[0].price;
+};
+
+initializeVariants();
+
+const updateTotalPrice = () => {
+  totalPrice.value = variants.value.reduce((total, variant) => {
+    variant.totalItemPrice = variant.price * variant.quantity; // Perbarui totalItemPrice
+    return variant.isChecked ? total + variant.totalItemPrice : total;
+  }, 0);
+};
+
+const handleVariantChange = (index) => {
+  const variant = variants.value[index];
+  if (variant.isChecked && variant.quantity === 0) {
+    variant.quantity = 1;
+  } else if (!variant.isChecked) {
+    variant.quantity = 0;
+  }
+  updateTotalPrice();
+};
+
+const handleQuantityChange = (index, newQuantity) => {
+  const variant = variants.value[index];
+
+  if (newQuantity > variant.max_person) {
+    newQuantity = variant.max_person;
+  }
+
+  variant.quantity = newQuantity;
+  if (newQuantity > 0 && !variant.isChecked) {
+    variant.isChecked = true;
+  } else if (newQuantity === 0) {
+    variant.isChecked = false;
+  }
+
+  updateTotalPrice();
+};
+
+const getMaxValueForVariant = (index) => {
+  return variants.value[index].max_person;
 };
 
 const continueOnsubmit = () => {

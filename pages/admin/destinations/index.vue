@@ -118,24 +118,16 @@
 </template>
 
 <script setup>
-import { withQuery } from "ufo";
-
-definePageMeta({
-  layout: "admin",
-  // @ts-ignore
-  middleware: ["auth", "admin"],
-});
-
-useHead({
-  title: "Destinasi",
-});
-
-const { transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const router = useRouter();
 const route = useRoute();
-
 const page = ref(1);
+import { withQuery } from "ufo";
+
+if (route.query.page) {
+  page.value = Number(route.query.page);
+}
+
 const showModalDelete = ref(false);
 const currentId = ref(undefined);
 
@@ -150,32 +142,15 @@ const { selectedDestinations, deleteDestinations, loading } = useDestinations({
   callback: refresh,
 });
 
-onMounted(async () => {
-  if (route.query.page) {
-    page.value = Number(route.query.page);
-  }
-
-  selectedDestinations.value = data.value;
-});
-
-const { start, stop } = useTimeoutFn(() => {
-  replaceWindow();
-}, 1000);
-
 watch(page, (newValue, oldValue) => {
   if (newValue !== oldValue) {
-    start();
+    router.replace(
+      withQuery("/admin/destinations", {
+        page: newValue,
+      })
+    );
   }
 });
-
-function replaceWindow() {
-  router.replace(
-    withQuery("/admin/destinations", {
-      page: page.value,
-    })
-  );
-  refresh();
-}
 
 function showModalDeleteFunc(hide, id) {
   showModalDelete.value = !showModalDelete.value;
@@ -187,4 +162,13 @@ function showModalDeleteFunc(hide, id) {
     currentId.value = undefined;
   }
 }
+
+useHead({
+  title: "Destinations",
+});
+
+definePageMeta({
+  layout: "admin",
+  middleware: ["auth", "admin"],
+});
 </script>

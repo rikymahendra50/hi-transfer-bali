@@ -188,7 +188,7 @@ const {
   clearSavedTourData,
 } = useTourStore({
   callback: () => {
-    alert("Form has been submitted!");
+    console.log("Form has been submitted!");
   },
 });
 

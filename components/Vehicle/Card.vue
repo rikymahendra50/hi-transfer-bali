@@ -71,7 +71,7 @@ const {
   clearSavedCarData,
 } = useCarStore({
   callback: () => {
-    alert("Form has been submitted!");
+    console.log("Form has been submitted!");
   },
 });
 
@@ -88,7 +88,7 @@ function goToVehicleBooking(id, image, price, facilities, name) {
 
   saveFormData();
 
-  console.log("ini dari card", dataForm.value);
+  // console.log("ini dari card", dataForm.value);
 
   router.push("/vehicles/booking");
 }

@@ -15,6 +15,8 @@ export default function useTourForm(options: Options = {}) {
 
   const { pushNotification } = useNotification();
 
+  const { $toast } = useNuxtApp();
+
   const dataForm = ref({
     location_id: null,
     location_name: null,
@@ -110,9 +112,7 @@ export default function useTourForm(options: Options = {}) {
       }
     )
       .catch((error) => {
-        // setErrorMessage(error.data?.message);
-        // ctx.setErrors(transformErrors(error.data));
-        alert(error);
+        $toast.error(error?.data?.message ?? "Fail");
       })
       .then((data) => {
         if (data) {
@@ -130,5 +130,6 @@ export default function useTourForm(options: Options = {}) {
     saveFormData,
     dataForm,
     clearSavedTourData,
+    loading,
   };
 }

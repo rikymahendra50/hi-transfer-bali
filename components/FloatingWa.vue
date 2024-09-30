@@ -17,8 +17,8 @@
   position: fixed;
   width: 60px;
   height: 60px;
-  bottom: -40px;
-  right: -40px;
+  bottom: 25px;
+  left: 25px; /* Ubah dari right ke left */
   background-color: #25d366;
   color: #fff;
   border-radius: 50px;

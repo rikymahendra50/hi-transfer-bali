@@ -79,7 +79,6 @@ const { locale, t: $t } = useI18n();
 
 const param = ref();
 const selectedLocation = ref();
-// const selectedTouristNumber = ref();
 const dataT = ref();
 const filter = ref({ sort: "" });
 
@@ -91,7 +90,7 @@ const {
   clearSavedTourData,
 } = useTourStore({
   callback: () => {
-    alert("Form has been submitted!");
+    console.log("Form has been submitted!");
   },
 });
 

@@ -15,6 +15,8 @@ export default function useTourForm(options: Options = {}) {
 
   const { pushNotification } = useNotification();
 
+  const { $toast } = useNuxtApp();
+
   const dataForm = ref({
     location_pickup_name: undefined,
     location_pickup_address: undefined,
@@ -179,14 +181,13 @@ export default function useTourForm(options: Options = {}) {
       .catch((error) => {
         // setErrorMessage(error.data?.message);
         // ctx.setErrors(transformErrors(error.data));
-        alert(error);
+        // alert(error);
+        $toast.error(error?.data?.message ?? "Fail");
       })
       .then((data) => {
         if (data) {
-          // console.log(data);
           loading.value = false;
           window.location.replace(data.data?.payment_url);
-          // console.log(data);
           options.callback?.();
         }
       });

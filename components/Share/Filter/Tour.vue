@@ -156,7 +156,9 @@ function onSubmit() {
 
   saveFormData();
 
-  router.replace(url);
+  // router.replace(url);
+
+  window.location.replace(url);
 }
 
 onMounted(() => {

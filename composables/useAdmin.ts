@@ -24,12 +24,12 @@ export default function (options: Options) {
     is_active: 1,
     password: "",
     confirm_password: "",
-    permissions: [
-      {
-        feature_id: "",
-        type: "",
-      },
-    ],
+    // permissions: [
+    //   {
+    //     feature_id: "",
+    //     type: "",
+    //   },
+    // ],
   });
 
   const allFeaturesSelected = computed(() => {
@@ -47,25 +47,25 @@ export default function (options: Options) {
       email: "",
       phone: "",
       is_active: 1,
-      permissions: [
-        {
-          feature_id: "",
-          type: "",
-        },
-      ],
+      // permissions: [
+      //   {
+      //     feature_id: "",
+      //     type: "",
+      //   },
+      // ],
     };
   }
 
-  function addMorePermission() {
-    dataForm.value.permissions.push({
-      feature_id: "",
-      type: "",
-    });
-  }
+  // function addMorePermission() {
+  //   dataForm.value.permissions.push({
+  //     feature_id: "",
+  //     type: "",
+  //   });
+  // }
 
-  function removePermission(index: number) {
-    dataForm.value.permissions.splice(index, 1);
-  }
+  // function removePermission(index: number) {
+  //   dataForm.value.permissions.splice(index, 1);
+  // }
 
   function onSubmit(values: any, ctx: SubmissionContext) {
     if (selectedItem.value) {
@@ -93,7 +93,7 @@ export default function (options: Options) {
     } else {
       pushNotification({
         type: "success",
-        text: "Success",
+        text: "Sukses menambah admin baru",
       });
       resetForm();
       options.callback?.();
@@ -120,7 +120,7 @@ export default function (options: Options) {
     } else {
       pushNotification({
         type: "success",
-        text: "User updated successfully",
+        text: "Sukses edit admin",
       });
       resetForm();
       options.callback?.();
@@ -129,21 +129,21 @@ export default function (options: Options) {
     loading.value = false;
   }
 
-  async function getListAdminFeatures() {
-    const { data } = await useFetch<CommonResponse<AdminFeature[]>>(
-      "/admins/admin-features",
-      {
-        method: "GET",
-        ...requestOptions,
-      }
-    );
+  // async function getListAdminFeatures() {
+  //   const { data } = await useFetch<CommonResponse<AdminFeature[]>>(
+  //     "/admins/admin-features",
+  //     {
+  //       method: "GET",
+  //       ...requestOptions,
+  //     }
+  //   );
 
-    adminFeature.value = data.value?.data ?? [];
-  }
+  //   adminFeature.value = data.value?.data ?? [];
+  // }
 
-  onMounted(async () => {
-    await getListAdminFeatures();
-  });
+  // onMounted(async () => {
+  //   await getListAdminFeatures();
+  // });
 
   return {
     dataForm,
@@ -154,8 +154,8 @@ export default function (options: Options) {
     adminFeature,
     isEditMode,
     allFeaturesSelected,
-    addMorePermission,
-    removePermission,
+    // addMorePermission,
+    // removePermission,
     onSubmit,
   };
 }

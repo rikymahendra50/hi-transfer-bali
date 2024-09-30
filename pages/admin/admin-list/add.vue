@@ -28,8 +28,5 @@ const reload = () => {
 
 onMounted(async () => {
   await nextTick();
-  //   if (!hasPermission("admin")) {
-  //     await router.push("/admin");
-  //   }
 });
 </script>

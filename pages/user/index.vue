@@ -49,7 +49,7 @@
                 Destination
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD]">Date</th>
-              <th class="font-medium text-[#667085] bg-[#FCFCFD]">Type</th>
+              <!-- <th class="font-medium text-[#667085] bg-[#FCFCFD]">Type</th> -->
               <th class="font-medium text-[#667085] bg-[#FCFCFD]">
                 {{ $t("pricing") }}
               </th>
@@ -84,11 +84,8 @@
                 </div>
               </td>
               <!-- <td>
-                <div class="">2 Participant</div>
-              </td> -->
-              <td>
                 <div class="">{{ item.type }}</div>
-              </td>
+              </td> -->
               <td>
                 <div class="">
                   {{ FormatMoneyDash(item.grand_total_purchased) }}
@@ -259,10 +256,18 @@ useHead({ title: "User" });
 
 const currentOrder = ref("order-transport");
 
+onMounted(() => {
+  if (route.query.transport) {
+    currentOrder.value = "order-transport";
+  } else if (route.query.tour) {
+    currentOrder.value = "order-tour";
+  }
+});
+
 const {
   data: cars,
   error: errorCars,
-  refresh: refreshCar,
+  refresh: refreshCars,
 } = await useAsyncData("cars", () =>
   $fetch(`/users/${$user.value?.uuid}/car-orders?page=${pageCars.value}`, {
     headers: {
@@ -296,12 +301,6 @@ const changeRoute = async (e, route) => {
   await useRouter().push(route);
   // openMenu();
 };
-
-definePageMeta({
-  layout: "user",
-  // @ts-ignore
-  middleware: ["auth", "user"],
-});
 
 onMounted(async () => {
   await nextTick();
@@ -344,6 +343,12 @@ function replaceWindowTours() {
   );
   refreshTours();
 }
+
+definePageMeta({
+  layout: "user",
+  // @ts-ignore
+  middleware: ["auth", "user"],
+});
 </script>
 
 <style></style>

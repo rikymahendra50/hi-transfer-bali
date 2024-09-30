@@ -136,7 +136,7 @@ export default function () {
           });
         }
       }),
-    // max_person: string().min(1, "Maksimal orang harus diisi"),
+    max_person: number().min(1, "Maksimal orang harus diisi"),
     description: string().min(1, "Description en harus diisi"),
     id_description: string().min(1, "Description id harus diisi"),
   });

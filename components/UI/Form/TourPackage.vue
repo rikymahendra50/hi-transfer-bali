@@ -39,7 +39,7 @@
           :disabled="isVaried === 1"
         />
 
-        <UIFormTextFieldWLabel
+        <!-- <UIFormTextFieldWLabel
           v-if="props.tourPackage"
           label="Max person"
           name="max_person"
@@ -48,10 +48,9 @@
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
           :disabled="isVaried === 1"
-        />
+        /> -->
 
         <UIFormInputNumber
-          v-else-if="!props.tourPackage"
           label="Max person"
           name="max_person"
           placeholder="Max person"
@@ -261,8 +260,8 @@ onMounted(async () => {
   if (props.tourPackage) {
     selectedTourPackage.value = props.tourPackage;
     dataForm.value.name = props.tourPackage?.name;
-    dataForm.value.price = props.tourPackage?.price;
-    dataForm.value.max_person = props.tourPackage?.max_person;
+    dataForm.value.price = Number(props.tourPackage?.price);
+    dataForm.value.max_person = Number(props.tourPackage?.max_person);
     dataForm.value.is_varied = props.tourPackage?.is_varied;
 
     dataForm.value["description[en]"] =
@@ -288,7 +287,7 @@ onMounted(async () => {
 
     dataForm.value.variants = props.tourPackage?.variants.map((variant) => ({
       name: variant?.name,
-      price: variant?.price,
+      price: Number(variant?.price),
       max_person: variant?.max_person,
       description: {
         en:

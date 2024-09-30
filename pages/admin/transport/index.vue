@@ -36,7 +36,7 @@
             falseString="Tidak tersedia"
             :trueNumber="1"
             :falseNumber="0"
-            :data="item.is_active"
+            :data="item?.is_active"
           />
         </td>
         <td>
@@ -50,13 +50,13 @@
               <template #popper="{ hide }">
                 <div class="bg-white flex flex-col shadow">
                   <NuxtLink
-                    :to="`/admin/transport/edit/${item.slug}`"
+                    :to="`/admin/transport/edit/${item?.slug}`"
                     class="hover:bg-orange-400 hover:text-white py-2 px-3"
                   >
                     Edit
                   </NuxtLink>
                   <button
-                    @click="showModalDeleteFunc(hide, item.slug)"
+                    @click="showModalDeleteFunc(hide, item?.slug)"
                     type="button"
                     class="hover:bg-red-600 hover:text-white py-2 px-3"
                   >
@@ -133,24 +133,16 @@
 </template>
 
 <script setup>
-const { transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const router = useRouter();
 const route = useRoute();
-
+const page = ref(1);
 import { withQuery } from "ufo";
 
-definePageMeta({
-  layout: "admin",
-  // @ts-ignore
-  middleware: ["auth", "admin"],
-});
+if (route.query.page) {
+  page.value = Number(route.query.page);
+}
 
-useHead({
-  title: "Transport",
-});
-
-const page = ref(1);
 const showModalDelete = ref(false);
 const currentId = ref(undefined);
 
@@ -165,32 +157,15 @@ const { selectedTransport, deleteTransport, loading } = useTransport({
   callback: refresh,
 });
 
-onMounted(async () => {
-  if (route.query.page) {
-    page.value = Number(route.query.page);
-  }
-
-  selectedTransport.value = data.value;
-});
-
-const { start, stop } = useTimeoutFn(() => {
-  replaceWindow();
-}, 1000);
-
 watch(page, (newValue, oldValue) => {
   if (newValue !== oldValue) {
-    start();
+    router.replace(
+      withQuery("/admin/transport", {
+        page: newValue,
+      })
+    );
   }
 });
-
-function replaceWindow() {
-  router.replace(
-    withQuery("/admin/transport", {
-      page: page.value,
-    })
-  );
-  refresh();
-}
 
 function showModalDeleteFunc(hide, id) {
   showModalDelete.value = !showModalDelete.value;
@@ -202,4 +177,13 @@ function showModalDeleteFunc(hide, id) {
     currentId.value = undefined;
   }
 }
+
+useHead({
+  title: "Transport",
+});
+
+definePageMeta({
+  layout: "admin",
+  middleware: ["auth", "admin"],
+});
 </script>

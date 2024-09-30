@@ -161,9 +161,10 @@ const slug = computed(() => route?.params?.slug);
 const { requestOptions } = useRequestOptions();
 const { $user } = useAuth();
 const page = ref(1);
+const { locale, t: $t } = useI18n();
 const showModalRefund = ref(false);
 const currentId = ref(undefined);
-
+const { $toast } = useNuxtApp();
 const { loading, message, alertType, setErrorMessage, transformErrors } =
   useRequestHelper();
 
@@ -198,15 +199,18 @@ async function showModalRefundFunc(id) {
 
   if (error.value) {
     setErrorMessage(error.value?.data?.message ?? "Something went wrong");
+    $toast.error(error.value?.data?.message ?? "Something went wrong. ");
   } else {
-    alert("Sending request refund sucsess");
+    $toast.success(
+      data.value?.data?.message ?? "Sending request refund sucsess"
+    );
   }
   loading.value = false;
 }
 
 async function cancelOrder() {
   loading.value = true;
-  const { error } = await useFetch(
+  const { error, data } = await useFetch(
     `/users/${$user.value.uuid}/car-orders/${carsOrderDetail.value.data?.uuid}/cancel`,
     {
       method: "post",
@@ -216,8 +220,11 @@ async function cancelOrder() {
 
   if (error.value) {
     setErrorMessage(error.value?.data?.message ?? "Something went wrong");
+    $toast.error(error.value?.data?.message ?? "Something went wrong.");
   } else {
-    alert("Cancel car order successfully");
+    $toast.success(
+      data.value?.data?.message ?? "Cancel car order successfully"
+    );
   }
   loading.value = false;
 
@@ -228,5 +235,5 @@ function getSuskes(data) {
   showModalRefund.value = data;
 }
 
-useHead({ title: "Order Summary" });
+useHead({ title: "Order detail car" });
 </script>

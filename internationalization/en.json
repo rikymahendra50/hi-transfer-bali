@@ -169,5 +169,7 @@
     "title": "Payment Failed",
     "description": "Your payment was failed. if you think this is an error, please contact us"
   },
-  "contact_us_txt": "Contact Us"
+  "contact_us_txt": "Contact Us",
+  "lokasi-harus-dibali": "The location must be in Bali. Please select another location",
+  "geolocation-tidak-didukung": "Geolocation is not supported in this browser."
 }

@@ -59,7 +59,11 @@
             </div>
           </div>
           <div class="flex items-end justify-end" @click="onSubmit">
-            <button type="submit" class="btn btn-md bg-primary text-white">
+            <button
+              type="submit"
+              class="btn btn-md bg-primary text-white"
+              :disabled="loading"
+            >
               <p>{{ $t("pesan-dan-bayar") }}</p>
             </button>
           </div>
@@ -80,6 +84,7 @@ const {
   saveFormData,
   showSavedTourData,
   clearSavedTourData,
+  loading,
 } = useTourStore({
   callback: () => {
     console.log("Form has been submitted!");

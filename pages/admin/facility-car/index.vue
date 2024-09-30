@@ -118,26 +118,39 @@
 </template>
 
 <script setup>
-const { transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const router = useRouter();
 const route = useRoute();
-
+const page = ref(1);
 import { withQuery } from "ufo";
 
-definePageMeta({
-  layout: "admin",
-  // @ts-ignore
-  middleware: ["auth", "admin"],
-});
+if (route.query.page) {
+  page.value = Number(route.query.page);
+}
 
-useHead({
-  title: "Facility Car",
-});
-
-const page = ref(1);
 const showModalDelete = ref(false);
 const currentId = ref(undefined);
+
+const { data, error, refresh } = await useAsyncData("facilities", () =>
+  $fetch(`/admins/facilities?page=${page.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
+
+const { selectedFacility, deleteFacility, loading } = useFacility({
+  callback: refresh,
+});
+
+watch(page, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    router.replace(
+      withQuery("/admin/facility-car", {
+        page: newValue,
+      })
+    );
+  }
+});
 
 function showModalDeleteFunc(hide, id) {
   showModalDelete.value = !showModalDelete.value;
@@ -150,41 +163,12 @@ function showModalDeleteFunc(hide, id) {
   }
 }
 
-const { data, error, refresh } = await useAsyncData("facility", () =>
-  $fetch(`/admins/facilities?page=${page.value}`, {
-    method: "get",
-    ...requestOptions,
-  })
-);
-
-const { selectedFacility, deleteFacility, loading } = useFacility({
-  callback: refresh,
+useHead({
+  title: "Facility car",
 });
 
-onMounted(async () => {
-  if (route.query.page) {
-    page.value = Number(route.query.page);
-  }
-
-  selectedFacility.value = data.value;
+definePageMeta({
+  layout: "admin",
+  middleware: ["auth", "admin"],
 });
-
-const { start, stop } = useTimeoutFn(() => {
-  replaceWindow();
-}, 1000);
-
-watch(page, (newValue, oldValue) => {
-  if (newValue !== oldValue) {
-    start();
-  }
-});
-
-function replaceWindow() {
-  router.replace(
-    withQuery("/admin/facility-car", {
-      page: page.value,
-    })
-  );
-  refresh();
-}
 </script>
