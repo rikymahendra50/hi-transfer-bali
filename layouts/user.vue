@@ -38,6 +38,9 @@
       <Toaster position="top-right" richColors />
     </ClientOnly>
   </div>
+
+  <SectionChat />
+  <FloatingWa />
 </template>
 
 <script lang="ts" setup></script>

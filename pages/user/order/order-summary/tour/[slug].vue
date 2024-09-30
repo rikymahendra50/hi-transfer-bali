@@ -1,10 +1,5 @@
 <template>
   <div class="h-28"></div>
-
-  <!-- <pre>
-    {{ tourOrderDetail }}
-  </pre> -->
-
   <div class="w-full border-b">
     <UIContainer>
       <div class="flex items-center gap-4">

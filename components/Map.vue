@@ -249,8 +249,6 @@ function getDescriptiveLocationName(addressComponents) {
     }
   }
 
-  alert(addressComponents);
-
   return addressComponents[0].long_name;
 }
 

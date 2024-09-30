@@ -76,7 +76,6 @@ const route = useRoute();
 const router = useRouter();
 const { requestOptions } = useRequestOptions();
 const { locale, t: $t } = useI18n();
-
 const param = ref();
 const selectedLocation = ref();
 const dataT = ref();
@@ -122,7 +121,7 @@ async function fetchData() {
 
 function goToHomePage() {
   clearSavedTourData();
-  router.push({ path: "/?tours" });
+  router.push({ path: "/" });
 }
 
 useHead({

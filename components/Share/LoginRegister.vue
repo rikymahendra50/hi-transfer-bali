@@ -10,13 +10,17 @@
             <img
               v-if="$isUser && userProfile?.data?.image"
               :src="userProfile?.data?.image"
-              :alt="userProfile?.data?.image"
+              alt="image"
               class="max-w-[30px] rounded-full"
             />
+
             <Icon
               name="gg:profile"
               class="text-black w-5 h-5 group-hover:text-white"
-              v-else-if="$isUser && userProfile?.data?.image === ''"
+              v-else-if="
+                ($isUser && userProfile?.data?.image === '') ||
+                userProfile?.data?.image === null
+              "
             />
             {{
               userProfile?.data?.first_name + " " + userProfile?.data?.last_name

@@ -9,8 +9,6 @@
       <StepToJoin />
     </UIContainer>
     <ShareCtaSection />
-    <SectionChat />
-    <FloatingWa />
   </div>
 </template>
 
