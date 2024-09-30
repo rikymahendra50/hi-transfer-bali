@@ -39,15 +39,15 @@
         <!-- row 1 -->
         <tr v-for="item in data?.data">
           <td class="text-sm font-normal text-[#989393]">#{{ item.uuid }}</td>
-          <td class="">{{ item.pic_name ?? "-" }}</td>
+          <td class="">{{ item.name ?? "-" }}</td>
           <td>
             <div class="text-[#989393] !font-normal">
-              {{ item.pic_email ?? "-" }}
+              {{ item.email ?? "-" }}
             </div>
           </td>
           <td>
             <div class="text-[#989393] !font-normal">
-              {{ item.pic_phone_number ?? "-" }}
+              {{ item.phone_number ?? "-" }}
             </div>
           </td>
           <td>

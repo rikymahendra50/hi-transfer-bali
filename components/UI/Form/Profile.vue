@@ -21,7 +21,7 @@ const {
   dataForm,
   updateProfile,
   currentUserProfile,
-} = useProfile(props.usedBy as "user" | "admin", reload);
+} = useProfileAdmin(props.usedBy as "user" | "admin", reload);
 
 onMounted(async () => {
   await nextTick();
@@ -33,10 +33,10 @@ onMounted(async () => {
     <VeeForm @submit="updateProfile" :validation-schema="updateProfileSchema">
       <div class="grid grid-cols-1 gap-4">
         <Alert v-model="message" :type="alertType" />
-        <div class="flex flex-row items-center space-x-2">
+        <!-- <div class="flex flex-row items-center space-x-2">
           <div class="flex-shrink-0">
             <UIFormAvatar
-              v-model="dataForm.image"
+              v-model="dataForm.profile_picture"
               :profile-image="currentUserProfile"
             />
             <VeeErrorMessage
@@ -47,7 +47,7 @@ onMounted(async () => {
           <div class="text-sm text-[#506176]">
             Recommended dimensions: 200x200px. Max. file size: 1 MB
           </div>
-        </div>
+        </div> -->
 
         <UIFormMGroup label="Nama Pertama" name="first_name">
           <UIFormMTextField
@@ -57,6 +57,7 @@ onMounted(async () => {
             placeholder="ex:jhon"
           />
         </UIFormMGroup>
+
         <UIFormMGroup label="Nama terakhir" name="last_name">
           <UIFormMTextField
             v-model="dataForm.last_name"
@@ -65,6 +66,7 @@ onMounted(async () => {
             placeholder="ex:doe"
           />
         </UIFormMGroup>
+
         <UIFormMGroup label="Email" name="email">
           <UIFormMTextField
             name="email"

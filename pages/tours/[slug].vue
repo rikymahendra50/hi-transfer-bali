@@ -32,14 +32,6 @@
               }}
               / {{ $t("orang") }}
             </h4>
-            <!-- <div class="flex justify-start items-center">
-              <div class="text-base sm:text-xl font-semibold">
-                Total :
-                <span class="text-primary">{{
-                  FormatMoneyDash(totalPrice.toString())
-                }}</span>
-              </div>
-            </div> -->
           </div>
         </div>
         <div class="flex justify-end w-full pt-5">
@@ -66,13 +58,9 @@
         </div>
       </div>
       <div class="h-5"></div>
-      <!-- <pre>
-        {{ apiData?.data }}
-      </pre> -->
       <div
         class="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-4 mb-4 sm:mb-6 md:mb-8 lg:mb-10"
       >
-        <!--       v-if="apiData?.data?.is_varied === 1" -->
         <div class="text-2xl font-semibold pt-5 md:pt-10">
           {{ $t("variant") }}
         </div>
@@ -82,8 +70,6 @@
             @click="modalWhenNotSelectDate"
             v-if="isLocationIdorActivity"
           ></div>
-          <!-- test -->
-
           <div
             v-for="(item, index) in variants"
             :key="item.id"
@@ -138,7 +124,7 @@
         </div>
       </div>
     </UIContainer>
-    <ShareCtaSection />
+    <ShareCtaSection link="/" />
   </div>
 
   <!-- test modal -->

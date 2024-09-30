@@ -1,27 +1,26 @@
 export default function (usedBy: "user" | "admin", callback: Function) {
   const { $user, $fetchAuthProfile } = useAuth();
   const { requestOptions } = useRequestOptions();
-  const { pushNotification } = useNotification();
 
   const { loading, message, alertType, setErrorMessage, transformErrors } =
     useRequestHelper();
 
   const { t: $t, locale } = useI18n();
-  const { $toast } = useNuxtApp();
+  const { pushNotification } = useNotification();
 
   const dataForm = ref<{
     email: string;
     first_name: string;
     last_name: string;
     phone: string;
-    image: File | undefined;
+    profile_picture: File | undefined;
     is_profile_picture_deleted: 0 | 1;
   }>({
     email: "",
     first_name: "",
     last_name: "",
     phone: "",
-    image: undefined,
+    profile_picture: undefined,
     is_profile_picture_deleted: 0,
   });
 
@@ -33,7 +32,7 @@ export default function (usedBy: "user" | "admin", callback: Function) {
   });
 
   const currentUserProfile = computed(() => {
-    return $user.value?.image ?? "";
+    return $user.value?.profile_picture ?? "";
   });
 
   async function updateProfile(values: any, ctx: any) {
@@ -45,19 +44,19 @@ export default function (usedBy: "user" | "admin", callback: Function) {
       const objectItem = object[item];
       formData.append(item, objectItem);
     }
-    if (!dataForm.value.image) {
-      formData.delete("image");
+    if (!dataForm.value.profile_picture) {
+      formData.delete("profile_picture");
     }
 
     loading.value = true;
 
     const { data, error } = await useFetch<{ data: { message: string } }>(
-      `${updateURL.value}&_method=PUT`,
+      `${updateURL.value}?_method=PUT`,
       {
         headers: {
           Accept: "application/json",
         },
-        method: "POST",
+        method: "post",
         body: formData,
         ...requestOptions,
       }
@@ -66,9 +65,13 @@ export default function (usedBy: "user" | "admin", callback: Function) {
     if (error.value) {
       setErrorMessage(error.value.data?.message);
       ctx.setErrors(transformErrors(error.value?.data));
-      $toast.error(data.value?.data?.message ?? "Fail update profile");
+      //   $toast.error(data.value?.data?.message ?? "Fail update profile");
     } else {
-      $toast.success(data.value?.data?.message ?? "Success update profile");
+      //   $toast.success(data.value?.data?.message ?? "Success update profile");
+      pushNotification({
+        type: "success",
+        text: "Sukses upadete admin",
+      });
       await $fetchAuthProfile();
       // callback();
     }

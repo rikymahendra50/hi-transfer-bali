@@ -43,7 +43,7 @@ const selectedLocationName = ref();
 const formData = ref({
   location_id: undefined,
   activity_date: undefined,
-  tourist_numbers: undefined,
+  // tourist_numbers: undefined,
 });
 
 const {
@@ -72,7 +72,7 @@ const {
 function replaceWindow() {
   const queryParams = {
     location: dataForm.value.location_id || undefined,
-    tourist_numbers: dataForm.value.tourist_numbers || undefined,
+    // tourist_numbers: dataForm.value.tourist_numbers || undefined,
   };
 
   router.replace({ query: queryParams });
@@ -87,7 +87,7 @@ function onSubmit() {
   dataForm.value.location_id = formData.value.location_id;
   dataForm.value.location_name = selectedLocationName.value;
   dataForm.value.activity_date = formData.value.activity_date;
-  dataForm.value.tourist_numbers = formData.value.tourist_numbers;
+  // dataForm.value.tourist_numbers = formData.value.tourist_numbers;
 
   // console.log("test");
   // console.log("ini untuk cek location", formData.value.location_id);

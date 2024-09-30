@@ -42,8 +42,9 @@
     v-model:longitude="formData.longitude"
     v-model:locationAddress="formData.locationAddress"
     v-model:locationName="formData.locationName"
-    :dataJikaSudahada2="props.dataJikaSudahAda"
+    :dataJikaSudahada2="props.dataJikaSudahada"
   />
+  <!-- {{ "ini dari text field modal" }} {{ props.dataJikaSudahada }} -->
   <!-- end modal -->
 </template>
 
@@ -74,7 +75,7 @@ const props = withDefaults(
     ariaLabel?: string;
     placeholder?: string;
     readonly?: boolean;
-    dataJikaSudahAda?: Array;
+    dataJikaSudahada?: array | Object;
   }>(),
   {
     type: "text",

@@ -33,9 +33,12 @@
               v-model:locationAddress="formData.locationAddress"
               v-model:locationName="formData.locationName"
               @hideModal="hideModal"
-              :dataJikaSudahAda4="props.dataJikaSudahAda3"
+              :dataJikaSudahada3="props.dataJikaSudahada2"
             />
             <!-- end map -->
+            <!-- <pre>
+             {{ "ini dari modal map" }} {{ props.dataJikaSudahada2 }}
+            </pre> -->
           </template>
         </div>
       </dialog>
@@ -72,8 +75,8 @@ const props = defineProps({
   locationName: {
     type: String,
   },
-  dataJikaSudahAda3: {
-    type: Array,
+  dataJikaSudahada2: {
+    type: [Array, Object],
   },
 });
 

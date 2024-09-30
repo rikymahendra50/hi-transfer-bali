@@ -121,7 +121,9 @@ async function fetchData() {
 
 function goToHomePage() {
   clearSavedTourData();
-  router.push({ path: "/" });
+  // router.push({ path: "/" });
+  // window.location.replace("/");
+  router.replace("/");
 }
 
 useHead({

@@ -171,5 +171,6 @@
   },
   "contact_us_txt": "Contact Us",
   "lokasi-harus-dibali": "The location must be in Bali. Please select another location",
-  "geolocation-tidak-didukung": "Geolocation is not supported in this browser."
+  "geolocation-tidak-didukung": "Geolocation is not supported in this browser.",
+  "pastikan-lokasi": "Make sure the location you choose is right"
 }

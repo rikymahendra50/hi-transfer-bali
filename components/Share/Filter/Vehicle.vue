@@ -29,6 +29,8 @@
             name="pickup_address"
             placeholder="ex:Jalan Pahlawan No. 1"
           />
+
+          <!-- {{ "Ini dari vehicle filter" }} + {{ formDataJemput }} -->
         </UIFormMGroup>
         <div class="flex flex-col gap-1 items-center">
           <div class="flex justify-center items-center">
@@ -311,7 +313,8 @@ function onSubmit() {
 
   saveFormData();
 
-  window.location.replace(url);
+  // window.location.replace(url);
+  window.location.href = url;
 }
 
 const today = new Date().toISOString().split("T")[0];

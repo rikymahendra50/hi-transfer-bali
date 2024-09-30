@@ -1,8 +1,8 @@
 <template>
-  <NuxtLink
-    :to="slug"
+  <a
+    :href="props.slug"
     @click="goToTourBooking(props.id, props.image, name, price, description)"
-    class="overflow-hidden rounded-xl space-y-2 border border-zinc-200 shadow-sm group"
+    class="overflow-hidden rounded-xl space-y-2 border border-zinc-200 shadow-sm group cursor-pointer"
   >
     <div class="h-[300px] overflow-hidden">
       <img
@@ -27,11 +27,12 @@
         </h4>
       </div>
     </div>
-  </NuxtLink>
+  </a>
 </template>
 
 <script setup>
 const { locale, t: $t } = useI18n();
+const router = useRouter();
 
 const props = defineProps({
   id: { type: [String, Number] },
@@ -54,7 +55,7 @@ const {
   clearSavedTourData,
 } = useTourStore({
   callback: () => {
-    alert("Form has been submitted!");
+    console.log("Form has been submitted!");
   },
 });
 
@@ -68,16 +69,11 @@ function goToTourBooking(id, image, name, price, description) {
   dataForm.value.list_location = description;
   dataForm.value.list_location_string = result.value;
 
-  console.log("ini untuk cek tur id", dataForm.value.tour_id, id);
+  console.log("testestest");
 
   saveFormData();
 
-  console.log(
-    "Ini dari card tour, harusnya menyimpan image, name dan harga dari tour",
-    dataForm.value
-  );
-
-  router.push("/vehicles/booking");
+  router.push("/tours/booking");
 }
 </script>
 

@@ -10,7 +10,7 @@
         </p>
         <div>
           <NuxtLink
-            to="#learnmore"
+            :to="props.link"
             class="btn btn-primary text-white font-medium leading-4"
             >{{ $t("jelajahi-lebih-lanjut") }}
             <Icon
@@ -27,6 +27,13 @@
 
 <script setup lang="ts">
 const { locale, t: $t } = useI18n();
+
+const props = defineProps({
+  link: {
+    type: String,
+    default: "#learnmore",
+  },
+});
 </script>
 
 <style scoped></style>

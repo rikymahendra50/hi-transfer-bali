@@ -1,5 +1,10 @@
 <template>
-  <div class="rounded-lg overflow-hidden relative p-3">
+  <div class="rounded-lg overflow-hidden relative">
+    <div
+      class="my-2 bg-yellow-600 w-fit px-2 py-1 rounded-lg text-gray-100 text-sm md:text-base"
+    >
+      <p>{{ $t("pastikan-lokasi") }}</p>
+    </div>
     <div class="relative z-[10000] grid md:flex gap-3 items-center">
       <button
         @click="getUserLocation"
@@ -15,6 +20,7 @@
       >
       </GMapAutocomplete>
     </div>
+
     <GMapMap
       :center="center"
       :zoom="10"
@@ -52,26 +58,17 @@
       >
         {{ $t("pilih-lokasi-ini") }}
       </button>
+
+      <!-- <div class="border-2 border-red-500">
+        {{ props.latitude }}
+        <p>test</p>
+      </div> -->
+      <!-- {{ props.dataJikaSudahada3 }} -->
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
-
-const { $toast } = useNuxtApp();
-
-const center = ref({ lat: -8.417347915171359, lng: 115.19596919507471 });
-const currentMarkerPosition = ref({
-  lat: -8.417347915171359,
-  lng: 115.19596919507471,
-});
-
-const latitudeFix = ref(-8.417347915171359);
-const longitudeFix = ref(115.19596919507471);
-const locationAddress = ref();
-const locationName = ref();
-
 const props = defineProps({
   latitude: {
     type: [String, Number],
@@ -85,10 +82,32 @@ const props = defineProps({
   locationName: {
     type: String,
   },
-  dataJikaSudahAda4: {
-    type: Array,
+  dataJikaSudahada3: {
+    type: [Array, Object],
   },
 });
+
+import { ref, watch } from "vue";
+
+const { $toast } = useNuxtApp();
+
+const center = ref({
+  lat: props.dataJikaSudahada3?.latitude ?? -8.417347915171359,
+  lng: props.dataJikaSudahada3?.longitude ?? 115.19596919507471,
+});
+const currentMarkerPosition = ref({
+  lat: props.dataJikaSudahada3?.latitude ?? -8.417347915171359,
+  lng: props.dataJikaSudahada3?.longitude ?? 115.19596919507471,
+});
+
+const latitudeFix = ref(
+  props.dataJikaSudahada3?.latitude ?? -8.417347915171359
+);
+const longitudeFix = ref(
+  props.dataJikaSudahada3?.longitude ?? 115.19596919507471
+);
+const locationAddress = ref(props.dataJikaSudahada3?.locationAddress ?? "");
+const locationName = ref(props.dataJikaSudahada3?.locationName ?? "");
 
 const emit = defineEmits([
   "update:longitude",

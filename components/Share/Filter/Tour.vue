@@ -1,7 +1,7 @@
 <template>
   <VeeForm
-    @submit="onSubmit"
     v-slot="{ errors }"
+    @submit="onSubmit"
     :validation-schema="tourSearchSchema"
     class="space-y-4"
   >
@@ -72,7 +72,9 @@
       </div>
 
       <div class="col-span-2 flex">
-        <UIBtn variant="primary" type="submit">{{ $t("cari-tur") }}</UIBtn>
+        <UIBtn variant="primary" type="submit">
+          {{ $t("cari-tur") }}
+        </UIBtn>
       </div>
     </div>
   </VeeForm>
@@ -84,6 +86,11 @@ const { transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const { tourSearchSchema } = useSchema();
 const router = useRouter();
+
+const changeRoute = async (route) => {
+  // e.preventDefault();
+  await useRouter().push(route);
+};
 
 const selectedLocationName = ref();
 
@@ -116,14 +123,14 @@ const {
   })
 );
 
-function replaceWindow() {
-  const queryParams = {
-    location: dataForm.value.location_id || undefined,
-    // tourist_numbers: dataForm.value.tourist_numbers || undefined,
-  };
+// function replaceWindow() {
+//   const queryParams = {
+//     location: dataForm.value.location_id || undefined,
+//     // tourist_numbers: dataForm.value.tourist_numbers || undefined,
+//   };
 
-  router.replace({ query: queryParams });
-}
+//   router.replace({ query: queryParams });
+// }
 
 function selectLocation(location) {
   formData.value.location_id = location.id;
@@ -139,17 +146,16 @@ function onSubmit() {
   if (dataForm.value.location_id) {
     filters.push(`location=${dataForm.value.location_id}`);
   }
-  if (dataForm.value.tourist_numbers) {
-    filters.push(`tourist_numbers=${dataForm.value.tourist_numbers}`);
-  }
 
   const queryString = filters.join("&");
   const url = `/tours?${queryString ? `&${queryString}` : ""}`;
 
   saveFormData();
 
-  // Use router.push to navigate to the new URL
-  router.push(url);
+  // router.push(url);
+  // window.location.replace(url);
+  // changeRoute(url);
+  window.location.href = url;
 }
 
 onMounted(() => {
