@@ -5,8 +5,8 @@
     :validation-schema="tourSearchSchema"
     class="space-y-4"
   >
-    <div class="grid grid-cols-12 gap-4">
-      <div class="col-span-5">
+    <div class="grid lg:grid-cols-12 gap-4">
+      <div class="lg:col-span-6">
         <UIFormMGroup name="tour_id" :label="$t('pilih-destinasi')">
           <VDropdown
             v-model="formData.location_id"
@@ -59,7 +59,7 @@
         />
         <VeeErrorMessage name="location" class="form-error-message" />
       </div>
-      <div class="col-span-5">
+      <div class="lg:col-span-5">
         <UIFormMGroup name="activity_date" :label="$t('pilih-tanggal')">
           <UIFormMTextField
             name="activity_date"
@@ -71,7 +71,7 @@
         </UIFormMGroup>
       </div>
 
-      <div class="col-span-2 flex">
+      <div class="lg:col-span-1 flex">
         <UIBtn variant="primary" type="submit">
           {{ $t("cari-tur") }}
         </UIBtn>

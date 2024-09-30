@@ -244,8 +244,12 @@ const {
 async function showModalRefundFunc(id) {
   showModalRefund.value = !showModalRefund.value;
 
+  console.log("ini user uuid", $user.value.uuid);
+
+  console.log("ini tour detail", tourOrderDetail.value.data?.uuid);
+
   const { data, error } = await useFetch(
-    `/users/${$user.value.uuid}/car-orders/${tourOrderDetail.value.data?.uuid}/refund-request`,
+    `/users/${$user.value.uuid}/tour-orders/${tourOrderDetail.value.data?.uuid}/refund-request`,
     {
       method: "post",
       ...requestOptions,
@@ -283,7 +287,8 @@ async function cancelOrder() {
   }
   loading.value = false;
 
-  window.location.replace("/user");
+  refreshOrderTour();
+  window.location.reload();
 }
 function getSuskes(data) {
   showModalRefund.value = data;

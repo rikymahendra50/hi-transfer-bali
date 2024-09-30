@@ -16,15 +16,13 @@
         </div>
         <div
           class="w-full flex flex-col gap-2"
-          v-if="
-            dataForm.location_pickup_address || dataForm.location_return_address
-          "
+          v-if="dataForm.location_pickup_name || dataForm.location_return_name"
         >
           <div
             class="flex flex-col lg:flex-row space-y-1 lg:space-y-0 lg:space-x-4 text-lg 2xl:text-xl font-semibold"
           >
             <div class="text-start">
-              {{ dataForm.location_pickup_address }}
+              {{ dataForm.location_pickup_name }}
             </div>
             <div class="hidden lg:block text-center">
               <Icon name="i-heroicons-arrow-right" class="w-4 h-4" />
@@ -33,7 +31,7 @@
               <Icon name="i-heroicons-arrow-down" class="w-4 h-4" />
             </div>
             <div class="text-start">
-              {{ dataForm.location_return_address }}
+              {{ dataForm.location_return_name }}
             </div>
           </div>
           <div

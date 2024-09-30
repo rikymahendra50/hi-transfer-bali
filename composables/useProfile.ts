@@ -52,7 +52,7 @@ export default function (usedBy: "user" | "admin", callback: Function) {
     loading.value = true;
 
     const { data, error } = await useFetch<{ data: { message: string } }>(
-      `${updateURL.value}&_method=PUT`,
+      `${updateURL.value}?_method=PUT`,
       {
         headers: {
           Accept: "application/json",

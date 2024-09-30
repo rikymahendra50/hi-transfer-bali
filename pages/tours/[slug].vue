@@ -357,9 +357,12 @@ const initializeVariants = () => {
   if (apiData.value?.data?.variants) {
     variants.value = apiData.value.data.variants.map((variant, index) => ({
       ...variant,
-      quantity: index === 0 ? 1 : 0,
-      isChecked: index === 0 ? true : false,
-      totalItemPrice: index === 0 ? variant.price : 0,
+      // quantity: index === 0 ? 1 : 0,
+      // isChecked: index === 0 ? true : false,
+      // totalItemPrice: index === 0 ? variant.price : 0,
+      quantity: 0,
+      isChecked: false,
+      totalItemPrice: 0,
     }));
   }
   totalPrice.value = apiData.value?.data?.variants[0].price;

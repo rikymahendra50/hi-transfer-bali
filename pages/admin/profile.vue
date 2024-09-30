@@ -152,7 +152,7 @@ function onSubmit() {
 <template>
   <div>
     <div class="max-w-xl space-y-8 p-4">
-      <UIFormProfile @reload="$fetchAuthProfile()" used-by="admin" />
+      <UIFormProfileAdmin @reload="$fetchAuthProfile()" used-by="admin" />
       <UIFormChangePassword used-by="admin" />
     </div>
   </div>

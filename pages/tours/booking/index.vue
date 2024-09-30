@@ -38,134 +38,101 @@
             <div class="text-2xl font-semibold">{{ $t("data-peserta") }}</div>
           </div>
           <div class="space-y-4">
-            <!-- test -->
-            <div>
-              <VeeForm @submit="onSubmit">
+            <VeeForm @submit="onSubmit" v-slot="{ errors, meta }">
+              <div
+                class="rounded-xl grid grid-cols-1 divide-y"
+                v-for="(item, variantIndex) in dataForm.variants"
+                :key="variantIndex"
+              >
+                <div class="my-3">
+                  {{ item.quantity > 0 ? item.name : "" }}
+                </div>
                 <div
-                  class="rounded-xl grid grid-cols-1 divide-y"
-                  v-for="(item, variantIndex) in dataForm.variants"
-                  :key="variantIndex"
+                  class="p-4"
+                  v-for="(n, participantIndex) in item.quantity"
+                  :key="participantIndex"
                 >
-                  <div class="my-3">
-                    {{ item.quantity > 0 ? item.name : "" }}
-                  </div>
-                  <div
-                    class="p-4"
-                    v-for="(n, participantIndex) in item.quantity"
-                    :key="participantIndex"
-                  >
-                    <!-- ini dimasukan kedalam VeeField -->
-                    <VeeField
-                      v-model="
-                        dataFormParticitpant[
-                          getParticipantIndex(variantIndex, participantIndex)
-                        ].variant_id
+                  <VeeField
+                    v-model="
+                      dataFormParticitpant[
+                        getParticipantIndex(variantIndex, participantIndex)
+                      ].variant_id
+                    "
+                    type="text"
+                    name="variant_id"
+                    class="border hidden"
+                    id="variant_id"
+                  />
+                  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <UIFormMGroup
+                      :name="
+                        `name` +
+                        getParticipantIndex(variantIndex, participantIndex)
                       "
-                      type="text"
-                      name="variant_id"
-                      class="border hidden"
-                      id="variant_id"
-                    />
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                      <UIFormMGroup
+                      label="Nama Lengkap"
+                    >
+                      <UIFormMTextField
+                        v-model="
+                          dataFormParticitpant[
+                            getParticipantIndex(variantIndex, participantIndex)
+                          ].name
+                        "
                         :name="
                           `name` +
                           getParticipantIndex(variantIndex, participantIndex)
                         "
-                        label="Nama Lengkap"
-                      >
-                        <UIFormMTextField
-                          v-model="
-                            dataFormParticitpant[
-                              getParticipantIndex(
-                                variantIndex,
-                                participantIndex
-                              )
-                            ].name
-                          "
-                          :name="
-                            `name` +
+                        class="input-bordered"
+                        placeholder="ex:John Doe"
+                        rules="required"
+                      />
+                    </UIFormMGroup>
+                    <UIFormMGroup
+                      :name="
+                        `nationality` +
+                        getParticipantIndex(variantIndex, participantIndex)
+                      "
+                      label="Kebangsaan"
+                    >
+                      <UIFormMSelect
+                        v-model="
+                          dataFormParticitpant[
                             getParticipantIndex(variantIndex, participantIndex)
-                          "
-                          class="input-bordered"
-                          placeholder="ex:John Doe"
-                        />
-                      </UIFormMGroup>
-                      <UIFormMGroup
+                          ].nationality
+                        "
                         :name="
                           `nationality` +
                           getParticipantIndex(variantIndex, participantIndex)
                         "
-                        label="Kebangsaan"
+                        class="input-bordered"
+                        placeholder="ex: Indonesia"
+                        rules="required"
                       >
-                        <UIFormMSelect
-                          v-model="
-                            dataFormParticitpant[
-                              getParticipantIndex(
-                                variantIndex,
-                                participantIndex
-                              )
-                            ].nationality
-                          "
-                          :name="
-                            `nationality` +
-                            getParticipantIndex(variantIndex, participantIndex)
-                          "
-                          class="input-bordered"
-                          placeholder="ex: Indonesia"
+                        <option value="">{{ $t("pilih-kebangsaan") }}</option>
+                        <option
+                          :value="item.name"
+                          v-for="item in dataCountry"
+                          :key="item.name"
                         >
-                          <option value="">{{ $t("pilih-kebangsaan") }}</option>
-                          <option
-                            :value="item.name"
-                            v-for="item in dataCountry"
-                            :key="item.name"
-                          >
-                            {{ item.name }}
-                          </option>
-                        </UIFormMSelect>
-                      </UIFormMGroup>
-
-                      <!-- <UIFormMGroup
-                        :name="
-                          `category` +
-                          getParticipantIndex(variantIndex, participantIndex)
-                        "
-                        label="Kategori"
-                      >
-                        <UIFormMSelect
-                          v-model="
-                            dataFormParticitpant[
-                              getParticipantIndex(
-                                variantIndex,
-                                participantIndex
-                              )
-                            ].category
-                          "
-                          :name="
-                            `category` +
-                            getParticipantIndex(variantIndex, participantIndex)
-                          "
-                          class="input-bordered"
-                          placeholder="ex: Dewasa"
-                        >
-                          <option value="">Kategori</option>
-                          <option value="dewasa">Dewasa</option>
-                          <option value="anak">Anak</option>
-                        </UIFormMSelect>
-                      </UIFormMGroup> -->
-                    </div>
+                          {{ item.name }}
+                        </option>
+                      </UIFormMSelect>
+                    </UIFormMGroup>
                   </div>
                 </div>
-                <div class="flex justify-end">
-                  <div class="btn btn-md bg-primary">
-                    <button ref="btnSubmit" type="submit" class="text-white">
-                      {{ $t("lanjutkan") }}
-                    </button>
-                  </div>
+              </div>
+              <div class="flex justify-end">
+                <div class="btn btn-md bg-primary">
+                  <button
+                    ref="btnSubmit"
+                    type="submit"
+                    class="text-white"
+                    :disabled="!meta.valid"
+                  >
+                    {{ $t("lanjutkan") }}
+                  </button>
                 </div>
-              </VeeForm>
-            </div>
-            <!-- end test -->
+              </div>
+            </VeeForm>
           </div>
         </div>
       </div>
@@ -174,6 +141,8 @@
 </template>
 
 <script setup>
+import { useField, useForm } from "vee-validate";
+
 const { $isLoggedIn, $isUser, $logout } = useAuth();
 const { requestOptions } = useRequestOptions();
 const router = useRouter();

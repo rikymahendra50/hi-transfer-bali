@@ -2,9 +2,9 @@
   <div
     :class="
       clsx(
-        'inline-flex space-x-2 items-center text-zinc-400 hover:border-b-2 py-2 hover:bg-green-100 transition-colors duration-300 px-2 hover:text-primary hover:border-primary cursor-pointer',
+        'inline-flex space-x-2 items-center text-zinc-400 hover:border-b-2 py-2 hover:bg-green-100 transition-colors duration-300 px-2 hover:text-primary hover:border-primary hover:bg-opacity-30 cursor-pointer',
         {
-          'border-b-2 border-primary !text-primary bg-green-100':
+          'border-b-2 border-primary bg-opacity-30 !text-primary bg-green-100':
             props.isActive,
         }
       )

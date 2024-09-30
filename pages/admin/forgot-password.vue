@@ -42,7 +42,7 @@ const { locale, t: $t } = useI18n();
 
 const stepper = useStepper({
   "forgot-password": {
-    title: $t("forgot-password"),
+    title: $t("lupa-password"),
     isValid: () => true,
   },
   otp: {

@@ -2,10 +2,24 @@
   <TitleAdminBack
     title="Ringkasan Pesanan"
     :subTitle="`Informasi lengkap untuk pesanan #${data?.data?.uuid}`"
-    link="/admin/orders"
+    link="/admin/orders/order-cars"
   >
     <div>
-      <div class="border-2 shadow-xs p-3 rounded-xl">
+      <div
+        class="border-2 shadow-xs p-3 rounded-xl"
+        :style="{
+          backgroundColor:
+            data?.data?.status === 'waiting_for_payment'
+              ? '#f2ec72'
+              : data?.data?.status === 'canceled'
+              ? '#f2727b'
+              : data?.data?.status === 'paid'
+              ? '#f2ec72'
+              : data?.data?.status === 'failed'
+              ? '#f2727b'
+              : 'transparent',
+        }"
+      >
         {{ data?.data?.status }}
       </div>
     </div>

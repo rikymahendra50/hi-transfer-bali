@@ -65,15 +65,17 @@ export default function (usedBy: "user" | "admin", callback: Function) {
     if (error.value) {
       setErrorMessage(error.value.data?.message);
       ctx.setErrors(transformErrors(error.value?.data));
-      //   $toast.error(data.value?.data?.message ?? "Fail update profile");
+      pushNotification({
+        type: "error",
+        text: "Gagal update admin",
+      });
     } else {
-      //   $toast.success(data.value?.data?.message ?? "Success update profile");
       pushNotification({
         type: "success",
-        text: "Sukses upadete admin",
+        text: "Sukses update admin",
       });
       await $fetchAuthProfile();
-      // callback();
+      callback();
     }
     loading.value = false;
   }

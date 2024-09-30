@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-0.5 !relative h-auto pb-1">
+  <div class="space-y-0.5 !relative h-auto">
     <div
       :class="
         clsx(

@@ -69,11 +69,11 @@ function goToTourBooking(id, image, name, price, description) {
   dataForm.value.list_location = description;
   dataForm.value.list_location_string = result.value;
 
-  console.log("testestest");
+  // console.log("testestest");
 
   saveFormData();
 
-  router.push("/tours/booking");
+  // router.push("/tours/booking");
 }
 </script>
 

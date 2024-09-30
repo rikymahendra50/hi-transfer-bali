@@ -6,13 +6,23 @@
           class="flex flex-col lg:flex-row lg:justify-between space-x-0 lg:space-x-8"
         >
           <div class="flex flex-col space-y-4 w-full">
-            <img
-              src="/hi-travel-white-logo.png"
-              alt="hi-travel logo white"
-              class="h-[60px] w-[60px] object-cover"
-            />
+            <div class="flex items-center gap-4">
+              <img
+                src="/hi-travel-white-logo.png"
+                alt="hi-travel logo white"
+                class="h-[60px] w-[60px] object-cover"
+              />
+              <div class="flex flex-col gap-2 border-l pl-3 border-opacity-20">
+                <p>Bagian dari</p>
+                <img src="/kada-global-logo.svg" alt="kada-global-logo" />
+              </div>
+            </div>
+
             <div class="h-0.5 w-[80%] bg-zinc-300"></div>
-            <div></div>
+            <div class="flex flex-col gap-2">
+              Pembayaranmu aman dengan
+              <img src="/logo-xendit.svg" alt="logo-xendit" class="w-[100px]" />
+            </div>
           </div>
           <div class="max-w-2xl">
             <div
@@ -72,11 +82,11 @@
         </div>
       </div>
     </UIContainer>
-    <div class="h-0.5 w-full bg-zinc-300"></div>
+    <div class="h-0.5 w-full"></div>
     <UIContainer>
-      <div class="h-8 w-full text-center">
+      <div class="h-3 w-full text-center">
         <p>
-          ©{{ fullYear }} Hi Travel Bali. All rights reserved. | Design &
+          ©{{ fullYear }} Hi Transfer Bali. All rights reserved. | Design &
           Development by
           <a href="https://spdigitalagency.com" target="_blank">s.p. Digital</a>
         </p>

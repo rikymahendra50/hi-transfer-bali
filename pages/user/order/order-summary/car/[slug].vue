@@ -228,7 +228,8 @@ async function cancelOrder() {
   }
   loading.value = false;
 
-  window.location.replace("/user");
+  refreshCar();
+  window.location.reload();
 }
 
 function getSuskes(data) {

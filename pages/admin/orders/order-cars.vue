@@ -55,13 +55,18 @@
           </td>
           <td>
             <div
-              :class="{
-                'bg-yellow-400 w-fit py-2 px-3 rounded-xl':
-                  item.status === 'waiting_for_payment',
-                'bg-red-400 w-fit py-2 px-3 rounded-xl':
-                  item.status === 'canceled',
-                'bg-green-400 w-fit py-2 px-3 rounded-xl':
-                  item.status === 'paid',
+              class="w-fit py-2 px-3 rounded-xl text-black"
+              :style="{
+                backgroundColor:
+                  item.status === 'waiting_for_payment'
+                    ? '#f2ec72'
+                    : item.status === 'canceled'
+                    ? '#f2727b'
+                    : item.status === 'paid'
+                    ? '#f2ec72'
+                    : item.status === 'failed'
+                    ? '#f2727b'
+                    : 'transparent',
               }"
             >
               {{ item.status }}

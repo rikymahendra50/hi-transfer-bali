@@ -66,7 +66,9 @@
                       : item.status === 'canceled'
                       ? '#f2727b'
                       : item.status === 'paid'
-                      ? '#72f2a1'
+                      ? '#f2ec72'
+                      : item.status === 'failed'
+                      ? '#f2727b'
                       : 'transparent',
                 }"
               >

@@ -14,6 +14,8 @@ function reload() {
   emit("reload");
 }
 
+const { $user, $fetchAuthProfile } = useAuth();
+
 const {
   loading,
   message,
@@ -21,7 +23,7 @@ const {
   dataForm,
   updateProfile,
   currentUserProfile,
-} = useProfile(props.usedBy as "user" | "admin", reload);
+} = useProfileAdmin(props.usedBy as "user" | "admin", reload);
 
 onMounted(async () => {
   await nextTick();
@@ -36,7 +38,7 @@ onMounted(async () => {
         <div class="flex flex-row items-center space-x-2">
           <div class="flex-shrink-0">
             <UIFormAvatar
-              v-model="dataForm.image"
+              v-model="dataForm.profile_picture"
               :profile-image="currentUserProfile"
             />
             <VeeErrorMessage name="image" class="form-error-message" />

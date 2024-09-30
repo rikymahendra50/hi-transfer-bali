@@ -29,8 +29,6 @@
             name="pickup_address"
             placeholder="ex:Jalan Pahlawan No. 1"
           />
-
-          <!-- {{ "Ini dari vehicle filter" }} + {{ formDataJemput }} -->
         </UIFormMGroup>
         <div class="flex flex-col gap-1 items-center">
           <div class="flex justify-center items-center">
@@ -57,34 +55,52 @@
           />
         </UIFormMGroup>
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 mt-6">
-        <UIFormToggle
-          name="round_trip"
-          label="Pulang - Pergi"
-          v-model="dataForm.round_trip"
-          true-value="1"
-          false-value="0"
-          variant="primary"
-        />
-        <UIFormMGroup name="pickup_date" :label="$t('jemput-tanggal')">
-          <UIFormMTextField
-            name="pickup_date"
-            :min="today"
-            v-model="dataForm.pickup_date"
-            type="date"
-            placeholder="ex:2024-01-01"
+      <div
+        class="flex flex-wrap gap-6 mt-5 md:mt-7 items-center justify-evenly"
+      >
+        <div
+          class=""
+          :class="{
+            'lg:w-[20%]': dateReturnDisabled,
+            'lg:w-fit': !dateReturnDisabled,
+          }"
+        >
+          <UIFormToggle
+            name="round_trip"
+            label="Pulang - Pergi"
+            v-model="dataForm.round_trip"
+            true-value="1"
+            false-value="0"
+            variant="primary"
           />
-        </UIFormMGroup>
-        <div class="relative">
-          <!-- <div
-            class="w-full h-full absolute bg-white z-[50] bg-opacity-100 top-[-5px]"
-            v-if="dateReturnDisabled"
-          ></div> -->
-          <UIFormMGroup
-            name="return_date"
-            :label="$t('pulang-balik')"
-            v-if="!dateReturnDisabled"
-          >
+        </div>
+
+        <div
+          :class="{
+            'lg:w-[30%]': dateReturnDisabled,
+            'lg:w-fit': !dateReturnDisabled,
+          }"
+        >
+          <UIFormMGroup name="pickup_date" :label="$t('jemput-tanggal')">
+            <UIFormMTextField
+              name="pickup_date"
+              :min="today"
+              v-model="dataForm.pickup_date"
+              type="date"
+              placeholder="ex:2024-01-01"
+            />
+          </UIFormMGroup>
+        </div>
+
+        <div
+          class="relative"
+          :class="{
+            'lg:w-[30%]': dateReturnDisabled,
+            'lg:w-fit': !dateReturnDisabled,
+          }"
+          v-if="!dateReturnDisabled"
+        >
+          <UIFormMGroup name="return_date" :label="$t('pulang-balik')">
             <UIFormMTextField
               name="return_date"
               v-model="dataForm.return_date"
@@ -95,20 +111,31 @@
             />
           </UIFormMGroup>
         </div>
-        <UIFormMGroup name="passengers" :label="$t('jumlah-penumpang')">
-          <UIFormMSelect name="passengers" v-model="dataForm.passengers">
-            <option value="1">1 {{ $t("penumpang") }}</option>
-            <option value="2">2 {{ $t("penumpang") }}</option>
-            <option value="3">3 {{ $t("penumpang") }}</option>
-            <option value="4">4 {{ $t("penumpang") }}</option>
-            <option value="5">5 {{ $t("penumpang") }}</option>
-            <option value="6">6 {{ $t("penumpang") }}</option>
-          </UIFormMSelect>
-        </UIFormMGroup>
-        <div>
-          <UIBtn variant="primary" type="submit" :disabled="loading">
-            {{ $t("cari-mobil") }}
-          </UIBtn>
+
+        <div
+          :class="{
+            'lg:w-[30%]': dateReturnDisabled,
+            'lg:w-fit': !dateReturnDisabled,
+          }"
+        >
+          <UIFormMGroup name="passengers" :label="$t('jumlah-penumpang')">
+            <UIFormMSelect name="passengers" v-model="dataForm.passengers">
+              <option value="1">1 {{ $t("penumpang") }}</option>
+              <option value="2">2 {{ $t("penumpang") }}</option>
+              <option value="3">3 {{ $t("penumpang") }}</option>
+              <option value="4">4 {{ $t("penumpang") }}</option>
+              <option value="5">5 {{ $t("penumpang") }}</option>
+              <option value="6">6 {{ $t("penumpang") }}</option>
+            </UIFormMSelect>
+          </UIFormMGroup>
+        </div>
+
+        <div class="w-full md:w-fit">
+          <div class="flex justify-end">
+            <UIBtn variant="primary" type="submit" :disabled="loading">
+              {{ $t("cari-mobil") }}
+            </UIBtn>
+          </div>
         </div>
       </div>
     </VeeForm>

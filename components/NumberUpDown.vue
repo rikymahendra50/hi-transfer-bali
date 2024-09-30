@@ -13,7 +13,6 @@
     >
       <Icon name="i-heroicons-minus" class="h-4 w-4" />
     </button>
-
     <div class="px-3">
       {{ input }}
     </div>

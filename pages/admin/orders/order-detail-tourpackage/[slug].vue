@@ -11,7 +11,21 @@
           <option value="recommended">Belum bayar</option>
         </UIFormMSelect>
       </UIFormMGroup> -->
-      <div class="border-2 shadow-xs p-3 rounded-xl">
+      <div
+        class="shadow-xs p-3 rounded-xl"
+        :style="{
+          backgroundColor:
+            data?.data?.status === 'waiting_for_payment'
+              ? '#f2ec72'
+              : data?.data?.status === 'canceled'
+              ? '#f2727b'
+              : data?.data?.status === 'paid'
+              ? '#f2ec72'
+              : data?.data?.status === 'failed'
+              ? '#f2727b'
+              : 'transparent',
+        }"
+      >
         {{ data?.data?.status }}
       </div>
     </div>
@@ -71,7 +85,9 @@
         <tbody>
           <tr v-for="item in data?.data?.details">
             <td>{{ item.name }}</td>
-            <td>-</td>
+            <td>
+              {{ data?.data?.activity_date }}
+            </td>
             <td>{{ item.quantity ?? "-" }}</td>
             <td>{{ FormatMoneyDash(item.total_price.toString()) }}</td>
           </tr>
@@ -97,16 +113,16 @@
             <th>
               <div class="text-[#121212] font-semibold text-sm">Kebangsaan</div>
             </th>
-            <th>
+            <!-- <th>
               <div class="text-[#121212] font-semibold text-sm">Kategori</div>
-            </th>
+            </th> -->
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in data?.data?.forms">
             <td>{{ item.name }}</td>
             <td>{{ item.nationality ?? "-" }}</td>
-            <td>-</td>
+            <!-- <td>-</td> -->
           </tr>
         </tbody>
       </table>

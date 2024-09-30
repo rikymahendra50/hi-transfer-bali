@@ -30,7 +30,6 @@
         </div>
       </div>
 
-      <!-- table tour package -->
       <div
         class="overflow-x-auto rounded-lg mt-5 bg-white mb-5"
         v-if="currentOrder === 'order-transport'"
@@ -49,7 +48,6 @@
                 Destination
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD]">Date</th>
-              <!-- <th class="font-medium text-[#667085] bg-[#FCFCFD]">Type</th> -->
               <th class="font-medium text-[#667085] bg-[#FCFCFD]">
                 {{ $t("pricing") }}
               </th>
@@ -83,9 +81,6 @@
                   {{ item.activity_date }} {{ $t("to") }} {{ item.return_date }}
                 </div>
               </td>
-              <!-- <td>
-                <div class="">{{ item.type }}</div>
-              </td> -->
               <td>
                 <div class="">
                   {{ FormatMoneyDash(item.grand_total_purchased) }}
@@ -95,15 +90,17 @@
                 <div
                   class="flex items-center gap-1 bg-opacity-10 w-fit px-3 py-1 rounded-[16px]"
                   :class="{
-                    'bg-[#22C55E] text-[#22C55E]': item.status == 'Paid',
+                    'bg-[#22C55E] text-[#22C55E]': item.status === 'paid',
                     'bg-[#EF4444] bg-opacity-[12%] text-error':
-                      item.status !== 'Paid',
+                      item.status !== 'paid',
                     'bg-[#ffe922] text-black':
                       item.status == 'waiting_for_payment',
                   }"
                 >
                   <Icon name="icon-park-outline:dot" />
-                  <p class="font-medium text-[12px]">{{ item.status }}</p>
+                  <p class="font-medium text-[12px]">
+                    {{ item.status }}
+                  </p>
                 </div>
               </td>
             </tr>
@@ -135,7 +132,7 @@
       </div>
       <!-- end table -->
 
-      <!-- table order transport -->
+      <!-- table order tour -->
       <div
         class="overflow-x-auto border rounded-lg mt-5 bg-white mb-5"
         v-else-if="currentOrder === 'order-tourpackage'"
@@ -196,9 +193,9 @@
                 <div
                   class="flex items-center gap-1 bg-opacity-10 w-fit px-3 py-1 rounded-[16px]"
                   :class="{
-                    'bg-[#22C55E] text-[#22C55E]': item.status == 'Paid',
+                    'bg-[#22C55E] text-[#22C55E]': item.status == 'paid',
                     'bg-[#EF4444] bg-opacity-[12%] text-error':
-                      item.status !== 'Paid',
+                      item.status !== 'paid',
                     'bg-[#ffe922] text-black':
                       item.status == 'waiting_for_payment',
                   }"

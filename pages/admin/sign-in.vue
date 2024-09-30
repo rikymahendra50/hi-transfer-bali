@@ -65,6 +65,10 @@ definePageMeta({
             >
           </div>
         </VeeForm>
+
+        <NuxtLink to="/admin/forgot-password">
+          {{ $t("lupa-password-?") }}
+        </NuxtLink>
       </div>
     </div>
   </div>

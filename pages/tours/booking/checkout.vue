@@ -100,6 +100,10 @@ function onSubmit() {
   saveFormData();
   submitForm();
 }
+
+useHead({
+  title: "Checkout",
+});
 </script>
 
 <style lang="scss" scoped></style>

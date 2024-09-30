@@ -104,7 +104,11 @@
             />
           </div>
           <div class="flex items-center justify-end">
-            <div class="btn btn-primary" @click="submitFormT">
+            <div
+              class="btn btn-primary"
+              :disabled="!$isUser"
+              @click="submitFormT"
+            >
               <p>{{ $t("lanjutkan") }}</p>
             </div>
           </div>
