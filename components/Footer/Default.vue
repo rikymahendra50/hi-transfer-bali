@@ -13,7 +13,7 @@
                 class="h-[60px] w-[60px] object-cover"
               />
               <div class="flex flex-col gap-2 border-l pl-3 border-opacity-20">
-                <p>{{ $t("part-of") }}</p>
+                <p>{{ $t("bagian-dari") }}</p>
                 <img src="/kada-global-logo.svg" alt="kada-global-logo" />
               </div>
             </div>
@@ -36,7 +36,7 @@
                 <h4 class="text-base font-semibold">{{ link.group }}</h4>
                 <ul class="space-y-1">
                   <li v-for="item in link.items" :key="item.label">
-                    <a :to="item.link" class="link link-hover text-sm">{{
+                    <a :href="item.link" class="link link-hover text-sm">{{
                       item.label
                     }}</a>
                   </li>
@@ -123,17 +123,17 @@ const links = [
       {
         icon: "",
         label: $t("kebijakan-privasi"),
-        link: "#",
+        link: "/privacy-policy",
       },
       {
         icon: "",
         label: $t("syarat-dan-ketentuan"),
-        link: "#",
+        link: "/terms-condition",
       },
       {
         icon: "",
         label: $t("ketentuan-dan-pengembalian-dana"),
-        link: "#",
+        link: "/terms-and-refunds",
       },
     ],
   },

@@ -317,7 +317,7 @@ function onSubmit() {
   // let filters = [];
 
   if (formDataJemput.value.latitude == formDataTujuan.value.latitude) {
-    $toast.error("Lokasi tidak boleh sama");
+    $toast.error($t("lokasi-tidak-boleh-sama"));
   } else {
     // jemput
     dataForm.value.location_pickup_address =
