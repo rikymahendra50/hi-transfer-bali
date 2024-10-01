@@ -31,7 +31,7 @@
       </div>
 
       <div
-        class="overflow-x-auto rounded-lg mt-5 bg-white mb-5"
+        class="overflow-x-auto rounded-lg mt-5 bg-white mb-5 md:w-[100%]"
         v-if="currentOrder === 'order-transport'"
       >
         <table
@@ -40,18 +40,20 @@
           <thead class="h-12">
             <tr>
               <th
-                class="font-medium text-[#667085] bg-[#FCFCFD] whitespace-nowrap"
+                class="font-medium text-[#667085] bg-[#FCFCFD] whitespace-nowrap w-[200px]"
               >
                 Booking ID
               </th>
-              <th class="font-medium text-[#667085] bg-[#FCFCFD]">
+              <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
                 Destination
               </th>
-              <th class="font-medium text-[#667085] bg-[#FCFCFD]">Date</th>
-              <th class="font-medium text-[#667085] bg-[#FCFCFD]">
+              <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
+                Date
+              </th>
+              <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
                 {{ $t("pricing") }}
               </th>
-              <th class="font-medium text-[#667085] bg-[#FCFCFD]">
+              <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
                 {{ $t("order-status") }}
               </th>
             </tr>
@@ -134,7 +136,7 @@
 
       <!-- table order tour -->
       <div
-        class="overflow-x-auto border rounded-lg mt-5 bg-white mb-5"
+        class="overflow-x-auto border rounded-lg mt-5 bg-white mb-5 md:w-[100%]"
         v-else-if="currentOrder === 'order-tourpackage'"
       >
         <table
@@ -143,20 +145,20 @@
           <thead class="h-12">
             <tr>
               <th
-                class="font-medium text-[#667085] bg-[#FCFCFD] whitespace-nowrap"
+                class="font-medium text-[#667085] bg-[#FCFCFD] whitespace-nowrap w-[200px]"
               >
                 Booking ID
               </th>
-              <th class="font-medium text-[#667085] bg-[#FCFCFD]">
+              <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
                 {{ $t("destination") }}
               </th>
-              <th class="font-medium text-[#667085] bg-[#FCFCFD]">
+              <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
                 Departure Date & Time
               </th>
-              <th class="font-medium text-[#667085] bg-[#FCFCFD]">
+              <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
                 {{ $t("pricing") }}
               </th>
-              <th class="font-medium text-[#667085] bg-[#FCFCFD]">
+              <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
                 {{ $t("order-status") }}
               </th>
             </tr>

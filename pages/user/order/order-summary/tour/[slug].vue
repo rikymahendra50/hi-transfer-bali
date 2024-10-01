@@ -49,46 +49,11 @@
               <p class="text-[#121212] font-semibold">Activity Date</p>
               {{ tourOrderDetail?.data?.activity_date }}
             </div>
-
-            <!-- <div class="flex flex-col gap-1 text-sm">
-              <p class="text-[#121212] font-semibold">{{ $t("penjeputan") }}</p>
-              <p class="font-normal">
-                {{ tourOrderDetail?.data?.details[0].pickup_name }}
-              </p>
-              <p class="font-normal text-[#16161697]">
-                {{ tourOrderDetail?.data?.details[0].pickup_address }}
-              </p>
-            </div> 
-            <div class="flex flex-col gap-1 text-sm">
-              <p class="text-[#121212] font-semibold">
-                {{ $t("pengantaran") }}
-              </p>
-              <p class="font-normal">
-                {{ tourOrderDetail?.data?.details[0].destination_name }}
-              </p>
-              <p class="font-normal text-[#16161697]">
-                {{ tourOrderDetail?.data?.details[0].destination_address }}
-              </p>
-            </div> -->
           </div>
+
           <div class="flex flex-col gap-1 text-sm">
-            <p class="text-[#121212] font-semibold">Details :</p>
-            <!-- <div
-              class="flex flex-col gap-2"
-              v-for="item in tourOrderDetail?.data?.details"
-            >
-              <div class="">
-                <span class="font-bold">Name:</span> {{ item.name }}
-              </div>
-              <div class="">
-                <span class="font-bold">Quantity :</span> {{ item.quantity }}
-              </div>
-              <div class="">
-                <span class="font-bold">Price :</span>
-                {{ FormatMoneyDash(item.price) }}
-              </div>
-            </div> -->
-            <div class="">
+            <!-- <p class="text-[#121212] font-semibold">Details :</p> -->
+            <!-- <div class="">
               <div
                 class="py-4 flex flex-col gap-3 border-b mb-4"
                 v-for="item in tourOrderDetail?.data?.details"
@@ -105,12 +70,6 @@
                   <p class="font-semibold">Quantity :</p>
                   <p>{{ item.quantity }}</p>
                 </div>
-                <!-- <div
-                  class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm"
-                >
-                  <p class="font-semibold">Location Name :</p>
-                  <p>{{ item.location_name }}</p>
-                </div> -->
                 <div
                   class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm"
                 >
@@ -124,8 +83,101 @@
                   <p>{{ FormatMoneyDash(item.total_price) }}</p>
                 </div>
               </div>
+            </div> -->
+            <div class="flex flex-col gap-3 border-b my-4">
+              <div class="text-black uppercase text-[12px] font-semibold">
+                Details :
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="table">
+                  <!-- head -->
+                  <thead>
+                    <tr>
+                      <th>
+                        <div class="text-[#121212] font-semibold text-sm">
+                          Name
+                        </div>
+                      </th>
+                      <th>
+                        <div class="text-[#121212] font-semibold text-sm">
+                          Quantity
+                        </div>
+                      </th>
+                      <th>
+                        <div class="text-[#121212] font-semibold text-sm">
+                          Price
+                        </div>
+                      </th>
+                      <th>
+                        <div class="text-[#121212] font-semibold text-sm">
+                          Total Price
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in tourOrderDetail?.data?.details">
+                      <td>{{ item.name }}</td>
+                      <td>
+                        {{ item.quantity }}
+                      </td>
+                      <td>
+                        {{ FormatMoneyDash(item.price) }}
+                      </td>
+                      <td>
+                        {{ FormatMoneyDash(item.total_price) }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
+
+          <!-- test -->
+          <div class="flex flex-col gap-3 border-b my-4">
+            <div class="text-black uppercase text-[12px] font-semibold">
+              Informasi Participant :
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="table">
+                <!-- head -->
+                <thead>
+                  <tr>
+                    <th>
+                      <div class="text-[#121212] font-semibold text-sm">
+                        Name
+                      </div>
+                    </th>
+                    <th>
+                      <div class="text-[#121212] font-semibold text-sm">
+                        Nationality
+                      </div>
+                    </th>
+                    <!-- <th>
+                      <div class="text-[#121212] font-semibold text-sm">
+                        Variant
+                      </div>
+                    </th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in tourOrderDetail?.data?.forms">
+                    <td>{{ item.name }}</td>
+                    <td>
+                      {{ item.nationality }}
+                    </td>
+                    <!-- <td>
+                      {{ item }}
+                    </td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- end test -->
         </div>
 
         <div class="px-5 py-4 flex flex-col gap-3 border-b">
@@ -214,6 +266,9 @@
       </div>
     </div>
   </modal>
+  <!-- <pre>
+    {{ tourOrderDetail?.data?.details }}
+  </pre> -->
 </template>
 
 <script setup>

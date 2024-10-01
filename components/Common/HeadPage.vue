@@ -1,8 +1,8 @@
 <template>
   <div class="p-4 border-b flex justify-between items-center">
-    <div>
-      <div>{{ props.title }}</div>
-      <div class="text-sm opacity-80">
+    <div class="flex flex-col gap-1">
+      <div class="text-xl font-semibold">{{ props.title }}</div>
+      <div class="text-sm md:text-base opacity-80">
         {{ props.description }}
       </div>
     </div>

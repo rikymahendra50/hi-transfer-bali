@@ -1,5 +1,5 @@
 <template>
-  <CommonHeadPage title="Order car" description="Manage Incoming Orders">
+  <CommonHeadPage title="Order mobil" description="Kelola order mobil">
     <div class="flex flex-row gap-2">
       <NuxtLink
         to="/admin/orders"

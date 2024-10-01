@@ -110,18 +110,13 @@
                 </div>
               </div>
               <div class="flex justify-end">
-                <div
-                  class="btn btn-md bg-primary"
+                <button
+                  class="btn btn-md bg-primary text-white"
+                  type="submit"
                   :class="{ 'opacity-50 cursor-not-allowed': !isFormComplete }"
                 >
-                  <button
-                    type="submit"
-                    class="text-white"
-                    :disabled="!isFormComplete"
-                  >
-                    {{ $t("lanjutkan") }}
-                  </button>
-                </div>
+                  {{ $t("lanjutkan") }}
+                </button>
               </div>
             </VeeForm>
           </div>
