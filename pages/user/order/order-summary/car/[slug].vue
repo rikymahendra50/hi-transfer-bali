@@ -1,17 +1,16 @@
 <template>
-  <div class="h-28"></div>
+  <div class="h-44 sm:h-28"></div>
   <div class="w-full border-b">
     <UIContainer>
       <div class="flex items-center gap-4">
         <NuxtLink to="/user">
           <Icon name="formkit:arrowleft" class="text-black w-7 h-7" />
         </NuxtLink>
-
         <div class="flex flex-col gap-1">
           <p class="text-black text-[18px] font-medium">
             {{ $t("ringkasan-pesanan") }}
           </p>
-          <span>
+          <span class="text-sm">
             {{ $t("informasi-lengkap-pesanan") }} #{{
               carsOrderDetail?.data?.uuid
             }}</span
@@ -111,9 +110,10 @@
           @click="showModalRefundFunc()"
           class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
         >
-          <p>{{ $t("pengembalian-pembayaran") }}</p>
+          <!-- <p>{{ $t("pengembalian-pembayaran") }}</p> -->
+          <p>Cancel</p>
         </button>
-        <button
+        <!-- <button
           v-else-if="
             carsOrderDetail?.data?.status === 'waiting_for_payment' &&
             carsOrderDetail?.data?.status !== 'cancel'
@@ -123,10 +123,10 @@
           class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
         >
           <p>Cancel Order</p>
-        </button>
-        <div v-else-if="carsOrderDetail?.data?.status == 'completed'">
+        </button> -->
+        <!-- <div v-else-if="carsOrderDetail?.data?.status == 'completed'">
           Completed
-        </div>
+        </div> -->
       </div>
     </UIContainer>
   </div>
@@ -234,6 +234,7 @@ async function cancelOrder() {
 
 function getSuskes(data) {
   showModalRefund.value = data;
+  window.location.reload();
 }
 
 useHead({ title: "Order detail car" });

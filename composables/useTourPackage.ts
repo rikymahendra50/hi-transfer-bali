@@ -23,7 +23,7 @@ export default function (options: Options = {}) {
     "meta[en]": undefined,
     "meta[id]": undefined,
     locations: [],
-    max_person: 1,
+    max_person: 0,
     is_varied: 0,
     variants: [],
   });
@@ -37,7 +37,7 @@ export default function (options: Options = {}) {
       "meta[en]": undefined,
       "meta[id]": undefined,
       locations: [],
-      max_person: 1,
+      max_person: 0,
       is_varied: 0,
       variants: [],
     };

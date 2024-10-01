@@ -1,5 +1,5 @@
 <template>
-  <div class="h-28"></div>
+  <div class="h-44 sm:h-28"></div>
   <div class="w-full border-b">
     <UIContainer>
       <div
@@ -11,8 +11,8 @@
             variant="primary"
             outlined
             class="whitespace-nowrap"
-            >{{ $t("kembali-ke-beranda") }}</UIBtn
-          >
+            >{{ $t("kembali-ke-beranda") }}
+          </UIBtn>
         </div>
         <div
           class="w-full flex flex-col gap-2"

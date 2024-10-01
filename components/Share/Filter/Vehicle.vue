@@ -300,6 +300,10 @@ async function calculateDistanceMatrix() {
           dataForm.value.quantity = parseInt(distance.value / 1000);
           dataForm.value.distance_text = distanceRound.value;
 
+          console.log(distance.value);
+
+          console.log("testestestest");
+
           // alert(dataForm.value.round_trip);
 
           if (dataForm.value.round_trip == 1) {

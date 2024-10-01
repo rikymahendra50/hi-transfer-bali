@@ -86,20 +86,22 @@ async function onSubmit() {
   loading.value = true;
 
   const { error, data } = await useFetch(
-    `/users/${$user.value.uuid}/${props.carOrTour}/${props.uuidData}/refund-request`,
+    `/users/${$user.value.uuid}/${props.carOrTour}/${props.uuidData}/refund`,
     {
       method: "POST",
-      body: stateForm.value.otp,
+      body: { pin: stateForm.value.otp },
       ...requestOptions,
     }
   );
 
   if (error.value) {
-    // alert("Error");
     $toast.error(error.value?.data?.message ?? "Fail ");
   } else {
     // updateToParent();
-    $toast.success(data.value?.data?.message ?? "Success");
+    $toast.success(
+      data.value?.data?.message ??
+        "Success please check your email for more step"
+    );
     emit("sukses", false);
   }
 

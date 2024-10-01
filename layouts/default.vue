@@ -2,7 +2,7 @@
   <div>
     <header class="fixed top-0 left-0 right-0 z-50 bg-white py-4 border-b">
       <div class="max-w-7xl mx-auto">
-        <nav class="navbar">
+        <nav class="navbar flex flex-col sm:flex-row gap-3 sm:gap-0">
           <div class="flex-1">
             <NuxtLink
               class="link link-neutral link-hover"

@@ -1,5 +1,5 @@
 <template>
-  <div class="h-28"></div>
+  <div class="h-44 sm:h-28"></div>
   <UIContainer>
     <div class="grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-6 divide-x-2">
       <div class="space-y-6 py-4">
@@ -38,6 +38,14 @@
             <div class="text-2xl font-semibold">{{ $t("data-peserta") }}</div>
           </div>
           <div class="space-y-4">
+            <!-- <pre>
+              {{ dataForm.variants }}
+            </pre>
+
+            <pre>
+              {{ dataFormParticitpant }}
+            </pre> -->
+
             <VeeForm @submit="onSubmit" v-slot="{ errors, meta }">
               <div
                 class="rounded-xl grid grid-cols-1 divide-y"
@@ -52,21 +60,10 @@
                   v-for="(n, participantIndex) in item.quantity"
                   :key="participantIndex"
                 >
-                  <VeeField
-                    v-model="
-                      dataFormParticitpant[
-                        getParticipantIndex(variantIndex, participantIndex)
-                      ].variant_id
-                    "
-                    type="text"
-                    name="variant_id"
-                    class="border hidden"
-                    id="variant_id"
-                  />
                   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     <UIFormMGroup
                       :name="
-                        `name` +
+                        'name' +
                         getParticipantIndex(variantIndex, participantIndex)
                       "
                       label="Nama Lengkap"
@@ -78,7 +75,7 @@
                           ].name
                         "
                         :name="
-                          `name` +
+                          'name' +
                           getParticipantIndex(variantIndex, participantIndex)
                         "
                         class="input-bordered"
@@ -88,7 +85,7 @@
                     </UIFormMGroup>
                     <UIFormMGroup
                       :name="
-                        `nationality` +
+                        'nationality' +
                         getParticipantIndex(variantIndex, participantIndex)
                       "
                       label="Kebangsaan"
@@ -100,7 +97,7 @@
                           ].nationality
                         "
                         :name="
-                          `nationality` +
+                          'nationality' +
                           getParticipantIndex(variantIndex, participantIndex)
                         "
                         class="input-bordered"
@@ -122,12 +119,7 @@
               </div>
               <div class="flex justify-end">
                 <div class="btn btn-md bg-primary">
-                  <button
-                    ref="btnSubmit"
-                    type="submit"
-                    class="text-white"
-                    :disabled="!meta.valid"
-                  >
+                  <button type="submit" class="text-white">
                     {{ $t("lanjutkan") }}
                   </button>
                 </div>
@@ -141,8 +133,6 @@
 </template>
 
 <script setup>
-import { useField, useForm } from "vee-validate";
-
 const { $isLoggedIn, $isUser, $logout } = useAuth();
 const { requestOptions } = useRequestOptions();
 const router = useRouter();
@@ -194,19 +184,12 @@ onMounted(async () => {
       })
     );
 
-    if (userProfile.value && userProfile.value.data) {
-      dataFormT.value.name = `${userProfile.value.data?.first_name} ${userProfile.value.data?.last_name}`;
-      dataFormT.value.email = userProfile.value.data?.email;
-      dataFormT.value.phone = userProfile.value.data?.phone;
-      dataFormT.value.user_uuid = userProfile.value.data?.uuid;
-    }
+    dataFormT.value.name = `${userProfile.value.data?.first_name} ${userProfile.value.data?.last_name}`;
+    dataFormT.value.email = userProfile.value.data?.email;
+    dataFormT.value.phone = userProfile.value.data?.phone;
+    dataFormT.value.user_uuid = userProfile.value.data?.uuid;
   }
   showSavedTourData();
-
-  console.log(
-    "ini untuk melihat hasil dari yang sudah dikerjakan",
-    dataForm.value
-  );
 
   if (!participantsInitialized) {
     initializeParticipants();
@@ -217,9 +200,10 @@ onMounted(async () => {
 function initializeParticipants() {
   dataFormParticitpant.value = [];
   dataForm.value.variants.forEach((variant) => {
+    console.log(`Initializing participants for variant ${variant.id}`);
     for (let i = 0; i < variant.quantity; i++) {
       dataFormParticitpant.value.push({
-        variant_id: variant.id, // Ini adalah perubahan utama
+        variant_id: variant.id,
         name: "",
         nationality: "",
         category: "",
@@ -243,13 +227,9 @@ function onSubmit() {
   dataForm.value.phone = dataFormT.value.phone;
   dataForm.value.forms = dataFormParticitpant.value;
 
-  // console.log(dataFormParticitpant.value);
-
   saveFormData();
 
-  // console.log("ini adalah dataFormT", dataFormT.value);
-
-  console.log("ini di booking", dataForm.value);
+  // console.log("ini di booking", dataForm.value);
 
   router.push("/tours/booking/checkout");
 }

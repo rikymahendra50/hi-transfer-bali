@@ -2,10 +2,10 @@
   <div>
     <VDropdown>
       <button
-        class="btn btn-outline border-zinc-300 hover:bg-zinc-300 hover:outline-zinc-300 hover:border-zinc-200"
+        class="btn btn-outline border-zinc-300 hover:bg-transparent hover:outline-zinc-300 group hover:border-primary"
       >
         <img :src="language.image" :alt="language.label" class="w-5 h-5" />
-        <div>
+        <div class="group-hover:text-primary">
           {{ language.label }}
         </div>
       </button>

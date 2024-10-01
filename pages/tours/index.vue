@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h-28"></div>
+    <div class="h-44 sm:h-28"></div>
     <div class="w-full border-b">
       <UIContainer>
         <div
@@ -121,8 +121,6 @@ async function fetchData() {
 
 function goToHomePage() {
   clearSavedTourData();
-  // router.push({ path: "/" });
-  // window.location.replace("/");
   router.replace("/");
 }
 

@@ -74,7 +74,7 @@
           </td>
           <td>
             <div class="flex items-center">
-              <VDropdown>
+              <!-- <VDropdown>
                 <div class="flex items-center justify-center">
                   <button
                     class="flex items-center justify-center cursor-pointer"
@@ -93,15 +93,15 @@
                     >
                       Detail
                     </NuxtLink>
-                    <!-- <button
-                      type="button"
-                      class="hover:bg-red-600 hover:text-white py-3 px-5"
-                    >
-                      Delete
-                    </button> -->
                   </div>
                 </template>
-              </VDropdown>
+              </VDropdown> -->
+              <NuxtLink
+                :to="`/admin/orders/order-detail-car/${item?.uuid}`"
+                class="btn bg-transparent"
+              >
+                <Icon name="fluent:eye-12-regular" class="text-primary" />
+              </NuxtLink>
             </div>
           </td>
         </tr>

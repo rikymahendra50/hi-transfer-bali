@@ -108,12 +108,12 @@ const links = [
       {
         icon: "",
         label: "Transport",
-        link: "#",
+        link: "/#learnmore",
       },
       {
         icon: "",
         label: "Packet Tour",
-        link: "#",
+        link: "/#learnmore",
       },
     ],
   },

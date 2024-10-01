@@ -1,5 +1,5 @@
 <template>
-  <div class="h-28"></div>
+  <div class="h-44 sm:h-28"></div>
   <UIContainer>
     <div class="grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-6 divide-x-2">
       <div class="space-y-6 py-4">
@@ -99,6 +99,7 @@ function onSubmit() {
   console.log("ini adalah dataForm final", dataForm.value);
   saveFormData();
   submitForm();
+  clearSavedTourData();
 }
 
 useHead({

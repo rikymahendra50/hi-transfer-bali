@@ -1,5 +1,5 @@
 <template>
-  <div class="h-28"></div>
+  <div class="h-44 sm:h-28"></div>
   <div class="w-full border-b">
     <UIContainer>
       <div class="flex items-center gap-4">
@@ -10,7 +10,7 @@
           <p class="text-black text-[18px] font-medium">
             {{ $t("ringkasan-pesanan") }}
           </p>
-          <span>
+          <span class="text-sm">
             {{ $t("informasi-lengkap-pesanan") }} #{{
               tourOrderDetail?.data?.uuid
             }}</span
@@ -105,12 +105,12 @@
                   <p class="font-semibold">Quantity :</p>
                   <p>{{ item.quantity }}</p>
                 </div>
-                <div
+                <!-- <div
                   class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm"
                 >
                   <p class="font-semibold">Location Name :</p>
                   <p>{{ item.location_name }}</p>
-                </div>
+                </div> -->
                 <div
                   class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm"
                 >
@@ -162,6 +162,7 @@
         </div>
       </div>
       <div class="flex items-center justify-end gap-2">
+        <!--  -->
         <button
           v-if="tourOrderDetail?.data?.payment_status === 'paid'"
           type="button"
@@ -169,9 +170,10 @@
           :disabled="loading"
           class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
         >
-          <p>{{ $t("pengembalian-pembayaran") }}</p>
+          <!-- <p>{{ $t("pengembalian-pembayaran") }}</p> -->
+          <p>Cancel</p>
         </button>
-        <button
+        <!-- <button
           v-else-if="
             tourOrderDetail?.data?.status === 'waiting_for_payment' &&
             tourOrderDetail?.data?.status !== 'cancel'
@@ -182,10 +184,10 @@
           class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
         >
           <p>Cancel Order</p>
-        </button>
-        <div v-else-if="tourOrderDetail?.data?.status == 'completed'">
+        </button> -->
+        <!-- <div v-else-if="tourOrderDetail?.data?.status == 'completed'">
           Completed
-        </div>
+        </div> -->
       </div>
     </UIContainer>
   </div>
@@ -244,10 +246,6 @@ const {
 async function showModalRefundFunc(id) {
   showModalRefund.value = !showModalRefund.value;
 
-  console.log("ini user uuid", $user.value.uuid);
-
-  console.log("ini tour detail", tourOrderDetail.value.data?.uuid);
-
   const { data, error } = await useFetch(
     `/users/${$user.value.uuid}/tour-orders/${tourOrderDetail.value.data?.uuid}/refund-request`,
     {
@@ -290,8 +288,10 @@ async function cancelOrder() {
   refreshOrderTour();
   window.location.reload();
 }
+
 function getSuskes(data) {
   showModalRefund.value = data;
+  window.location.reload();
 }
 
 useHead({ title: "Order detail tour" });

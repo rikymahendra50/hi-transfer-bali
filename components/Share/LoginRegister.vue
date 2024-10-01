@@ -1,17 +1,17 @@
 <template>
   <div>
     <div class="" v-if="$isLoggedIn">
-      <div v-if="$isUser" class="">
+      <div v-if="$isUser">
         <VDropdown>
           <button
             type="button"
-            class="flex items-center gap-2 btn-outline rounded-none group btn border border-gray-400 group hover:bg-primary"
+            class="flex items-center gap-2 btn-outline group btn border border-gray-400 group hover:bg-primary rounded-md hover:border-white group"
           >
             <img
               v-if="$isUser && userProfile?.data?.image"
               :src="userProfile?.data?.image"
               alt="image"
-              class="max-w-[30px] rounded-full"
+              class="max-w-[30px] rounded-full group-hover:border-2"
             />
 
             <Icon
@@ -27,25 +27,25 @@
             }}
           </button>
           <template #popper="{ hide }">
-            <div class="px-2 my-1 py-1 flex flex-col gap-2">
+            <div class="my-1 py-1 flex flex-col px-2">
               <NuxtLink
                 @click.prevent="hide"
                 to="/user/profile"
-                class="hover:bg-primary p-2 rounded-lg hover:text-white"
+                class="hover:bg-primary px-3 lg:px-5 py-2 lg:py-3 rounded-lg hover:text-white"
               >
                 <p>Profile</p>
               </NuxtLink>
               <NuxtLink
                 to="/user"
                 @click.prevent="hide"
-                class="hover:bg-primary p-2 rounded-lg hover:text-white"
+                class="hover:bg-primary px-3 lg:px-5 py-2 lg:py-3 rounded-lg hover:text-white"
               >
                 <p>Orders</p>
               </NuxtLink>
               <button
                 @click.prevent="hide"
                 @click="$logout"
-                class="hover:border-red-500 hover:border-2 p-2 rounded-lg text-red-600"
+                class="hover:border-red-500 hover:border-2 px-3 lg:px-5 py-2 lg:py-3 rounded-lg text-red-600"
               >
                 Logout
               </button>

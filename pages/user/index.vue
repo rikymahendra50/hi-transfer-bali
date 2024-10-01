@@ -1,5 +1,5 @@
 <template>
-  <div class="h-28"></div>
+  <div class="h-44 sm:h-28"></div>
   <div class="w-full border-b">
     <UIContainer>
       <div class="text-black font-semibold text-2xl">

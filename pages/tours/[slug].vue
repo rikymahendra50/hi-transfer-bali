@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h-28"></div>
+    <div class="h-44 sm:h-28"></div>
     <TourSwiper :data="apiData.data?.images" />
     <div class="h-5"></div>
     <UIContainer>
@@ -372,7 +372,7 @@ initializeVariants();
 
 const updateTotalPrice = () => {
   totalPrice.value = variants.value.reduce((total, variant) => {
-    variant.totalItemPrice = variant.price * variant.quantity; // Perbarui totalItemPrice
+    variant.totalItemPrice = variant.price * variant.quantity;
     return variant.isChecked ? total + variant.totalItemPrice : total;
   }, 0);
 };

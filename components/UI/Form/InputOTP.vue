@@ -5,7 +5,7 @@
       v-for="i in length"
       v-model="fieldValues[i - 1]"
       @keyup="onKeyUp($event, i - 1)"
-      class="input input-bordered h-14 px-3.5"
+      class="input input-bordered h-14 px-3.5 text-center"
       :class="{ 'input-error': isError }"
       maxlength="1"
       @update:model-value="onUpdate($event, i - 1)"

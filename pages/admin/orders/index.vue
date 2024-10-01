@@ -77,7 +77,7 @@
             </td>
             <td>
               <div class="flex items-center">
-                <VDropdown>
+                <!-- <VDropdown>
                   <div class="flex items-center justify-center">
                     <button
                       class="flex items-center justify-center cursor-pointer"
@@ -98,7 +98,13 @@
                       </NuxtLink>
                     </div>
                   </template>
-                </VDropdown>
+                </VDropdown> -->
+                <NuxtLink
+                  :to="`/admin/orders/order-detail-tourpackage/${item?.uuid}`"
+                  class="btn bg-transparent btn-sm"
+                >
+                  <Icon name="fluent:eye-12-regular" class="text-primary" />
+                </NuxtLink>
               </div>
             </td>
           </tr>
@@ -148,14 +154,14 @@ useHead({
   title: "Orders",
 });
 
-const { transformErrors } = useRequestHelper();
+// const { transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const router = useRouter();
-const route = useRoute();
+// const route = useRoute();
 
 const page = ref(1);
-const showModalDelete = ref(false);
-const currentId = ref(undefined);
+// const showModalDelete = ref(false);
+// const currentId = ref(undefined);
 
 const { data, error, refresh } = await useAsyncData("tour-orders", () =>
   $fetch(`/admins/tour-orders?page=${page.value}`, {

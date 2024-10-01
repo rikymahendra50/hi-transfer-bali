@@ -1,12 +1,13 @@
 <template>
   <div class="">
     <TitleAdmin title="Daftar Admin" subTitle="Kelola daftar admin ">
-      <NuxtLink
+      <!-- <NuxtLink
         to="/admin/admin-list/add"
         class="border-2 py-4 px-6 rounded-[8px] shadow-xs font-medium text-black"
       >
         Tambah Admin baru
-      </NuxtLink>
+      </NuxtLink> -->
+      <ButtonAddAdmin link="/admin/admin-list/add" name="Tambah admin baru" />
     </TitleAdmin>
     <table class="table">
       <thead>
