@@ -29,7 +29,13 @@
           {{ FormatMoneyDash(item?.price) }}
         </td>
         <td class="text-sm font-normal text-[#989393]">
-          {{ item?.is_active === 1 ? "Tersedia" : "Tidak tersedia" }}
+          <StatusTrueOrFalse
+            trueString="Tersedia"
+            falseString="Tidak tersedia"
+            :trueNumber="1"
+            :falseNumber="0"
+            :data="item?.is_active"
+          />
         </td>
         <td>
           <div class="flex items-center">

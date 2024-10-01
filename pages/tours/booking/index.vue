@@ -38,14 +38,6 @@
             <div class="text-2xl font-semibold">{{ $t("data-peserta") }}</div>
           </div>
           <div class="space-y-4">
-            <!-- <pre>
-              {{ dataForm.variants }}
-            </pre>
-
-            <pre>
-              {{ dataFormParticitpant }}
-            </pre> -->
-
             <VeeForm @submit="onSubmit" v-slot="{ errors, meta }">
               <div
                 class="rounded-xl grid grid-cols-1 divide-y"
@@ -118,8 +110,15 @@
                 </div>
               </div>
               <div class="flex justify-end">
-                <div class="btn btn-md bg-primary">
-                  <button type="submit" class="text-white">
+                <div
+                  class="btn btn-md bg-primary"
+                  :class="{ 'opacity-50 cursor-not-allowed': !isFormComplete }"
+                >
+                  <button
+                    type="submit"
+                    class="text-white"
+                    :disabled="!isFormComplete"
+                  >
                     {{ $t("lanjutkan") }}
                   </button>
                 </div>
@@ -220,6 +219,12 @@ function getParticipantIndex(variantIndex, participantIndex) {
   return index + participantIndex;
 }
 
+const isFormComplete = computed(() => {
+  return dataFormParticitpant.value.every(
+    (participant) => participant.name && participant.nationality
+  );
+});
+
 function onSubmit() {
   dataForm.value.user_uuid = dataFormT.value.user_uuid;
   dataForm.value.name = dataFormT.value.name;
@@ -228,8 +233,6 @@ function onSubmit() {
   dataForm.value.forms = dataFormParticitpant.value;
 
   saveFormData();
-
-  // console.log("ini di booking", dataForm.value);
 
   router.push("/tours/booking/checkout");
 }

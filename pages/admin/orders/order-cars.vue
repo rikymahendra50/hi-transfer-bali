@@ -66,6 +66,8 @@
                     ? '#f2ec72'
                     : item.status === 'failed'
                     ? '#f2727b'
+                    : item.status === 'refunding'
+                    ? '#f2727b'
                     : 'transparent',
               }"
             >

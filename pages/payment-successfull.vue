@@ -10,9 +10,18 @@
           <p class="py-6">
             {{ $t("payment_success_page.description") }}
           </p>
-          <NuxtLink to="/" class="btn btn-primary">{{
-            $t("get_started_txt")
-          }}</NuxtLink>
+          <NuxtLink
+            :to="`/user/order/order-summary/car/${type}`"
+            class="btn btn-primary"
+            v-if="type == 'car'"
+            >{{ $t("get_started_txt") }}</NuxtLink
+          >
+          <NuxtLink
+            :to="`/user/order/order-summary/tour/${type}`"
+            class="btn btn-primary"
+            v-else-if="type == 'tour'"
+            >{{ $t("get_started_txt") }}</NuxtLink
+          >
         </div>
       </div>
     </div>
@@ -25,6 +34,10 @@ const route = useRoute();
 
 const order_id = computed(() => {
   return route.query.order ?? "";
+});
+
+const type = computed(() => {
+  return route.query.type ?? "";
 });
 
 useHead({

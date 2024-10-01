@@ -234,7 +234,8 @@ async function cancelOrder() {
 
 function getSuskes(data) {
   showModalRefund.value = data;
-  window.location.reload();
+  // window.location.reload();
+  refresh();
 }
 
 useHead({ title: "Order detail car" });

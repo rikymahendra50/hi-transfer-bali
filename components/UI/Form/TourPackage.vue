@@ -265,10 +265,10 @@ onMounted(async () => {
     dataForm.value.is_varied = props.tourPackage?.is_varied;
 
     dataForm.value["description[en]"] =
-      props.tourPackage?.description?.find((item) => item.language === "en")
+      props.tourPackage?.description?.find((item) => item?.language === "en")
         ?.translation || "";
     dataForm.value["description[id]"] =
-      props.tourPackage?.description?.find((item) => item.language === "id")
+      props.tourPackage?.description?.find((item) => item?.language === "id")
         ?.translation || "";
     statusActive.value =
       props.tourPackage?.is_active === 0 ? "Tidak Tersedia" : "Tersedia";
@@ -278,11 +278,11 @@ onMounted(async () => {
     );
 
     dataForm.value["meta[en]"] =
-      props.tourPackage?.meta?.find((item) => item.language === "en")
+      props.tourPackage?.meta?.find((item) => item?.language === "en")
         ?.translation || "";
 
     dataForm.value["meta[id]"] =
-      props.tourPackage?.meta?.find((item) => item.language === "id")
+      props.tourPackage?.meta?.find((item) => item?.language === "id")
         ?.translation || "";
 
     dataForm.value.variants = props.tourPackage?.variants.map((variant) => ({
@@ -291,10 +291,10 @@ onMounted(async () => {
       max_person: variant?.max_person,
       description: {
         en:
-          variant?.description?.find((item) => item.language === "en")
+          variant?.description?.find((item) => item?.language === "en")
             ?.translation || "",
         id:
-          variant?.description?.find((item) => item.language === "id")
+          variant?.description?.find((item) => item?.language === "id")
             ?.translation || "",
       },
     }));

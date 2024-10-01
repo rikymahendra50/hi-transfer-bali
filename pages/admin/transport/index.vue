@@ -13,7 +13,7 @@
           <div class="text-[#989393]">Nama Mobil</div>
         </th>
         <th>
-          <div>Harga Per KM</div>
+          <div>Harga</div>
         </th>
         <th>
           <div>Status mobil</div>

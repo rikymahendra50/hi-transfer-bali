@@ -55,9 +55,6 @@
     <div class="text-gray-500 uppercase text-[12px] font-semibold">
       Informasi Pemesanan
     </div>
-    <!-- <pre>
-      {{ data?.data?.details }}
-    </pre> -->
 
     <div class="overflow-x-auto">
       <table class="table">
@@ -152,9 +149,6 @@
       </p>
     </div>
   </div>
-  <!-- <pre>
-    {{ data?.data }}
-  </pre> -->
 </template>
 
 <script setup lang="ts">

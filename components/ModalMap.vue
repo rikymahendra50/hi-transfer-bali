@@ -36,9 +36,6 @@
               :dataJikaSudahada3="props.dataJikaSudahada2"
             />
             <!-- end map -->
-            <!-- <pre>
-             {{ "ini dari modal map" }} {{ props.dataJikaSudahada2 }}
-            </pre> -->
           </template>
         </div>
       </dialog>

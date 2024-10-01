@@ -6,10 +6,6 @@
       buttonTitle="Edit destinasi"
       :destinations="data?.data"
     />
-
-    <!-- <pre>
-      {{ data }}
-    </pre> -->
   </div>
 </template>
 

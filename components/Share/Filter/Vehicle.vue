@@ -30,6 +30,7 @@
             placeholder="ex:Jalan Pahlawan No. 1"
           />
         </UIFormMGroup>
+
         <div class="flex flex-col gap-1 items-center">
           <div class="flex justify-center items-center">
             <Icon
