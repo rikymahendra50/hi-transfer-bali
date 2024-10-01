@@ -11,13 +11,13 @@
             {{ $t("payment_success_page.description") }}
           </p>
           <NuxtLink
-            :to="`/user/order/order-summary/car/${type}`"
+            :to="`/user/order/order-summary/car/${order_id}`"
             class="btn btn-primary"
             v-if="type == 'car'"
             >{{ $t("get_started_txt") }}</NuxtLink
           >
           <NuxtLink
-            :to="`/user/order/order-summary/tour/${type}`"
+            :to="`/user/order/order-summary/tour/${order_id}`"
             class="btn btn-primary"
             v-else-if="type == 'tour'"
             >{{ $t("get_started_txt") }}</NuxtLink
