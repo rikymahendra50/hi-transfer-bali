@@ -571,6 +571,9 @@ export default function (options?: useAuthOptions) {
     const { data, error } = await useFetch<{ data: { message: string } }>(
       `${_verificationEmailURL.value}/${token}`,
       {
+        headers: {
+          Accept: "application/json",
+        },
         method: "POST",
         ...requestOptions,
       }

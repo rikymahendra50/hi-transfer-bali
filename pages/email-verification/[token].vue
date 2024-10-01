@@ -31,8 +31,6 @@ const title = ref("Email Verification");
 
 async function tokenVerify() {
   const { data, error } = await $verificationEmail(token.value);
-  //   console.log(token.value);
-  // console.log(data, error);
 
   if (error) {
     message.value = error?.data?.message as string;

@@ -1,11 +1,6 @@
 <template>
   <div class="h-44 sm:h-28"></div>
   <div class="w-full border-b">
-    <!-- <pre>
-      {{ carsOrderDetail }}
-      </pre
-    > -->
-
     <UIContainer>
       <div class="flex items-center gap-4">
         <NuxtLink to="/user">
