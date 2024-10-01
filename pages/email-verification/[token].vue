@@ -19,7 +19,9 @@ const route = useRoute();
 
 const router = useRouter();
 
-const { $verificationEmail } = useAuth();
+const { $verificationEmail } = useAuth({
+  usedBy: "user",
+});
 
 const token = computed(() => {
   return route.params.token as string;
@@ -42,6 +44,7 @@ async function tokenVerify() {
 }
 
 onMounted(async () => {
+  await nextTick();
   if (token.value) {
     await tokenVerify();
   } else {
