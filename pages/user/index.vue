@@ -1,6 +1,9 @@
 <template>
   <div class="h-44 sm:h-28"></div>
   <div class="w-full border-b">
+    <!-- <pre>
+      {{ cars?.data }}
+    </pre> -->
     <UIContainer>
       <div class="text-black font-semibold text-2xl">
         {{ $t("order-saya") }}
@@ -48,6 +51,9 @@
                 Destination
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
+                Type
+              </th>
+              <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
                 Date
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
@@ -76,6 +82,11 @@
               <td>
                 <div class="font-semibold">
                   {{ item.destination }}
+                </div>
+              </td>
+              <td>
+                <div class="font-semibold">
+                  {{ item.type }}
                 </div>
               </td>
               <td>

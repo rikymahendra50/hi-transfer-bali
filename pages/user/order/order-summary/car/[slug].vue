@@ -1,6 +1,11 @@
 <template>
   <div class="h-44 sm:h-28"></div>
   <div class="w-full border-b">
+    <!-- <pre>
+      {{ carsOrderDetail }}
+      </pre
+    > -->
+
     <UIContainer>
       <div class="flex items-center gap-4">
         <NuxtLink to="/user">
@@ -65,6 +70,24 @@
               <p class="font-normal text-[#16161697]">
                 {{ carsOrderDetail?.data?.details[0].destination_address }}
               </p>
+            </div>
+          </div>
+
+          <div v-if="carsOrderDetail?.data?.details">
+            <!-- <pre>
+              {{ carsOrderDetail?.data?.details }}
+            </pre> -->
+            <div
+              class="bg-primary py-2 px-4 rounded-xl text-white w-fit"
+              v-if="carsOrderDetail?.data?.details.length > 1"
+            >
+              <p>Round trip</p>
+            </div>
+            <div
+              class="bg-primary py-2 px-4 rounded-xl text-white w-fit"
+              v-else-if="carsOrderDetail?.data?.details.length == 1"
+            >
+              <p>One way</p>
             </div>
           </div>
         </div>

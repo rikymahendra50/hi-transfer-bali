@@ -22,7 +22,7 @@ export default function useTourForm(options: Options = {}) {
     location_pickup_address: undefined,
     location_return_name: undefined,
     location_return_address: undefined,
-    location_return_latitude: undefined,
+    location_return_latitude: undefined, //
     location_return_longitude: undefined,
     location_pickup_latitude: undefined,
     location_pickup_longitude: undefined,
@@ -124,6 +124,7 @@ export default function useTourForm(options: Options = {}) {
     formData.append("pic_phone_number", dataForm.value.phone || "");
     formData.append("products[0][id]", dataForm.value.car_id || "");
     formData.append("products[0][quantity]", dataForm.value.quantity);
+
     formData.append(
       "products[0][pickup_latitude]",
       dataForm.value.location_pickup_latitude || ""
@@ -160,6 +161,48 @@ export default function useTourForm(options: Options = {}) {
       "products[0][activity_date]",
       dataForm.value.pickup_date || ""
     );
+
+    if (dataForm.value.round_trip == 1) {
+      formData.append("products[1][id]", dataForm.value.car_id || "");
+      formData.append("products[1][quantity]", dataForm.value.quantity);
+
+      formData.append(
+        "products[1][pickup_latitude]",
+        dataForm.value.location_return_latitude || ""
+      );
+      formData.append(
+        "products[1][pickup_longitude]",
+        dataForm.value.location_return_longitude || ""
+      );
+      formData.append(
+        "products[1][pickup_name]",
+        dataForm.value.location_return_name || ""
+      );
+      formData.append(
+        "products[1][pickup_address]",
+        dataForm.value.location_return_address || ""
+      );
+      formData.append(
+        "products[1][destination_latitude]",
+        dataForm.value.location_pickup_latitude || ""
+      );
+      formData.append(
+        "products[1][destination_longitude]",
+        dataForm.value.location_pickup_longitude || ""
+      );
+      formData.append(
+        "products[1][destination_name]",
+        dataForm.value.location_pickup_name || ""
+      );
+      formData.append(
+        "products[1][destination_address]",
+        dataForm.value.location_pickup_address || ""
+      );
+      formData.append(
+        "products[1][activity_date]",
+        dataForm.value.return_date || ""
+      );
+    }
 
     // for (const item in dataFormSubmit.value) {
     //   // @ts-ignore
