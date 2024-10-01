@@ -161,22 +161,23 @@ onMounted(() => {
   if (route.query.sort) {
     filter.value.sort = route.query.sort;
   }
-  if (route.query.distance && route.query.passengers) {
-    selectedDistance.value = route.query.distance;
-    selectedPassenger.value = route.query.passengers;
-  }
-  if (route.query.distance && !route.query.passengers) {
-    selectedDistance.value = route.query.distance;
-  }
-  if (!route.query.distance && route.query.passengers) {
-    selectedTouristNumber.value = route.query.passengers;
-  }
-
-  // replaceWindow();
-
-  fetchData();
+  // if (route.query.distance && route.query.passengers) {
+  //   selectedDistance.value = route.query.distance;
+  //   selectedPassenger.value = route.query.passengers;
+  // }
+  // if (route.query.distance && !route.query.passengers) {
+  //   selectedDistance.value = route.query.distance;
+  // }
+  // if (!route.query.distance && route.query.passengers) {
+  //   selectedTouristNumber.value = route.query.passengers;
+  // }
 
   showSavedCarData();
+
+  selectedDistance.value = dataForm.value.distance;
+  selectedPassenger.value = dataForm.value.passengers;
+
+  fetchData();
 });
 
 const fetchData = async () => {
@@ -199,12 +200,12 @@ const fetchData = async () => {
 
 function replaceWindow() {
   let filters = [];
-  if (selectedPassenger.value) {
-    filters.push(`passengers=${selectedPassenger.value}`);
-  }
-  if (selectedDistance.value) {
-    filters.push(`distance=${selectedDistance.value}`);
-  }
+  // if (selectedPassenger.value) {
+  //   filters.push(`passengers=${selectedPassenger.value}`);
+  // }
+  // if (selectedDistance.value) {
+  //   filters.push(`distance=${selectedDistance.value}`);
+  // }
   if (filter.value.sort) {
     filters.push(`sort=${filter.value.sort}`);
   }

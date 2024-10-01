@@ -156,6 +156,7 @@ const config = useRuntimeConfig();
 const breakpoints = useBreakpoints(breakpointsTailwind);
 const isMobile = breakpoints.smaller("lg");
 const router = useRouter();
+const { $toast } = useNuxtApp();
 
 const {
   dataForm,
@@ -313,35 +314,42 @@ async function calculateDistanceMatrix() {
 }
 
 function onSubmit() {
-  let filters = [];
+  // let filters = [];
 
-  // jemput
-  dataForm.value.location_pickup_address = formDataJemput.value.locationAddress;
-  dataForm.value.location_pickup_name = formDataJemput.value.locationName;
-  dataForm.value.location_pickup_latitude = formDataJemput.value.latitude;
-  dataForm.value.location_pickup_longitude = formDataJemput.value.longitude;
+  if (formDataJemput.value.latitude == formDataTujuan.value.latitude) {
+    $toast.error("Lokasi tidak boleh sama");
+  } else {
+    // jemput
+    dataForm.value.location_pickup_address =
+      formDataJemput.value.locationAddress;
+    dataForm.value.location_pickup_name = formDataJemput.value.locationName;
+    dataForm.value.location_pickup_latitude = formDataJemput.value.latitude;
+    dataForm.value.location_pickup_longitude = formDataJemput.value.longitude;
 
-  // destinasi
-  dataForm.value.location_return_address = formDataTujuan.value.locationAddress;
-  dataForm.value.location_return_name = formDataTujuan.value.locationName;
-  dataForm.value.location_return_latitude = formDataTujuan.value.latitude;
-  dataForm.value.location_return_longitude = formDataTujuan.value.longitude;
+    // destinasi
+    dataForm.value.location_return_address =
+      formDataTujuan.value.locationAddress;
+    dataForm.value.location_return_name = formDataTujuan.value.locationName;
+    dataForm.value.location_return_latitude = formDataTujuan.value.latitude;
+    dataForm.value.location_return_longitude = formDataTujuan.value.longitude;
 
-  if (dataForm.value.passengers) {
-    filters.push(`passengers=${dataForm.value.passengers}`);
+    // if (dataForm.value.passengers) {
+    //   filters.push(`passengers=${dataForm.value.passengers}`);
+    // }
+
+    // if (dataForm.value.distance) {
+    //   filters.push(`distance=${dataForm.value.distance}`);
+    // }
+
+    // const queryString = filters.join("&");
+    // const url = `/vehicles?${queryString ? `&${queryString}` : ""}`;
+
+    saveFormData();
+
+    window.location.href = "/vehicles";
+
+    // window.location.href = url;
   }
-
-  if (dataForm.value.distance) {
-    filters.push(`distance=${dataForm.value.distance}`);
-  }
-
-  const queryString = filters.join("&");
-  const url = `/vehicles?${queryString ? `&${queryString}` : ""}`;
-
-  saveFormData();
-
-  // window.location.replace(url);
-  window.location.href = url;
 }
 
 const today = new Date().toISOString().split("T")[0];

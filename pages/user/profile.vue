@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="h-28"></div>
-    <div class="flex justify-center">
+    <div class="flex justify-center mb-6">
       <div class="max-w-xl space-y-8 p-4">
         <UIFormProfile @reload="$fetchAuthProfile()" used-by="user" />
         <UIFormChangePassword used-by="user" />

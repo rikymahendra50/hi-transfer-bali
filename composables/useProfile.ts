@@ -25,12 +25,12 @@ export default function (usedBy: "user" | "admin", callback: Function) {
     is_profile_picture_deleted: 0,
   });
 
-  const updateURL = computed(() => {
-    if (usedBy == "user") {
-      return "/users/profile?lang=" + locale.value;
-    }
-    return "/admins/profile";
-  });
+  // const updateURL = computed(() => {
+  //   if (usedBy == "user") {
+  //     return "";
+  //   }
+  //   return "/admins/profile";
+  // });
 
   const currentUserProfile = computed(() => {
     return $user.value?.image ?? "";
@@ -52,12 +52,12 @@ export default function (usedBy: "user" | "admin", callback: Function) {
     loading.value = true;
 
     const { data, error } = await useFetch<{ data: { message: string } }>(
-      `${updateURL.value}?_method=PUT`,
+      `/users/profile?_method=PUT`,
       {
         headers: {
           Accept: "application/json",
         },
-        method: "POST",
+        method: "post",
         body: formData,
         ...requestOptions,
       }

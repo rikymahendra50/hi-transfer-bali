@@ -6,7 +6,7 @@
     class="space-y-4"
   >
     <div class="grid lg:grid-cols-12 gap-4">
-      <div class="lg:col-span-6">
+      <div class="lg:col-span-5">
         <UIFormMGroup name="tour_id" :label="$t('pilih-destinasi')">
           <VDropdown
             v-model="formData.location_id"
@@ -70,8 +70,7 @@
           />
         </UIFormMGroup>
       </div>
-
-      <div class="lg:col-span-1 flex">
+      <div class="lg:col-span-2 flex items-center justify-end">
         <UIBtn variant="primary" type="submit">
           {{ $t("cari-tur") }}
         </UIBtn>

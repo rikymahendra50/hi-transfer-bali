@@ -13,14 +13,14 @@
                 class="h-[60px] w-[60px] object-cover"
               />
               <div class="flex flex-col gap-2 border-l pl-3 border-opacity-20">
-                <p>Bagian dari</p>
+                <p>{{ $t("part-of") }}</p>
                 <img src="/kada-global-logo.svg" alt="kada-global-logo" />
               </div>
             </div>
 
             <div class="h-0.5 w-[80%] bg-zinc-300"></div>
             <div class="flex flex-col gap-2">
-              Pembayaranmu aman dengan
+              {{ $t("pembayaranmu-aman-dengan") }}
               <img src="/logo-xendit.svg" alt="logo-xendit" class="w-[100px]" />
             </div>
           </div>
@@ -61,7 +61,7 @@
                 </ul>
               </div>
               <div class="flex flex-col space-y-4">
-                <h4 class="text-base font-semibold">Kontak Kami</h4>
+                <h4 class="text-base font-semibold">{{ $t("kontak-kami") }}</h4>
                 <ul class="space-y-1">
                   <li v-for="item in contact" :key="item.label">
                     <div class="font-semibold">{{ item.title }}</div>
@@ -97,12 +97,13 @@
 
 <script lang="ts" setup>
 const fullYear = new Date().getFullYear();
+const { locale, t: $t } = useI18n();
 
 const { contact, socialMedias } = useCompanyBase();
 
 const links = [
   {
-    group: "Layanan Kami",
+    group: $t("layanan-kami"),
     items: [
       {
         icon: "",
@@ -117,21 +118,21 @@ const links = [
     ],
   },
   {
-    group: "Pusat Bantuan",
+    group: $t("pusat-bantuan"),
     items: [
       {
         icon: "",
-        label: "Kebijakan Privasi",
+        label: $t("kebijakan-privasi"),
         link: "#",
       },
       {
         icon: "",
-        label: "Syarat dan Ketentuan",
+        label: $t("syarat-dan-ketentuan"),
         link: "#",
       },
       {
         icon: "",
-        label: "Ketentuan Pengembalian Dana",
+        label: $t("ketentuan-dan-pengembalian-dana"),
         link: "#",
       },
     ],

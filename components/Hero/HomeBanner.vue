@@ -22,7 +22,7 @@
         <img
           v-if="currentSlide?.image"
           :src="currentSlide?.image"
-          class="w-full h-[500px] object-cover"
+          class="w-full h-[370px] lg:h-[500px] object-cover"
           alt="hero"
         />
       </Transition>
