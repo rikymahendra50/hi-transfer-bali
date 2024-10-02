@@ -91,7 +91,11 @@
               </td>
               <td>
                 <div class="">
-                  {{ item.activity_date }} {{ $t("to") }} {{ item.return_date }}
+                  <!--                   {{ item.activity_date }} {{ $t("to") }}
+                  {{ item.return_date }} -->
+
+                  {{ formatDate(item.activity_date) }}
+                  {{ "-" }} {{ formatDate(item.return_date) }}
                 </div>
               </td>
               <td>
@@ -161,7 +165,7 @@
                 Booking ID
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
-                {{ $t("destination") }}
+                Destination
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
                 Departure Date & Time
@@ -195,7 +199,7 @@
                 </div>
               </td>
               <td>
-                <div class="">{{ item.activity_date }}</div>
+                <div class="">{{ formatDate(item.activity_date) }}</div>
               </td>
               <td>
                 <div class="">
@@ -352,6 +356,15 @@ function replaceWindowTours() {
     })
   );
   refreshTours();
+}
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 }
 
 definePageMeta({

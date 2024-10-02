@@ -382,7 +382,7 @@ export default function (options?: useAuthOptions) {
        * Redirect the user to the page
        * they were trying to access before
        */
-      window.location.replace(_redirectLogin.value);
+      window.location.href = _redirectLogin.value;
     }
 
     /**

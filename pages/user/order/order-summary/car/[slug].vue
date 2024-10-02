@@ -55,7 +55,11 @@
                 {{ carsOrderDetail?.data?.details[0].pickup_address }}
               </p>
               <p class="font-normal text-[#16161697]">
-                {{ carsOrderDetail?.data?.details[0].activity_date }}
+                {{
+                  formatDate(
+                    carsOrderDetail?.data?.details[0]?.activity_date
+                  ) ?? ""
+                }}
               </p>
             </div>
             <div class="flex flex-col gap-1 text-sm">
@@ -69,7 +73,11 @@
                 {{ carsOrderDetail?.data?.details[0].destination_address }}
               </p>
               <p class="font-normal text-[#16161697]">
-                {{ carsOrderDetail?.data?.details[1]?.activity_date ?? "" }}
+                {{
+                  formatDate(
+                    carsOrderDetail?.data?.details[1]?.activity_date
+                  ) ?? ""
+                }}
               </p>
             </div>
           </div>
@@ -269,6 +277,15 @@ function getSuskes(data) {
   showModalRefund.value = data;
   // window.location.reload();
   refresh();
+}
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 }
 
 useHead({ title: "Order detail car" });

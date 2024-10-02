@@ -47,7 +47,7 @@
           <div class="grid gap-3 md:grid-cols-2">
             <div class="flex flex-col gap-1 text-sm">
               <p class="text-[#121212] font-semibold">Activity Date</p>
-              {{ tourOrderDetail?.data?.activity_date }}
+              {{ formatDate(tourOrderDetail?.data?.activity_date) }}
             </div>
           </div>
 
@@ -357,6 +357,15 @@ function getSuskes(data) {
   showModalRefund.value = data;
   // window.location.reload();
   refresh();
+}
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 }
 
 useHead({ title: "Order detail tour" });
