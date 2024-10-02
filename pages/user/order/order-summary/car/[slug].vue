@@ -54,6 +54,9 @@
               <p class="font-normal text-[#16161697]">
                 {{ carsOrderDetail?.data?.details[0].pickup_address }}
               </p>
+              <p class="font-normal text-[#16161697]">
+                {{ carsOrderDetail?.data?.details[0].activity_date }}
+              </p>
             </div>
             <div class="flex flex-col gap-1 text-sm">
               <p class="text-[#121212] font-semibold">
@@ -64,6 +67,9 @@
               </p>
               <p class="font-normal text-[#16161697]">
                 {{ carsOrderDetail?.data?.details[0].destination_address }}
+              </p>
+              <p class="font-normal text-[#16161697]">
+                {{ carsOrderDetail?.data?.details[1]?.activity_date ?? "" }}
               </p>
             </div>
           </div>

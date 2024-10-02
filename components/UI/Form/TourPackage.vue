@@ -208,11 +208,6 @@
       </button>
     </div>
   </VeeForm>
-
-  <pre>
-    {{ dataForm }}
-    </pre
-  >
 </template>
 
 <script setup>
