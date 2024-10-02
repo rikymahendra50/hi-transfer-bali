@@ -95,7 +95,7 @@
         </div>
 
         <div
-          class="relative"
+          class="relative w-full"
           :class="{
             'lg:w-[30%]': dateReturnDisabled,
             'lg:w-fit': !dateReturnDisabled,

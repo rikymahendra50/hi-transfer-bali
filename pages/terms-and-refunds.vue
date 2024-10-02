@@ -1,7 +1,7 @@
 <template>
   <div class="h-[100px]"></div>
   <div class="h-[200px] flex items-center justify-center bg-primary">
-    <h3 class="text-[30px] text-white">Tems and refunds</h3>
+    <h3 class="text-[30px] text-white">Terms and refunds</h3>
   </div>
   <UIContainer>
     <p class="py-5">
@@ -35,11 +35,11 @@ definePageMeta({
 });
 
 useHead({
-  title: "Tems and refunds",
+  title: "Terms and refunds",
   meta: [
     {
       name: "description",
-      content: "Tems and refunds",
+      content: "Terms and refunds",
     },
   ],
 });
