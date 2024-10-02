@@ -74,9 +74,11 @@
               </p>
               <p class="font-normal text-[#16161697]">
                 {{
-                  formatDate(
-                    carsOrderDetail?.data?.details[1]?.activity_date
-                  ) ?? ""
+                  carsOrderDetail?.data?.details[1]?.activity_date
+                    ? formatDate(
+                        carsOrderDetail?.data?.details[1]?.activity_date
+                      )
+                    : ""
                 }}
               </p>
             </div>
