@@ -11,7 +11,7 @@
     "
   >
     <Icon :name="props.icon" class="h-5 w-5" />
-    <div class="">{{ props.label }}</div>
+    <div class="text-sm md:text-lg">{{ props.label }}</div>
   </div>
 </template>
 

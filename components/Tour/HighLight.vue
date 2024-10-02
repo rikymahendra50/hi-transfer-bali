@@ -3,8 +3,9 @@
     <h3 class="text-[32px] leading-[40px] font-semibold text-primary-dark">
       {{ $t("paket-tour") }}
     </h3>
-
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    >
       <TourCard
         v-for="item in data?.data"
         :id="item.id"

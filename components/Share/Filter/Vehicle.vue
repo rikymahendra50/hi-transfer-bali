@@ -77,6 +77,7 @@
         </div>
 
         <div
+          class="w-full"
           :class="{
             'lg:w-[30%]': dateReturnDisabled,
             'lg:w-fit': !dateReturnDisabled,
@@ -114,6 +115,7 @@
         </div>
 
         <div
+          class="w-full"
           :class="{
             'lg:w-[30%]': dateReturnDisabled,
             'lg:w-fit': !dateReturnDisabled,
@@ -297,20 +299,24 @@ async function calculateDistanceMatrix() {
           distance.value = result?.distance?.value;
           distanceRound.value = result?.distance?.text;
 
-          dataForm.value.distance = parseInt(distance.value / 1000);
-          dataForm.value.quantity = parseInt(distance.value / 1000);
-          dataForm.value.distance_text = distanceRound.value;
+          if (result?.distance?.value > 1000) {
+            dataForm.value.distance = parseInt(distance.value / 1000);
+            dataForm.value.quantity = parseInt(distance.value / 1000);
+            dataForm.value.distance_text = distanceRound.value;
 
-          console.log(distance.value);
+            if (dataForm.value.round_trip == 1) {
+              const test = parseInt(distance.value / 1000);
+              dataForm.value.distance = test.toFixed(1) * 2;
+              dataForm.value.quantity = test.toFixed(1) * 2;
+            }
+          } else {
+            $toast.error($t("the-distance-cannot"));
+            dataForm.value.distance = "";
+            dataForm.value.quantity = "";
+            dataForm.value.distance_text = "";
 
-          console.log("testestestest");
-
-          // alert(dataForm.value.round_trip);
-
-          if (dataForm.value.round_trip == 1) {
-            const test = parseInt(distance.value / 1000);
-            dataForm.value.distance = test.toFixed(1) * 2;
-            dataForm.value.quantity = test.toFixed(1) * 2;
+            formDataJemput.value = {};
+            formDataTujuan.value = {};
           }
         }
       }

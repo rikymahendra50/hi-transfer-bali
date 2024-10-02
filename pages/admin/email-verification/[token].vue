@@ -25,18 +25,18 @@ const token = computed(() => {
   return route.params.token as string;
 });
 const message = ref("");
-const isSuccess = ref(true);
+const isSuccess = ref(false);
 const title = ref("Email Verification");
 
 async function tokenVerify() {
   const { data, error } = await $verificationEmail(token.value);
-  console.log(data, error);
 
   if (error) {
     message.value = error?.data?.message as string;
     isSuccess.value = false;
     title.value = "Email Verification Failed";
   } else {
+    isSuccess.value = true;
     message.value = "Your email has been verified";
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white py-4 border-b">
+    <header class="fixed top-0 left-0 right-0 bg-white py-4 border-b z-50">
       <div class="max-w-7xl mx-auto">
         <nav class="navbar flex flex-col sm:flex-row gap-3 sm:gap-0">
           <div class="flex-1">

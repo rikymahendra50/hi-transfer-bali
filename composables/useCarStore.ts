@@ -123,7 +123,7 @@ export default function useTourForm(options: Options = {}) {
     formData.append("pic_email", dataForm.value.email || "");
     formData.append("pic_phone_number", dataForm.value.phone || "");
     formData.append("products[0][id]", dataForm.value.car_id || "");
-    formData.append("products[0][quantity]", dataForm.value.quantity);
+    formData.append("products[0][quantity]", dataForm.value.quantity / 2);
 
     formData.append(
       "products[0][pickup_latitude]",
@@ -164,7 +164,7 @@ export default function useTourForm(options: Options = {}) {
 
     if (dataForm.value.round_trip == 1) {
       formData.append("products[1][id]", dataForm.value.car_id || "");
-      formData.append("products[1][quantity]", dataForm.value.quantity);
+      formData.append("products[1][quantity]", dataForm.value.quantity / 2);
 
       formData.append(
         "products[1][pickup_latitude]",

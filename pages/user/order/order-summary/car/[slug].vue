@@ -131,6 +131,15 @@
           <!-- <p>{{ $t("pengembalian-pembayaran") }}</p> -->
           <p>Cancel</p>
         </button>
+        <a
+          v-if="carsOrderDetail?.data?.payment_status === 'pending'"
+          :href="carsOrderDetail?.data?.payment_url"
+          target="_blank"
+          class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
+        >
+          <p>Payment url</p>
+        </a>
+
         <!-- <button
           v-else-if="
             carsOrderDetail?.data?.status === 'waiting_for_payment' &&

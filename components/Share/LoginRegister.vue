@@ -45,7 +45,7 @@
               <button
                 @click.prevent="hide"
                 @click="$logout"
-                class="hover:border-red-500 hover:border-2 px-3 lg:px-5 py-2 lg:py-3 rounded-lg text-red-600"
+                class="hover:bg-red-500 hover:border-2 px-3 lg:px-5 py-2 lg:py-3 rounded-lg text-red-600 hover:text-white"
               >
                 Logout
               </button>

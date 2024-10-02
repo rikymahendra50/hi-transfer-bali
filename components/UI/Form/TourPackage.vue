@@ -208,6 +208,11 @@
       </button>
     </div>
   </VeeForm>
+
+  <pre>
+    {{ dataForm }}
+    </pre
+  >
 </template>
 
 <script setup>
@@ -232,6 +237,15 @@ const statusActive = ref();
 const isVaried = computed(() => {
   return dataForm.value.is_varied;
 });
+
+// const test22 = ref();
+
+// watch(
+//   () => dataForm.value,
+//   (newValue, oldValue) => {
+//     test22.value = newValue;
+//   }
+// );
 
 const schemaShouldIUse = computed(() => {
   if (isVaried.value == 1) {

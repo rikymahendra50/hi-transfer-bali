@@ -225,6 +225,15 @@
           <!-- <p>{{ $t("pengembalian-pembayaran") }}</p> -->
           <p>Cancel</p>
         </button>
+        <a
+          v-if="tourOrderDetail?.data?.payment_status === 'waiting_for_payment'"
+          :href="tourOrderDetail?.data?.payment_url"
+          target="_blank"
+          class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
+        >
+          <p>Payment url</p>
+        </a>
+
         <!-- <button
           v-else-if="
             tourOrderDetail?.data?.status === 'waiting_for_payment' &&

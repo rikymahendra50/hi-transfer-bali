@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h-32" id="learnmore"></div>
+    <div class="h-44 lg:h-32" id="learnmore"></div>
     <HeroHomeBanner />
     <UIContainer>
       <TourHighLight />

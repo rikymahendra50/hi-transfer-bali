@@ -22,17 +22,15 @@
               {{ result }}
             </div>
           </div>
-          <div>
+          <!-- <div>
             <div class="text-zinc-400 text-xs">
               {{ $t("harga-mulai-dari") }}
             </div>
             <h4 class="text-base sm:text-xl font-semibold text-primary">
-              {{
-                FormatMoneyDash(apiData?.data?.variants[0]?.price?.toString())
-              }}
+              {{ FormatMoneyDash(lowestPrice?.toString()) }}
               / {{ $t("orang") }}
             </h4>
-          </div>
+          </div> -->
         </div>
         <div class="flex justify-end w-full pt-5">
           <div class="flex items-center justify-end">

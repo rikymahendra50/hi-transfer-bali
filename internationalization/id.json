@@ -176,5 +176,6 @@
   "bagian-dari": "Bagian dari",
   "syarat-dan-ketentuan": "Syarat dan ketentuan",
   "lokasi-tidak-boleh-sama": "Lokasi tidak boleh sama",
-  "go-to-detail": "Lihat detail"
+  "go-to-detail": "Lihat detail",
+  "the-distance-cannot": "jaraknya tidak boleh lebih kecil dari 1 km"
 }

@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-secondary text-white py-5">
+  <footer class="bg-secondary text-white h-fit pt-10 pb-20 md:pt-5 md:pb-5">
     <UIContainer>
       <div class="flex flex-col w-full space-y-6">
         <div
@@ -84,8 +84,8 @@
     </UIContainer>
     <div class="h-0.5 w-full"></div>
     <UIContainer>
-      <div class="h-3 w-full text-center">
-        <p>
+      <div class="h-2 w-full text-center pt-4">
+        <p class="text-sm">
           ©{{ fullYear }} Hi Transfer Bali. All rights reserved. | Design &
           Development by
           <a href="https://spdigitalagency.com" target="_blank">s.p. Digital</a>

@@ -30,7 +30,7 @@
     <div class="lg:absolute z-10 w-full inset-x-0 bottom-0 lg:-bottom-4">
       <div>
         <div
-          class="max-w-5xl bg-white mx-auto mt-auto bottom-0 p-6 lg:p-2 shadow rounded-lg"
+          class="max-w-5xl bg-white mx-auto lg:mt-auto bottom-0 p-3 md:p-4 lg:p-2 shadow rounded-lg mt-[-30px] z-40 relative"
         >
           <div class="inline-flex">
             <ShareMenuTabLink
@@ -68,7 +68,6 @@ import { useStepper } from "@vueuse/core";
 const { locale, t: $t } = useI18n();
 const route = useRoute();
 const router = useRouter();
-
 const { current, goTo, isCurrent } = useStepper(["transport", "paket-tour"]);
 
 const slides = [

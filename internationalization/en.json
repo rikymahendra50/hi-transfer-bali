@@ -177,5 +177,6 @@
   "bagian-dari": "Part of",
   "syarat-dan-ketentuan": "Terms and Conditions",
   "lokasi-tidak-boleh-sama": "Lokasi should not be the same",
-  "go-to-detail": "Go to detail"
+  "go-to-detail": "Go to detail",
+  "the-distance-cannot": "the distance cannot be smaller than 1 km"
 }
