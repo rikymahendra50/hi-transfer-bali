@@ -1,12 +1,6 @@
 <template>
   <div class="">
     <TitleAdmin title="Daftar Admin" subTitle="Kelola daftar admin ">
-      <!-- <NuxtLink
-        to="/admin/admin-list/add"
-        class="border-2 py-4 px-6 rounded-[8px] shadow-xs font-medium text-black"
-      >
-        Tambah Admin baru
-      </NuxtLink> -->
       <ButtonAddAdmin link="/admin/admin-list/add" name="Tambah admin baru" />
     </TitleAdmin>
     <table class="table">
@@ -47,9 +41,7 @@
             </div>
           </td>
           <td class="text-sm font-normal">
-            <div class="font-medium text-[14px] text-black">
-              {{ item.is_active === 0 ? "Tidak aktif" : "Aktif" }}
-            </div>
+            <StatusActive :status="item.is_active" />
           </td>
           <td class="text-sm font-normal">
             <VDropdown>
@@ -66,13 +58,6 @@
                   >
                     Edit
                   </NuxtLink>
-                  <!-- <button
-                    @click="showModalDeleteFunc(hide, item.id)"
-                    type="button"
-                    class="hover:bg-red-600 hover:text-white py-2 px-3"
-                  >
-                    Delete
-                  </button> -->
                 </div>
               </template>
             </VDropdown>

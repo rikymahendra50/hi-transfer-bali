@@ -32,9 +32,10 @@
           <div class="px-3 py-1 w-fit rounded-xl">{{ item?.phone }}</div>
         </td>
         <td>
-          <div>
+          <!-- <div>
             {{ item?.is_active === 1 ? "Aktif" : "Tidak Aktif" }}
-          </div>
+          </div> -->
+          <StatusActive :status="item.is_active" />
         </td>
         <!-- <td>
           <div class="flex items-center">

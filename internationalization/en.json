@@ -178,5 +178,7 @@
   "syarat-dan-ketentuan": "Terms and Conditions",
   "lokasi-tidak-boleh-sama": "Lokasi should not be the same",
   "go-to-detail": "Go to detail",
-  "the-distance-cannot": "the distance cannot be smaller than 1 km"
+  "the-distance-cannot": "the distance cannot be smaller than 1 km",
+  "round-trip": "Round trip",
+  "one-way": "One way"
 }

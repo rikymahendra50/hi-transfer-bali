@@ -17,7 +17,6 @@
           >
         </div>
       </div>
-
       <div class="py-10">
         <div class="px-5 py-4 flex flex-col gap-3 border-b">
           <div class="text-gray-500 uppercase text-sm">
@@ -92,13 +91,13 @@
               class="bg-primary py-2 px-4 rounded-xl text-white w-fit"
               v-if="carsOrderDetail?.data?.details.length > 1"
             >
-              <p>Round trip</p>
+              <p>{{ $t("round-trip") }}</p>
             </div>
             <div
               class="bg-primary py-2 px-4 rounded-xl text-white w-fit"
               v-else-if="carsOrderDetail?.data?.details.length == 1"
             >
-              <p>One way</p>
+              <p>{{ $t("one-way") }}</p>
             </div>
           </div>
         </div>
@@ -210,6 +209,7 @@ const currentId = ref(undefined);
 const { $toast } = useNuxtApp();
 const { loading, message, alertType, setErrorMessage, transformErrors } =
   useRequestHelper();
+const { formatDate } = useFormatDate();
 
 const { pushNotification } = useNotification();
 
@@ -279,15 +279,6 @@ function getSuskes(data) {
   showModalRefund.value = data;
   // window.location.reload();
   refresh();
-}
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
 }
 
 useHead({ title: "Order detail car" });

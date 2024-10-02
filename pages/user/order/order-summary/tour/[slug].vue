@@ -88,7 +88,6 @@
               <div class="text-black uppercase text-[12px] font-semibold">
                 Details :
               </div>
-
               <div class="overflow-x-auto">
                 <table class="table">
                   <!-- head -->
@@ -275,9 +274,6 @@
       </div>
     </div>
   </modal>
-  <!-- <pre>
-    {{ tourOrderDetail?.data?.details }}
-  </pre> -->
 </template>
 
 <script setup>
@@ -285,6 +281,7 @@ const route = useRoute();
 const slug = computed(() => route?.params?.slug);
 const { requestOptions } = useRequestOptions();
 const { $user } = useAuth();
+const { formatDate } = useFormatDate();
 const page = ref(1);
 const showModalRefund = ref(false);
 const { $toast } = useNuxtApp();
@@ -357,15 +354,6 @@ function getSuskes(data) {
   showModalRefund.value = data;
   // window.location.reload();
   refresh();
-}
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
 }
 
 useHead({ title: "Order detail tour" });

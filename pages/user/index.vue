@@ -265,6 +265,7 @@ const pageCars = ref(1);
 const pageTours = ref(1);
 const status = ref("Paid");
 const { $logout, $user } = useAuth();
+const { formatDate } = useFormatDate();
 
 useHead({ title: "User" });
 
@@ -356,15 +357,6 @@ function replaceWindowTours() {
     })
   );
   refreshTours();
-}
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
 }
 
 definePageMeta({

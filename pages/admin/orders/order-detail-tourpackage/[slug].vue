@@ -23,6 +23,8 @@
               ? '#f2ec72'
               : data?.data?.status === 'failed'
               ? '#f2727b'
+              : data?.data?.status === 'refunding'
+              ? '#f2727b'
               : 'transparent',
         }"
       >
@@ -83,7 +85,7 @@
           <tr v-for="item in data?.data?.details">
             <td>{{ item.name }}</td>
             <td>
-              {{ data?.data?.activity_date }}
+              {{ formatDate(data?.data?.activity_date) }}
             </td>
             <td>{{ item.quantity ?? "-" }}</td>
             <td>{{ FormatMoneyDash(item.total_price.toString()) }}</td>
@@ -188,6 +190,7 @@ const page = ref(1);
 const showModalDelete = ref(false);
 const currentId = ref(undefined);
 const slug = computed(() => route.params.slug);
+const { formatDate } = useFormatDate();
 
 const { data, error, refresh } = await useAsyncData("ordersDetail", () =>
   $fetch(`/admins/tour-orders/${slug.value}`, {

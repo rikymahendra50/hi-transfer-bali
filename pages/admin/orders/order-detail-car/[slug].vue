@@ -1,7 +1,7 @@
 <template>
   <TitleAdminBack
     title="Ringkasan Pesanan"
-    :subTitle="`Informasi lengkap untuk pesanan #${data?.data?.uuid}`"
+    :subTitle="`Informasi lengkap untuk pesanan #${data?.data?.uuid ?? ''}`"
     link="/admin/orders/order-cars"
   >
     <div>
@@ -16,6 +16,8 @@
               : data?.data?.status === 'paid'
               ? '#f2ec72'
               : data?.data?.status === 'failed'
+              ? '#f2727b'
+              : data?.data?.status === 'refunding'
               ? '#f2727b'
               : 'transparent',
         }"
@@ -49,29 +51,66 @@
     <div class="text-gray-500 uppercase text-[12px] font-semibold">
       Informasi Pemesanan
     </div>
-    <div class="grid md:grid-cols-2" v-for="item in data?.data?.details">
+    <div class="grid md:grid-cols-2">
       <div class="flex flex-col gap-2">
         <p class="font-semibold text-sm">Penjemputan</p>
-        <p class="text-sm">{{ item.pickup_name }}</p>
+        <p class="text-sm">{{ data?.data?.details[0]?.pickup_name }}</p>
         <div class="text-sm opacity-50">
           <a
-            :href="`https://maps.google.com/?q=${item.pickup_address},${item.pickup_address}`"
+            class="hover:text-primary font-medium"
+            :href="`https://maps.google.com/?q=${data?.data?.details[0]?.pickup_latitude},${data?.data?.details[0]?.pickup_longitude}`"
             target="_blank"
           >
-            {{ item.pickup_address }}
+            {{ data?.data?.details[0]?.pickup_address }}
           </a>
+        </div>
+        <div class="text-sm">
+          {{ formatDate(data?.data?.details[0]?.activity_date) ?? "" }}
         </div>
       </div>
       <div class="flex flex-col gap-2">
         <p class="font-semibold text-sm">Pengantaran</p>
-        <p class="text-sm">{{ item.destination_name }}</p>
+        <p class="text-sm">
+          {{
+            data?.data?.details[1]?.destination_name ??
+            data?.data?.details[0]?.destination_name
+          }}
+        </p>
         <div class="text-sm opacity-50">
           <a
             target="_blank"
-            :href="`https://maps.google.com/?q=${item.destination_latitude},${item.destination_longitude}`"
-            >{{ item.destination_address }}</a
+            class="hover:text-primary font-medium"
+            :href="`https://maps.google.com/?q=${data?.data?.details[0]?.destination_latitude},${data?.data?.details[0]?.destination_longitude}`"
+            >{{
+              data?.data?.details[1]?.destination_address ??
+              data?.data?.details[0]?.destination_address
+            }}</a
           >
         </div>
+        <div class="text-sm">
+          <div class="text-sm">
+            {{
+              data?.data?.details[1]?.activity_date
+                ? formatDate(data?.data?.details[1]?.activity_date)
+                : formatDate(data?.data?.details[0]?.activity_date)
+            }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="data?.data?.details">
+      <div
+        class="bg-primary py-2 px-4 rounded-xl text-white w-fit"
+        v-if="data?.data?.details?.length > 1"
+      >
+        <p>Bolak balik</p>
+      </div>
+      <div
+        class="bg-primary py-2 px-4 rounded-xl text-white w-fit"
+        v-else-if="data?.data?.details?.length == 1"
+      >
+        <p>Satu arah</p>
       </div>
     </div>
   </div>
@@ -134,6 +173,7 @@ const page = ref(1);
 const showModalDelete = ref(false);
 const currentId = ref(undefined);
 const slug = computed(() => route.params.slug);
+const { formatDate } = useFormatDate();
 
 const { data, error, refresh } = await useAsyncData("ordersDetail", () =>
   $fetch(`/admins/car-orders/${slug.value}`, {
