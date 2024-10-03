@@ -72,7 +72,12 @@
           />
         </div>
       </div>
-      <div class="p-4">
+      <VeeForm
+        @submit="submitFormT"
+        class="p-4"
+        :validation-schema="orderCarSchema"
+        v-slot="{ errors }"
+      >
         <div class="flex flex-col space-y-6">
           <div class="flex justify-between items-center">
             <div class="text-2xl font-semibold">{{ $t("data-pemesan") }}</div>
@@ -83,7 +88,7 @@
               class="absolute w-full h-full z-[200] bg-opacity-0"
               v-if="!$isUser"
             ></NuxtLink>
-            <VehicleOrdererForm
+            <!-- <VehicleOrdererForm
               ref="vehicleForm"
               :name="dataFormT.name"
               :email="dataFormT.email"
@@ -91,7 +96,42 @@
               @update:name="dataFormT.name = $event"
               @update:email="dataFormT.email = $event"
               @update:phone="dataFormT.phone = $event"
-            />
+            /> -->
+            <!-- test -->
+            <div>
+              <div class="space-y-4 p-4 border rounded-xl">
+                <UIFormMGroup name="name" label="Nama Lengkap">
+                  <UIFormMTextField
+                    v-model="dataFormT.name"
+                    name="name"
+                    class="input-bordered"
+                    placeholder="Ketik Nama Lengkap Anda"
+                  />
+                </UIFormMGroup>
+
+                <UIFormMGroup name="email" label="Email">
+                  <UIFormMTextField
+                    v-model="dataFormT.email"
+                    name="email"
+                    class="input-bordered"
+                    placeholder="Ketik Email Anda"
+                  />
+                </UIFormMGroup>
+
+                <UIFormMGroup name="phone" label="Nomor Telepon">
+                  <UIFormMTextField
+                    v-model="dataFormT.phone"
+                    name="phone"
+                    class="input-bordered"
+                    placeholder="Ketik Nomor Telepon"
+                  />
+                </UIFormMGroup>
+                <div class="hidden">
+                  <button ref="internalSubmit" type="submit">submit</button>
+                </div>
+              </div>
+            </div>
+            <!-- end test -->
           </div>
           <div class="flex justify-between items-center">
             <div class="text-2xl font-semibold">{{ $t("detail-mobil") }}</div>
@@ -106,14 +146,14 @@
           <div class="flex items-center justify-end">
             <button
               class="btn btn-primary"
+              type="submit"
               :disabled="$isUser === false"
-              @click="submitFormT"
             >
               <p>{{ $t("lanjutkan") }}</p>
             </button>
           </div>
         </div>
-      </div>
+      </VeeForm>
     </div>
   </UIContainer>
 </template>
@@ -136,6 +176,7 @@ const { $isLoggedIn, $isUser, $logout } = useAuth();
 
 const selectedDistance = ref("");
 const selectedPassenger = ref("");
+const { orderCarSchema } = useSchema();
 
 useHead({
   title: "Vehicle",
@@ -163,7 +204,7 @@ const dataFormT = ref({
 });
 
 function submitFormT() {
-  vehicleForm.value.$refs.internalSubmit.click();
+  // vehicleForm.value.$refs.internalSubmit.click();
 
   dataForm.value.user_uuid = dataFormT.value.user_uuid;
   dataForm.value.name = dataFormT.value.name;
@@ -181,8 +222,6 @@ onMounted(async () => {
   }
 
   showSavedCarData();
-
-  // console.log("ini dari booking", dataForm.value);
 });
 
 const fetchUserData = async (ctx) => {

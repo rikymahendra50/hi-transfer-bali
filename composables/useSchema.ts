@@ -258,23 +258,21 @@ export default function () {
     object({
       name: string().min(1, $t("orderCarSchema.name")),
       email: emailField,
-      phone: string()
-        .min(1, $t("orderCarSchema.telepon"))
-        .transform((value, ctx) => {
-          const parsed = parseInt(value);
-          if (isNaN(parsed)) {
-            ctx.addIssue({
-              code: z.ZodIssueCode.custom,
-              message: notANumber,
-            });
-            return z.NEVER;
-          }
-          return parsed;
-        }),
+      // phone: string()
+      //   .min(1, $t("orderCarSchema.telepon"))
+      //   .transform((value, ctx) => {
+      //     const parsed = parseInt(value);
+      //     if (isNaN(parsed)) {
+      //       ctx.addIssue({
+      //         code: z.ZodIssueCode.custom,
+      //         message: notANumber,
+      //       });
+      //       return z.NEVER;
+      //     }
+      //     return parsed;
+      //   }),
     })
   );
-
-  // const bookingSchema = toTypedSchema()
 
   const unSetPasswordSchema = toTypedSchema(passwordAndConfirm);
 

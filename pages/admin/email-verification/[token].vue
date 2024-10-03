@@ -16,7 +16,6 @@
 
 <script lang="ts" setup>
 const route = useRoute();
-
 const router = useRouter();
 
 const { $verificationEmail } = useAuth({ usedBy: "admin" });
@@ -24,8 +23,9 @@ const { $verificationEmail } = useAuth({ usedBy: "admin" });
 const token = computed(() => {
   return route.params.token as string;
 });
+
 const message = ref("");
-const isSuccess = ref(false);
+const isSuccess = ref(true);
 const title = ref("Email Verification");
 
 async function tokenVerify() {
@@ -42,6 +42,7 @@ async function tokenVerify() {
 }
 
 onMounted(async () => {
+  await nextTick();
   if (token.value) {
     await tokenVerify();
   } else {

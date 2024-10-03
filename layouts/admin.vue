@@ -18,7 +18,7 @@
         <NuxtLink
           class="link link-primary link-hover p-1 underline-offset-8 decoration-4 rounded"
           active-class="font-medium"
-          to="/admin/orders"
+          to="/"
           ><img
             src="/hi-transfer-logo.png"
             alt="logo"
