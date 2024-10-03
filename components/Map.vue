@@ -69,6 +69,10 @@
 </template>
 
 <script setup>
+import { ref, watch } from "vue";
+const { locale, t: $t } = useI18n();
+const { $toast } = useNuxtApp();
+
 const props = defineProps({
   latitude: {
     type: [String, Number],
@@ -86,10 +90,6 @@ const props = defineProps({
     type: [Array, Object],
   },
 });
-
-import { ref, watch } from "vue";
-
-const { $toast } = useNuxtApp();
 
 const center = ref({
   lat: props.dataJikaSudahada3?.latitude ?? -8.417347915171359,

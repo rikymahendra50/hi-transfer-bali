@@ -48,13 +48,13 @@
                 Booking ID
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
-                Destination
+                {{ $t("destinasi") }}
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
                 Type
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
-                Date
+                {{ $t("date") }}
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
                 {{ $t("pricing") }}
@@ -165,10 +165,10 @@
                 Booking ID
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
-                Destination
+                {{ $t("destinasi") }}
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
-                Departure Date & Time
+                {{ $t("tanggal-keberangkatan") }}
               </th>
               <th class="font-medium text-[#667085] bg-[#FCFCFD] w-[200px]">
                 {{ $t("pricing") }}

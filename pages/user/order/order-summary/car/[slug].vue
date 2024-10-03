@@ -241,11 +241,11 @@ async function showModalRefundFunc(id) {
   );
 
   if (error.value) {
-    setErrorMessage(error.value?.data?.message ?? "Something went wrong");
-    $toast.error(error.value?.data?.message ?? "Something went wrong. ");
+    setErrorMessage(error.value?.data?.message ?? $t("something-error"));
+    $toast.error(error.value?.data?.message ?? $t("something-error"));
   } else {
     $toast.success(
-      data.value?.data?.message ?? "Sending request refund sucsess"
+      data.value?.data?.message ?? $t("sending-request-refund-success")
     );
   }
   loading.value = false;
@@ -262,12 +262,10 @@ async function cancelOrder() {
   );
 
   if (error.value) {
-    setErrorMessage(error.value?.data?.message ?? "Something went wrong");
-    $toast.error(error.value?.data?.message ?? "Something went wrong.");
+    setErrorMessage(error.value?.data?.message ?? $t("something-error"));
+    $toast.error(error.value?.data?.message ?? $t("something-error"));
   } else {
-    $toast.success(
-      data.value?.data?.message ?? "Cancel car order successfully"
-    );
+    $toast.success(data.value?.data?.message ?? $t("cancel-car-order-sukses"));
   }
   loading.value = false;
 

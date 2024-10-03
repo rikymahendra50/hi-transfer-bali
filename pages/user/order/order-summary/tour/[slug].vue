@@ -52,41 +52,9 @@
           </div>
 
           <div class="flex flex-col gap-1 text-sm">
-            <!-- <p class="text-[#121212] font-semibold">Details :</p> -->
-            <!-- <div class="">
-              <div
-                class="py-4 flex flex-col gap-3 border-b mb-4"
-                v-for="item in tourOrderDetail?.data?.details"
-              >
-                <div
-                  class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm"
-                >
-                  <p class="font-semibold">Name :</p>
-                  <p>{{ item.name }}</p>
-                </div>
-                <div
-                  class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm"
-                >
-                  <p class="font-semibold">Quantity :</p>
-                  <p>{{ item.quantity }}</p>
-                </div>
-                <div
-                  class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm"
-                >
-                  <p class="font-semibold">Price :</p>
-                  <p>{{ FormatMoneyDash(item.price) }}</p>
-                </div>
-                <div
-                  class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm"
-                >
-                  <p class="font-semibold">Total Price :</p>
-                  <p>{{ FormatMoneyDash(item.total_price) }}</p>
-                </div>
-              </div>
-            </div> -->
             <div class="flex flex-col gap-3 border-b my-4">
               <div class="text-black uppercase text-[12px] font-semibold">
-                Details :
+                {{ $t("details") }} :
               </div>
               <div class="overflow-x-auto">
                 <table class="table">
@@ -95,22 +63,22 @@
                     <tr>
                       <th>
                         <div class="text-[#121212] font-semibold text-sm">
-                          Name
+                          {{ $t("name") }}
                         </div>
                       </th>
                       <th>
                         <div class="text-[#121212] font-semibold text-sm">
-                          Quantity
+                          {{ $t("jumlah") }}
                         </div>
                       </th>
                       <th>
                         <div class="text-[#121212] font-semibold text-sm">
-                          Price
+                          {{ $t("price") }}
                         </div>
                       </th>
                       <th>
                         <div class="text-[#121212] font-semibold text-sm">
-                          Total Price
+                          Total {{ $t("price") }}
                         </div>
                       </th>
                     </tr>
@@ -137,9 +105,8 @@
           <!-- test -->
           <div class="flex flex-col gap-3 border-b my-4">
             <div class="text-black uppercase text-[12px] font-semibold">
-              Informasi Participant :
+              {{ $t("informasi-participant") }} :
             </div>
-
             <div class="overflow-x-auto">
               <table class="table">
                 <!-- head -->
@@ -147,12 +114,12 @@
                   <tr>
                     <th>
                       <div class="text-[#121212] font-semibold text-sm">
-                        Name
+                        {{ $t("name") }}
                       </div>
                     </th>
                     <th>
                       <div class="text-[#121212] font-semibold text-sm">
-                        Nationality
+                        {{ $t("nationality") }}
                       </div>
                     </th>
                     <!-- <th>
@@ -222,7 +189,7 @@
           class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
         >
           <!-- <p>{{ $t("pengembalian-pembayaran") }}</p> -->
-          <p>Cancel</p>
+          <p>{{ $t("cancel") }}</p>
         </button>
         <a
           v-if="tourOrderDetail?.data?.payment_status === 'waiting_for_payment'"
@@ -283,6 +250,7 @@ const { requestOptions } = useRequestOptions();
 const { $user } = useAuth();
 const { formatDate } = useFormatDate();
 const page = ref(1);
+const { locale, t: $t } = useI18n();
 const showModalRefund = ref(false);
 const { $toast } = useNuxtApp();
 const currentId = ref(undefined);
@@ -316,12 +284,10 @@ async function showModalRefundFunc(id) {
   );
 
   if (error.value) {
-    setErrorMessage(error.value?.data?.message ?? "Something went wrong");
-    $toast.error(error.value?.data?.message ?? "Something went wrong.");
+    setErrorMessage(error.value?.data?.message ?? $t("something-error"));
+    $toast.error(error.value?.data?.message ?? $t("something-error"));
   } else {
-    $toast.success(
-      data.value?.data?.message ?? "Cancel tour order successfully"
-    );
+    $toast.success(data.value?.data?.message ?? $t("cancel-tour-order-sukses"));
   }
   loading.value = false;
 }
@@ -340,9 +306,7 @@ async function cancelOrder() {
     setErrorMessage(error.value?.data?.message ?? "Something went wrong");
     $toast.error(error.value?.data?.message ?? "Something went wrong.");
   } else {
-    $toast.success(
-      data.value?.data?.message ?? "Cancel tour order successfully"
-    );
+    $toast.success(data.value?.data?.message ?? $t("cancel-tour-order-sukses"));
   }
   loading.value = false;
 

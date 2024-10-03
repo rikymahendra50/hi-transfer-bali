@@ -44,7 +44,9 @@
               </div>
 
               <div class="flex flex-col space-y-4">
-                <h4 class="text-base font-semibold">Ikuti kami di</h4>
+                <h4 class="text-base font-semibold">
+                  {{ $t("ikuti-kami-di") }}
+                </h4>
                 <ul class="space-y-1">
                   <li v-for="item in socialMedias" :key="item.label">
                     <a

@@ -79,6 +79,7 @@ export default function (options?: useAuthOptions) {
     first_name: "",
     last_name: "",
     email: "",
+    phone: "",
     password: "",
     confirm_password: "",
   });

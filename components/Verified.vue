@@ -95,12 +95,11 @@ async function onSubmit() {
   );
 
   if (error.value) {
-    $toast.error(error.value?.data?.message ?? "Fail ");
+    $toast.error(error.value?.data?.message ?? $t("gagal"));
   } else {
     // updateToParent();
     $toast.success(
-      data.value?.data?.message ??
-        "Success please check your email for more step"
+      data.value?.data?.message ?? $t("success-please-check-your-email-step")
     );
     emit("sukses", false);
   }

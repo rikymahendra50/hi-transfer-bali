@@ -135,11 +135,6 @@ definePageMeta({
               </UIFormMTextField>
             </UIFormMGroup>
 
-            <!-- test resend -->
-
-            <!--              
-              " -->
-
             <div class="h-1"></div>
             <div
               v-if="
