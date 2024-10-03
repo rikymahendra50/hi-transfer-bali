@@ -6,9 +6,6 @@
     <table class="table">
       <thead>
         <tr>
-          <!-- <th>
-            <div class="text-[#989393]">Profile picture</div>
-          </th> -->
           <th>
             <div class="text-[#989393]">List Admin</div>
           </th>
@@ -23,13 +20,6 @@
       </thead>
       <tbody>
         <tr v-for="item in data?.data">
-          <!-- <td class="text-sm font-normal">
-            <img
-              :src="item.profile_picture ?? '-'"
-              alt=""
-              class="rounded-full w-10 h-10"
-            />
-          </td> -->
           <td class="text-sm font-normal">
             <div class="font-medium text-[14px] text-black">
               {{ item.first_name + " " + item.last_name }}

@@ -71,20 +71,14 @@
       <div class="flex flex-col gap-2">
         <p class="font-semibold text-sm">Pengantaran</p>
         <p class="text-sm">
-          {{
-            data?.data?.details[1]?.destination_name ??
-            data?.data?.details[0]?.destination_name
-          }}
+          {{ data?.data?.details[0]?.destination_name }}
         </p>
         <div class="text-sm opacity-50">
           <a
             target="_blank"
             class="hover:text-primary font-medium"
             :href="`https://maps.google.com/?q=${data?.data?.details[0]?.destination_latitude},${data?.data?.details[0]?.destination_longitude}`"
-            >{{
-              data?.data?.details[1]?.destination_address ??
-              data?.data?.details[0]?.destination_address
-            }}</a
+            >{{ data?.data?.details[0]?.destination_address }}</a
           >
         </div>
         <div class="text-sm">
