@@ -192,7 +192,7 @@
           <p>{{ $t("cancel") }}</p>
         </button>
         <a
-          v-if="tourOrderDetail?.data?.payment_status === 'waiting_for_payment'"
+          v-if="tourOrderDetail?.data?.payment_status === 'pending'"
           :href="tourOrderDetail?.data?.payment_url"
           target="_blank"
           class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
