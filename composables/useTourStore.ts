@@ -26,6 +26,7 @@ export default function useTourForm(options: Options = {}) {
     tour_id: undefined,
     tourist_numbers: 1,
     price: undefined,
+    usd_price: undefined,
     product: [],
     forms: [],
     variants: [],

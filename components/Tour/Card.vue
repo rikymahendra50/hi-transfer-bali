@@ -23,7 +23,10 @@
       <div>
         <div class="text-zinc-400 text-xs">{{ $t("harga-mulai-dari") }}</div>
         <h4 class="text-xl font-semibold text-primary">
-          {{ FormatMoneyDash(price.toString()) }} /{{ $t("orang") }}
+          {{
+            FormatMoneyDash(price.toString(), locale == "id" ? "IDR" : "usd")
+          }}
+          /{{ $t("orang") }}
         </h4>
       </div>
     </div>

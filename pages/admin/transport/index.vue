@@ -28,7 +28,7 @@
           </div>
         </td>
         <td class="text-sm font-normal text-[#989393]">
-          {{ FormatMoneyDash(item?.price) }}
+          {{ FormatMoneyDash(item?.price, locale == "id" ? "IDR" : "usd") }}
         </td>
         <td class="text-sm font-normal text-[#989393]">
           <StatusTrueOrFalse
@@ -137,6 +137,7 @@ const { requestOptions } = useRequestOptions();
 const router = useRouter();
 const route = useRoute();
 const page = ref(1);
+const { locale, t: $t } = useI18n();
 import { withQuery } from "ufo";
 
 if (route.query.page) {

@@ -18,6 +18,7 @@ export default function (options: Options = {}) {
     name: undefined,
     is_active: undefined,
     price: undefined,
+    usd_price: undefined,
     max_person: undefined,
     image: undefined,
     facilities: [],
@@ -28,6 +29,7 @@ export default function (options: Options = {}) {
       name: undefined,
       is_active: undefined,
       price: undefined,
+      usd_price: undefined,
       max_person: undefined,
       image: undefined,
       facilities: [],
@@ -75,7 +77,7 @@ export default function (options: Options = {}) {
         ctx.setErrors(transformErrors(error.data));
         pushNotification({
           type: "error",
-          text: error.value.data?.message,
+          text: error.data?.message,
           title: "error",
         });
       })

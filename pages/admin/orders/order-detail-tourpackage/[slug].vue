@@ -88,7 +88,14 @@
               {{ formatDate(data?.data?.activity_date) }}
             </td>
             <td>{{ item.quantity ?? "-" }}</td>
-            <td>{{ FormatMoneyDash(item.total_price.toString()) }}</td>
+            <td>
+              {{
+                FormatMoneyDash(
+                  item.total_price.toString(),
+                  locale == "id" ? "IDR" : "usd"
+                )
+              }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -147,7 +154,12 @@
     <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
       <p class="font-semibold">Total Price</p>
       <p>
-        {{ FormatMoneyDash(data?.data?.payment?.total_purchased.toString()) }}
+        {{
+          FormatMoneyDash(
+            data?.data?.payment?.total_purchased.toString(),
+            locale == "id" ? "IDR" : "usd"
+          )
+        }}
       </p>
     </div>
   </div>
@@ -155,6 +167,7 @@
 
 <script setup lang="ts">
 import { withQuery } from "ufo";
+const { locale, t: $t } = useI18n();
 
 // @ts-ignore
 definePageMeta({

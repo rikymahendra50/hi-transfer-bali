@@ -41,7 +41,12 @@
         </div>
         <div class="flex flex-col justify-between space-y-4">
           <h4 class="text-xl font-semibold text-primary xl:text-right">
-            {{ FormatMoneyDash(props?.price?.toString()) }}
+            {{
+              FormatMoneyDash(
+                props?.price?.toString(),
+                locale == "id" ? "IDR" : "usd"
+              )
+            }}
           </h4>
 
           <div>
@@ -87,8 +92,6 @@ function goToVehicleBooking(id, image, price, facilities, name) {
   dataForm.value.facilities = facilities;
 
   saveFormData();
-
-  // console.log("ini dari card", dataForm.value);
 
   router.push("/vehicles/booking");
 }

@@ -52,7 +52,18 @@
                 >
                   <div>{{ $t("yang-harus-kamu-bayar") }}</div>
                   <div class="text-lg font-semibold text-primary">
-                    {{ FormatMoneyDash(dataForm?.price?.toString()) }}
+                    {{
+                      // FormatMoneyDash(
+                      //   dataForm?.price?.toString(),
+                      //   locale == "id" ? "IDR" : "usd"
+                      // )
+                      locale == "en"
+                        ? FormatMoneyDash(
+                            dataForm?.usd_price?.toString(),
+                            "USD"
+                          )
+                        : FormatMoneyDash(dataForm?.price?.toString(), "IDR")
+                    }}
                   </div>
                 </div>
               </div>
@@ -74,6 +85,8 @@
 </template>
 
 <script setup>
+const { locale, t: $t } = useI18n();
+
 const filter = ref({
   sort: "",
 });
@@ -93,10 +106,12 @@ const {
 
 onMounted(() => {
   showSavedTourData();
+
+  console.log(dataForm.value);
 });
 
 function onSubmit() {
-  console.log("ini adalah dataForm final", dataForm.value);
+  // console.log("ini adalah dataForm final", dataForm.value);
   saveFormData();
   submitForm();
   clearSavedTourData();

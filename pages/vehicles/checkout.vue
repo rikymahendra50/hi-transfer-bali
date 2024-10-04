@@ -133,7 +133,12 @@
                 </p>
                 <p class="text-primary text-lg font-semibold">
                   <!-- {{ FormatMoneyDash(String(dataForm.price)) }} -->
-                  {{ FormatMoneyDash(String(dataForm.total_price)) }}
+                  {{
+                    FormatMoneyDash(
+                      String(dataForm.total_price),
+                      locale == "id" ? "IDR" : "usd"
+                    )
+                  }}
                 </p>
               </div>
             </div>

@@ -51,7 +51,7 @@
     <div class="text-gray-500 uppercase text-[12px] font-semibold">
       Informasi Pemesanan
     </div>
-    <div class="grid md:grid-cols-2">
+    <div class="grid md:grid-cols-2 gap-5">
       <div class="flex flex-col gap-2">
         <p class="font-semibold text-sm">Penjemputan</p>
         <p class="text-sm">{{ data?.data?.details[0]?.pickup_name }}</p>
@@ -128,7 +128,12 @@
     <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
       <p class="font-semibold">Total Price</p>
       <p>
-        {{ FormatMoneyDash(data?.data?.payment?.total_purchased.toString()) }}
+        {{
+          FormatMoneyDash(
+            data?.data?.payment?.total_purchased.toString(),
+            locale == "id" ? "IDR" : "usd"
+          )
+        }}
       </p>
     </div>
   </div>
@@ -136,6 +141,7 @@
 
 <script setup>
 import { withQuery } from "ufo";
+const { locale, t: $t } = useI18n();
 
 // @ts-ignore
 definePageMeta({

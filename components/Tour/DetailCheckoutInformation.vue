@@ -50,7 +50,15 @@
       >
         <div class="font-semibold">{{ item.name }}</div>
         <div>
-          {{ FormatMoneyDash(item?.totalItemPrice?.toString()) }}
+          {{
+            // FormatMoneyDash(
+            //   item?.totalItemPrice?.toString(),
+            //   locale == "id" ? "IDR" : "usd"
+            // )
+            locale == "en"
+              ? FormatMoneyDash(item?.totalItemPriceUSD?.toString(), "USD")
+              : FormatMoneyDash(item?.totalItemPrice?.toString(), "IDR")
+          }}
         </div>
       </div>
     </div>
@@ -58,6 +66,8 @@
 </template>
 
 <script setup lang="ts">
+const { locale, t: $t } = useI18n();
+
 const props = defineProps({
   name: {
     type: String,

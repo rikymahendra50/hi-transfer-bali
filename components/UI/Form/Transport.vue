@@ -1,6 +1,6 @@
 <template>
   <VeeForm
-    :validation-schema="transportSchema"
+    :validation-schema="schemaShouldIUse"
     @submit="onSubmit"
     v-slot="{ errors }"
   >
@@ -10,8 +10,8 @@
         <div class="hidden">
           <VeeField
             type="file"
-            name="image_thumbnail"
-            id="image_thumbnail"
+            name="image"
+            id="image"
             v-model="dataForm.image"
           />
         </div>
@@ -35,11 +35,40 @@
           :useStarIcon="false"
         />
 
-        <UIFormInputNumber
+        <!-- <UIFormTextFieldWLabel
+          v-if="props.transport"
           label="Harga"
           name="price"
           placeholder="Harga"
           v-model="dataForm.price"
+          class="input-bordered shadow-sm focus:outline-none"
+          :useStarIcon="false"
+        /> -->
+
+        <UIFormInputNumber
+          label="Harga IDR"
+          name="price"
+          placeholder="Harga IDR"
+          v-model="dataForm.price"
+          class="input-bordered shadow-sm focus:outline-none"
+          :useStarIcon="false"
+        />
+
+        <!-- <UIFormTextFieldWLabel
+          v-if="props.transport"
+          label="Harga USD"
+          name="price_usd"
+          placeholder="Inputkan harga USD"
+          v-model="dataForm.usd_price"
+          class="input-bordered shadow-sm focus:outline-none"
+          :useStarIcon="false"
+        /> -->
+
+        <UIFormInputNumber
+          label="Harga USD"
+          name="price_usd"
+          placeholder="Inputkan harga USD"
+          v-model="dataForm.usd_price"
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
         />
@@ -67,7 +96,7 @@
 
       <UIFormDropdownsTest
         label="Fasilitas mobil"
-        name="fasilitas_mobil"
+        name="facilities"
         placeholder="Fasilitas mobil"
         :dataDropdown="data?.data"
         v-model="dataForm.facilities"
@@ -95,7 +124,7 @@
 </template>
 
 <script setup>
-const { transportSchema } = useSchema();
+const { transportSchema, transportSchemaIfVaried } = useSchema();
 const { requestOptions } = useRequestOptions();
 
 const props = defineProps({
@@ -123,9 +152,13 @@ const {
   selectedTransport,
 } = useTransport({ callback: redirect });
 
-// const statusIsActive = computed(() => {
-//   return dataForm.value.is_active === 1 ? "Tersedia" : "Tidak Tersedia";
-// });
+const schemaShouldIUse = computed(() => {
+  if (existingImage.value) {
+    return transportSchemaIfVaried;
+  } else {
+    return transportSchema;
+  }
+});
 
 const statusActive = ref();
 
@@ -155,9 +188,9 @@ const { data, error, refresh } = await useAsyncData("facilities", () =>
 
 // console.log(data.value);
 
-const selectedValues = ref([]);
-const selectedIds = ref([]);
-const selectedOptions = ref([]);
+// const selectedValues = ref([]);
+// const selectedIds = ref([]);
+// const selectedOptions = ref([]);
 
 // function funcGetIdFacility(ids) {
 //   if (!selectedIds.value.includes(ids)) {
@@ -193,9 +226,9 @@ function funcGetIdFacility(ids) {
 onMounted(async () => {
   if (props.transport) {
     selectedTransport.value = props.transport;
-
     dataForm.value.name = props.transport.name;
-    dataForm.value.price = props.transport.price;
+    dataForm.value.price = Number(props.transport.price);
+    dataForm.value.usd_price = Number(props.transport.usd_price);
     dataForm.value.max_person = props.transport.max_person;
     dataForm.value.is_active = props.transport.is_active;
     statusActive.value =
@@ -203,8 +236,6 @@ onMounted(async () => {
     dataForm.value.facilities = props.transport.facilities.map(
       (facility) => facility.id
     );
-
-    // console.log(dataForm.value);
   }
 });
 </script>

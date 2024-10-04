@@ -91,7 +91,72 @@ export default function () {
 
   const transportSchema = toTypedSchema(
     object({
+      image: z.instanceof(File),
+      price: number()
+        .int()
+        .min(1, "Harga harus lebih dari 0")
+        .superRefine((data, ctx) => {
+          if (isNaN(data)) {
+            ctx.addIssue({
+              path: ["price"],
+              code: "custom",
+              message: "Harga harus berupa angka yang valid",
+            });
+          }
+        }),
+      price_usd: number()
+        .int()
+        .min(1, "Harga harus lebih dari 0")
+        .superRefine((data, ctx) => {
+          if (isNaN(data)) {
+            ctx.addIssue({
+              path: ["price"],
+              code: "custom",
+              message: "Harga harus berupa angka yang valid",
+            });
+          }
+        }),
+      is_active: string().min(1, "Status harus diisi"),
+      maxpenumpang: number().min(1, "Maksimal orang harus diisi"),
       mobil: string().min(1, "Mobil is required"),
+      facilities: z
+        .array(z.number())
+        .min(1, { message: "Needs to be exactly 1" }),
+    })
+  );
+
+  const transportSchemaIfVaried = toTypedSchema(
+    object({
+      price: number()
+        .int()
+        .min(1, "Harga harus lebih dari 0")
+        .superRefine((data, ctx) => {
+          if (isNaN(data)) {
+            ctx.addIssue({
+              path: ["price"],
+              code: "custom",
+              message: "Harga harus berupa angka yang valid",
+            });
+          }
+        }),
+      price_usd: number()
+        .int()
+        .min(1, "Harga harus lebih dari 0")
+        .superRefine((data, ctx) => {
+          if (isNaN(data)) {
+            ctx.addIssue({
+              path: ["price"],
+              code: "custom",
+              message: "Harga harus berupa angka yang valid",
+            });
+          }
+        }),
+      is_active: string().min(1, "Status harus diisi"),
+      maxpenumpang: number().min(1, "Maksimal orang harus diisi"),
+      mobil: string().min(1, "Mobil is required"),
+      facilities: z
+        .array(z.number())
+        .min(1, { message: "Needs to be exactly 1" }),
     })
   );
 
@@ -110,11 +175,23 @@ export default function () {
             });
           }
         }),
+      price_usd: number()
+        .int()
+        .min(1, "Harga harus lebih dari 0")
+        .superRefine((data, ctx) => {
+          if (isNaN(data)) {
+            ctx.addIssue({
+              path: ["price"],
+              code: "custom",
+              message: "Harga harus berupa angka yang valid",
+            });
+          }
+        }),
       max_person: number().min(1, "Maksimal orang harus diisi"),
       is_active: string().min(1, "Status harus diisi"),
       locations: z
         .array(z.number())
-        .min(1, { message: "needs to be exactly 1" }),
+        .min(1, { message: "Needs to be exactly 1" }),
       "description[en]": string().min(1, "description en harus diisi"),
       "description[id]": string().min(1, "description id harus diisi"),
       "meta[en]": string().min(1, "meta en harus diisi"),
@@ -125,6 +202,18 @@ export default function () {
   const variantSchema = object({
     name: string().min(1, "Name is required"),
     price: number()
+      .int()
+      .min(1, "Harga harus lebih dari 0")
+      .superRefine((data, ctx) => {
+        if (isNaN(data)) {
+          ctx.addIssue({
+            path: ["price"],
+            code: "custom",
+            message: "Harga harus berupa angka yang valid",
+          });
+        }
+      }),
+    price_usd: number()
       .int()
       .min(1, "Harga harus lebih dari 0")
       .superRefine((data, ctx) => {
@@ -298,5 +387,6 @@ export default function () {
     carSearchSchemaIfPickUpTrue,
     tourSearchSchema2,
     tourPackageSchemaIfVaried,
+    transportSchemaIfVaried,
   };
 }

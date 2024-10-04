@@ -17,11 +17,11 @@
           :useStarIcon="false"
         />
 
-        <UIFormTextFieldWLabel
+        <!-- <UIFormTextFieldWLabel
           v-if="props.tourPackage"
-          label="Harga"
+          label="Harga IDR"
           name="price"
-          placeholder="Harga"
+          placeholder="Harga IDR"
           v-model="dataForm.price"
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
@@ -30,7 +30,17 @@
 
         <UIFormInputNumber
           v-else-if="!props.tourPackage"
-          label="Harga"
+          label="Harga IDR"
+          name="price"
+          placeholder="Harga"
+          v-model="dataForm.price"
+          class="input-bordered shadow-sm focus:outline-none"
+          :useStarIcon="false"
+          :disabled="isVaried === 1"
+        /> -->
+
+        <UIFormInputNumber
+          label="Harga IDR"
           name="price"
           placeholder="Harga"
           v-model="dataForm.price"
@@ -41,14 +51,35 @@
 
         <!-- <UIFormTextFieldWLabel
           v-if="props.tourPackage"
-          label="Max person"
-          name="max_person"
-          placeholder="Max person"
-          v-model="dataForm.max_person"
+          label="Harga USD"
+          name="price_usd"
+          placeholder="Inputkan harga USD"
+          v-model="dataForm.price_usd"
+          class="input-bordered shadow-sm focus:outline-none"
+          :useStarIcon="false"
+          :disabled="isVaried === 1"
+        />
+
+        <UIFormInputNumber
+          v-else-if="!props.tourPackage"
+          label="Harga USD"
+          name="price_usd"
+          placeholder="Inputkan harga USD"
+          v-model="dataForm.price_usd"
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
           :disabled="isVaried === 1"
         /> -->
+
+        <UIFormInputNumber
+          label="Harga USD"
+          name="price_usd"
+          placeholder="Inputkan harga USD"
+          v-model="dataForm.usd_price"
+          class="input-bordered shadow-sm focus:outline-none"
+          :useStarIcon="false"
+          :disabled="isVaried === 1"
+        />
 
         <UIFormInputNumber
           label="Max person"
@@ -233,15 +264,6 @@ const isVaried = computed(() => {
   return dataForm.value.is_varied;
 });
 
-// const test22 = ref();
-
-// watch(
-//   () => dataForm.value,
-//   (newValue, oldValue) => {
-//     test22.value = newValue;
-//   }
-// );
-
 const schemaShouldIUse = computed(() => {
   if (isVaried.value == 1) {
     return tourPackageSchemaIfVaried;
@@ -266,12 +288,15 @@ function funcGetIdStatus(data) {
 }
 
 onMounted(async () => {
+  // console.log(props.tourPackage);
+
   if (props.tourPackage) {
     selectedTourPackage.value = props.tourPackage;
     dataForm.value.name = props.tourPackage?.name;
     dataForm.value.price = Number(props.tourPackage?.price);
     dataForm.value.max_person = Number(props.tourPackage?.max_person);
     dataForm.value.is_varied = props.tourPackage?.is_varied;
+    dataForm.value.usd_price = Number(props.tourPackage?.usd_price);
 
     dataForm.value["description[en]"] =
       props.tourPackage?.description?.find((item) => item?.language === "en")
@@ -297,6 +322,7 @@ onMounted(async () => {
     dataForm.value.variants = props.tourPackage?.variants.map((variant) => ({
       name: variant?.name,
       price: Number(variant?.price),
+      usd_price: Number(variant?.usd_price),
       max_person: variant?.max_person,
       description: {
         en:

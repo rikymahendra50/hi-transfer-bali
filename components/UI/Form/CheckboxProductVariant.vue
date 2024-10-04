@@ -24,7 +24,12 @@
               @input="handleQuantityChange"
             />
             <div class="font-semibold">
-              {{ FormatMoneyDash(totalPrice.toString()) }}
+              {{
+                FormatMoneyDash(
+                  totalPrice.toString(),
+                  locale == "id" ? "IDR" : "usd"
+                )
+              }}
             </div>
           </div>
         </div>
@@ -35,6 +40,7 @@
 
 <script setup>
 import { ref, computed, watch } from "vue";
+const { locale, t: $t } = useI18n();
 
 const props = defineProps({
   productVariant: {

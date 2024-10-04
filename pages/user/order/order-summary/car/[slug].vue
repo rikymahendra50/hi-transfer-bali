@@ -131,7 +131,14 @@
           </div>
           <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
             <p class="font-semibold text-sm">{{ $t("total-price") }}</p>
-            <p>{{ FormatMoneyDash(carsOrderDetail?.data?.total_purchased) }}</p>
+            <p>
+              {{
+                FormatMoneyDash(
+                  carsOrderDetail?.data?.total_purchased,
+                  locale == "id" ? "IDR" : "usd"
+                )
+              }}
+            </p>
           </div>
         </div>
       </div>
@@ -150,7 +157,7 @@
           v-if="carsOrderDetail?.data?.payment_status === 'pending'"
           :href="carsOrderDetail?.data?.payment_url"
           target="_blank"
-          class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
+          class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-primary text-white"
         >
           <p>Payment url</p>
         </a>
@@ -198,19 +205,18 @@
 </template>
 
 <script setup>
+const { locale, t: $t } = useI18n();
 const route = useRoute();
 const slug = computed(() => route?.params?.slug);
 const { requestOptions } = useRequestOptions();
 const { $user } = useAuth();
 const page = ref(1);
-const { locale, t: $t } = useI18n();
 const showModalRefund = ref(false);
 const currentId = ref(undefined);
 const { $toast } = useNuxtApp();
 const { loading, message, alertType, setErrorMessage, transformErrors } =
   useRequestHelper();
 const { formatDate } = useFormatDate();
-
 const { pushNotification } = useNotification();
 
 const {

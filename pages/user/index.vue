@@ -100,7 +100,12 @@
               </td>
               <td>
                 <div class="">
-                  {{ FormatMoneyDash(item.grand_total_purchased) }}
+                  {{
+                    FormatMoneyDash(
+                      item.grand_total_purchased,
+                      locale == "id" ? "IDR" : "usd"
+                    )
+                  }}
                 </div>
               </td>
               <td>
@@ -203,7 +208,12 @@
               </td>
               <td>
                 <div class="">
-                  {{ FormatMoneyDash(item.grand_total_purchased) }}
+                  {{
+                    FormatMoneyDash(
+                      item.grand_total_purchased,
+                      locale == "id" ? "IDR" : "usd"
+                    )
+                  }}
                 </div>
               </td>
               <td>
@@ -257,6 +267,7 @@
 import { withQuery } from "ufo";
 
 const { loading, transformErrors } = useRequestHelper();
+
 const { requestOptions } = useRequestOptions();
 const router = useRouter();
 const route = useRoute();

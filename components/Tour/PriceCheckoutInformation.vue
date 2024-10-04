@@ -4,7 +4,7 @@
       <div class="flex flex-col lg:flex-row lg:justify-between item-center">
         <div>{{ $t("yang-harus-kamu-bayar") }}</div>
         <div class="text-lg font-semibold text-primary">
-          {{ FormatMoneyDash(props.price) }}
+          {{ FormatMoneyDash(props.price, locale == "id" ? "IDR" : "usd") }}
         </div>
       </div>
     </div>

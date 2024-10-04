@@ -18,6 +18,7 @@ export default function (options: Options = {}) {
   const dataForm = ref({
     name: undefined,
     price: undefined,
+    usd_price: undefined,
     "description[en]": undefined,
     "description[id]": undefined,
     "meta[en]": undefined,
@@ -32,6 +33,7 @@ export default function (options: Options = {}) {
     dataForm.value = {
       name: undefined,
       price: undefined,
+      usd_price: undefined,
       "description[en]": undefined,
       "description[id]": undefined,
       "meta[en]": undefined,
@@ -92,6 +94,7 @@ export default function (options: Options = {}) {
       dataForm.value.variants.forEach((variant, index) => {
         formData.append(`variants[${index}][name]`, variant.name);
         formData.append(`variants[${index}][price]`, variant.price);
+        formData.append(`variants[${index}][usd_price]`, variant.usd_price);
         formData.append(`variants[${index}][max_person]`, variant.max_person);
         formData.append(
           `variants[${index}][descriptions][en]`,
@@ -151,6 +154,7 @@ export default function (options: Options = {}) {
       dataForm.value.variants.forEach((variant, index) => {
         formData.append(`variants[${index}][name]`, variant.name);
         formData.append(`variants[${index}][price]`, variant.price);
+        formData.append(`variants[${index}][usd_price]`, variant.usd_price);
         formData.append(`variants[${index}][max_person]`, variant.max_person);
         formData.append(
           `variants[${index}][descriptions][en]`,
@@ -238,6 +242,7 @@ export default function (options: Options = {}) {
           return {
             name: variant?.name,
             price: Number(variant?.price),
+            usd_price: Number(variant?.usd_price),
             max_person: variant?.max_person,
             description: {
               en: variant?.description.find((item) => item.language === "en")
@@ -252,6 +257,7 @@ export default function (options: Options = {}) {
       dataForm.value.variants.push({
         name: "",
         price: "",
+        usd_price: "",
         max_person: "",
         description: {
           en: "",

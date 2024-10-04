@@ -54,7 +54,12 @@
               </div>
             </td>
             <td>
-              {{ FormatMoneyDash(item?.grand_total_purchased.toString()) }}
+              {{
+                FormatMoneyDash(
+                  item?.grand_total_purchased.toString(),
+                  locale == "id" ? "IDR" : "usd"
+                )
+              }}
             </td>
             <td>
               <div
@@ -145,6 +150,7 @@
 
 <script setup>
 import { withQuery } from "ufo";
+const { locale, t: $t } = useI18n();
 
 definePageMeta({
   layout: "admin",

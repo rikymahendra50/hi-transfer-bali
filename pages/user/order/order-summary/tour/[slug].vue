@@ -90,10 +90,20 @@
                         {{ item.quantity }}
                       </td>
                       <td>
-                        {{ FormatMoneyDash(item.price) }}
+                        {{
+                          FormatMoneyDash(
+                            item.price,
+                            locale == "id" ? "IDR" : "usd"
+                          )
+                        }}
                       </td>
                       <td>
-                        {{ FormatMoneyDash(item.total_price) }}
+                        {{
+                          FormatMoneyDash(
+                            item.total_price,
+                            locale == "id" ? "IDR" : "usd"
+                          )
+                        }}
                       </td>
                     </tr>
                   </tbody>
@@ -175,7 +185,14 @@
           </div>
           <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
             <p class="font-semibold text-sm">{{ $t("total-price") }}</p>
-            <p>{{ FormatMoneyDash(tourOrderDetail?.data?.total_purchased) }}</p>
+            <p>
+              {{
+                FormatMoneyDash(
+                  tourOrderDetail?.data?.total_purchased,
+                  locale == "id" ? "IDR" : "usd"
+                )
+              }}
+            </p>
           </div>
         </div>
       </div>
@@ -195,7 +212,7 @@
           v-if="tourOrderDetail?.data?.payment_status === 'pending'"
           :href="tourOrderDetail?.data?.payment_url"
           target="_blank"
-          class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
+          class="border-2 shadow-sm rounded-lg py-2 px-4 btn text-white bg-primary"
         >
           <p>Payment url</p>
         </a>

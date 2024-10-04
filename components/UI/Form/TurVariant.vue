@@ -18,10 +18,21 @@
 
             <!-- price -->
             <UIFormInputNumber
-              label="Harga"
+              label="Harga IDR"
               :name="`product_variants[${index}].price`"
               placeholder="Price"
               v-model="dataForm.price"
+              class="input-bordered shadow-sm focus:outline-none"
+              :useStarIcon="false"
+            />
+            <!-- end price -->
+
+            <!-- price -->
+            <UIFormInputNumber
+              label="Harga USD"
+              :name="`product_variants[${index}].price_usd`"
+              placeholder="Price"
+              v-model="dataForm.usd_price"
               class="input-bordered shadow-sm focus:outline-none"
               :useStarIcon="false"
             />

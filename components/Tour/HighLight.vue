@@ -23,9 +23,10 @@
 <script setup lang="ts">
 const { transformErrors, loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+const { locale, t: $t } = useI18n();
 
 const { data, error, refresh } = await useAsyncData("popularTours", () =>
-  $fetch(`/popular-tours`, {
+  $fetch(`/popular-tours?lang=${locale.value}`, {
     method: "get",
     ...requestOptions,
   })

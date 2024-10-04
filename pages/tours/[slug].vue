@@ -93,7 +93,17 @@
                       "
                     />
                     <div class="text-sm sm:text-base md:text-lg font-semibold">
-                      {{ FormatMoneyDash(item.totalItemPrice.toString()) }}
+                      {{
+                        locale === "en"
+                          ? FormatMoneyDash(
+                              item.totalItemPriceUSD.toString(),
+                              "USD"
+                            )
+                          : FormatMoneyDash(
+                              item.totalItemPrice.toString(),
+                              "IDR"
+                            )
+                      }}
                     </div>
                   </div>
                 </div>
@@ -154,6 +164,7 @@ const apiData = ref(null);
 const variants = ref([]);
 const totalPrice = ref(0);
 const showModal = ref(false);
+const totalPriceUSD = ref(0);
 
 const result = computed(() => {
   return (
@@ -177,15 +188,15 @@ const initializeVariants = () => {
   if (apiData.value?.data?.variants) {
     variants.value = apiData.value.data.variants.map((variant, index) => ({
       ...variant,
-      // quantity: index === 0 ? 1 : 0,
-      // isChecked: index === 0 ? true : false,
-      // totalItemPrice: index === 0 ? variant.price : 0,
       quantity: 0,
       isChecked: false,
       totalItemPrice: 0,
+      totalItemPriceUSD: 0,
     }));
   }
-  totalPrice.value = apiData.value?.data?.variants[0].price;
+
+  totalPrice.value = apiData.value?.data?.variants[0]?.price || 0;
+  totalPriceUSD.value = apiData.value?.data?.variants[0]?.usd_price || 0;
 };
 
 initializeVariants();
@@ -197,6 +208,14 @@ const updateTotalPrice = () => {
   }, 0);
 };
 
+const updateTotalPriceUSD = () => {
+  totalPriceUSD.value = variants.value.reduce((total, variant) => {
+    variant.totalItemPriceUSD = variant.usd_price * variant.quantity;
+    return variant.isChecked ? total + variant.totalItemPriceUSD : total;
+  }, 0);
+  // console.log(`Total Price USD: ${totalPriceUSD.value}`);
+};
+
 const handleVariantChange = (index) => {
   const variant = variants.value[index];
   if (variant.isChecked && variant.quantity === 0) {
@@ -205,6 +224,7 @@ const handleVariantChange = (index) => {
     variant.quantity = 0;
   }
   updateTotalPrice();
+  updateTotalPriceUSD();
 };
 
 const handleQuantityChange = (index, newQuantity) => {
@@ -222,6 +242,7 @@ const handleQuantityChange = (index, newQuantity) => {
   }
 
   updateTotalPrice();
+  updateTotalPriceUSD(); // Ensure this is called
 };
 
 const getMaxValueForVariant = (index) => {
@@ -230,6 +251,7 @@ const getMaxValueForVariant = (index) => {
 
 const continueOnsubmit = () => {
   dataForm.value.price = totalPrice.value;
+  dataForm.value.usd_price = totalPriceUSD.value; // Pastikan ini benar
 
   dataForm.value.variants = variants.value.filter(
     (variant) => variant.quantity > 0
@@ -249,6 +271,7 @@ watch(
   variants,
   () => {
     updateTotalPrice();
+    updateTotalPriceUSD();
   },
   { deep: true }
 );
