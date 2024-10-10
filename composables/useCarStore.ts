@@ -44,6 +44,7 @@ export default function useTourForm(options: Options = {}) {
     name: undefined,
     email: undefined,
     phone: undefined,
+    flight_number: undefined,
   });
 
   // const dataFormProfile = ref({
@@ -84,7 +85,7 @@ export default function useTourForm(options: Options = {}) {
 
   function clearSavedCarData() {
     sessionStorage.removeItem("carFormData");
-    console.log("Car form data dihapus dari sessionStorage");
+    // console.log("Car form data dihapus dari sessionStorage");
   }
 
   // function submitForm() {
@@ -122,6 +123,7 @@ export default function useTourForm(options: Options = {}) {
     formData.append("pic_name", dataForm.value.name || "");
     formData.append("pic_email", dataForm.value.email || "");
     formData.append("pic_phone_number", dataForm.value.phone || "");
+    formData.append("flight_number", dataForm.value.flight_number || "");
     formData.append("products[0][id]", dataForm.value.car_id || "");
 
     if (dataForm.value.round_trip == 1) {

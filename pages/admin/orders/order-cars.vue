@@ -51,12 +51,7 @@
             </div>
           </td>
           <td>
-            {{
-              FormatMoneyDash(
-                item.grand_total_purchased.toString(),
-                locale == "id" ? "IDR" : "usd"
-              )
-            }}
+            {{ FormatMoneyDash(item.grand_total_purchased.toString(), "IDR") }}
           </td>
           <td>
             <div

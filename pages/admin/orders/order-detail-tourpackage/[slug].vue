@@ -137,27 +137,27 @@
 
   <div class="px-5 py-4 flex flex-col gap-3">
     <div class="text-gray-500 uppercase text-[12px] font-semibold">
-      Payment Information
+      Informasi Pembayaran
     </div>
     <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
-      <p class="font-semibold">Payment Method</p>
+      <p class="font-semibold">Metode Pembayaran</p>
       <p>{{ data?.data?.payment?.payment_method ?? "-" }}</p>
     </div>
     <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
-      <p class="font-semibold">Payment Channel</p>
+      <p class="font-semibold">Channel Pembayaran</p>
       <p>{{ data?.data?.payment?.payment_channel ?? "-" }}</p>
     </div>
     <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
-      <p class="font-semibold">Payment Status</p>
+      <p class="font-semibold">Status Pembayaran</p>
       <p>{{ data?.data?.payment?.status }}</p>
     </div>
     <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
-      <p class="font-semibold">Total Price</p>
+      <p class="font-semibold">Total Harga</p>
       <p>
         {{
           FormatMoneyDash(
             data?.data?.payment?.total_purchased.toString(),
-            locale == "id" ? "IDR" : "usd"
+            "IDR"
           )
         }}
       </p>

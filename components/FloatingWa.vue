@@ -1,11 +1,12 @@
 <template>
-  <div
-    href="https://api.whatsapp.com/send?phone=6282342044966&text=halo"
+  <!-- +62 877-4401-5600 -->
+  <a
+    href="https://api.whatsapp.com/send?phone=6287744015600&text=Halo"
     class="fixed bottom-[15px] left-[18px] md:bottom-[25px] md:left-[25px] w-[50px] h-[50px] md:w-[60px] md:h-[60px] bg-primary rounded-full flex items-center justify-center z-[99999]"
     target="_blank"
   >
     <Icon name="ic:baseline-whatsapp" class="text-white w-7 h-7" />
-  </div>
+  </a>
 </template>
 
 <style scoped>

@@ -38,6 +38,10 @@
             <p class="font-semibold text-sm">{{ $t("nomor-telepon") }}:</p>
             <p>{{ carsOrderDetail?.data?.user?.phone }}</p>
           </div>
+          <div class="grid grid-cols-2 w-full md:w-[40%] items-center text-sm">
+            <p class="font-semibold text-sm">{{ $t("nomor-penerbangan") }}:</p>
+            <p>{{ carsOrderDetail?.data?.flight_number ?? "-" }}</p>
+          </div>
         </div>
 
         <div class="px-5 py-4 flex flex-col gap-3 border-b">
@@ -84,9 +88,6 @@
           </div>
 
           <div v-if="carsOrderDetail?.data?.details">
-            <!-- <pre>
-              {{ carsOrderDetail?.data?.details }}
-            </pre> -->
             <div
               class="bg-primary py-2 px-4 rounded-xl text-white w-fit"
               v-if="carsOrderDetail?.data?.details.length > 1"
@@ -133,10 +134,7 @@
             <p class="font-semibold text-sm">{{ $t("total-price") }}</p>
             <p>
               {{
-                FormatMoneyDash(
-                  carsOrderDetail?.data?.total_purchased,
-                  locale == "id" ? "IDR" : "usd"
-                )
+                FormatMoneyDash(carsOrderDetail?.data?.total_purchased, "IDR")
               }}
             </p>
           </div>

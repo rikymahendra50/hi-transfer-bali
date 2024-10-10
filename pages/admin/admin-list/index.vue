@@ -33,7 +33,7 @@
           <td class="text-sm font-normal">
             <StatusActive :status="item.is_active" />
           </td>
-          <td class="text-sm font-normal">
+          <!-- <td class="text-sm font-normal">
             <VDropdown>
               <div class="flex items-center justify-center">
                 <button class="flex items-center justify-center cursor-pointer">
@@ -51,7 +51,7 @@
                 </div>
               </template>
             </VDropdown>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>

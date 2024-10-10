@@ -9,19 +9,19 @@
           {{ language.label }}
         </div>
       </button>
-      <template #popper>
+      <template #popper="{ hide }">
         <div class="p-2">
           <ul class="flex flex-col space-y-2">
             <li
-              @click="changeLocale('en')"
-              class="py-1 inline-flex space-x-4 hover:bg-zinc-200 cursor-pointer hover:outline-zinc-300 hover:border-zinc-200 hover:rounded-md px-2"
+              @click="hide(), changeLocale('en')"
+              class="py-2 inline-flex space-x-3 cursor-pointer hover:outline-zinc-300 hover:border-zinc-200 hover:rounded-md px-3 hover:bg-primary hover:text-white"
             >
               <img src="/united-kingdom.png" alt="english" class="w-5 h-5" />
               <div>English</div>
             </li>
             <li
-              @click="changeLocale('id')"
-              class="py-1 inline-flex space-x-4 hover:bg-zinc-200 cursor-pointer hover:outline-zinc-300 hover:border-zinc-200 hover:rounded-md px-2"
+              @click="hide(), changeLocale('id')"
+              class="py-2 inline-flex space-x-3 cursor-pointer hover:outline-zinc-300 hover:border-zinc-200 hover:bg-primary hover:text-white hover:rounded-md px-3"
             >
               <img src="/indonesia.png" alt="indonesia" class="w-5 h-5" />
               <div>Indonesia</div>

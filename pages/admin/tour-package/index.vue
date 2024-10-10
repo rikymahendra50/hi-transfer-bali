@@ -26,7 +26,7 @@
           <div class="font-medium text-[14px] text-black">{{ item?.name }}</div>
         </td>
         <td class="text-sm font-normal text-[#989393]">
-          {{ FormatMoneyDash(item?.price, locale == "id" ? "IDR" : "usd") }}
+          {{ FormatMoneyDash(item?.price, "IDR") }}
         </td>
         <td class="text-sm font-normal text-[#989393]">
           <StatusTrueOrFalse

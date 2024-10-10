@@ -1,9 +1,6 @@
 <template>
   <div class="h-44 sm:h-28"></div>
   <div class="w-full border-b">
-    <!-- <pre>
-      {{ cars?.data }}
-    </pre> -->
     <UIContainer>
       <div class="text-black font-semibold text-2xl">
         {{ $t("order-saya") }}
@@ -91,21 +88,13 @@
               </td>
               <td>
                 <div class="">
-                  <!--                   {{ item.activity_date }} {{ $t("to") }}
-                  {{ item.return_date }} -->
-
                   {{ formatDate(item.activity_date) }}
                   {{ "-" }} {{ formatDate(item.return_date) }}
                 </div>
               </td>
               <td>
                 <div class="">
-                  {{
-                    FormatMoneyDash(
-                      item.grand_total_purchased,
-                      locale == "id" ? "IDR" : "usd"
-                    )
-                  }}
+                  {{ FormatMoneyDash(item.grand_total_purchased, "IDR") }}
                 </div>
               </td>
               <td>
@@ -208,12 +197,7 @@
               </td>
               <td>
                 <div class="">
-                  {{
-                    FormatMoneyDash(
-                      item.grand_total_purchased,
-                      locale == "id" ? "IDR" : "usd"
-                    )
-                  }}
+                  {{ FormatMoneyDash(item.grand_total_purchased, "IDR") }}
                 </div>
               </td>
               <td>

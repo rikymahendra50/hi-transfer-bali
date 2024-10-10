@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 const { transformErrors, loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const { locale, t: $t } = useI18n();

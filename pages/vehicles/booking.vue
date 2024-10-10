@@ -70,12 +70,12 @@
             <!-- test -->
             <div>
               <div class="space-y-4 p-4 border rounded-xl">
-                <UIFormMGroup name="name" label="Nama Lengkap">
+                <UIFormMGroup name="name" :label="$t('nama-lengkap')">
                   <UIFormMTextField
                     v-model="dataFormT.name"
                     name="name"
                     class="input-bordered"
-                    placeholder="Ketik Nama Lengkap Anda"
+                    :placeholder="$t('ketik-nama-lengkap')"
                   />
                 </UIFormMGroup>
 
@@ -84,18 +84,31 @@
                     v-model="dataFormT.email"
                     name="email"
                     class="input-bordered"
-                    placeholder="Ketik Email Anda"
+                    :placeholder="$t('ketik-email-anda')"
                   />
                 </UIFormMGroup>
 
-                <UIFormMGroup name="phone" label="Nomor Telepon">
+                <UIFormMGroup name="phone" :label="$t('nomor-telepon')">
                   <UIFormMTextField
                     v-model="dataFormT.phone"
                     name="phone"
                     class="input-bordered"
-                    placeholder="Ketik Nomor Telepon"
+                    :placeholder="$t('ketik-no-telepon')"
                   />
                 </UIFormMGroup>
+
+                <UIFormMGroup
+                  name="flight_number"
+                  :label="$t('nomor-penerbangan')"
+                >
+                  <UIFormMTextField
+                    v-model="dataFormT.flight_number"
+                    name="flight_number"
+                    class="input-bordered"
+                    :placeholder="$t('ketik-nomor-penerbangan')"
+                  />
+                </UIFormMGroup>
+
                 <div class="hidden">
                   <button ref="internalSubmit" type="submit">submit</button>
                 </div>
@@ -144,8 +157,8 @@ const route = useRoute();
 const { locale, t: $t } = useI18n();
 const { $isLoggedIn, $isUser, $logout } = useAuth();
 
-const selectedDistance = ref("");
-const selectedPassenger = ref("");
+// const selectedDistance = ref("");
+// const selectedPassenger = ref("");
 const { orderCarSchema } = useSchema();
 
 useHead({
@@ -171,6 +184,7 @@ const dataFormT = ref({
   name: undefined,
   email: undefined,
   phone: undefined,
+  flight_number: undefined,
 });
 
 function submitFormT() {
@@ -180,8 +194,11 @@ function submitFormT() {
   dataForm.value.name = dataFormT.value.name;
   dataForm.value.email = dataFormT.value.email;
   dataForm.value.phone = dataFormT.value.phone;
+  dataForm.value.flight_number = dataFormT.value.flight_number;
 
   saveFormData();
+
+  // console.log(dataForm.value);
 
   router.push("/vehicles/checkout");
 }

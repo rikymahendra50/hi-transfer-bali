@@ -187,10 +187,7 @@
             <p class="font-semibold text-sm">{{ $t("total-price") }}</p>
             <p>
               {{
-                FormatMoneyDash(
-                  tourOrderDetail?.data?.total_purchased,
-                  locale == "id" ? "IDR" : "usd"
-                )
+                FormatMoneyDash(tourOrderDetail?.data?.total_purchased, "IDR")
               }}
             </p>
           </div>
