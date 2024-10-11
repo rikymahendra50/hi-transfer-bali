@@ -115,9 +115,7 @@ export default defineNuxtConfig({
         { name: "twitter:description", content: "" },
         { name: "twitter:image", content: projectImageThumbnail },
       ],
-      link: [
-        { rel: "icon", type: "image/x-icon", href: "/hi-transfer-logo.png" },
-      ],
+      link: [{ rel: "icon", type: "image/x-icon", href: "/hai_bali.png" }],
     },
   },
 
@@ -172,6 +170,4 @@ export default defineNuxtConfig({
       Form: "VeeForm",
     },
   },
-
-  compatibilityDate: "2024-09-10",
 });

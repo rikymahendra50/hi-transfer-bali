@@ -125,7 +125,7 @@ const links = [
       {
         icon: "",
         label: $t("kebijakan-privasi"),
-        link: "/privacy-policy",
+        link: "",
       },
       {
         icon: "",
@@ -135,7 +135,7 @@ const links = [
       {
         icon: "",
         label: $t("ketentuan-dan-pengembalian-dana"),
-        link: "/terms-and-refunds",
+        link: "",
       },
     ],
   },

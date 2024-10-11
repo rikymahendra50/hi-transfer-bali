@@ -203,5 +203,25 @@
   "nationality": "Nationality",
   "cancel": "Cancel",
   "date": "Date",
-  "tanggal-keberangkatan": "Departure Date & Time"
+  "tanggal-keberangkatan": "Departure Date & Time",
+  "terms-conditions-title": "Transfer Service Terms and Conditions – Hai Bali",
+  "terms-conditions": {
+    "title": "At Hai Bali, we are dedicated to delivering reliable, efficient, and seamless transfer services. To ensure smooth and timely pick-up and drop-off experiences, we kindly request that the following terms and conditions be adhered to:",
+    "1-title": "Accurate Booking Information",
+    "1-desk": "To guarantee your transfer, it is imperative that all booking details are accurate and complete. This includes, but is not limited to, the correct flight number, precise pick-up and drop-off addresses, the scheduled date and time of travel, and a valid contact number. Failure to provide accurate information may result in delays or passenger no shows.",
+    "2-title": "Flight Monitoring",
+    "2-desk": "Hai Bali monitors flight status through third-party services such as Flightradar24 <a href='www.flightradar24.com' target='_blank'>(www.flightradar24.com)</a> to account for any changes to flight schedules. A buffer time of 45 minutes from the official landing time will be applied to ensure a smooth pick-up process. In the event of significant delays beyond our control, we reserve the right to reschedule or modify the transfer to accommodate the updated flight information.",
+    "3-title": "Driver and Vehicle Information",
+    "3-desk": "You will receive confirmation of the assigned driver and vehicle details no later than 24 hours prior to the scheduled transfer. Both the travel agent (if applicable) and the client will be notified via email or phone. It is your responsibility to ensure that all provided contact details are correct to facilitate this communication.",
+    "4-title": "Cancellation Policy",
+    "4-desk": "Transfers may be canceled without penalty up to 24 hours before the scheduled pick-up time. Cancellations made less than 24 hours prior to the transfer will result in a non-refundable charge equivalent to the full transfer cost. No-shows or failure to notify Hai Bali of a cancellation within this window will also result in the full charge being applied.",
+    "5-title": "Amendments to Booking",
+    "5-desk": "Any amendments to booking details, including changes to the pick-up time, location, or contact information, must be communicated to Hai Bali at least 24 hours before the scheduled pick-up. Amendments requested less than 24 hours in advance may not be accommodated and could result in additional charges. Changes are subject to availability and are not guaranteed.",
+    "6-title": "Child Seat Availability",
+    "6-desk": "Child seats are available upon request for an additional charge of €10 per seat. To ensure availability, requests must be made at the time of booking. Child seats are provided for children weighing between 9 kg and 36 kg. Failure to request a child seat in advance may result in the inability to provide one on the day of transfer.",
+    "7-title": "Liability",
+    "7-desk": "Hai Bali assumes no responsibility for delays or disruptions caused by factors beyond our control, such as severe weather, traffic conditions, or unforeseen airport delays. We will make all reasonable efforts to accommodate any changes and ensure a smooth transfer, but no compensation or refunds will be issued for service disruptions caused by external factors.",
+    "8-title": "Acceptance of Terms",
+    "8-desk": "By booking with Hai Bali, you acknowledge that you have read, understood, and agree to abide by these terms and conditions. These terms are legally binding, and failure to comply may result in the cancellation of your booking without refund."
+  }
 }

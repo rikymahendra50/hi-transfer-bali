@@ -202,5 +202,25 @@
   "nationality": "Kebangsaan",
   "cancel": "Batalkan",
   "date": "Tanggal",
-  "tanggal-keberangkatan": "Tanggal & Waktu Keberangkatan"
+  "tanggal-keberangkatan": "Tanggal & Waktu Keberangkatan",
+  "terms-conditions-title": "Syarat dan Ketentuan Layanan Transfer – Hai Bali",
+  "terms-conditions": {
+    "title": "Di Hai Bali, kami berdedikasi untuk memberikan layanan transfer yang andal, efisien, dan lancar. Untuk memastikan pengalaman penjemputan dan pengantaran yang lancar dan tepat waktu, kami dengan hormat meminta agar syarat dan ketentuan berikut dipatuhi:",
+    "1-title": "Informasi Pemesanan yang Akurat",
+    "1-desk": "Untuk menjamin transfer Anda, semua detail pemesanan harus akurat dan lengkap. Ini termasuk, namun tidak terbatas pada, nomor penerbangan yang benar, alamat penjemputan dan pengantaran yang tepat, tanggal dan waktu perjalanan yang dijadwalkan, dan nomor kontak yang valid. Kegagalan untuk memberikan informasi yang akurat dapat mengakibatkan penundaan atau ketidakhadiran penumpang.",
+    "2-title": "Pemantauan Penerbangan",
+    "2-desk": "Hai Bali memantau status penerbangan melalui layanan pihak ketiga seperti Flightradar24 <a href='www.flightradar24.com' target='_blank'>(www.flightradar24.com)</a> untuk memperhitungkan setiap perubahan jadwal penerbangan. Waktu jeda 45 menit dari waktu pendaratan resmi akan diterapkan untuk memastikan kelancaran proses penjemputan. Jika terjadi penundaan signifikan di luar kendali kami, kami berhak menjadwal ulang atau mengubah transfer untuk mengakomodasi informasi penerbangan terbaru.",
+    "3-title": "Informasi Pengemudi dan Kendaraan",
+    "3-desk": "Anda akan menerima konfirmasi rincian pengemudi dan kendaraan yang ditugaskan selambat-lambatnya 24 jam sebelum jadwal transfer. Baik agen perjalanan (jika ada) dan klien akan diberitahu melalui email atau telepon. Anda bertanggung jawab untuk memastikan bahwa semua rincian kontak yang diberikan sudah benar untuk memfasilitasi komunikasi ini.",
+    "4-title": "Kebijakan Pembatalan",
+    "4-desk": "Transportasi dapat dibatalkan tanpa penalti hingga 24 jam sebelum waktu penjemputan yang dijadwalkan. Pembatalan yang dilakukan kurang dari 24 jam sebelum transfer akan mengakibatkan biaya yang tidak dapat dikembalikan setara dengan biaya transfer penuh. Ketidakhadiran atau kegagalan memberi tahu Hai Bali tentang pembatalan dalam jangka waktu ini juga akan dikenakan biaya penuh.",
+    "5-title": "Perubahan Pemesanan",
+    "5-desk": "Setiap perubahan pada detail pemesanan, termasuk perubahan waktu penjemputan, lokasi, atau informasi kontak, harus dikomunikasikan kepada Hai Bali setidaknya 24 jam sebelum jadwal penjemputan. Perubahan yang diminta kurang dari 24 jam sebelumnya mungkin tidak dapat diakomodasi dan dapat mengakibatkan biaya tambahan. Perubahan tergantung pada ketersediaan dan tidak dijamin.",
+    "6-title": "Ketersediaan Kursi Anak",
+    "6-desk": "Kursi anak tersedia berdasarkan permintaan dengan biaya tambahan sebesar €10 per kursi. Untuk memastikan ketersediaan, permintaan harus dilakukan pada saat pemesanan. Kursi anak disediakan untuk anak dengan berat antara 9 kg dan 36 kg. Kegagalan untuk meminta kursi anak terlebih dahulu dapat mengakibatkan ketidakmampuan untuk menyediakannya pada hari transfer.",
+    "7-title": "Beban",
+    "7-desk": "Hai Bali tidak bertanggung jawab atas keterlambatan atau gangguan yang disebabkan oleh faktor-faktor di luar kendali kami, seperti cuaca buruk, kondisi lalu lintas, atau penundaan bandara yang tidak terduga. Kami akan melakukan segala upaya yang wajar untuk mengakomodasi perubahan apa pun dan memastikan kelancaran transfer, namun tidak ada kompensasi atau pengembalian uang yang akan diberikan untuk gangguan layanan yang disebabkan oleh faktor eksternal.",
+    "8-title": "Penerimaan Persyaratan",
+    "8-desk": "Dengan memesan melalui Hai Bali, Anda menyatakan bahwa Anda telah membaca, memahami, dan setuju untuk mematuhi syarat dan ketentuan ini. Ketentuan ini mengikat secara hukum, dan kegagalan untuk mematuhinya dapat mengakibatkan pembatalan pemesanan Anda tanpa pengembalian uang."
+  }
 }
