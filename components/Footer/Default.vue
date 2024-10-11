@@ -8,7 +8,7 @@
           <div class="flex flex-col space-y-4 w-full">
             <div class="flex items-center gap-4">
               <img
-                src="/hi-travel-white-logo.png"
+                src="/hai_bali_white.png"
                 alt="hi-travel logo white"
                 class="h-[60px] w-[60px] object-cover"
               />

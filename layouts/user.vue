@@ -10,7 +10,7 @@
               to="/"
             >
               <img
-                src="/hai_bali.png"
+                src="/hai_bali_black.png"
                 alt="Hi Transfer"
                 class="h-[60px] w-[60px]"
               />

@@ -19,7 +19,7 @@
           class="link link-primary link-hover p-1 underline-offset-8 decoration-4 rounded"
           active-class="font-medium"
           to="/"
-          ><img src="/hai_bali.png" alt="logo" class="h-[60px] w-[60px]"
+          ><img src="/hai_bali_black.png" alt="logo" class="h-[60px] w-[60px]"
         /></NuxtLink>
       </div>
     </div>

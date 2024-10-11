@@ -1,17 +1,17 @@
 /**
  * replace with actual title or name of the project
  */
-const projectName = "Hi Transfer";
+const projectName = "Hi Transfer Bali";
 /**
  * replace with actual description for seo
  */
-const projectDescription = "Nuxt App";
+const projectDescription =
+  "Safe and Comfortable Transfer in Bali. A fleet of modern vehicles and experienced drivers are ready to take you wherever you want.";
 /**
  * replace with actual image for thumbnail
  *
  */
-const projectImageThumbnail =
-  "https://spdigitalagency.com/assets/images/sp-digital.png";
+const projectImageThumbnail = "/hai_bali_thumbnail.jpeg";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -98,7 +98,7 @@ export default defineNuxtConfig({
         { property: "og:type", content: "website" },
         {
           property: "og:url",
-          content: "https://spdigitalagency.com/",
+          content: "https://haitransferbali.com/",
         },
         { property: "og:image", content: projectImageThumbnail },
         { property: "og:description", content: projectDescription },
