@@ -47,30 +47,8 @@ export default function useTourForm(options: Options = {}) {
     flight_number: undefined,
   });
 
-  // const dataFormProfile = ref({
-  //   name: undefined,
-  //   email: undefined,
-  //   phone: undefined,
-  // });
-
-  // function saveFormDataProfile() {
-  //   sessionStorage.setItem(
-  //     "carFormDataOrder",
-  //     JSON.stringify(dataFormProfile.value)
-  //   );
-  // }
-
-  // function showSavedCarDataProfile() {
-  //   const savedData = sessionStorage.getItem("carFormDataOrder");
-
-  //   if (savedData) {
-  //     dataFormProfile.value = JSON.parse(savedData);
-  //   }
-  // }
-
   function saveFormData() {
     sessionStorage.setItem("carFormData", JSON.stringify(dataForm.value));
-    // console.log("Data tersimpan:", dataForm.value);
   }
 
   function showSavedCarData() {
@@ -79,52 +57,25 @@ export default function useTourForm(options: Options = {}) {
     if (savedData) {
       dataForm.value = JSON.parse(savedData);
     }
-
-    // console.log("showSavedCarData", dataForm.value);
   }
 
   function clearSavedCarData() {
     sessionStorage.removeItem("carFormData");
-    // console.log("Car form data dihapus dari sessionStorage");
   }
-
-  // function submitForm() {
-  //   // console.log("Form submitted:", dataForm.value);
-  //   const formData = new FormData();
-
-  //   if (options.callback) {
-  //     options.callback();
-  //   }
-  // }
 
   const submitFormOrder = async (ctx: SubmissionContext) => {
     const formData = new FormData();
     loading.value = true;
-
-    // const dataFormSubmit = ref({
-    //   pic_name: dataForm.value.name,
-    //   pic_email: dataForm.value.email,
-    //   pic_phone_number: dataForm.value.phone,
-    //   "products[0][id]": dataForm.value.car_id,
-    //   "products[0][quantity]": 1,
-    //   "products[0][pickup_latitude]": dataForm.value.location_pickup_latitude,
-    //   "products[0][pickup_longitude]": dataForm.value.location_pickup_longitude,
-    //   "products[0][pickup_name]": dataForm.value.location_pickup_name,
-    //   "products[0][pickup_address]": dataForm.value.location_pickup_address,
-    //   "products[0][destination_latitude]":
-    //     dataForm.value.location_return_latitude,
-    //   "products[0][destination_longitude]":
-    //     dataForm.value.location_return_longitude,
-    //   "products[0][destination_name]": dataForm.value.location_return_name,
-    //   "products[0][destination_address]":
-    //     dataForm.value.location_return_address,
-    // });
 
     formData.append("pic_name", dataForm.value.name || "");
     formData.append("pic_email", dataForm.value.email || "");
     formData.append("pic_phone_number", dataForm.value.phone || "");
     formData.append("flight_number", dataForm.value.flight_number || "");
     formData.append("products[0][id]", dataForm.value.car_id || "");
+
+    if (dataForm.value.quantity < 10) {
+      dataForm.value.quantity = 10;
+    }
 
     if (dataForm.value.round_trip == 1) {
       formData.append("products[0][quantity]", dataForm.value.quantity / 2);
@@ -210,12 +161,6 @@ export default function useTourForm(options: Options = {}) {
         dataForm.value.return_date || ""
       );
     }
-
-    // for (const item in dataFormSubmit.value) {
-    //   // @ts-ignore
-    //   const objectItem = dataForm.value[item];
-    //   formData.append(item, objectItem);
-    // }
 
     await $fetch<CommonResponse<{ message: string }>>(
       `/users/${dataForm.value.user_uuid}/car-orders`,
