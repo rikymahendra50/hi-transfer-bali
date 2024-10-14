@@ -287,8 +287,6 @@ const {
 );
 
 async function showModalRefundFunc(id) {
-  showModalRefund.value = !showModalRefund.value;
-
   const { data, error } = await useFetch(
     `/users/${$user.value.uuid}/tour-orders/${tourOrderDetail.value.data?.uuid}/refund-request`,
     {
@@ -301,6 +299,7 @@ async function showModalRefundFunc(id) {
     setErrorMessage(error.value?.data?.message ?? $t("something-error"));
     $toast.error(error.value?.data?.message ?? $t("something-error"));
   } else {
+    showModalRefund.value = !showModalRefund.value;
     $toast.success(data.value?.data?.message ?? $t("cancel-tour-order-sukses"));
   }
   loading.value = false;

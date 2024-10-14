@@ -54,9 +54,13 @@
               <p class="font-normal">
                 {{ carsOrderDetail?.data?.details[0].pickup_name }}
               </p>
-              <p class="font-normal text-[#16161697]">
+              <a
+                target="_blank"
+                :href="`https://maps.google.com/?q=${carsOrderDetail?.data?.details[0]?.pickup_latitude},${carsOrderDetail?.data?.details[0]?.pickup_longitude}`"
+                class="font-normal text-[#16161697] hover:text-primary"
+              >
                 {{ carsOrderDetail?.data?.details[0].pickup_address }}
-              </p>
+              </a>
               <p class="font-normal text-[#16161697]">
                 {{
                   formatDate(
@@ -72,9 +76,13 @@
               <p class="font-normal">
                 {{ carsOrderDetail?.data?.details[0].destination_name }}
               </p>
-              <p class="font-normal text-[#16161697]">
+              <a
+                target="_blank"
+                :href="`https://maps.google.com/?q=${carsOrderDetail?.data?.details[0]?.destination_latitude},${carsOrderDetail?.data?.details[0]?.destination_longitude}`"
+                class="font-normal text-[#16161697] hover:text-primary"
+              >
                 {{ carsOrderDetail?.data?.details[0].destination_address }}
-              </p>
+              </a>
               <p class="font-normal text-[#16161697]">
                 {{
                   carsOrderDetail?.data?.details[1]?.activity_date
@@ -145,10 +153,10 @@
         <button
           v-if="carsOrderDetail?.data?.payment_status === 'paid'"
           type="button"
+          :disabled="loading"
           @click="showModalRefundFunc()"
           class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
         >
-          <!-- <p>{{ $t("pengembalian-pembayaran") }}</p> -->
           <p>Cancel</p>
         </button>
         <a
@@ -159,21 +167,6 @@
         >
           <p>Payment url</p>
         </a>
-
-        <!-- <button
-          v-else-if="
-            carsOrderDetail?.data?.status === 'waiting_for_payment' &&
-            carsOrderDetail?.data?.status !== 'cancel'
-          "
-          type="button"
-          @click="cancelOrder()"
-          class="border-2 shadow-sm rounded-lg py-2 px-4 btn bg-white"
-        >
-          <p>Cancel Order</p>
-        </button> -->
-        <!-- <div v-else-if="carsOrderDetail?.data?.status == 'completed'">
-          Completed
-        </div> -->
       </div>
     </UIContainer>
   </div>
@@ -234,8 +227,6 @@ const {
 async function showModalRefundFunc(id) {
   loading.value = true;
 
-  showModalRefund.value = !showModalRefund.value;
-
   const { data, error } = await useFetch(
     `/users/${$user.value.uuid}/car-orders/${carsOrderDetail.value.data?.uuid}/refund-request`,
     {
@@ -248,6 +239,7 @@ async function showModalRefundFunc(id) {
     setErrorMessage(error.value?.data?.message ?? $t("something-error"));
     $toast.error(error.value?.data?.message ?? $t("something-error"));
   } else {
+    showModalRefund.value = !showModalRefund.value;
     $toast.success(
       data.value?.data?.message ?? $t("sending-request-refund-success")
     );

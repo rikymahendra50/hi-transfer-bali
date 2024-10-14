@@ -135,7 +135,11 @@
 
         <div class="w-full md:w-fit">
           <div class="flex justify-end">
-            <UIBtn variant="primary" type="submit" :disabled="loading">
+            <UIBtn
+              variant="primary"
+              type="submit"
+              :disabled="loading && !dataForm.distance"
+            >
               {{ $t("cari-mobil") }}
             </UIBtn>
           </div>
@@ -325,8 +329,6 @@ async function calculateDistanceMatrix() {
 }
 
 function onSubmit() {
-  // let filters = [];
-
   if (formDataJemput.value.latitude == formDataTujuan.value.latitude) {
     $toast.error($t("lokasi-tidak-boleh-sama"));
   } else {
@@ -344,22 +346,9 @@ function onSubmit() {
     dataForm.value.location_return_latitude = formDataTujuan.value.latitude;
     dataForm.value.location_return_longitude = formDataTujuan.value.longitude;
 
-    // if (dataForm.value.passengers) {
-    //   filters.push(`passengers=${dataForm.value.passengers}`);
-    // }
-
-    // if (dataForm.value.distance) {
-    //   filters.push(`distance=${dataForm.value.distance}`);
-    // }
-
-    // const queryString = filters.join("&");
-    // const url = `/vehicles?${queryString ? `&${queryString}` : ""}`;
-
     saveFormData();
 
     window.location.href = "/vehicles";
-
-    // window.location.href = url;
   }
 }
 

@@ -20,43 +20,62 @@
           <span>{{ $t("proses-pengembalian") }}</span>
         </button>
       </div>
-      <!-- <div v-if="showPinEmailExpired">
-        <p class="text-sm">
+
+      <div v-if="$countdownHelper.showExpired">
+        <p class="text-gray-400 text-xs">
           {{ $t("jika-tidak-menerima-email") }}
-          <span class="link text-primary" @click="resentEmail" role="button">{{
-            $t("klik-disini")
-          }}</span>
+          <span
+            class="link hover:text-blue-600"
+            @click="resentEmail"
+            role="button"
+            >{{ $t("klik-disini") }}</span
+          >
         </p>
       </div>
-      <div>
-        <div v-if="secondTime > 0" class="text-gray-400 text-sm">
-          {{ $t("pin-berlaku-selama") }}
-          <span class="whitespace-nowrap"
-            >{{ secondTime }} {{ $t("second") }}.
-          </span>
+
+      <div class="flex justify-center">
+        <div>
+          <div
+            v-if="$countdownHelper.expiredTime > 0"
+            class="text-gray-400 text-xs"
+          >
+            {{ $t("otp-telah-dikirim") }}
+            <span class="whitespace-nowrap">
+              {{ $countdownHelper.expiredTime }} {{ $t("detik") }}
+            </span>
+          </div>
         </div>
-        <div class="text-error text-sm" v-if="showPinEmailExpired">
+
+        <div class="text-error text-xs" v-if="$countdownHelper.showExpired">
           {{ $t("otp-expired") }}
         </div>
-      </div> -->
+      </div>
     </div>
   </VeeForm>
 </template>
 
 <script setup>
 const { requestOptions } = useRequestOptions();
-// const snackbar = useSnackbar();
 const { locale, t: $t } = useI18n();
-const { $user } = useAuth();
+const { $toast } = useNuxtApp();
+
+const {
+  $user,
+  $countdownTokenExpired,
+  $countdownHelper,
+  $reRequestForgotPassword,
+} = useAuth({
+  usedBy: "user",
+  callback: updateToParent,
+});
 
 const props = defineProps({
   email: String,
   otp: String,
   uuidData: String || Number,
   carOrTour: String,
+  userUuid: String || Number,
 });
-
-const { $toast } = useNuxtApp();
 
 const emit = defineEmits(["next", "update:otp", "sukses"]);
 
@@ -70,17 +89,29 @@ function updateToParent() {
   emit("next");
 }
 
-// function resentEmail() {
-//   showPinEmailExpired.value = false;
-//   secondTime.value = 60;
-//   countdown();
+async function resentEmail() {
+  const { data, error } = await useFetch(
+    `/users/${$user.value.uuid}/${props.carOrTour}/${props.uuidData}/refund-request`,
+    {
+      method: "post",
+      ...requestOptions,
+    }
+  );
 
-//   useFetch("/admins/resend-email-verification", {
-//     method: "POST",
-//     body: { email: stateForm.value.email },
-//     ...requestOptions,
-//   });
-// }
+  $countdownHelper.value.showExpired = false;
+  $countdownHelper.value.expiredTime = 60;
+
+  $countdownTokenExpired();
+
+  if (error.value) {
+    setErrorMessage(error.value?.data?.message ?? $t("something-error"));
+    $toast.error(error.value?.data?.message ?? $t("something-error"));
+  } else {
+    $toast.success(
+      data.value?.data?.message ?? $t("sending-request-refund-success")
+    );
+  }
+}
 
 async function onSubmit() {
   loading.value = true;
@@ -109,7 +140,7 @@ async function onSubmit() {
 
 onMounted(async () => {
   await nextTick();
-  // countdown();
+  $countdownTokenExpired();
 });
 </script>
 

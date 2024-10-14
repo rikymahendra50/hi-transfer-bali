@@ -13,8 +13,8 @@ export default function () {
     },
     {
       title: "Email",
-      label: "dekpericab@gmail.com",
-      link: "mailto:dekpericab@gmail.com",
+      label: "info@haitransferbali.com",
+      link: "mailto:info@haitransferbali.com",
     },
   ];
 

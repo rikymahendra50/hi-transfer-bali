@@ -39,14 +39,12 @@
               :is-active="isCurrent('transport')"
               @click="goTo('transport')"
             />
-            <!-- , replaceWindow() -->
             <ShareMenuTabLink
               :label="$t('paket-tour')"
               icon="mingcute:umbrella-2-line"
               :is-active="isCurrent('paket-tour')"
               @click="goTo('paket-tour')"
             />
-            <!-- , replaceWindow() -->
           </div>
           <div class="p-4 mt-2">
             <div v-if="isCurrent('transport')">

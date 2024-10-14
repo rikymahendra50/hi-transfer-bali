@@ -44,7 +44,9 @@
       </GMapMarker>
     </GMapMap>
 
-    <div class="flex justify-between mt-3 items-center gap-3">
+    <div
+      class="flex sm:flex-col md:flex-row justify-between mt-3 items-center gap-3"
+    >
       <div class="grid gap-1">
         <p class="font-semibold lg:text-[20px]">{{ $t("location") }} :</p>
         <p class="text-sm">{{ locationName }}</p>
@@ -58,12 +60,6 @@
       >
         {{ $t("pilih-lokasi-ini") }}
       </button>
-
-      <!-- <div class="border-2 border-red-500">
-        {{ props.latitude }}
-        <p>test</p>
-      </div> -->
-      <!-- {{ props.dataJikaSudahada3 }} -->
     </div>
   </div>
 </template>

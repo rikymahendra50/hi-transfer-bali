@@ -1,7 +1,7 @@
 <template>
-  <div class="h-[100px]"></div>
+  <div class="h-[160px] lg:h-[100px]"></div>
   <div class="h-[200px] flex items-center justify-center bg-primary">
-    <h3 class="text-[30px] text-white">{{ $t('terms-conditions-title') }}</h3>
+    <h3 class="text-center text-lg sm:text-[27px] lg:text-[30px] text-white">{{ $t('terms-conditions-title') }}</h3>
   </div>
   <UIContainer>
     <p class="py-5 adjustdefault">

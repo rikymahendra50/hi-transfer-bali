@@ -101,6 +101,9 @@
                 class="mb-3"
               />
             </div>
+            <div v-else-if="loading">
+              <Icon name="line-md:loading-twotone-loop" class="text-primary" />
+            </div>
             <Empty v-else :description="$t('mobil-tidak-ditemukan')" />
           </div>
         </div>
@@ -138,10 +141,6 @@ const filter = ref({
   sort: "",
 });
 
-// const totalData = computed(() => {
-//   return apiData?.value.meta?.total;
-// });
-
 watch([() => selectedDistance, selectedPassenger], (newValues, oldValues) => {
   if (newValues !== oldValues) {
     replaceWindow();
@@ -161,16 +160,6 @@ onMounted(() => {
   if (route.query.sort) {
     filter.value.sort = route.query.sort;
   }
-  // if (route.query.distance && route.query.passengers) {
-  //   selectedDistance.value = route.query.distance;
-  //   selectedPassenger.value = route.query.passengers;
-  // }
-  // if (route.query.distance && !route.query.passengers) {
-  //   selectedDistance.value = route.query.distance;
-  // }
-  // if (!route.query.distance && route.query.passengers) {
-  //   selectedTouristNumber.value = route.query.passengers;
-  // }
 
   showSavedCarData();
 
@@ -200,12 +189,6 @@ const fetchData = async () => {
 
 function replaceWindow() {
   let filters = [];
-  // if (selectedPassenger.value) {
-  //   filters.push(`passengers=${selectedPassenger.value}`);
-  // }
-  // if (selectedDistance.value) {
-  //   filters.push(`distance=${selectedDistance.value}`);
-  // }
   if (filter.value.sort) {
     filters.push(`sort=${filter.value.sort}`);
   }
