@@ -73,14 +73,20 @@ export default function useTourForm(options: Options = {}) {
     formData.append("flight_number", dataForm.value.flight_number || "");
     formData.append("products[0][id]", dataForm.value.car_id || "");
 
-    if (dataForm.value.quantity < 10) {
-      dataForm.value.quantity = 10;
-    }
-
     if (dataForm.value.round_trip == 1) {
-      formData.append("products[0][quantity]", dataForm.value.quantity / 2);
+      if (dataForm.value.quantity < 10) {
+        dataForm.value.quantity = 10;
+        formData.append("products[0][quantity]", dataForm.value.quantity);
+      } else {
+        formData.append("products[0][quantity]", dataForm.value.quantity / 2);
+      }
     } else if (dataForm.value.round_trip == 0) {
-      formData.append("products[0][quantity]", dataForm.value.quantity);
+      if (dataForm.value.quantity < 10) {
+        dataForm.value.quantity = 10;
+        formData.append("products[0][quantity]", dataForm.value.quantity);
+      } else {
+        formData.append("products[0][quantity]", dataForm.value.quantity);
+      }
     }
 
     formData.append(
@@ -122,7 +128,14 @@ export default function useTourForm(options: Options = {}) {
 
     if (dataForm.value.round_trip == 1) {
       formData.append("products[1][id]", dataForm.value.car_id || "");
-      formData.append("products[1][quantity]", dataForm.value.quantity / 2);
+      // formData.append("products[1][quantity]", dataForm.value.quantity / 2);
+
+      if (dataForm.value.quantity < 10) {
+        dataForm.value.quantity = 10;
+        formData.append("products[1][quantity]", dataForm.value.quantity);
+      } else {
+        formData.append("products[1][quantity]", dataForm.value.quantity / 2);
+      }
 
       formData.append(
         "products[1][pickup_latitude]",
