@@ -39,7 +39,8 @@
             v-if="$countdownHelper.expiredTime > 0"
             class="text-gray-400 text-xs"
           >
-            {{ $t("otp-telah-dikirim") }}
+            <!-- {{ $t("otp-telah-dikirim") }} -->
+            OTP has been sent
             <span class="whitespace-nowrap">
               {{ $countdownHelper.expiredTime }} {{ $t("detik") }}
             </span>

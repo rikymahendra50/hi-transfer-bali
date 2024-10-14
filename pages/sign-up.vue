@@ -31,7 +31,7 @@ definePageMeta({
 <template>
   <div class="hero min-h-screen">
     <div class="hero-content text-center">
-      <div class="w-[500px] rounded-xl border">
+      <div class="md:w-[500px] rounded-xl border">
         <div class="py-4 text-center">
           <h1 class="text-xl font-bold">Sign Up</h1>
         </div>

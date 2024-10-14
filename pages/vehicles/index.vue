@@ -164,6 +164,11 @@ onMounted(() => {
   showSavedCarData();
 
   selectedDistance.value = dataForm.value.distance;
+
+  if (dataForm.value.distance < 10) {
+    selectedDistance.value = 10;
+  }
+
   selectedPassenger.value = dataForm.value.passengers;
 
   fetchData();
