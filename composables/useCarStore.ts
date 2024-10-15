@@ -196,7 +196,7 @@ export default function useTourForm(options: Options = {}) {
       .then((data) => {
         if (data) {
           loading.value = false;
-          window.location.replace(data.data?.payment_url);
+          window.location.replace(data?.data?.payment_url);
           options.callback?.();
         }
       });

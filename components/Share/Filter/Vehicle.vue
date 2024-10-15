@@ -6,7 +6,8 @@
         v-if="dataForm.quantity"
       >
         <div class="p-1 text-sm text-white">
-          <span> {{ dataForm.distance_text }}</span>
+          <span> {{ dataForm.quantity }} Km</span>
+          <!-- <span>{{ dataForm.distance_text }}</span> -->
         </div>
       </div>
     </div>
@@ -301,8 +302,14 @@ async function calculateDistanceMatrix() {
         if (status === "OK" && lat1 !== lat2 && lat2 !== lng2) {
           const result = response.rows[0].elements[0];
           distance.value =
-            result?.distance?.value <= 1000 ? 1000 : result?.distance?.value;
+            result?.distance?.value <= 1000
+              ? 1000
+              : Math.ceil(result?.distance?.value);
           distanceRound.value = result?.distance?.text;
+
+          // alert("ini adalah math ceil", distance.value);
+
+          // alert("ini adalah distance not round", result?.distance?.text);
 
           dataForm.value.distance = parseInt(distance.value / 1000);
           dataForm.value.quantity = parseInt(distance.value / 1000);
