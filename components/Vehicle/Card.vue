@@ -51,7 +51,9 @@
 
           <div>
             <UIBtn
-              @click="goToVehicleBooking(id, image, price, facilities, name)"
+              @click="
+                goToVehicleBooking(id, image, price, facilities, name, slug)
+              "
               variant="primary"
               outlined
               class="w-full"
@@ -84,12 +86,13 @@ onMounted(() => {
   showSavedCarData();
 });
 
-function goToVehicleBooking(id, image, price, facilities, name) {
+function goToVehicleBooking(id, image, price, facilities, name, slug) {
   dataForm.value.car_id = id;
   dataForm.value.name_car = name;
   dataForm.value.image = image;
   dataForm.value.total_price = price;
   dataForm.value.facilities = facilities;
+  dataForm.value.slug = slug;
 
   saveFormData();
 
@@ -101,6 +104,9 @@ const props = defineProps({
     type: [String, Number],
   },
   name: {
+    type: String,
+  },
+  slug: {
     type: String,
   },
   price: {

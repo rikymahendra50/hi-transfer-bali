@@ -6,7 +6,7 @@
         v-if="dataForm.quantity"
       >
         <div class="p-1 text-sm text-white">
-          <span>{{ dataForm.quantity }} Km</span>
+          <span> {{ dataForm.distance_text }}</span>
         </div>
       </div>
     </div>
@@ -298,30 +298,29 @@ async function calculateDistanceMatrix() {
         travelMode: "DRIVING",
       },
       (response, status) => {
-        if (status === "OK") {
+        if (status === "OK" && lat1 !== lat2 && lat2 !== lng2) {
           const result = response.rows[0].elements[0];
-          distance.value = result?.distance?.value;
+          distance.value =
+            result?.distance?.value <= 1000 ? 1000 : result?.distance?.value;
           distanceRound.value = result?.distance?.text;
 
-          if (result?.distance?.value > 1000) {
-            dataForm.value.distance = parseInt(distance.value / 1000);
-            dataForm.value.quantity = parseInt(distance.value / 1000);
-            dataForm.value.distance_text = distanceRound.value;
+          dataForm.value.distance = parseInt(distance.value / 1000);
+          dataForm.value.quantity = parseInt(distance.value / 1000);
+          dataForm.value.distance_text = distanceRound.value;
 
-            if (dataForm.value.round_trip == 1) {
-              const test = parseInt(distance.value / 1000);
-              dataForm.value.distance = test.toFixed(1) * 2;
-              dataForm.value.quantity = test.toFixed(1) * 2;
-            }
-          } else {
-            $toast.error($t("the-distance-cannot"));
-            dataForm.value.distance = "";
-            dataForm.value.quantity = "";
-            dataForm.value.distance_text = "";
-
-            formDataJemput.value = {};
-            formDataTujuan.value = {};
+          if (dataForm.value.round_trip == 1) {
+            const test = parseInt(distance.value / 1000);
+            dataForm.value.distance = test.toFixed(1) * 2;
+            dataForm.value.quantity = test.toFixed(1) * 2;
           }
+        } else {
+          $toast.error("Lokasi tidak boleh sama");
+          dataForm.value.distance = "";
+          dataForm.value.quantity = "";
+          dataForm.value.distance_text = "";
+
+          formDataJemput.value = {};
+          formDataTujuan.value = {};
         }
       }
     );

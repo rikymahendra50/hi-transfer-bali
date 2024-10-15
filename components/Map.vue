@@ -91,6 +91,7 @@ const center = ref({
   lat: props.dataJikaSudahada3?.latitude ?? -8.417347915171359,
   lng: props.dataJikaSudahada3?.longitude ?? 115.19596919507471,
 });
+
 const currentMarkerPosition = ref({
   lat: props.dataJikaSudahada3?.latitude ?? -8.417347915171359,
   lng: props.dataJikaSudahada3?.longitude ?? 115.19596919507471,
@@ -102,6 +103,7 @@ const latitudeFix = ref(
 const longitudeFix = ref(
   props.dataJikaSudahada3?.longitude ?? 115.19596919507471
 );
+
 const locationAddress = ref(props.dataJikaSudahada3?.locationAddress ?? "");
 const locationName = ref(props.dataJikaSudahada3?.locationName ?? "");
 
@@ -130,8 +132,7 @@ function getUserLocation() {
         const lng = position.coords.longitude;
 
         if (isWithinBaliBounds(lat, lng)) {
-          latitudeFix.value = lat;
-          longitudeFix.value = lng;
+          fetchAddress(lat, lng);
 
           center.value = { lat, lng };
           currentMarkerPosition.value = { lat, lng };
@@ -144,7 +145,6 @@ function getUserLocation() {
       }
     );
   } else {
-    // alert("Geolocation tidak didukung di browser ini.");
     $toast.error($t("geolocation-tidak-didukung"));
   }
 }
@@ -153,12 +153,15 @@ function getUserLocation() {
 async function fetchAddress(latitude, longitude) {
   const geocoder = new google.maps.Geocoder();
   const latLng = {
-    lat: parseFloat(latitude.value),
-    lng: parseFloat(longitude.value),
+    lat: parseFloat(latitude),
+    lng: parseFloat(longitude),
   };
 
   geocoder.geocode({ location: latLng }, (results, status) => {
     if (status === "OK" && results.length > 0) {
+      latitudeFix.value = latitude;
+      longitudeFix.value = longitude;
+
       locationAddress.value = results[0].formatted_address;
       locationName.value = getDescriptiveLocationName(
         results[0].address_components
@@ -177,8 +180,10 @@ function handleMapClick(event) {
     currentMarkerPosition.value = { lat: latitude, lng: longitude };
     center.value = { lat: latitude, lng: longitude };
 
-    latitudeFix.value = latitude;
-    longitudeFix.value = longitude;
+    // latitudeFix.value = latitude;
+    // longitudeFix.value = longitude;
+
+    fetchAddress(latitude, longitude);
   } else {
     $toast.error($t("lokasi-harus-dibali"));
   }
@@ -192,8 +197,10 @@ function setPlace(ctx) {
     currentMarkerPosition.value = { lat: latitude, lng: longitude };
     center.value = { lat: latitude, lng: longitude };
 
-    latitudeFix.value = latitude;
-    longitudeFix.value = longitude;
+    // latitudeFix.value = latitude;
+    // longitudeFix.value = longitude;
+
+    fetchAddress(latitude, longitude);
   } else {
     $toast.error($t("lokasi-harus-dibali"));
   }
@@ -255,11 +262,8 @@ function getDescriptiveLocationName(addressComponents) {
     // "town_square",
   ];
 
-  // console.log(addressComponents);
-
   for (const component of addressComponents) {
     if (types.some((type) => component.types.includes(type))) {
-      console.log(component);
       return component.long_name;
     }
   }
@@ -267,15 +271,14 @@ function getDescriptiveLocationName(addressComponents) {
   return addressComponents[0].long_name;
 }
 
-watch(
-  () => latitudeFix.value,
-  () => {
-    fetchAddress(latitudeFix, longitudeFix);
-  }
-);
+// watch(
+//   () => latitudeFix.value,
+//   () => {
+//     fetchAddress(latitudeFix, longitudeFix);
+//   }
+// );
 
 function submitKoordinat() {
-  fetchAddress(latitudeFix, longitudeFix);
   emit("hideModal", true);
   emit("update:longitude", longitudeFix.value);
   emit("update:latitude", latitudeFix.value);

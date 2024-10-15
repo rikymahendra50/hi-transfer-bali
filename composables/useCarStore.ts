@@ -22,11 +22,12 @@ export default function useTourForm(options: Options = {}) {
     location_pickup_address: undefined,
     location_return_name: undefined,
     location_return_address: undefined,
-    location_return_latitude: undefined, //
+    location_return_latitude: undefined,
     location_return_longitude: undefined,
     location_pickup_latitude: undefined,
     location_pickup_longitude: undefined,
     pickup_date: undefined,
+    slug: undefined,
     return_date: undefined,
     round_trip: 0,
     quantity: undefined,

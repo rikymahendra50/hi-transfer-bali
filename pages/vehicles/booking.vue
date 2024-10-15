@@ -120,10 +120,15 @@
             <div class="text-2xl font-semibold">{{ $t("detail-mobil") }}</div>
           </div>
           <div class="space-y-4">
-            <VehicleSelectedCard
+            <!-- <VehicleSelectedCard
               :name="dataForm.name_car"
               :image="dataForm.image"
               :facilities="dataForm.facilities"
+            /> -->
+            <VehicleSelectedCard
+              :name="dataDetail?.data?.name"
+              :image="dataDetail?.data?.image"
+              :facilities="dataDetail?.data?.facilities"
             />
           </div>
           <div class="flex items-center justify-end">
@@ -157,8 +162,6 @@ const route = useRoute();
 const { locale, t: $t } = useI18n();
 const { $isLoggedIn, $isUser, $logout } = useAuth();
 
-// const selectedDistance = ref("");
-// const selectedPassenger = ref("");
 const { orderCarSchema } = useSchema();
 
 useHead({
@@ -177,6 +180,34 @@ const {
   },
 });
 
+const slug = ref(undefined);
+const distance = ref(undefined);
+const dataDetail = ref();
+
+watch(
+  [() => slug.value, distance.value, locale.value],
+  (newValues, oldValues) => {
+    fetchData();
+  }
+);
+
+const fetchData = async () => {
+  const { data, error, refresh } = await useAsyncData("carsDetail", () =>
+    $fetch(
+      `/cars/${dataForm.value.slug}?lang=${locale.value}&filter[distance]=${dataForm.value.distance}`,
+      {
+        headers: {
+          Accept: "application/json",
+        },
+        method: "get",
+        ...requestOptions,
+      }
+    )
+  );
+
+  dataDetail.value = data.value;
+};
+
 const vehicleForm = ref(null);
 
 const dataFormT = ref({
@@ -188,8 +219,6 @@ const dataFormT = ref({
 });
 
 function submitFormT() {
-  // vehicleForm.value.$refs.internalSubmit.click();
-
   dataForm.value.user_uuid = dataFormT.value.user_uuid;
   dataForm.value.name = dataFormT.value.name;
   dataForm.value.email = dataFormT.value.email;
@@ -197,8 +226,6 @@ function submitFormT() {
   dataForm.value.flight_number = dataFormT.value.flight_number;
 
   saveFormData();
-
-  // console.log(dataForm.value);
 
   router.push("/vehicles/checkout");
 }
@@ -209,6 +236,11 @@ onMounted(async () => {
   }
 
   showSavedCarData();
+
+  slug.value = dataForm.value.slug;
+  distance.value = dataForm.value.distance;
+
+  fetchData();
 });
 
 const fetchUserData = async (ctx) => {

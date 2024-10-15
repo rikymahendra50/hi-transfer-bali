@@ -14,36 +14,6 @@
             >{{ $t("kembali-ke-beranda") }}</UIBtn
           >
         </div>
-        <!-- <div
-          class="w-full flex flex-col gap-2"
-          v-if="
-            dataForm.location_pickup_address && dataForm.location_return_address
-          "
-        >
-          <div
-            class="flex flex-col lg:flex-row space-y-1 lg:space-y-0 lg:space-x-4 text-lg 2xl:text-xl font-semibold"
-          >
-            <div class="text-start">
-              {{ dataForm.location_pickup_address }}
-            </div>
-            <div class="hidden lg:block text-center">
-              <Icon name="i-heroicons-arrow-right" class="w-4 h-4" />
-            </div>
-            <div class="block lg:hidden text-center">
-              <Icon name="i-heroicons-arrow-down" class="w-4 h-4" />
-            </div>
-            <div class="text-start">
-              {{ dataForm.location_return_address }}
-            </div>
-          </div>
-          <div
-            class="text-zinc-400 text-sm whitespace-nowrap text-center lg:text-left"
-          >
-            {{ dataForm.pickup_date }} &nbsp; | &nbsp;
-            {{ dataForm.passengers }}
-            {{ $t("penumpang") }}
-          </div>
-        </div> -->
       </div>
     </UIContainer>
   </div>
@@ -97,9 +67,9 @@
           </div>
           <div class="space-y-4">
             <VehicleSelectedCard
-              :name="dataForm.name_car"
-              :image="dataForm.image"
-              :facilities="dataForm.facilities"
+              :name="dataDetail?.data?.name"
+              :image="dataDetail?.data?.image"
+              :facilities="dataDetail?.data?.facilities"
             />
           </div>
         </div>
@@ -109,19 +79,6 @@
           </h3>
           <div class="space-y-4">
             <div class="border p-4 rounded-[8px] flex flex-col gap-3">
-              <!-- <div
-                class="flex flex-col sm:flex-row sm:items-center gap-2 justify-between"
-              >
-                <h4 class="font-medium">{{ $t("perjalanan-pergi") }}</h4>
-                <p>{{ FormatMoneyDash(String(dataForm.total_price)) }}</p>
-              </div> -->
-              <!-- <div
-                class="flex flex-col sm:flex-row sm:items-center gap-2 justify-between"
-                v-if="dataForm.round_trip == 1"
-              >
-                <h4 class="font-medium">{{ $t("perjalanan-pulang") }}</h4>
-                <p>{{ FormatMoneyDash(String(dataForm.price)) }}</p>
-              </div> -->
               <div
                 class="flex flex-col sm:flex-row sm:items-center gap-2 justify-between"
               >
@@ -135,7 +92,7 @@
                   <!-- {{ FormatMoneyDash(String(dataForm.price)) }} -->
                   {{
                     FormatMoneyDash(
-                      String(dataForm.total_price),
+                      String(dataDetail?.data?.trip_price),
                       locale == "id" ? "IDR" : "usd"
                     )
                   }}
@@ -165,6 +122,9 @@ const router = useRouter();
 const route = useRoute();
 const { locale, t: $t } = useI18n();
 const { $isLoggedIn, $isUser, $logout } = useAuth();
+const dataDetail = ref(null);
+const slug = ref(undefined);
+const distance = ref(undefined);
 
 const {
   dataForm,
@@ -180,6 +140,30 @@ const {
   },
 });
 
+watch(
+  [() => slug.value, distance.value, locale.value],
+  (newValues, oldValues) => {
+    fetchData();
+  }
+);
+
+const fetchData = async () => {
+  const { data, error, refresh } = await useAsyncData("carsDetail", () =>
+    $fetch(
+      `/cars/${dataForm.value.slug}?lang=${locale.value}&filter[distance]=${dataForm.value.distance}`,
+      {
+        headers: {
+          Accept: "application/json",
+        },
+        method: "get",
+        ...requestOptions,
+      }
+    )
+  );
+
+  dataDetail.value = data.value;
+};
+
 const dataFormT = ref({
   name: dataForm.value.name,
   email: dataForm.value.email,
@@ -191,6 +175,11 @@ onMounted(() => {
   dataFormT.value.name = dataForm.value.name;
   dataFormT.value.email = dataForm.value.email;
   dataFormT.value.phone = dataForm.value.phone;
+
+  slug.value = dataForm.value.slug;
+  distance.value = dataForm.value.distance;
+
+  fetchData();
 });
 
 useHead({
