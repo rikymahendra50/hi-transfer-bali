@@ -164,10 +164,6 @@ const { $isLoggedIn, $isUser, $logout } = useAuth();
 
 const { orderCarSchema } = useSchema();
 
-useHead({
-  title: "Vehicle",
-});
-
 const {
   dataForm,
   submitForm,

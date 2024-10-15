@@ -39,7 +39,7 @@ const {
 });
 
 useHead({
-  title: "Home",
+  title: "Hi Transfer Bali",
   meta: [
     {
       name: "description",

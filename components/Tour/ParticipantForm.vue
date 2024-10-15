@@ -68,10 +68,6 @@ const { $isLoggedIn, $isUser, $logout } = useAuth();
 const selectedDistance = ref("");
 const selectedPassenger = ref("");
 
-// useHead({
-//   title: "Vehicle",
-// });
-
 const dataFormT = ref({
   user_uuid: undefined,
   name: undefined,
