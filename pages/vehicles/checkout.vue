@@ -179,7 +179,7 @@ onMounted(() => {
   slug.value = dataForm.value.slug;
   distance.value = dataForm.value.distance;
 
-  fetchData();
+  // fetchData();
 });
 
 useHead({

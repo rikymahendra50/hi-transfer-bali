@@ -240,7 +240,7 @@ onMounted(async () => {
   slug.value = dataForm.value.slug;
   distance.value = dataForm.value.distance;
 
-  fetchData();
+  // fetchData();
 });
 
 const fetchUserData = async (ctx) => {
