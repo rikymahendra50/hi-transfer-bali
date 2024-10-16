@@ -35,10 +35,29 @@
 
 <script setup lang="ts">
 const { setLocale, locale } = useI18n();
+const { loading, transformErrors } = useRequestHelper();
+const { requestOptions } = useRequestOptions();
+const { $logout, $user } = useAuth();
 
-function changeLocale(lang: "id" | "en") {
+async function changeLocale(lang: "id" | "en") {
   setLocale(lang);
-  window.location.reload();
+
+  if ($user.value?.uuid) {
+    await useAsyncData("changeLanguage", () =>
+      $fetch(`/users/change-language`, {
+        headers: {
+          Accept: "application/json",
+        },
+        body: {
+          lang: lang,
+        },
+        method: "post",
+        ...requestOptions,
+      })
+    );
+  }
+
+  // window.location.reload();
 }
 
 const language = computed(() => {

@@ -1,6 +1,0 @@
-User-agent: *
-Disallow: /admin
-Disallow:/auth-redirect
-Disallow:/user
-Disallow:/payment-successfully
-Disallow:/payment-failed
