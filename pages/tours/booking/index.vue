@@ -58,7 +58,7 @@
                         'name' +
                         getParticipantIndex(variantIndex, participantIndex)
                       "
-                      label="Nama Lengkap"
+                      :label="$t('nama-lengkap')"
                     >
                       <UIFormMTextField
                         v-model="
@@ -80,7 +80,7 @@
                         'nationality' +
                         getParticipantIndex(variantIndex, participantIndex)
                       "
-                      label="Kebangsaan"
+                      :label="$t('nationality')"
                     >
                       <UIFormMSelect
                         v-model="
@@ -113,6 +113,7 @@
                 <button
                   class="btn btn-md bg-primary text-white"
                   type="submit"
+                  :disabled="!isFormComplete"
                   :class="{ 'opacity-50 cursor-not-allowed': !isFormComplete }"
                 >
                   {{ $t("lanjutkan") }}

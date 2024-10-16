@@ -7,7 +7,6 @@
       >
         <div class="p-1 text-sm text-white">
           <span> {{ dataForm.quantity }} Km</span>
-          <!-- <span>{{ dataForm.distance_text }}</span> -->
         </div>
       </div>
     </div>
@@ -321,7 +320,7 @@ async function calculateDistanceMatrix() {
             dataForm.value.quantity = test.toFixed(1) * 2;
           }
         } else {
-          $toast.error("Lokasi tidak boleh sama");
+          $toast.error($t("lokasi-tidak-boleh-sama"));
           dataForm.value.distance = "";
           dataForm.value.quantity = "";
           dataForm.value.distance_text = "";
