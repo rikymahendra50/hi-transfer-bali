@@ -57,7 +57,7 @@ async function changeLocale(lang: "id" | "en") {
     );
   }
 
-  // window.location.reload();
+  window.location.reload();
 }
 
 const language = computed(() => {
