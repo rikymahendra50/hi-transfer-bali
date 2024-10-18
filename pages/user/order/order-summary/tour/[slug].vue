@@ -68,7 +68,7 @@
                       </th>
                       <th>
                         <div class="text-[#121212] font-semibold text-sm">
-                          {{ $t("jumlah") }}
+                          {{ $t("quantity") }}
                         </div>
                       </th>
                       <th>
@@ -92,7 +92,7 @@
                       <td>
                         {{
                           FormatMoneyDash(
-                            item.price,
+                            locale == "id" ? item.price : item.usd_price,
                             locale == "id" ? "IDR" : "usd"
                           )
                         }}
@@ -100,7 +100,9 @@
                       <td>
                         {{
                           FormatMoneyDash(
-                            item.total_price,
+                            locale == "id"
+                              ? item.total_price
+                              : item.total_usd_price,
                             locale == "id" ? "IDR" : "usd"
                           )
                         }}
@@ -132,11 +134,6 @@
                         {{ $t("nationality") }}
                       </div>
                     </th>
-                    <!-- <th>
-                      <div class="text-[#121212] font-semibold text-sm">
-                        Variant
-                      </div>
-                    </th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -145,9 +142,6 @@
                     <td>
                       {{ item.nationality }}
                     </td>
-                    <!-- <td>
-                      {{ item }}
-                    </td> -->
                   </tr>
                 </tbody>
               </table>
@@ -187,7 +181,12 @@
             <p class="font-semibold text-sm">{{ $t("total-price") }}</p>
             <p>
               {{
-                FormatMoneyDash(tourOrderDetail?.data?.total_purchased, "IDR")
+                FormatMoneyDash(
+                  locale == "id"
+                    ? tourOrderDetail?.data?.total_purchased
+                    : tourOrderDetail?.data?.total_usd_purchased,
+                  locale == "id" ? "IDR" : "usd"
+                )
               }}
             </p>
           </div>
