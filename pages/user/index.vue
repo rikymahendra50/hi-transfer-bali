@@ -94,7 +94,15 @@
               </td>
               <td>
                 <div class="">
-                  {{ FormatMoneyDash(item.grand_total_purchased, "IDR") }}
+                  <!-- {{ FormatMoneyDash(item.grand_total_purchased, "IDR") }} -->
+                  {{
+                    FormatMoneyDash(
+                      locale == "id"
+                        ? item.grand_total_purchased
+                        : item.grand_total_usd_purchased,
+                      locale == "id" ? "IDR" : "usd"
+                    )
+                  }}
                 </div>
               </td>
               <td>
@@ -197,7 +205,15 @@
               </td>
               <td>
                 <div class="">
-                  {{ FormatMoneyDash(item.grand_total_purchased, "IDR") }}
+                  <!-- {{ FormatMoneyDash(item.grand_total_purchased, "IDR") }} -->
+                  {{
+                    FormatMoneyDash(
+                      locale == "id"
+                        ? item.grand_total_purchased
+                        : item.grand_total_usd_purchased,
+                      locale == "id" ? "IDR" : "usd"
+                    )
+                  }}
                 </div>
               </td>
               <td>
