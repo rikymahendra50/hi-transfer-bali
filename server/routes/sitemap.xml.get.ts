@@ -1,22 +1,55 @@
-export default defineEventHandler(async (event) => {
-  // perform async logic
+import { defineEventHandler, setHeader } from "h3";
+import { useRuntimeConfig } from "#imports";
+import axios from "axios";
 
+let cachedSitemap = null;
+let lastFetchTime = null;
+const cacheDuration = 24 * 60 * 60 * 1000;
+
+export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event);
 
-  const domains = config.public.DOMAIN;
+  const now = Date.now();
 
-  const routes: string[] = ["/"];
+  if (cachedSitemap && lastFetchTime && now - lastFetchTime < cacheDuration) {
+    setHeader(event, "content-type", "application/xml");
+    return cachedSitemap;
+  }
 
-  // copy the logic from the module above though you might consider,
-  // if relevant, using your CMS's modified date for <lastmod> instead
+  let routes = ["/"];
+
+  try {
+    const response = await axios.get(
+      `${config.public.API_ENDPOINT}/popular-tours?lang=en`,
+      {
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
+
+    const popularTours = response.data;
+
+    if (popularTours.data && Array.isArray(popularTours.data)) {
+      popularTours.data.forEach((tour: any) => {
+        routes.push(`/tours/${tour.slug}`);
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching popular tours:", error);
+    // Optionally, you can add a fallback here if the API fails
+    // routes = ["/"];
+  }
+
+  // Membuat sitemap
   const timestamp = new Date().toISOString();
-  const sitemap = [
+  cachedSitemap = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ...routes.map((route) =>
       [
         "<url>",
-        `  <loc>${"https://haitransferbali.com" + route}</loc>`,
+        `  <loc>${config.public.APP_DOMAIN + route}</loc>`,
         `  <lastmod>${timestamp}</lastmod>`,
         "</url>",
       ].join("")
@@ -24,6 +57,9 @@ export default defineEventHandler(async (event) => {
     "</urlset>",
   ].join("");
 
+  lastFetchTime = now;
+
+  // Set header content-type untuk XML
   setHeader(event, "content-type", "application/xml");
-  return sitemap;
+  return cachedSitemap;
 });

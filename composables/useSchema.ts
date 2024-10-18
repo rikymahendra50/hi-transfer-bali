@@ -93,7 +93,6 @@ export default function () {
     object({
       image: z.instanceof(File),
       price: number()
-        .int()
         .min(1, "Harga harus lebih dari 0")
         .superRefine((data, ctx) => {
           if (isNaN(data)) {
@@ -105,7 +104,6 @@ export default function () {
           }
         }),
       price_usd: number()
-        .int()
         .min(1, "Harga harus lebih dari 0")
         .superRefine((data, ctx) => {
           if (isNaN(data)) {
@@ -128,7 +126,6 @@ export default function () {
   const transportSchemaIfVaried = toTypedSchema(
     object({
       price: number()
-        .int()
         .min(1, "Harga harus lebih dari 0")
         .superRefine((data, ctx) => {
           if (isNaN(data)) {
@@ -140,7 +137,6 @@ export default function () {
           }
         }),
       price_usd: number()
-        .int()
         .min(1, "Harga harus lebih dari 0")
         .superRefine((data, ctx) => {
           if (isNaN(data)) {
@@ -164,7 +160,6 @@ export default function () {
     object({
       name: string().min(1, "Nama package harus diisi"),
       price: number()
-        .int()
         .min(1, "Harga harus lebih dari 0")
         .superRefine((data, ctx) => {
           if (isNaN(data)) {
@@ -176,7 +171,6 @@ export default function () {
           }
         }),
       price_usd: number()
-        .int()
         .min(1, "Harga harus lebih dari 0")
         .superRefine((data, ctx) => {
           if (isNaN(data)) {
@@ -187,7 +181,7 @@ export default function () {
             });
           }
         }),
-      max_person: number().min(1, "Maksimal orang harus diisi"),
+      max_person: number().int().min(1, "Maksimal orang harus diisi"),
       is_active: string().min(1, "Status harus diisi"),
       locations: z
         .array(z.number())
@@ -202,7 +196,6 @@ export default function () {
   const variantSchema = object({
     name: string().min(1, "Name is required"),
     price: number()
-      .int()
       .min(1, "Harga harus lebih dari 0")
       .superRefine((data, ctx) => {
         if (isNaN(data)) {
@@ -214,7 +207,6 @@ export default function () {
         }
       }),
     price_usd: number()
-      .int()
       .min(1, "Harga harus lebih dari 0")
       .superRefine((data, ctx) => {
         if (isNaN(data)) {

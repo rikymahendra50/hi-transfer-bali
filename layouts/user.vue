@@ -11,7 +11,7 @@
             >
               <img
                 src="/hai_bali_black.png"
-                alt="Hi Transfer"
+                alt="Hai Transfer"
                 class="h-[60px] w-[60px]"
               />
             </NuxtLink>

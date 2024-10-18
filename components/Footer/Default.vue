@@ -9,7 +9,7 @@
             <div class="flex items-center gap-4">
               <img
                 src="/hai_bali_white.png"
-                alt="hi-travel logo white"
+                alt="hai-travel logo white"
                 class="h-[60px] w-[60px] object-cover"
               />
               <div class="flex flex-col gap-2 border-l pl-3 border-opacity-20">
@@ -88,7 +88,7 @@
     <UIContainer>
       <div class="h-2 w-full text-center pt-4">
         <p class="text-sm">
-          ©{{ fullYear }} Hi Transfer Bali. All rights reserved. | Design &
+          ©{{ fullYear }} Hai Transfer Bali. All rights reserved. | Design &
           Development by
           <a href="https://spdigitalagency.com" target="_blank">s.p. Digital</a>
         </p>

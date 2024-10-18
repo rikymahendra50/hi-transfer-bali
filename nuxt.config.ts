@@ -1,7 +1,7 @@
 /**
  * replace with actual title or name of the project
  */
-const projectName = "Hi Transfer Bali";
+const projectName = "Hai Transfer Bali";
 /**
  * replace with actual description for seo
  */
@@ -37,7 +37,7 @@ export default defineNuxtConfig({
 
   image: {
     format: ["webp"],
-    domains: ["https://unsplash.com", "https://spdigitalagency.com"],
+    domains: ["https://unsplash.com", "https://haitransferbali.com"],
   },
 
   devServer: {

@@ -49,41 +49,23 @@
           :disabled="isVaried === 1"
         />
 
-        <!-- <UIFormTextFieldWLabel
-          v-if="props.tourPackage"
-          label="Harga USD"
-          name="price_usd"
-          placeholder="Inputkan harga USD"
-          v-model="dataForm.price_usd"
-          class="input-bordered shadow-sm focus:outline-none"
-          :useStarIcon="false"
-          :disabled="isVaried === 1"
-        />
-
-        <UIFormInputNumber
-          v-else-if="!props.tourPackage"
-          label="Harga USD"
-          name="price_usd"
-          placeholder="Inputkan harga USD"
-          v-model="dataForm.price_usd"
-          class="input-bordered shadow-sm focus:outline-none"
-          :useStarIcon="false"
-          :disabled="isVaried === 1"
-        /> -->
-
         <UIFormInputNumber
           label="Harga USD"
           name="price_usd"
           placeholder="Inputkan harga USD"
           v-model="dataForm.usd_price"
+          step1="any"
           class="input-bordered shadow-sm focus:outline-none"
           :useStarIcon="false"
           :disabled="isVaried === 1"
         />
 
+        <!-- <input type="number" step="any" v-model="dataForm.usd_price" /> -->
+
         <UIFormInputNumber
           label="Max person"
           name="max_person"
+          step="any"
           placeholder="Max person"
           v-model="dataForm.max_person"
           class="input-bordered shadow-sm focus:outline-none"
@@ -288,8 +270,6 @@ function funcGetIdStatus(data) {
 }
 
 onMounted(async () => {
-  // console.log(props.tourPackage);
-
   if (props.tourPackage) {
     selectedTourPackage.value = props.tourPackage;
     dataForm.value.name = props.tourPackage?.name;

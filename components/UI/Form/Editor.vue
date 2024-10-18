@@ -614,7 +614,7 @@ function addPhoto({ url }: { url: string; alt?: string }) {
   editor.value
     ?.chain()
     .focus()
-    .setImage({ src: url, alt: "Hi Transfer" })
+    .setImage({ src: url, alt: "Hai Transfer" })
     .run();
 }
 

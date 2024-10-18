@@ -213,7 +213,6 @@ const updateTotalPriceUSD = () => {
     variant.totalItemPriceUSD = variant.usd_price * variant.quantity;
     return variant.isChecked ? total + variant.totalItemPriceUSD : total;
   }, 0);
-  // console.log(`Total Price USD: ${totalPriceUSD.value}`);
 };
 
 const handleVariantChange = (index) => {
