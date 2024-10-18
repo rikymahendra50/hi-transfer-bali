@@ -19,14 +19,11 @@ export default defineEventHandler(async (event) => {
   let routes = ["/"];
 
   try {
-    const response = await axios.get(
-      `${config.public.API_ENDPOINT}/popular-tours?lang=en`,
-      {
-        headers: {
-          Accept: "application/json",
-        },
-      }
-    );
+    const response = await axios.get(`${config.public.API_ENDPOINT}/tours`, {
+      headers: {
+        Accept: "application/json",
+      },
+    });
 
     const popularTours = response.data;
 

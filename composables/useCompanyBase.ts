@@ -8,7 +8,7 @@ export default function () {
     },
     {
       title: "Phone",
-      label: "0887744015600",
+      label: "+6287744015600",
       link: "tel:+6287744015600",
     },
     {
