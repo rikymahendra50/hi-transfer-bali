@@ -16,8 +16,8 @@
       <div class="grid grid-cols-1 xl:grid-cols-[1fr_170px] gap-6">
         <div class="space-y-2 border-0 xl:border-r">
           <h4 class="text-xl lg:text-2xl font-semibold">{{ name }}</h4>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-1 lg:p-4">
-            <div class="inline-flex space-x-1 items-center">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 lg:p-4">
+            <div class="inline-flex space-x-3 items-center">
               <Icon name="i-heroicons-users" class="w-6 h-6 text-primary" />
               <div class="text-zinc-400 text-sm whitespace-nowrap">
                 {{
@@ -28,12 +28,9 @@
               </div>
             </div>
 
-            <div
-              class="inline-flex space-x-1 items-center"
-              v-for="item in facilities"
-            >
+            <div class="flex space-x-3 items-start" v-for="item in facilities">
               <img :src="item.image" :alt="item.image" class="w-6 h-6" />
-              <div class="text-zinc-400 text-sm whitespace-nowrap">
+              <div class="text-zinc-400 text-sm">
                 {{ item.description }}
               </div>
             </div>
