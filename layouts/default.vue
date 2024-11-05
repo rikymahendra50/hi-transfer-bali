@@ -50,6 +50,9 @@
   </div>
 
   <SectionChat />
+
+  <SectionTrustBox />
+
   <FloatingWa />
 </template>
 
