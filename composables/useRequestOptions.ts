@@ -14,16 +14,17 @@ export default function () {
   async function clearCredential() {
     if (process.client) {
       useCookie("auth-token").value = null;
-      // console.log(defaultRedirect);
       window.location.replace(defaultRedirect);
     }
   }
+
   function onRequest(context: any) {
     context.options.headers = context.options.headers || {};
     context.options.headers.authorization = credential.value?.token
       ? "Bearer " + credential.value?.token
       : "";
   }
+
   function onResponseError(context: any) {
     if (context.response.status === 401) {
       return clearCredential();
